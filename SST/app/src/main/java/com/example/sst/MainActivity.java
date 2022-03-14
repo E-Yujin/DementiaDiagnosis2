@@ -29,7 +29,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
-    Intent intent;
+    Intent intent; //어쩌구
     SpeechRecognizer mRecognizer;
 
     private TextToSpeech tts;
