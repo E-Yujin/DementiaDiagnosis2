@@ -1,8 +1,10 @@
 package questions;
 
-public class question {
+import java.util.List;
 
-    void SetQuestion(){
-
-    };
+public abstract class question {
+    protected List<String> quiz;
+    protected List<String> crr_ans;
+    protected int score;
+    protected boolean isDone[];
 }

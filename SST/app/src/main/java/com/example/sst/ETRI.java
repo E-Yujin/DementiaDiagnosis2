@@ -48,6 +48,20 @@ public class ETRI {
     boolean forceStop = false;
     boolean isStop_state = false;
 
+    public static final String PREFS_NAME = "prefs";
+    private static final String MSG_KEY = "status";
+
+    public String StartSpeach(){
+        recordSpeech();
+        return "듣는 중...\n\n" +
+                "말씀이 끝나셨다면 '말했어요!'를 눌러주세요!";
+    }
+
+    public String SplitResult(String result_text){
+        String splited[] = result_text.split("\"");
+        return splited[7];
+    }
+
     private static String readStream(InputStream in) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(in),1000);
@@ -72,13 +86,15 @@ public class ETRI {
                     bufferSize);
             lenSpeech = 0;
             if (audio.getState() != AudioRecord.STATE_INITIALIZED) {
-                throw new RuntimeException("ERROR: Failed to initialize audio device. Allow app to access microphone");
+                throw new RuntimeException("ERROR: Failed to initialize audio device. " +
+                        "Allow app to access microphone");
             }
             else {
                 short [] inBuffer = new short [bufferSize];
                 forceStop = false;
                 isRecording = true;
                 audio.startRecording();
+
                 while (!forceStop) {
                     int ret = audio.read(inBuffer, 0, bufferSize);
                     for (int i = 0; i < ret ; i++ ) {
@@ -91,6 +107,7 @@ public class ETRI {
                         lenSpeech++;
                     }
                 }
+
                 audio.stop();
                 audio.release();
                 isRecording = false;

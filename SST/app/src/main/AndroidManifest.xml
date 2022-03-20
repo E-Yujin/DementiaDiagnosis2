@@ -14,13 +14,25 @@
         android:theme="@style/Theme.SST"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name="com.example.sst.QuizHOME"
+            >
+        </activity>
+
+        <activity android:name="com.example.sst.MainActivity"
+            >
+        </activity>
+
+        <activity android:name="questions.orientation_Page"
+            >
         </activity>
     </application>
 
