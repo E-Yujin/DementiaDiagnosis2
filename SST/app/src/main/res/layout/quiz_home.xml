@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".QuizHOME">
 
     <TextView
         android:id="@+id/title"
@@ -23,6 +23,15 @@
         android:text="준비가 되셨다면 아래 보라색 상자를 눌러주세요."
         android:layout_marginTop="30dp"
         android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/intent"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="total_score"
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/sttStart"

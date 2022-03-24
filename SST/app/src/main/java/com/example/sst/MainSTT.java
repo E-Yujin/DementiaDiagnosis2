@@ -44,7 +44,7 @@ public class MainSTT{
     int maxLenSpeech = 16000 * 45;
     byte [] speechData = new byte [maxLenSpeech * 2];
     int lenSpeech = 0;
-    boolean isRecording = false;
+    public boolean isRecording = false;
     boolean forceStop = false;
     boolean isStop_state = false;
 
@@ -145,16 +145,15 @@ public class MainSTT{
                 case 5:
                     result.setText(SplitResult());
                     if(SplitResult().equals("ASR_NOTOKEN")){
+                        result.setText("");
                         textView.setText("혹시 아무것도 말하지 않으셨나요?\n\n" +
-                                "'다시 말하기'를 눌러 다시 말씀하시거나\n" +
-                                "자판을 이용해 다시 입력해주세요.");
+                                "보라색 상자를 눌러 다시 말씀해주세요.");
                     }
                     else{
                         textView.setText("\"" + result.getText() + "\"" +
                                 " 라고 말씀하신 게 맞나요?\n\n" +
-                                "맞으시면 아래 파란 박스를 눌러주세요.\n"+
-                                "아니라면 '다시 말하기'를 눌러 다시 말씀하시거나\n" +
-                                "자판을 이용해 다시 입력해주세요.");
+                                "맞으시면 아래 파란 상자를 눌러주세요.\n"+
+                                "아니라면 보라색 상자를 눌러 다시 말씀해주세요.");
                     }
                     tts.speakOut(textView.getText().toString());
                     sttBtn.setEnabled(true);

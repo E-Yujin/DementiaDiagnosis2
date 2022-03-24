@@ -1,6 +1,5 @@
 package questions;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,8 +61,8 @@ public class orientation extends question{
         this.quiz.add("지금 있는 곳은 어디입니까?");
 
         this.crr_ans.add(Date[0]);
-        this.crr_ans.add(Date[1]);
-        this.crr_ans.add(Date[2]);
+        this.crr_ans.add(returnMONTH());
+        this.crr_ans.add(returnDATE());
         this.crr_ans.add(day);
         this.crr_ans.add("미정");
 
@@ -76,11 +75,13 @@ public class orientation extends question{
     }
 
     public String returnMONTH(){
-        return Date[1];
+        if(Date[1].indexOf("0") == 0) return Date[1].replace("0", "");
+        else return Date[1];
     }
 
     public String returnDATE(){
-        return Date[2];
+        if(Date[2].indexOf("0") == 0) return Date[2].replace("0", "");
+        else return Date[2];
     }
 
     public String returnDAY(){
