@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="50dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".SimpleTestActivity">
+
+    <TextView
+        android:id="@+id/questionTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="문제"
+        android:textSize="30sp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/answerTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:hint="답변을 입력해주세요"
+        android:inputType="text"
+        android:textSize="20sp"
+        android:textColor="@color/purple_500"/>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="다음"
+        android:textSize="20sp"
+        android:minHeight="48dp"/>
+
+</LinearLayout>
