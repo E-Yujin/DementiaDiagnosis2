@@ -6,13 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:padding="30dp"
     tools:context=".HomeActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="홈화면\n\n성공!"
-        android:textSize="30sp"/>
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:text="진단하기"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:backgroundTint="@color/purple_500"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:text="진단결과"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:backgroundTint="@color/teal_200"/>
 
 </LinearLayout>

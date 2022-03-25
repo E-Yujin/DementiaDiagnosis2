@@ -7,11 +7,15 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
-        android:layout_height="550dp"
+        android:layout_width="330dp"
+        android:layout_height="640dp"
         card_view:cardElevation="10sp"
         app:cardCornerRadius="26dp">
 
@@ -24,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:text="진단하기 앞서 간단한 정보를\n입력해주시길 바랍니다"
@@ -32,13 +36,14 @@
                 android:textSize="18sp"/>
 
            <com.google.android.material.textfield.TextInputLayout
-               android:layout_width="wrap_content"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginTop="20dp">
+               android:layout_marginTop="20dp"
+               app:errorEnabled="true">
 
                <com.google.android.material.textfield.TextInputEditText
                    android:id="@+id/name"
-                   android:layout_width="270dp"
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:hint="이름"
                    android:textSize="16sp"
@@ -47,13 +52,14 @@
            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/birth"
-                    android:layout_width="270dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="생년월일"
                     android:textSize="16sp"
@@ -64,7 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="3dp"
                 android:text="성별"
                 android:textSize="18sp"
@@ -75,7 +81,8 @@
                 android:id="@+id/radioGroupSex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:errorEnabled="true">
 
                 <RadioButton
                     android:id="@+id/radioM"
@@ -94,6 +101,16 @@
             </RadioGroup>
 
             <TextView
+                android:id="@+id/sexError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="성별을 선택해주세요"
+                android:textColor="#FF0000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -103,36 +120,80 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
 
-            <RadioGroup
-                android:id="@+id/radioGroupEdu"
+
+               <eu.tutorials.nologin.RadioButtonTable
+                   android:id="@+id/radioGroupEdu"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <TableRow>
+                       <RadioButton
+                           android:id="@+id/radioOne"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="문맹"
+                           android:textSize="18sp"/>
+                       <RadioButton
+                           android:id="@+id/radioTwo"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginStart="5dp"
+                           android:text="무학"
+                           android:textSize="18sp"/>
+                   </TableRow>
+
+                   <TableRow>
+                       <RadioButton
+                           android:id="@+id/radioThree"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="초등졸업"
+                           android:textSize="18sp" />
+                       <RadioButton
+                           android:id="@+id/radioFour"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginStart="5dp"
+                           android:text="중등졸업"
+                           android:textSize="18sp" />
+                   </TableRow>
+
+                   <TableRow>
+                       <RadioButton
+                           android:id="@+id/radioFive"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="고등졸업"
+                           android:textSize="18sp" />
+                       <RadioButton
+                           android:id="@+id/radioSix"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginStart="5dp"
+                           android:text="대학졸업이상"
+                           android:textSize="18sp" />
+                   </TableRow>
+
+               </eu.tutorials.nologin.RadioButtonTable>
+
+            <TextView
+                android:id="@+id/eduError"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="예"
-                    android:textSize="18sp"/>
-
-                <RadioButton
-                    android:id="@+id/radioNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="아니오"
-                    android:textSize="18sp"/>
-            </RadioGroup>
+                android:text="무학여부를 선택해주세요"
+                android:textColor="#FF0000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/btnStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_gravity="center"
-                android:text="진단시작"
-                android:textSize="18sp"/>
+                android:layout_marginTop="5dp"
+                android:text="시작하기"
+                android:textSize="20sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
