@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +32,7 @@ public class orientation_Page extends AppCompatActivity {
     Button sttBtn;
     Button submit;
 
-    private boolean isDone[];
+    private long backBtnTime = 0;
 
 
 
@@ -40,8 +41,6 @@ public class orientation_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orientation);
 
-        this.isDone = new boolean[5];
-        Arrays.fill(isDone, false);
         question = (TextView) findViewById(R.id.question);
         announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
@@ -52,13 +51,11 @@ public class orientation_Page extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 tts.onInit(status, question.getText().toString());
+                tts.UtteranceProgress(announce.getText().toString());
             }
         });
         stt = new MainSTT(this, answer, announce, question, sttBtn, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, submit, isDone,
-                ortt_main.quiz, ortt_main.crr_ans, ortt_main.score);
-
-        QP.Delay(3000, announce.getText().toString());
+        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, ortt_main.quiz);
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -67,8 +64,13 @@ public class orientation_Page extends AppCompatActivity {
         });
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                stt.Stop();
+                tts.Stop();
+                sttBtn.setEnabled(true);
+                sttBtn.setText("말하기");
+                tts.isStopUtt = true;
                 QP.user_ans = answer.getText().toString();
-                QP.correct = ortt_main.crr_ans.get(QP.current);
+                QP.correct = ortt_main.crr_ans[QP.current].get(0);
                 answer.setText("");
                 if(QP.user_ans.isEmpty()){
                     announce.setText("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
@@ -80,9 +82,10 @@ public class orientation_Page extends AppCompatActivity {
                         ortt_main.score ++;
                     }
                     if(QP.current < 4){
+                        tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
-                        QP.Delay(3000, announce.getText().toString());
+                        tts.UtteranceProgress(announce.getText().toString());
                     }
                     else if(QP.current == 4){
                         Intent resultIntent = new Intent();
@@ -100,7 +103,16 @@ public class orientation_Page extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        QP.BackPressed(this);
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        } else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -112,15 +124,15 @@ public class orientation_Page extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        QP.isStop = false;
+        tts.isStopUtt = false;
         if(announce.getText() != "대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!"){
             QP.Start(this);
             tts.speakOut(question.getText().toString());
-            QP.Delay(3000, announce.getText().toString());
+            tts.UtteranceProgress(announce.getText().toString());
         }
         else {
             tts.speakOut(question.getText().toString());
-            QP.Delay(3000, announce.getText().toString());
+            tts.UtteranceProgress(announce.getText().toString());
         }
     }
 

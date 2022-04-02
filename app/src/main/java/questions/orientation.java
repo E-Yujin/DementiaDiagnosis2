@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class orientation extends question{
     private String Date[];
@@ -12,9 +13,13 @@ public class orientation extends question{
 
     public orientation(){
 
+        this.num = 5;
         this.quiz = new ArrayList<>();
-        this.crr_ans = new ArrayList<>();
-        this.isDone = new boolean[5];
+        this.crr_ans = new ArrayList[this.num];
+        for (int i = 0; i < this.num; i++) {
+            this.crr_ans[i] = new ArrayList<>();
+        }
+        this.isDone = new boolean[this.num];
         this.score = new Integer(0);
         Arrays.fill(isDone, false);
 
@@ -60,11 +65,11 @@ public class orientation extends question{
         this.quiz.add("오늘은 무슨 요일입니까?");
         this.quiz.add("지금 있는 곳은 어디입니까?");
 
-        this.crr_ans.add(Date[0]);
-        this.crr_ans.add(returnMONTH());
-        this.crr_ans.add(returnDATE());
-        this.crr_ans.add(day);
-        this.crr_ans.add("미정");
+        this.crr_ans[0].add(Date[0]);
+        this.crr_ans[1].add(returnMONTH());
+        this.crr_ans[2].add(returnDATE());
+        this.crr_ans[3].add(day);
+        this.crr_ans[4].add("미정");
 
     }
 

@@ -6,9 +6,13 @@ import java.util.Arrays;
 public class memoryInput extends question {
 
     public memoryInput(){
+        this.num = 5;
         this.quiz = new ArrayList<>();
-        this.crr_ans = new ArrayList<>();
-        this.isDone = new boolean[5];
+        this.crr_ans = new ArrayList[this.num];
+        for (int i = 0; i < this.num; i++) {
+            this.crr_ans[i] = new ArrayList<>();
+        }
+        this.isDone = new boolean[this.num];
         this.score = new Integer(0);
         Arrays.fill(isDone, false);
 
@@ -23,10 +27,10 @@ public class memoryInput extends question {
         this.quiz.add(("제가 이 문장을 나중에 여쭤보겠습니다.\n" +
                 "잘 기억하세요."));
 
-        this.crr_ans.add("민수");
-        this.crr_ans.add("자전거");
-        this.crr_ans.add("공원");
-        this.crr_ans.add("11시");
-        this.crr_ans.add("야구");
+        this.crr_ans[0].add("민수");
+        this.crr_ans[1].add("자전거");
+        this.crr_ans[2].add("공원");
+        this.crr_ans[3].add("11시");
+        this.crr_ans[4].add("야구");
     }
 }

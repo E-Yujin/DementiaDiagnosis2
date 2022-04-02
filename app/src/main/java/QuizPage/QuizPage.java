@@ -18,19 +18,14 @@ public class QuizPage {
     TextView announce;
     EditText answer;
     Button sttBtn;
-    Button submit;
 
-    protected boolean isStop = false;
-    protected long backBtnTime = 0;
-    protected boolean isDone[];
     public int current = 0;
-    protected List<String> title_quest, Correct;
-    protected int Tscore;
+    protected List<String> title_quest;
 
     public String user_ans, correct;
 
-    public QuizPage(MainSTT Stt, TTS Tts, TextView quest, TextView ann, EditText ans, Button sttB,
-                    Button sub, boolean isD[], List<String> quiz, List<String> crr, int Score){
+    public QuizPage(MainSTT Stt, TTS Tts, TextView quest, TextView ann, EditText ans,
+                    Button sttB, List<String> quiz){
 
         stt = Stt;
         tts = Tts;
@@ -38,11 +33,7 @@ public class QuizPage {
         announce = ann;
         answer = ans;
         sttBtn = sttB;
-        submit = sub;
-        isDone = isD;
         title_quest = quiz;
-        Correct = crr;
-        Tscore = Score;
 
         question.setText(title_quest.get(current));
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
@@ -55,31 +46,7 @@ public class QuizPage {
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
     }
 
-    public void Delay(int time, String say) {
-        int tem = current;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(!isStop && tem == current && !stt.isRecording)
-                tts.speakOut(say);
-            }
-        }, time);
-    }
-
-    public void BackPressed(Context context) {
-        long curTime = System.currentTimeMillis();
-        long gapTime = curTime - backBtnTime;
-
-        if (0 <= gapTime && 2000 >= gapTime) {
-        } else {
-            backBtnTime = curTime;
-            Toast.makeText(context, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public void Stop(){
-        isStop = true;
         tts.Stop();
         stt.Stop();
     }

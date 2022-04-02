@@ -131,7 +131,7 @@ public class QuizHOME extends AppCompatActivity {
         switch (current){
 
             case 0:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), memoryInput_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 1:

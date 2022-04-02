@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.cbnu.dementiadiagnosis.TTS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import QuizPage.QuizPage;
 import questions.memoryInput;
@@ -33,16 +35,15 @@ public class memoryInput_Page extends AppCompatActivity {
     Button submit;
 
     ArrayList<String> first, second;
+    List<String> tem = new ArrayList<>();
 
-    private boolean isDone[];
+    private long backBtnTime = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.memory_input);
 
-        this.isDone = new boolean[5];
-        Arrays.fill(isDone, false);
         question = (TextView) findViewById(R.id.question);
         announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
@@ -51,21 +52,20 @@ public class memoryInput_Page extends AppCompatActivity {
         sttBtn = (Button) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
         memo_in = new memoryInput();
+
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 tts.onInit(status, question.getText().toString());
+                tem.add("민수는  자전거를 타고  공원에 가서  11시부터  야구를 했다");
+                tem.add(announce.getText().toString());
+                tts.UtteranceProgress(tem,"continue");
             }
         });
         stt = new MainSTT(this, answer, announce, question, sttBtn, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, submit, isDone,
-                memo_in.quiz, memo_in.crr_ans, memo_in.score);
+        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, memo_in.quiz);
         first = new ArrayList<>();
         second = new ArrayList<>();
-
-
-        QP.Delay(8000, "민수는  자전거를 타고  공원에 가서  11시부터  야구를 했다");
-        QP.Delay(14000, announce.getText().toString());
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -74,27 +74,33 @@ public class memoryInput_Page extends AppCompatActivity {
         });
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                stt.Stop();
+                tts.Stop();
+                sttBtn.setEnabled(true);
+                sttBtn.setText("말하기");
+                tts.isStopUtt = true;
                 if(QP.current == 0){
+                    tts.isStopUtt = false;
                     for(int i = 0; i<5; i++){
-                        if(answer.getText().toString() == memo_in.crr_ans.get(i)){
-                            first.add(memo_in.crr_ans.get(i));
+                        if(answer.getText().toString() == memo_in.crr_ans[i].get(0)){
+                            first.add(memo_in.crr_ans[i].get(0));
                         }
                     }
                     QP.Submit();
                     tts.speakOut(question.getText().toString());
-                    QP.Delay(10000, "민수는  자전거를 타고  공원에 가서  11시부터  야구를 했다");
-                    QP.Delay(16000, announce.getText().toString());
+                    tts.UtteranceProgress(tem,"continue");
                 }
                 else if(QP.current == 1){
+                    tts.isStopUtt = false;
                     for(int i = 0; i<5; i++){
-                        if(answer.getText().toString() == memo_in.crr_ans.get(i)){
-                            second.add(memo_in.crr_ans.get(i));
+                        if(answer.getText().toString() == memo_in.crr_ans[i].get(0)){
+                            second.add(memo_in.crr_ans[i].get(0));
                         }
                     }
                     QP.Submit();
                     tts.speakOut(question.getText().toString());
                     announce.setText("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!");
-                    QP.Delay(6000, announce.getText().toString());
+                    tts.UtteranceProgress(announce.getText().toString());
                     sttBtn.setEnabled(false);
                     submit.setText("확인");
                 }
@@ -114,7 +120,16 @@ public class memoryInput_Page extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        QP.BackPressed(this);
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        } else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -126,17 +141,24 @@ public class memoryInput_Page extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        QP.isStop = false;
-        if(announce.getText() != "대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!"){
-            QP.Start(this);
-            tts.speakOut(question.getText().toString());
-            QP.Delay(8000, "민수는  자전거를 타고  공원에 가서  11시부터  야구를 했다");
-            QP.Delay(14000, announce.getText().toString());
+        tts.isStopUtt = false;
+        if(QP.current < 2){
+            if(announce.getText() != "대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!"){
+                QP.Start(this);
+                tts.speakOut(question.getText().toString());
+                tts.UtteranceProgress(tem,"continue");
+            }
+            else {
+                tts.speakOut(question.getText().toString());
+                tts.UtteranceProgress(tem,"continue");
+            }
         }
-        else {
+        else{
             tts.speakOut(question.getText().toString());
-            QP.Delay(8000, "민수는  자전거를 타고  공원에 가서  11시부터  야구를 했다");
-            QP.Delay(14000, announce.getText().toString());
+            announce.setText("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!");
+            tts.UtteranceProgress(announce.getText().toString());
+            sttBtn.setEnabled(false);
+            submit.setText("확인");
         }
     }
 
