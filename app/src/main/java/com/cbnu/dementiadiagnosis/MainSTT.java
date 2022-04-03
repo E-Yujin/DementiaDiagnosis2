@@ -33,6 +33,7 @@ public class MainSTT{
     private TTS tts;
 
     Button sttBtn;
+    Button submit;
     EditText result;
     TextView textView;
     TextView question;
@@ -52,7 +53,7 @@ public class MainSTT{
     private static final String MSG_KEY = "status";
 
     public MainSTT (AppCompatActivity context, EditText editText, TextView announce,
-                    TextView quiz, Button Btn, TTS talk){
+                    TextView quiz, Button Btn, Button sub, TTS talk){
         if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
             ActivityCompat.requestPermissions(
                     context, new String[]{Manifest.permission.INTERNET,
@@ -62,6 +63,7 @@ public class MainSTT{
         textView = announce;
         question = quiz;
         sttBtn = Btn;
+        submit = sub;
         tts = talk;
     }
 
@@ -124,22 +126,26 @@ public class MainSTT{
                 case 1:
                     textView.setText(v);
                     sttBtn.setText("말했어요!");
+                    submit.setEnabled(false);
                     break;
                 // 녹음이 정상적으로 종료되었음(버튼 또는 max time)
                 case 2:
                     textView.setText(v);
                     sttBtn.setEnabled(false);
+                    submit.setEnabled(false);
                     break;
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
                     textView.setText(v);
                     sttBtn.setText("말하기");
+                    submit.setEnabled(true);
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
                     textView.setText(v);
                     sttBtn.setEnabled(true);
                     sttBtn.setText("말하기");
+                    submit.setEnabled(true);
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
@@ -155,9 +161,10 @@ public class MainSTT{
                                 "맞으시면 아래 파란 상자를 눌러주세요.\n"+
                                 "아니라면 보라색 상자를 눌러 다시 말씀해주세요.");
                     }
-                    tts.speakOut(textView.getText().toString());
+                    tts.speakOut(textView.getText().toString(),"Done");
                     sttBtn.setEnabled(true);
                     sttBtn.setText("다시 말하기");
+                    submit.setEnabled(true);
 
                     break;
             }

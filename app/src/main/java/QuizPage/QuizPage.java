@@ -17,7 +17,7 @@ public class QuizPage {
     TextView question;
     TextView announce;
     EditText answer;
-    Button sttBtn;
+    Button sttBtn, submit;
 
     public int current = 0;
     protected List<String> title_quest;
@@ -25,7 +25,7 @@ public class QuizPage {
     public String user_ans, correct;
 
     public QuizPage(MainSTT Stt, TTS Tts, TextView quest, TextView ann, EditText ans,
-                    Button sttB, List<String> quiz){
+                    Button sttB,Button sub, List<String> quiz){
 
         stt = Stt;
         tts = Tts;
@@ -33,6 +33,7 @@ public class QuizPage {
         announce = ann;
         answer = ans;
         sttBtn = sttB;
+        submit = sub;
         title_quest = quiz;
 
         question.setText(title_quest.get(current));
@@ -46,19 +47,40 @@ public class QuizPage {
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
     }
 
+    public String ans_filter(String num){
+        String tem = num.replace(" ", "")
+                .replace(".", "")
+                .replace(",", "")
+                .replace("?", "")
+                .replace("요일", "")
+                .replace("이다", "")
+                .replace("이요", "")
+                .replace("이야", "")
+                .replace("이지", "")
+                .replace("이죠", "")
+                .replace("이지요", "")
+                .replace("이고", "")
+                .replace("이며", "")
+                .replace("이라서", "")
+                .replace("이어서", "")
+                .replace("이었다", "")
+                .replace("이기", "")
+                .replace("이기에", "");
+        return tem;
+    }
+
     public void Stop(){
         tts.Stop();
         stt.Stop();
     }
 
-    public void Start(Context context){
+    public void Start(){
         question.setText(title_quest.get(current));
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
         answer.setText("");
-        Toast.makeText(context, "음성 인식 도중 나가셨기에 해당 문제부터 다시 시작합니다.",
-                Toast.LENGTH_SHORT).show();
         sttBtn.setText("말하기");
         sttBtn.setEnabled(true);
+        submit.setEnabled(true);
     }
 
     public void Destroy() {

@@ -27,6 +27,7 @@
         <activity android:name=".QuizHOME"> </activity>
         <activity android:name="QuizPage.orientation_Page"> </activity>
         <activity android:name="QuizPage.memoryInput_Page"> </activity>
+        <activity android:name="QuizPage.attention_Page"> </activity>
 
     </application>
 

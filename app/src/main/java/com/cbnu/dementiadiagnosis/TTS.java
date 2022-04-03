@@ -7,23 +7,25 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
+import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 
 import java.util.List;
 import java.util.Locale;
 
-import QuizPage.QuizPage;
-
 public class TTS {
     private TextToSpeech tts;
     private final Bundle params = new Bundle();
     Handler handler = new Handler();
     public boolean isStopUtt = false;
+    Button sttButt, submit;
 
-    public TTS(Context context, TextToSpeech.OnInitListener listener){
+    public TTS(Context context, TextToSpeech.OnInitListener listener, Button sttB, Button sub){
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, null);
         tts = new TextToSpeech(context, listener);
+        sttButt = sttB;
+        submit = sub;
     }
 
     public void UtteranceProgress(String say){
@@ -93,13 +95,20 @@ public class TTS {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(!s.contains("continue")){
-                                speakOut(say.get(i), id);
-                                i++;
-                            }
-                            else if(i < say.size()){
-                                speakOut(say.get(i), id);
-                                i++;
+                            if(!s.contains("Done")){
+                                if(!s.contains("continue")){
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
+                                else if(i < say.size()){
+                                    speakOut(say.get(i), id);
+
+                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
+                                        sttButt.setEnabled(true);
+                                        submit.setEnabled(true);
+                                    }
+                                    i++;
+                                }
                             }
                         }
                     }, 500);
@@ -127,13 +136,19 @@ public class TTS {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(!s.contains("continue")){
-                                speakOut(say.get(i), id);
-                                i++;
-                            }
-                            else if(i < say.size()){
-                                speakOut(say.get(i), id);
-                                i++;
+                            if(!s.contains("Done")){
+                                if(!s.contains("continue")){
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
+                                else if(i < say.size()){
+                                    speakOut(say.get(i), id);
+                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
+                                        sttButt.setEnabled(true);
+                                        submit.setEnabled(true);
+                                    }
+                                    i++;
+                                }
                             }
                         }
                     }, times[i]);

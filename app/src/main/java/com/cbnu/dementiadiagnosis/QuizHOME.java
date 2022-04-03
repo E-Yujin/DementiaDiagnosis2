@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import QuizPage.attention_Page;
 import QuizPage.memoryInput_Page;
 import QuizPage.orientation_Page;
 
@@ -85,8 +86,8 @@ public class QuizHOME extends AppCompatActivity {
             }
             else if(current == 2){
                 String tem = "맞춘 말 : ";
-                for(int i = 0; i< first.size(); i++) {
-                    tem += first.get(i);
+                for(String data : first) {
+                    tem += data;
                 }
                 Intend_value.setText(tem);
             }
@@ -131,7 +132,7 @@ public class QuizHOME extends AppCompatActivity {
         switch (current){
 
             case 0:
-                intent = new Intent(view.getContext(), memoryInput_Page.class);
+                intent = new Intent(view.getContext(), orientation_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 1:
@@ -139,7 +140,7 @@ public class QuizHOME extends AppCompatActivity {
                 startActivityForResult(intent, 100);
                 break;
             case 2:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), attention_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 3:

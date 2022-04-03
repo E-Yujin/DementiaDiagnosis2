@@ -92,4 +92,129 @@ public class orientation extends question{
     public String returnDAY(){
         return day;
     }
+
+    public String KorTran(String num){
+        String tem = num.replace(" ", "")
+                .replace("년", "")
+                .replace("도", "")
+                .replace("일", "")
+                .replace("시월", "십월")
+                .replace("유월", "육월")
+                .replace("월", "");
+
+        int result = 0;
+        List<String> kor = new ArrayList<>();
+        kor.add("일");
+        kor.add("이");
+        kor.add("삼");
+        kor.add("사");
+        kor.add("오");
+        kor.add("육");
+        kor.add("칠");
+        kor.add("팔");
+        kor.add("구");
+
+        if(tem.contains("천")){
+            int position = tem.indexOf("천");
+            if(position != 0){
+                String sub = tem.substring(position-1, position);
+                for(String s : kor){
+                    if(sub.contains(s)){
+                        sub = KtoD(sub);
+                        int sub_result = Integer.parseInt(sub)*1000;
+                        result += sub_result;
+                        break;
+                    }
+                }
+                if(!Character.isDigit(sub.charAt(0))) result += 1000;
+            }
+            else result += 1000;
+        }
+        if(tem.contains("백")){
+            int position = tem.indexOf("백");
+            if(position != 0){
+                String sub = tem.substring(position-1, position);
+                for(String s : kor){
+                    if(sub.contains(s)){
+                        sub = KtoD(sub);
+                        int sub_result = Integer.parseInt(sub)*100;
+                        result += sub_result;
+                        break;
+                    }
+                }
+                if(!Character.isDigit(sub.charAt(0))) result += 100;
+            }
+            else result += 100;
+        }
+        if(tem.contains("십")){
+            int position = tem.indexOf("십");
+            if(position != 0){
+                String sub = tem.substring(position-1, position);
+                for(String s : kor){
+                    if(sub.contains(s)){
+                        sub = KtoD(sub);
+                        int sub_result = Integer.parseInt(sub)*10;
+                        result += sub_result;
+                        break;
+                    }
+                }
+                if(!Character.isDigit(sub.charAt(0))) result += 10;
+            }
+            else result += 10;
+        }
+
+        for(int i = tem.length() - 1; i >= 0; i--){
+            String sub = tem.substring(i, i+1);
+            for(String s : kor){
+                if(sub.contains(s)){
+                    sub = KtoD(sub);
+                    result += Integer.parseInt(sub);
+                    break;
+                }
+            }
+            if(Character.isDigit(sub.charAt(0))) break;
+        }
+        int p1000 = tem.indexOf("천");
+        int p100 = tem.indexOf("백");
+        int p10 = tem.indexOf("십");
+
+        if(p10 != -1 && p100 != -1) {
+            if(p10 < p100) return "-1";
+            else return Integer.toString(result);
+        }
+        else if(p10 != -1 && p1000 != -1) {
+            if(p10 < p1000) return "-1";
+            else return Integer.toString(result);
+        }
+        else if(p100 != -1 && p1000 != -1) {
+            if(p100 < p1000) return "-1";
+            else return Integer.toString(result);
+        }
+        else return Integer.toString(result);
+    }
+
+    public String KtoD(String num){
+        switch (num){
+            case "일":
+                return "1";
+            case "이":
+                return "2";
+            case "삼":
+                return "3";
+            case "사":
+                return "4";
+            case "오":
+                return "5";
+            case "육":
+                return "6";
+            case "칠":
+                return "7";
+            case "팔":
+                return "8";
+            case "구":
+                return "9";
+            default:
+                return "";
+        }
+    }
 }

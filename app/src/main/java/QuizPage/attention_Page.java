@@ -16,13 +16,13 @@ import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
-import QuizPage.QuizPage;
-import questions.orientation;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Arrays;
+import questions.attention;
 
-public class orientation_Page extends AppCompatActivity {
-    orientation ortt_main;
+public class attention_Page extends AppCompatActivity {
+    attention att;
     MainSTT stt;
     TTS tts;
     QuizPage QP;
@@ -34,7 +34,7 @@ public class orientation_Page extends AppCompatActivity {
 
     private long backBtnTime = 0;
 
-
+    List<String> tem = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,19 +46,25 @@ public class orientation_Page extends AppCompatActivity {
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (Button) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
-        ortt_main = new orientation();
+        att = new attention();
+
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 tts.onInit(status, question.getText().toString());
-                tts.UtteranceProgress(announce.getText().toString());
+                tem.add("6, 9, 7, 3");
+                tem.add(announce.getText().toString());
+                tts.UtteranceProgress(tem, "continue");
+                sttBtn.setEnabled(false);
+                submit.setEnabled(false);
             }
         }, sttBtn, submit);
         stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, submit, ortt_main.quiz);
+        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, submit, att.quiz);
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
                 tts.Stop();
                 stt.start_STT();
             }
@@ -70,41 +76,61 @@ public class orientation_Page extends AppCompatActivity {
                 sttBtn.setEnabled(true);
                 sttBtn.setText("말하기");
                 tts.isStopUtt = true;
-                QP.user_ans = QP.ans_filter(answer.getText().toString());
 
-                if(QP.current < 3){
-                    for(int i = QP.user_ans.length() - 1; i >= 0; i--){
-                        String sub = QP.user_ans.substring(i, i+1);
-                        if(Character.isDigit(sub.charAt(0))) break;
-                        else {
-                            QP.user_ans = ortt_main.KorTran(QP.user_ans);
-                            break;
-                        }
-                    }
+                QP.user_ans = answer.getText().toString()
+                        .replace(" ","")
+                        .replace(",","")
+                        .replace(".", "");
+
+                List<String> correct = new ArrayList<>();
+                correct.clear();
+                for(String data : att.crr_ans[QP.current]){
+                    correct.add(data);
                 }
 
-                QP.correct = ortt_main.crr_ans[QP.current].get(0);
                 answer.setText("");
+
                 if(QP.user_ans.isEmpty()){
                     announce.setText("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
                     tts.speakOut(announce.getText().toString());
                 }
                 else
                 {
-                    if(QP.user_ans.contains(QP.correct)){
-                        ortt_main.score ++;
+                    for(String data : correct){
+                        if(QP.user_ans.contains(data)){
+                            att.score ++;
+                        }
+                        if(QP.current + 1 < att.score){
+                            att.score = QP.current + 1;
+                        }
                     }
-                    if(QP.current < 4){
+                    if(QP.current == 0){
+                        sttBtn.setEnabled(false);
+                        submit.setEnabled(false);
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
-                        tts.UtteranceProgress(announce.getText().toString());
+                        tem.clear();
+                        tem.add("5, 7, 2, 8, 4");
+                        tem.add(announce.getText().toString());
+                        tts.UtteranceProgress(tem, "continue");
                     }
-                    else if(QP.current == 4){
+                    else if(QP.current == 1){
+                        sttBtn.setEnabled(false);
+                        submit.setEnabled(false);
+                        tts.isStopUtt = false;
+                        QP.Submit();
+                        tts.speakOut(question.getText().toString());
+                        tem.clear();
+                        tem.add("금수강산");
+                        tem.add(announce.getText().toString());
+                        tts.UtteranceProgress(tem, "continue");
+                    }
+                    else if(QP.current == 2){
                         Intent resultIntent = new Intent();
 
                         resultIntent.putExtra("isDone", true);
-                        resultIntent.putExtra("score", ortt_main.score);
+                        resultIntent.putExtra("score", att.score);
 
                         setResult(1, resultIntent);
                         finish();
@@ -130,7 +156,6 @@ public class orientation_Page extends AppCompatActivity {
 
     @Override
     protected void onStop(){
-        tts.isStopUtt = true;
         super.onStop();
         QP.Stop();
     }
@@ -142,12 +167,12 @@ public class orientation_Page extends AppCompatActivity {
         if(announce.getText() != "대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!"){
             QP.Start();
             tts.speakOut(question.getText().toString());
-            tts.UtteranceProgress(announce.getText().toString());
+            tts.UtteranceProgress(tem,"continue");
         }
         else {
             QP.Start();
             tts.speakOut(question.getText().toString());
-            tts.UtteranceProgress(announce.getText().toString());
+            tts.UtteranceProgress(tem,"continue");
         }
     }
 
