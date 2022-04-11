@@ -8,6 +8,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
@@ -53,7 +54,8 @@ public class TTS {
                 }
             });
         }
-    } // 한 문장만 말할 때
+    }
+    // 한 문장만 말할 때
     public void UtteranceProgress(String say, int time){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
@@ -80,7 +82,8 @@ public class TTS {
                 }
             });
         }
-    } // 한 문장을 말하는데 딜레이가 필요할 때
+    }
+    // 한 문장을 말하는데 수동으로 텀을 조절하고 싶을 때
     public void UtteranceProgress(List<String> say, String id){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
@@ -120,7 +123,8 @@ public class TTS {
                 }
             });
         }
-    } // 여러 문장을 말할 때
+    }
+    // 여러 문장을 말할 때
     public void UtteranceProgress(List<String> say, String id, int[] times){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
@@ -161,7 +165,91 @@ public class TTS {
             });
         }
     }
-    // 여러 문장을 말하는데 딜레이가 필요할 때
+    // 여러 문장을 말하는데 수동으로 텀을 조절하고 싶을 때
+    public void UtteranceProgress(List<String> say, String id, TextView text){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+                @Override
+                public void onStart(String s) {
+
+                }
+
+                @Override
+                public void onDone(String s) {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(!s.contains("continue")){
+                                    text.setText(say.get(i));
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
+                                else if(i < say.size()){
+                                    speakOut(say.get(i), id);
+
+                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
+                                        sttButt.setEnabled(true);
+                                        submit.setEnabled(true);
+                                    }
+                                    i++;
+                                }
+                            }
+                        }
+                    }, 500);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
+    // 여러 문장을 말하며 텍스트뷰 변경이 필요할 때
+    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+
+                @Override
+                public void onStart(String s) {
+
+                }
+
+                @Override
+                public void onDone(String s) {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(!s.contains("continue")){
+                                    text.setText(say.get(i));
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
+                                else if(i < say.size()){
+                                    speakOut(say.get(i), id);
+                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
+                                        sttButt.setEnabled(true);
+                                        submit.setEnabled(true);
+                                    }
+                                    i++;
+                                }
+                            }
+                        }
+                    }, times[i]);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
+    // 여러 문장을 말하는데 텍스트뷰 변경이 필요하고 수동으로 텀을 조절하고 싶을 때
 
     public boolean is_speaking(){
         if(tts.isSpeaking()){

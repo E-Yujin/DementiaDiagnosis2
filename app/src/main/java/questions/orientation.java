@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.StringTokenizer;
 
 public class orientation extends question{
     private String Date[];
@@ -94,7 +94,7 @@ public class orientation extends question{
     }
 
     public String KorTran(String num){
-        String tem = num.replace(" ", "")
+        String input = num.replace(" ", "")
                 .replace("년", "")
                 .replace("도", "")
                 .replace("일", "")
@@ -102,119 +102,31 @@ public class orientation extends question{
                 .replace("유월", "육월")
                 .replace("월", "");
 
-        int result = 0;
-        List<String> kor = new ArrayList<>();
-        kor.add("일");
-        kor.add("이");
-        kor.add("삼");
-        kor.add("사");
-        kor.add("오");
-        kor.add("육");
-        kor.add("칠");
-        kor.add("팔");
-        kor.add("구");
-
-        if(tem.contains("천")){
-            int position = tem.indexOf("천");
-            if(position != 0){
-                String sub = tem.substring(position-1, position);
-                for(String s : kor){
-                    if(sub.contains(s)){
-                        sub = KtoD(sub);
-                        int sub_result = Integer.parseInt(sub)*1000;
-                        result += sub_result;
-                        break;
-                    }
+        long result = 0;
+        long tmpResult = 0;
+        long number = 0;
+        final String NUMBER = "영일이삼사오육칠팔구";
+        final String UNIT = "십백천만억조";
+        final long[] UNIT_NUM = { 10, 100, 1000, 10000, (long)Math.pow(10,8), (long)Math.pow(10,12) };
+        StringTokenizer st = new StringTokenizer(input, UNIT, true);
+        while(st.hasMoreTokens()) {
+            String token = st.nextToken();
+            //숫자인지, 단위(UNIT)인지 확인
+            int check = NUMBER.indexOf(token);
+            if(check == -1) { //단위인 경우
+                if("만억조".indexOf(token) == -1) {
+                    tmpResult += (number != 0 ? number : 1) * UNIT_NUM[UNIT.indexOf(token)];
+                } else {
+                    tmpResult += number;
+                    result += (tmpResult != 0 ? tmpResult : 1) * UNIT_NUM[UNIT.indexOf(token)];
+                    tmpResult = 0;
                 }
-                if(!Character.isDigit(sub.charAt(0))) result += 1000;
+                number = 0;
+            } else { //숫자인 경우
+                number = check;
             }
-            else result += 1000;
         }
-        if(tem.contains("백")){
-            int position = tem.indexOf("백");
-            if(position != 0){
-                String sub = tem.substring(position-1, position);
-                for(String s : kor){
-                    if(sub.contains(s)){
-                        sub = KtoD(sub);
-                        int sub_result = Integer.parseInt(sub)*100;
-                        result += sub_result;
-                        break;
-                    }
-                }
-                if(!Character.isDigit(sub.charAt(0))) result += 100;
-            }
-            else result += 100;
-        }
-        if(tem.contains("십")){
-            int position = tem.indexOf("십");
-            if(position != 0){
-                String sub = tem.substring(position-1, position);
-                for(String s : kor){
-                    if(sub.contains(s)){
-                        sub = KtoD(sub);
-                        int sub_result = Integer.parseInt(sub)*10;
-                        result += sub_result;
-                        break;
-                    }
-                }
-                if(!Character.isDigit(sub.charAt(0))) result += 10;
-            }
-            else result += 10;
-        }
-
-        for(int i = tem.length() - 1; i >= 0; i--){
-            String sub = tem.substring(i, i+1);
-            for(String s : kor){
-                if(sub.contains(s)){
-                    sub = KtoD(sub);
-                    result += Integer.parseInt(sub);
-                    break;
-                }
-            }
-            if(Character.isDigit(sub.charAt(0))) break;
-        }
-        int p1000 = tem.indexOf("천");
-        int p100 = tem.indexOf("백");
-        int p10 = tem.indexOf("십");
-
-        if(p10 != -1 && p100 != -1) {
-            if(p10 < p100) return "-1";
-            else return Integer.toString(result);
-        }
-        else if(p10 != -1 && p1000 != -1) {
-            if(p10 < p1000) return "-1";
-            else return Integer.toString(result);
-        }
-        else if(p100 != -1 && p1000 != -1) {
-            if(p100 < p1000) return "-1";
-            else return Integer.toString(result);
-        }
-        else return Integer.toString(result);
-    }
-
-    public String KtoD(String num){
-        switch (num){
-            case "일":
-                return "1";
-            case "이":
-                return "2";
-            case "삼":
-                return "3";
-            case "사":
-                return "4";
-            case "오":
-                return "5";
-            case "육":
-                return "6";
-            case "칠":
-                return "7";
-            case "팔":
-                return "8";
-            case "구":
-                return "9";
-            default:
-                return "";
-        }
+        long total = result + tmpResult + number;
+        return String.valueOf(total);
     }
 }

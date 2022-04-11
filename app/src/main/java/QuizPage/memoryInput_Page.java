@@ -56,10 +56,12 @@ public class memoryInput_Page extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+                int[] time = {0, 1000, 1000};
                 tts.onInit(status, question.getText().toString());
                 tem.add("민수는.....자전거를 타고.....공원에 가서....11시부터...야구를 했다.");
                 tem.add(announce.getText().toString());
-                tts.UtteranceProgress(tem,"continue");
+                tem.add("야호");
+                tts.UtteranceProgress(tem, "continue", time);
             }
         }, sttBtn, submit);
         stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
@@ -158,6 +160,8 @@ public class memoryInput_Page extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         tts.isStopUtt = false;
+        sttBtn.setEnabled(false);
+        submit.setEnabled(false);
         if(QP.current < 2){
             if(announce.getText() != "대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!"){
                 QP.Start();
