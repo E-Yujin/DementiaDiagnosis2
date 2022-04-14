@@ -41,6 +41,16 @@ public class QuizPage {
 
     }
 
+    public QuizPage(TTS Tts, TextView quest, TextView ann, Button sub, List<String> quiz) {
+        tts = Tts;
+        question = quest;
+        announce = ann;
+        title_quest = quiz;
+        submit = sub;
+        question.setText(title_quest.get(current));
+        announce.setText("아래 세개의 도형 중 하나를 선택해주세요!");
+    }
+
     public void Submit(){
         current ++;
         question.setText(title_quest.get(current));
@@ -52,6 +62,12 @@ public class QuizPage {
                 .replace(".", "")
                 .replace(",", "")
                 .replace("?", "")
+                .replace("년", "")
+                .replace("도", "")
+                .replace("일", "")
+                .replace("시월", "십월")
+                .replace("유월", "육월")
+                .replace("월", "")
                 .replace("요일", "")
                 .replace("이다", "")
                 .replace("이요", "")

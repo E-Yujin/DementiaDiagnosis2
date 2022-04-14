@@ -28,6 +28,7 @@
         <activity android:name="QuizPage.orientation_Page"> </activity>
         <activity android:name="QuizPage.memoryInput_Page"> </activity>
         <activity android:name="QuizPage.attention_Page"> </activity>
+        <activity android:name="QuizPage.ExecutionPage"> </activity>
 
     </application>
 

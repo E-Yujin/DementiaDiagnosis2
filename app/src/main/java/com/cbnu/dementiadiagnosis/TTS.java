@@ -29,6 +29,12 @@ public class TTS {
         submit = sub;
     }
 
+    public TTS(Context context, TextToSpeech.OnInitListener listener, Button sub){
+        params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, null);
+        tts = new TextToSpeech(context, listener);
+        submit = sub;
+    }
+
     public void UtteranceProgress(String say){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
@@ -188,7 +194,6 @@ public class TTS {
                                 }
                                 else if(i < say.size()){
                                     speakOut(say.get(i), id);
-
                                     if(say.get(i).contains("대답할 준비가 되셨다면")){
                                         sttButt.setEnabled(true);
                                         submit.setEnabled(true);
@@ -230,11 +235,12 @@ public class TTS {
                                     i++;
                                 }
                                 else if(i < say.size()){
+                                    text.setText(say.get(i));
                                     speakOut(say.get(i), id);
-                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
+                                    /*if(say.get(i).contains("대답할 준비가 되셨다면")){
                                         sttButt.setEnabled(true);
                                         submit.setEnabled(true);
-                                    }
+                                    }*/
                                     i++;
                                 }
                             }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import QuizPage.ExecutionPage;
 import QuizPage.attention_Page;
 import QuizPage.memoryInput_Page;
 import QuizPage.orientation_Page;
@@ -144,7 +145,7 @@ public class QuizHOME extends AppCompatActivity {
                 startActivityForResult(intent, 100);
                 break;
             case 3:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), ExecutionPage.class);
                 startActivityForResult(intent, 100);
                 break;
             case 4:
