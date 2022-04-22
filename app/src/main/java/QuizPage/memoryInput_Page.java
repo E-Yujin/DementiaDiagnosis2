@@ -60,7 +60,6 @@ public class memoryInput_Page extends AppCompatActivity {
                 tts.onInit(status, question.getText().toString());
                 tem.add("민수는.....자전거를 타고.....공원에 가서....11시부터...야구를 했다.");
                 tem.add(announce.getText().toString());
-                tem.add("야호");
                 tts.UtteranceProgress(tem, "continue", time);
             }
         }, sttBtn, submit);
