@@ -59,6 +59,7 @@ public class orientation_Page extends AppCompatActivity {
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
                 tts.Stop();
                 stt.start_STT();
             }

@@ -1,7 +1,5 @@
 package com.cbnu.dementiadiagnosis;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,13 +7,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import QuizPage.ExecutionPage;
 import QuizPage.attention_Page;
+import QuizPage.fluency_Page;
 import QuizPage.memoryInput_Page;
+import QuizPage.memoryOutput_Page;
 import QuizPage.orientation_Page;
 
 public class QuizHOME extends AppCompatActivity {
@@ -82,7 +84,7 @@ public class QuizHOME extends AppCompatActivity {
         if(isDone[current]){
             current ++;
             Title.setText(announce.get(current));
-            if(current == 1){
+            if(current == 1 || current == 3){
                 Intend_value.setText(Integer.toString(total_score));
             }
             else if(current == 2){
@@ -103,7 +105,6 @@ public class QuizHOME extends AppCompatActivity {
     }
 
     private void init_Announce(){
-
         announce.add("지금부터 '지남력'을\n검사해보겠습니다.");
         announce.add("지금부터 '기억 등록'을\n시행하겠습니다.");
         announce.add("지금부터 '주의력'을\n검사해보겠습니다.");
@@ -112,7 +113,6 @@ public class QuizHOME extends AppCompatActivity {
         announce.add("지금부터 '기억력'을\n검사해보겠습니다.");
         announce.add("지금부터 '언어 기능'을\n검사해보겠습니다.");
         announce.add("지금부터 '유창성'을\n검사해보겠습니다.");
-
     }
 
     @Override
@@ -131,7 +131,6 @@ public class QuizHOME extends AppCompatActivity {
 
     private void switchPage(Intent intent, View view){
         switch (current){
-
             case 0:
                 intent = new Intent(view.getContext(), orientation_Page.class);
                 startActivityForResult(intent, 100);
@@ -149,28 +148,17 @@ public class QuizHOME extends AppCompatActivity {
                 startActivityForResult(intent, 100);
                 break;
             case 4:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), memoryOutput_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 5:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), fluency_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 6:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), fluency_Page.class);
                 startActivityForResult(intent, 100);
                 break;
-            case 7:
-                intent = new Intent(view.getContext(), orientation_Page.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 8:
-                intent = new Intent(view.getContext(), orientation_Page.class);
-                startActivityForResult(intent, 100);
-                break;
-
         }
-
-
     }
 }

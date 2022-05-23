@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/bg01.xml" value="0.10555555555555556" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/shape_line.xml" value="0.10555555555555556" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/execution_season.xml" value="0.10400000000000001" />
+        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fluency.xml" value="0.16983695652173914" />
+        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/map.xml" value="0.10666666666666667" />
+        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_output.xml" value="0.17346014492753623" />
+        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/orientation.xml" value="0.1" />
       </map>
     </option>
   </component>

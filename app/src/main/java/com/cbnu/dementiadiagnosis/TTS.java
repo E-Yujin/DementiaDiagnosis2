@@ -8,12 +8,15 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
 import java.util.List;
 import java.util.Locale;
+
+import QuizPage.fluency_Page;
 
 public class TTS {
     private TextToSpeech tts;
@@ -257,12 +260,63 @@ public class TTS {
     }
     // 여러 문장을 말하는데 텍스트뷰 변경이 필요하고 수동으로 텀을 조절하고 싶을 때
 
-    public boolean is_speaking(){
-        if(tts.isSpeaking()){
-            return true;
+    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, Button btn, EditText ans){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+
+                @Override
+                public void onStart(String s) {
+
+                }
+
+                @Override
+                public void onDone(String s) {
+                    if(s.contains("Done")) return;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(i < say.size()){
+                                    text.setText(say.get(i));
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
+                                if(i == say.size()){
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            btn.callOnClick();
+                                            i++;
+                                            handler.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    btn.callOnClick();
+                                                    text.setText("그만!");
+                                                    speakOut("그만!", "Done");
+                                                    ans.setEnabled(true);
+                                                }
+                                            }, 60000);
+                                        }
+                                    }, 1000);
+                                }
+                            }
+                            else{
+                                return;
+                            }
+                        }
+                    }, times[i]);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
         }
-        else return false;
     }
+    // 여러 문장을 말하는데 텍스트뷰 변경이 필요하고 수동으로 텀을 조절하고 싶을 때
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void speakOut(String say, String id) {
         CharSequence text = say;
@@ -286,6 +340,18 @@ public class TTS {
                 Log.e("TTS", "This Language is not supported");
             } else {
                 speakOut(say);
+            }
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+    public void onInit(int status, String say, String id) {
+        if (status == TextToSpeech.SUCCESS) {
+            int result = tts.setLanguage(Locale.KOREA);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                speakOut(say, id);
             }
         } else {
             Log.e("TTS", "Initilization Failed!");
