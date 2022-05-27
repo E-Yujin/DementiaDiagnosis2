@@ -38,7 +38,6 @@ public class QuizPage {
 
         question.setText(title_quest.get(current));
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
-
     }
 
     public QuizPage(TTS Tts, TextView quest, TextView ann, Button sub, List<String> quiz) {
@@ -58,8 +57,7 @@ public class QuizPage {
     }
 
     public String ans_filter(String num){
-        String tem = num.replace(" ", "")
-                .replace(".", "")
+        String tem = num.replace(".", "")
                 .replace(",", "")
                 .replace("?", "")
                 .replace("년", "")
@@ -86,8 +84,10 @@ public class QuizPage {
     }
 
     public void Stop(){
-        tts.Stop();
-        stt.Stop();
+        if(tts != null && stt != null){
+            tts.Stop();
+            stt.Stop();
+        }
     }
 
     public void Start(){
@@ -100,7 +100,9 @@ public class QuizPage {
     }
 
     public void Destroy() {
-        tts.Destroy();
-        stt.Destroy();
+        if(tts != null && stt != null) {
+            tts.Destroy();
+            stt.Destroy();
+        }
     }
 }

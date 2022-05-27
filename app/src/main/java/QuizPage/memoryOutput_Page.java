@@ -20,11 +20,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import QuizPage.QuizPage;
-import questions.memoryInput;
+import questions.memoryOutput;
 
-public class memoryInput_Page extends AppCompatActivity {
-    memoryInput memo_in;
+public class memoryOutput_Page extends AppCompatActivity {
+    memoryOutput memo_out;
     MainSTT stt;
     TTS tts;
     QuizPage QP;
@@ -34,42 +33,36 @@ public class memoryInput_Page extends AppCompatActivity {
     Button sttBtn;
     Button submit;
 
-    ArrayList<String> first, second;
-    List<String> tem = new ArrayList<>();
+    boolean first[];
 
     private long backBtnTime = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.memory_input);
+        setContentView(R.layout.memory_output);
 
         question = (TextView) findViewById(R.id.question);
         announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
-        answer.setEnabled(false);
+        answer.setEnabled(true);
         answer.setHint("이 항목에서는 키보드 입력이 불가능합니다.");
         sttBtn = (Button) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
-        memo_in = new memoryInput();
+        memo_out = new memoryOutput();
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                int[] time = {0, 1000, 1000};
-                tts.onInit(status, question.getText().toString());
-                tem.add("민수는.....자전거를 타고.....공원에 가서....11시부터...야구를 했다.");
-                tem.add(announce.getText().toString());
-                tts.UtteranceProgress(tem, "continue", time);
+                tts.onInit(status, question.getText().toString(), "Done");
             }
         }, sttBtn, submit);
         stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn,submit, memo_in.quiz);
-        first = new ArrayList<>();
-        second = new ArrayList<>();
+        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn,submit, memo_out.quiz);
 
-        sttBtn.setEnabled(false);
-        submit.setEnabled(false);
+        first = new boolean[memo_out.num];
+        Arrays.fill(first, false);
+        first[0] = true;
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -80,6 +73,7 @@ public class memoryInput_Page extends AppCompatActivity {
         });
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // 설정 초기화
                 stt.Stop();
                 tts.Stop();
                 sttBtn.setEnabled(true);
@@ -91,45 +85,58 @@ public class memoryInput_Page extends AppCompatActivity {
                 answer.setText("");
 
                 if(QP.current == 0){
-                    tts.isStopUtt = false;
-                    sttBtn.setEnabled(false);
-                    submit.setEnabled(false);
-
                     for(int i = 0; i<5; i++){
-                        QP.correct = memo_in.crr_ans[i].get(0);
+                        QP.correct = memo_out.crr_ans[0].get(i);
                         if(QP.user_ans.contains(QP.correct)){
-                            first.add(QP.correct);
+                            first[i+1] = true;
+                            memo_out.score += 2;
                         }
                     }
-                    QP.Submit();
-                    tts.speakOut(question.getText().toString());
-                    tts.UtteranceProgress(tem,"continue");
-                }
-                else if(QP.current == 1){
-                    tts.isStopUtt = false;
-                    for(int i = 0; i<5; i++){
-                        QP.correct = memo_in.crr_ans[i].get(0);
-                        if(QP.user_ans.contains(QP.correct)){
-                            second.add(QP.correct);
+                    if(memo_out.score == 10){ // 점수가 만점이면 액티비티 종료.
+                        Intent resultIntent = new Intent();
+
+                        resultIntent.putExtra("isDone", true);
+                        resultIntent.putExtra("score", memo_out.score);
+
+                        setResult(1, resultIntent);
+                        finish();
+                    }
+                    else{
+                        while (QP.current < 6){
+                            if(!first[QP.current]){
+                                question.setText(memo_out.quiz.get(QP.current));
+                                announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
+                                tts.speakOut(question.getText().toString(),"Done");
+                                break;
+                            }
+                            else QP.current ++;
                         }
                     }
-                    QP.Submit();
-                    tts.speakOut(question.getText().toString());
-                    announce.setText("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!");
-                    tts.UtteranceProgress(announce.getText().toString());
-                    sttBtn.setEnabled(false);
-                    submit.setEnabled(true);
-                    submit.setText("확인");
                 }
-                else{
-                    Intent resultIntent = new Intent();
+                else {
+                    QP.correct = memo_out.crr_ans[QP.current].get(0);
+                    if(QP.user_ans.contains(QP.correct)){
+                        memo_out.score ++;
+                    }
+                    QP.current ++;
+                    if(QP.current == 6){
+                        Intent resultIntent = new Intent();
 
-                    resultIntent.putExtra("isDone", true);
-                    resultIntent.putExtra("First", first);
-                    resultIntent.putExtra("Second", second);
+                        resultIntent.putExtra("isDone", true);
+                        resultIntent.putExtra("score", memo_out.score);
 
-                    setResult(2, resultIntent);
-                    finish();
+                        setResult(1, resultIntent);
+                        finish();
+                    }
+                    while (QP.current < 6){
+                        if(!first[QP.current]){
+                            question.setText(memo_out.quiz.get(QP.current));
+                            announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
+                            tts.speakOut(question.getText().toString(),"Done");
+                            break;
+                        }
+                        else QP.current ++;
+                    }
                 }
             }
         });
@@ -158,24 +165,18 @@ public class memoryInput_Page extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        tts.isStopUtt = false;
-        sttBtn.setEnabled(false);
-        submit.setEnabled(false);
         if(QP.current < 2){
             if(announce.getText() != "대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!"){
                 QP.Start();
-                tts.speakOut(question.getText().toString());
-                tts.UtteranceProgress(tem,"continue");
+                tts.speakOut(question.getText().toString(),"Done");
             }
             else {
-                tts.speakOut(question.getText().toString());
-                tts.UtteranceProgress(tem,"continue");
+                tts.speakOut(question.getText().toString(),"Done");
             }
         }
         else{
-            tts.speakOut(question.getText().toString());
+            tts.speakOut(question.getText().toString(),"Done");
             announce.setText("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!");
-            tts.UtteranceProgress(announce.getText().toString());
             sttBtn.setEnabled(false);
             submit.setText("확인");
         }

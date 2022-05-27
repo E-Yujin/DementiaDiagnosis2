@@ -94,39 +94,63 @@ public class orientation extends question{
     }
 
     public String KorTran(String num){
-        String input = num.replace(" ", "")
-                .replace("년", "")
+        String input = num.replace("년", "")
                 .replace("도", "")
                 .replace("일", "")
                 .replace("시월", "십월")
                 .replace("유월", "육월")
                 .replace("월", "");
 
+        String splited[] = input.split(" ");
+
+        StringTokenizer st;
+        String token;
+        int check;
         long result = 0;
         long tmpResult = 0;
         long number = 0;
+        long total = 0;
         final String NUMBER = "영일이삼사오육칠팔구";
         final String UNIT = "십백천만억조";
         final long[] UNIT_NUM = { 10, 100, 1000, 10000, (long)Math.pow(10,8), (long)Math.pow(10,12) };
-        StringTokenizer st = new StringTokenizer(input, UNIT, true);
-        while(st.hasMoreTokens()) {
-            String token = st.nextToken();
-            //숫자인지, 단위(UNIT)인지 확인
-            int check = NUMBER.indexOf(token);
-            if(check == -1) { //단위인 경우
-                if("만억조".indexOf(token) == -1) {
-                    tmpResult += (number != 0 ? number : 1) * UNIT_NUM[UNIT.indexOf(token)];
-                } else {
-                    tmpResult += number;
-                    result += (tmpResult != 0 ? tmpResult : 1) * UNIT_NUM[UNIT.indexOf(token)];
-                    tmpResult = 0;
+        for(String split : splited){
+            st = new StringTokenizer(split, UNIT, true);
+            StringTokenizer tem = new StringTokenizer(split, UNIT, true);
+            String tok = tem.nextToken();
+            if(NUMBER.indexOf(tok) != -1){
+                if(tem.hasMoreTokens()){
+                    tok = tem.nextToken();
                 }
-                number = 0;
-            } else { //숫자인 경우
-                number = check;
+                if(split.length() > 1 && UNIT.indexOf(tok) != -1){
+                    while(st.hasMoreTokens()) {
+                        token = st.nextToken();
+                        check = NUMBER.indexOf(token);
+                        //숫자인지, 단위(UNIT)인지 확인
+                        if(check == -1) { //단위인 경우
+                            if("만억조".indexOf(token) == -1) {
+                                tmpResult += (number != 0 ? number : 1) * UNIT_NUM[UNIT.indexOf(token)];
+                            } else {
+                                tmpResult += number;
+                                result += (tmpResult != 0 ? tmpResult : 1) * UNIT_NUM[UNIT.indexOf(token)];
+                                tmpResult = 0;
+                            }
+                            number = 0;
+                        } else { //숫자인 경우
+                            number = check;
+                        }
+                    }
+                    total = result + tmpResult + number;
+                }
+                else if(split.length() == 1){
+                    while(st.hasMoreTokens()) {
+                        token = st.nextToken();
+                        check = NUMBER.indexOf(token);
+                        number = check;
+                    }
+                    total += number;
+                }
             }
         }
-        long total = result + tmpResult + number;
         return String.valueOf(total);
     }
 }

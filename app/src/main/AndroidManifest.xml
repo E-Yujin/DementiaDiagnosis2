@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -25,11 +27,15 @@
         </activity>
 
         <activity android:name=".QuizHOME"> </activity>
+        <activity android:name=".Map"> </activity>
         <activity android:name="QuizPage.orientation_Page"> </activity>
         <activity android:name="QuizPage.memoryInput_Page"> </activity>
         <activity android:name="QuizPage.attention_Page"> </activity>
         <activity android:name="QuizPage.ExecutionPage"> </activity>
-
+        <activity android:name="QuizPage.memoryOutput_Page"> </activity>
+        <activity android:name="QuizPage.fluency_Page"> </activity>
+        <meta-data android:name="com.kakao.sdk.AppKey"
+            android:value="deeed953cb0bd5ce8fb32d971a0039d7"/>
     </application>
 
 
