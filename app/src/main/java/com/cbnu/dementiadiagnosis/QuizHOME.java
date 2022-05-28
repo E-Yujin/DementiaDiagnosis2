@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import QuizPage.ExecutionPage;
+import QuizPage.SpaceTimePage;
 import QuizPage.attention_Page;
 import QuizPage.fluency_Page;
 import QuizPage.memoryInput_Page;
@@ -31,6 +32,7 @@ public class QuizHOME extends AppCompatActivity {
     private ArrayList<String> first, second;
     public List<String> announce;
     private long backBtnTime = 0;
+    private int part_score[];
     private int total_score = 0;
 
 
@@ -41,6 +43,7 @@ public class QuizHOME extends AppCompatActivity {
 
         announce = new ArrayList();
         isDone = new boolean[8];
+        part_score = new int[8];
         Arrays.fill(isDone,false);
 
         sttBtn = findViewById(R.id.sttStart);
@@ -69,7 +72,8 @@ public class QuizHOME extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, resultIntent);
         if (requestCode == 100 && resultCode == 1) {
             isDone[current] = resultIntent.getBooleanExtra("isDone", false);
-            total_score += resultIntent.getIntExtra("score", 0);
+            part_score[current] = resultIntent.getIntExtra("score", 0);
+            total_score += part_score[current];
         }
         if (requestCode == 100 && resultCode == 2) {
             isDone[current] = resultIntent.getBooleanExtra("isDone", false);
@@ -84,15 +88,15 @@ public class QuizHOME extends AppCompatActivity {
         if(isDone[current]){
             current ++;
             Title.setText(announce.get(current));
-            if(current == 1 || current == 3){
-                Intend_value.setText(Integer.toString(total_score));
-            }
-            else if(current == 2){
+            if(current == 2){
                 String tem = "맞춘 말 : ";
                 for(String data : first) {
                     tem += data;
                 }
                 Intend_value.setText(tem);
+            }
+            else {
+                Intend_value.setText(Integer.toString(total_score));
             }
             Toast.makeText(this, "결과가 저장되었습니다.",
                     Toast.LENGTH_SHORT).show();
@@ -132,11 +136,11 @@ public class QuizHOME extends AppCompatActivity {
     private void switchPage(Intent intent, View view){
         switch (current){
             case 0:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), SpaceTimePage.class);
                 startActivityForResult(intent, 100);
                 break;
             case 1:
-                intent = new Intent(view.getContext(), memoryInput_Page.class);
+                intent = new Intent(view.getContext(), ExecutionPage.class);
                 startActivityForResult(intent, 100);
                 break;
             case 2:

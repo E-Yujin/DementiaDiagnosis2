@@ -34,6 +34,7 @@
         <activity android:name="QuizPage.ExecutionPage"> </activity>
         <activity android:name="QuizPage.memoryOutput_Page"> </activity>
         <activity android:name="QuizPage.fluency_Page"> </activity>
+        <activity android:name="QuizPage.SpaceTimePage"> </activity>
         <meta-data android:name="com.kakao.sdk.AppKey"
             android:value="deeed953cb0bd5ce8fb32d971a0039d7"/>
     </application>

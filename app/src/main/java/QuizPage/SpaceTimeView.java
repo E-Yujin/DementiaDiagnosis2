@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,7 +26,7 @@ public class SpaceTimeView extends View {
     private static final int TOUCH_TOLERANCE_DP = 24;
     private static final int BACKGROUND = 0xFFDDDDDD;
     private List<Point> mPoints = new ArrayList<Point>();
-    private int mLastPointIndex = 0;
+    private int mLastPointIndex;
     private int mTouchTolerance;
     private boolean isPathStarted = false;
 
@@ -244,33 +245,206 @@ public class SpaceTimeView extends View {
 
     private void touch_start(float x, float y) {
 
-        if (checkPoint(x, y, mLastPointIndex)) {
-            mPath.reset();
-            // user starts from given point so path can be is started
-            isPathStarted = true;
-        } else {
-            // user starts move from point which doesn't belongs to mPoint list
-            isPathStarted = false;
+        for(int i = 0; i < 25; i++){
+            mLastPointIndex = i;
+            if (checkPoint(x, y, mLastPointIndex)) {
+                mPath.reset();
+                // user starts from given point so path can be is started
+                isPathStarted = true;
+                break;
+            } else {
+                // user starts move from point which doesn't belongs to mPoint list
+                isPathStarted = false;
+            }
         }
 
     }
 
     private void touch_move(float x, float y) {
     // draw line with finger move
+        Point p;
         if (isPathStarted) {
             mPath.reset();
-            Point p = mPoints.get(mLastPointIndex);
+            p = mPoints.get(mLastPointIndex);
             mPath.moveTo(p.x, p.y);
-            if (checkPoint(x, y, mLastPointIndex + 1)) {
-                p = mPoints.get(mLastPointIndex + 1);
-                mPath.lineTo(p.x, p.y);
-                mCanvas.drawPath(mPath, mPaint);
-                mPath.reset();
-                ++mLastPointIndex;
-            } else {
-                mPath.lineTo(x, y);
+            Log.d("path_start",Integer.toString(mLastPointIndex));
+            int nextPointIndex;
+            if(mLastPointIndex == 0){
+                if (checkPoint(x, y, mLastPointIndex + 1)) {
+                    drawPath(p, mLastPointIndex + 1);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                    drawPath(p, mLastPointIndex + 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                    drawPath(p, mLastPointIndex + 6);
+                }
+                else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if(mLastPointIndex == 4){
+                if (checkPoint(x, y, mLastPointIndex - 1)) {
+                    drawPath(p, mLastPointIndex - 1);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                    drawPath(p, mLastPointIndex + 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                    drawPath(p, mLastPointIndex + 5);
+                }
+                else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if(mLastPointIndex == 20){
+                if (checkPoint(x, y, mLastPointIndex + 1)) {
+                    drawPath(p, mLastPointIndex + 1);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                    drawPath(p, mLastPointIndex - 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                    drawPath(p, mLastPointIndex - 5);
+                }else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if(mLastPointIndex == 24){
+                if (checkPoint(x, y, mLastPointIndex - 1)) {
+                    drawPath(p, mLastPointIndex - 1);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                    drawPath(p, mLastPointIndex - 6);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                    drawPath(p, mLastPointIndex - 5);
+                }else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if(mLastPointIndex > 0 && mLastPointIndex <= 3){
+                if (checkPoint(x, y, mLastPointIndex + 1)) {
+                    drawPath(p, mLastPointIndex + 1);
+                }
+                if (checkPoint(x, y, mLastPointIndex - 1)) {
+                    drawPath(p, mLastPointIndex - 1);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                    drawPath(p, mLastPointIndex + 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                    drawPath(p, mLastPointIndex + 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                    drawPath(p, mLastPointIndex + 6);
+                }
+                else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if(mLastPointIndex == 5 || mLastPointIndex == 10 || mLastPointIndex == 15){
+                if (checkPoint(x, y, mLastPointIndex + 1)) {
+                    drawPath(p, mLastPointIndex + 1);
+                }
+                if (checkPoint(x, y, mLastPointIndex - 5)) {
+                    drawPath(p, mLastPointIndex - 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                    drawPath(p, mLastPointIndex - 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                    drawPath(p, mLastPointIndex + 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                    drawPath(p, mLastPointIndex + 6);
+                }
+                else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if(mLastPointIndex == 9 || mLastPointIndex == 14 || mLastPointIndex == 19){
+                if (checkPoint(x, y, mLastPointIndex - 1)) {
+                    drawPath(p, mLastPointIndex - 1);
+                }
+                if (checkPoint(x, y, mLastPointIndex - 5)) {
+                    drawPath(p, mLastPointIndex - 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                    drawPath(p, mLastPointIndex + 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                    drawPath(p, mLastPointIndex + 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                    drawPath(p, mLastPointIndex - 6);
+                }
+                else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if(mLastPointIndex > 20 && mLastPointIndex <= 23){
+                if (checkPoint(x, y, mLastPointIndex + 1)) {
+                    drawPath(p, mLastPointIndex + 1);
+                }
+                if (checkPoint(x, y, mLastPointIndex - 1)) {
+                    drawPath(p, mLastPointIndex - 1);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                    drawPath(p, mLastPointIndex - 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                    drawPath(p, mLastPointIndex - 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                    drawPath(p, mLastPointIndex - 6);
+                }
+                else {
+                    mPath.lineTo(x, y);
+                }
+            }
+            else if((mLastPointIndex > 5 && mLastPointIndex <= 8)||
+                    (mLastPointIndex > 10 && mLastPointIndex <= 13)||
+                    (mLastPointIndex > 15 && mLastPointIndex <= 18)){
+                if (checkPoint(x, y, mLastPointIndex + 1)) {
+                    drawPath(p, mLastPointIndex + 1);
+                }
+                if (checkPoint(x, y, mLastPointIndex - 1)) {
+                    drawPath(p, mLastPointIndex - 1);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                    drawPath(p, mLastPointIndex + 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                    drawPath(p, mLastPointIndex - 4);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                    drawPath(p, mLastPointIndex + 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                    drawPath(p, mLastPointIndex - 5);
+                }
+                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                    drawPath(p, mLastPointIndex + 6);
+                }
+                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                    drawPath(p, mLastPointIndex - 6);
+                }
+                else {
+                    mPath.lineTo(x, y);
+                }
             }
         }
+    }
+    public void drawPath(Point p, int PointIndex){
+        Log.d("path_end",Integer.toString(PointIndex));
+        int nextPointIndex;
+        nextPointIndex = PointIndex;
+        p = mPoints.get(nextPointIndex);
+        mPath.lineTo(p.x, p.y);
+        mCanvas.drawPath(mPath, mPaint);
+        mPath.reset();
+        mLastPointIndex = nextPointIndex;
     }
     /**
      * Draws line.
@@ -289,7 +463,6 @@ public class SpaceTimeView extends View {
             mCanvas.drawPath(mPath, mPaint);
             mPath.reset();
             // increment point index
-            ++mLastPointIndex;
             isPathStarted = false;
         }
 
@@ -324,10 +497,10 @@ public class SpaceTimeView extends View {
     }
 
     /**
-     * Checks if user touch point with some tolerance
-     */
+      Checks if user touch point with some tolerance
+     **/
     private boolean checkPoint(float x, float y, int pointIndex) {
-        if (pointIndex >= mPoints.size()) {
+        if (pointIndex >= mPoints.size() || pointIndex < 0) {
             // out of bounds
             return false;
         }
@@ -341,6 +514,7 @@ public class SpaceTimeView extends View {
         return false;
     }
 
+
     public List<Point> getPoints() {
         return mPoints;
     }
@@ -353,5 +527,9 @@ public class SpaceTimeView extends View {
         Resources r = getContext().getResources();
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
         return (int) px;
+    }
+    public boolean Score_cal(){
+
+        return true;
     }
 }

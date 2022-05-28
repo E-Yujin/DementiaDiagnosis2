@@ -47,7 +47,6 @@ public class MainSTT{
     final int PERMISSION = 1;
 
     int maxLenSpeech = 16000 * 45;
-    byte [] speechData = new byte [maxLenSpeech * 2];
     int lenSpeech = 0;
     public boolean isRecording = false;
     boolean forceStop = false;
@@ -60,8 +59,6 @@ public class MainSTT{
     private int startingIndex = -1; // 녹음 시작 인덱스
     private int endIndex = -1;
     private int cnt = 0;// 카운터
-
-    private LinkedList<short[]> recData = new LinkedList<short[]>();
 
     private short[] buffer = null;
 
@@ -112,6 +109,7 @@ public class MainSTT{
             switch (msg.what) {
                 // 녹음이 시작되었음(버튼)
                 case 1:
+                    result.setText("");
                     textView.setText(v);
                     sttBtn.setText("말했어요!");
                     submit.setEnabled(false);
@@ -132,7 +130,7 @@ public class MainSTT{
                 case 4:
                     textView.setText(v);
                     sttBtn.setEnabled(true);
-                    sttBtn.setText("말하기");
+                    sttBtn.setText("다시 말하기");
                     submit.setEnabled(true);
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
@@ -232,10 +230,10 @@ public class MainSTT{
                 });
                 threadRecog.start();
                 try {
-                    threadRecog.join(500000);
+                    threadRecog.join(60000);
                     if (threadRecog.isAlive()) {
                         threadRecog.interrupt();
-                        SendMessage("5분 동안 말씀하지 않아 인식을 종료합니다.\n" +
+                        SendMessage("1분 동안 말씀하지 않아 인식을 종료합니다.\n" +
                                 "'말하기'를 다시 누르고 말씀해주세요.", 4);
                     }
                 } catch (InterruptedException e) {
@@ -250,7 +248,7 @@ public class MainSTT{
     public void Recordingloop (AudioRecord audio, int bufferSize){
         int total;
         int level;
-
+        LinkedList<short[]> recData = new LinkedList<short[]>();
         while (!forceStop) {
             short[] inBuffer = new short[bufferSize];
             int ret = audio.read(inBuffer, 0, bufferSize);
