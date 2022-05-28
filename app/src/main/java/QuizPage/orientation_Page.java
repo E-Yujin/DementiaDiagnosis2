@@ -83,12 +83,22 @@ public class orientation_Page extends AppCompatActivity {
                     }
                     if(toDigit.equals("")){
                         QP.user_ans = ortt_main.KorTran(QP.user_ans);
-                        answer.setText(QP.user_ans);
+                        if(QP.current == 0) answer.setText(QP.user_ans+"년");
+                        else if(QP.current == 1) answer.setText(QP.user_ans+"월");
+                        else if(QP.current == 2) answer.setText(QP.user_ans+"일");
                     }
                     else{
                         QP.user_ans = toDigit;
-                        answer.setText(QP.user_ans);
+                        if(QP.current == 0) answer.setText(QP.user_ans+"년");
+                        else if(QP.current == 1) answer.setText(QP.user_ans+"월");
+                        else if(QP.current == 2) answer.setText(QP.user_ans+"일");
                     }
+                }
+                else if(QP.current == 3) answer.setText(QP.user_ans+"요일");
+                if(QP.current < 4){
+                    announce.setText("\""+answer.getText()+"\""+
+                            " 이라고 하신 게 맞으시면\n파란 상자를 다시 눌러주세요.");
+                    tts.speakOut(announce.getText().toString());
                 }
 
                 QP.correct = ortt_main.crr_ans[QP.current].get(0);
@@ -96,7 +106,7 @@ public class orientation_Page extends AppCompatActivity {
                     announce.setText("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
                     tts.speakOut(announce.getText().toString());
                 }
-                else if(!is_confirmation){
+                else if(!is_confirmation && QP.current < 4){
                     is_confirmation = true;
                 }
                 else
@@ -105,10 +115,12 @@ public class orientation_Page extends AppCompatActivity {
                         ortt_main.score ++;
                     }
                     if(QP.current < 4){
+                        answer.setText("");
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
                         tts.UtteranceProgress(announce.getText().toString());
+                        is_confirmation = false;
                     }
                     else if(QP.current == 4){
                         Intent resultIntent = new Intent();

@@ -330,7 +330,7 @@ public class TTS {
         CharSequence text = say;
         tts.setPitch((float) 0.6);
         tts.setSpeechRate((float) 1);
-        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,"default");
+        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,"Done");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

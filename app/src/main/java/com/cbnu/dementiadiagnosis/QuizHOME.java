@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import QuizPage.ExecutionPage;
+import QuizPage.LanguagePage;
 import QuizPage.SpaceTimePage;
 import QuizPage.attention_Page;
 import QuizPage.fluency_Page;
@@ -136,11 +137,11 @@ public class QuizHOME extends AppCompatActivity {
     private void switchPage(Intent intent, View view){
         switch (current){
             case 0:
-                intent = new Intent(view.getContext(), SpaceTimePage.class);
+                intent = new Intent(view.getContext(), orientation_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 1:
-                intent = new Intent(view.getContext(), ExecutionPage.class);
+                intent = new Intent(view.getContext(), memoryInput_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 2:
@@ -148,18 +149,22 @@ public class QuizHOME extends AppCompatActivity {
                 startActivityForResult(intent, 100);
                 break;
             case 3:
-                intent = new Intent(view.getContext(), ExecutionPage.class);
+                intent = new Intent(view.getContext(), SpaceTimePage.class);
                 startActivityForResult(intent, 100);
                 break;
             case 4:
-                intent = new Intent(view.getContext(), memoryOutput_Page.class);
+                intent = new Intent(view.getContext(), ExecutionPage.class);
                 startActivityForResult(intent, 100);
                 break;
             case 5:
-                intent = new Intent(view.getContext(), fluency_Page.class);
+                intent = new Intent(view.getContext(), memoryOutput_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 6:
+                intent = new Intent(view.getContext(), LanguagePage.class);
+                startActivityForResult(intent, 100);
+                break;
+            case 7:
                 intent = new Intent(view.getContext(), fluency_Page.class);
                 startActivityForResult(intent, 100);
                 break;

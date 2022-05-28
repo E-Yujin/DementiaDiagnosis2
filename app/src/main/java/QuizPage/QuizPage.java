@@ -58,7 +58,7 @@ public class QuizPage {
 
     public String ans_filter(String num){
         String tem;
-        if(!num.contains("요일")){
+        if(current != 3){
             tem = num.replace(".", "")
                     .replace(",", "")
                     .replace("?", "")
