@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SpaceTimeView extends View {
@@ -29,6 +30,7 @@ public class SpaceTimeView extends View {
     private int mLastPointIndex;
     private int mTouchTolerance;
     private boolean isPathStarted = false;
+    private List<String> answer = new ArrayList<String>();
 
     public SpaceTimeView(Context context) {
         super(context);
@@ -267,7 +269,6 @@ public class SpaceTimeView extends View {
             mPath.reset();
             p = mPoints.get(mLastPointIndex);
             mPath.moveTo(p.x, p.y);
-            Log.d("path_start",Integer.toString(mLastPointIndex));
             int nextPointIndex;
             if(mLastPointIndex == 0){
                 if (checkPoint(x, y, mLastPointIndex + 1)) {
@@ -437,7 +438,10 @@ public class SpaceTimeView extends View {
         }
     }
     public void drawPath(Point p, int PointIndex){
+        Log.d("path_start",Integer.toString(mLastPointIndex));
         Log.d("path_end",Integer.toString(PointIndex));
+        answer.add(Integer.toString(mLastPointIndex));
+        answer.add(Integer.toString(PointIndex));
         int nextPointIndex;
         nextPointIndex = PointIndex;
         p = mPoints.get(nextPointIndex);
@@ -451,21 +455,8 @@ public class SpaceTimeView extends View {
      */
     private void touch_up(float x, float y) {
         mPath.reset();
-        if (checkPoint(x, y, mLastPointIndex + 1) && isPathStarted) {
-            // move finished at valid point so draw whole line
-
-            // start point
-            Point p = mPoints.get(mLastPointIndex);
-            mPath.moveTo(p.x, p.y);
-            // end point
-            p = mPoints.get(mLastPointIndex + 1);
-            mPath.lineTo(p.x, p.y);
-            mCanvas.drawPath(mPath, mPaint);
-            mPath.reset();
-            // increment point index
-            isPathStarted = false;
-        }
-
+        if(Score_cal()) Log.d("path_iscorrect", "correct!");
+        else Log.d("path_iscorrect", "wrong!");
     }
 
     /**
@@ -490,6 +481,7 @@ public class SpaceTimeView extends View {
      * Clears canvas
      */
     public void clear() {
+        answer.clear();
         mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         mBitmap.eraseColor(BACKGROUND);
         mCanvas.setBitmap(mBitmap);
@@ -529,7 +521,33 @@ public class SpaceTimeView extends View {
         return (int) px;
     }
     public boolean Score_cal(){
-
+        String correct[] = {"1", "5", "5", "11", "1", "7", "7", "12", "11", "12", "11",
+                "16", "16", "17", "17", "18", "18", "13", "13", "8", "8", "7", "13", "17"};
+        boolean isCorrect = false;
+        boolean buffer[] = new boolean[correct.length/2];
+        int count = 0;
+        Arrays.fill(buffer, false);
+        for(int i = 0; i < answer.size(); i+=2){
+            for(int j = 0; j < correct.length; j+=2){
+                if(answer.get(i).equals(correct[j]) && answer.get(i+1).equals(correct[j+1])){
+                    isCorrect = true;
+                    buffer[j-count] = true;
+                    break;
+                }
+                else if(answer.get(i).equals(correct[j+1]) && answer.get(i+1).equals(correct[j])){
+                    isCorrect = true;
+                    buffer[j-count] = true;
+                    break;
+                }
+                count++;
+            }
+            if(!isCorrect) return false;
+            isCorrect = false;
+            count = 0;
+        }
+        for(boolean a : buffer){
+            if(!a) return false;
+        }
         return true;
     }
 }

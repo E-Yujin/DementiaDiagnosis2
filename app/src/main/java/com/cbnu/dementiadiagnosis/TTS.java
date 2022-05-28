@@ -197,6 +197,7 @@ public class TTS {
                                 }
                                 else if(i < say.size()){
                                     speakOut(say.get(i), id);
+                                    text.setText(say.get(i));
                                     if(say.get(i).contains("대답할 준비가 되셨다면")){
                                         sttButt.setEnabled(true);
                                         submit.setEnabled(true);
