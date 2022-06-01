@@ -51,7 +51,7 @@ public class attention_Page extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString());
+                tts.onInit(status, question.getText().toString(), "default");
                 tem.add("6, 9, 7, 3");
                 tem.add(announce.getText().toString());
                 tts.UtteranceProgress(tem, "continue");
@@ -92,7 +92,7 @@ public class attention_Page extends AppCompatActivity {
 
                 if(QP.user_ans.isEmpty()){
                     announce.setText("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
-                    tts.speakOut(announce.getText().toString());
+                    tts.speakOut(announce.getText().toString(), "default");
                 }
                 else
                 {
@@ -109,7 +109,7 @@ public class attention_Page extends AppCompatActivity {
                         submit.setEnabled(false);
                         tts.isStopUtt = false;
                         QP.Submit();
-                        tts.speakOut(question.getText().toString());
+                        tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("5, 7, 2, 8, 4");
                         tem.add(announce.getText().toString());
@@ -120,7 +120,7 @@ public class attention_Page extends AppCompatActivity {
                         submit.setEnabled(false);
                         tts.isStopUtt = false;
                         QP.Submit();
-                        tts.speakOut(question.getText().toString());
+                        tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("금수강산");
                         tem.add(announce.getText().toString());

@@ -49,7 +49,7 @@ public class SpaceTimePage extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 question.setText(ST.quiz.get(0));
-                tts.onInit(status, ST.quiz.get(0));
+                tts.onInit(status, ST.quiz.get(0), "default");
                 tem.add(ST.quiz.get(1));
                 tem.add(ST.quiz.get(2));
                 tem.add(ST.quiz.get(3));
@@ -114,7 +114,7 @@ public class SpaceTimePage extends AppCompatActivity {
         tts.isStopUtt = false;
         if(!question.getText().toString().equals(ST.quiz.get(0))){
             question.setText(ST.quiz.get(0));
-            tts.speakOut(ST.quiz.get(0));
+            tts.speakOut(ST.quiz.get(0), "default");
             tem.add(ST.quiz.get(1));
             tem.add(ST.quiz.get(2));
             tem.add(ST.quiz.get(3));

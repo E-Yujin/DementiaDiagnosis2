@@ -70,7 +70,7 @@ public class ExecutionPage extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString());
+                tts.onInit(status, question.getText().toString(), "default");
                 tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
                 tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
                 tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
@@ -147,7 +147,7 @@ public class ExecutionPage extends AppCompatActivity {
                         tts.isStopUtt = false;
                         QP.current++;
                         question.setText(execution.quiz.get(QP.current));
-                        tts.speakOut(question.getText().toString());
+                        tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("별이 각자 다른 위치로 이동합니다.");
                         tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
@@ -162,7 +162,7 @@ public class ExecutionPage extends AppCompatActivity {
                         tts.isStopUtt = false;
                         QP.current++;
                         question.setText(execution.quiz.get(QP.current));
-                        tts.speakOut(question.getText().toString());
+                        tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
                         tem.add("빈칸에는 무엇이 들어갈 차례일까요?");

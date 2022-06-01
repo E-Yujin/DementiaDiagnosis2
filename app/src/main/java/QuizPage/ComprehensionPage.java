@@ -77,7 +77,7 @@ public class ComprehensionPage extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString());
+                tts.onInit(status, question.getText().toString(), "default");
                 //tts.UtteranceProgress(announce.getText().toString());
             }
         }, sttBtn, submit);

@@ -45,7 +45,7 @@ public class QuizHOME extends AppCompatActivity {
         setContentView(R.layout.quiz_home);
 
         announce = new ArrayList();
-        isDone = new boolean[8];
+        isDone = new boolean[9];
         part_score = new int[8];
         Arrays.fill(isDone,false);
 
@@ -120,6 +120,7 @@ public class QuizHOME extends AppCompatActivity {
         announce.add("지금부터 '기억력'을\n검사해보겠습니다.");
         announce.add("지금부터 '언어 기능'을\n검사해보겠습니다.");
         announce.add("지금부터 '유창성'을\n검사해보겠습니다.");
+        announce.add("결과 출력");
     }
 
     @Override
@@ -143,8 +144,9 @@ public class QuizHOME extends AppCompatActivity {
                 startActivityForResult(intent, 100);
                 break;
             case 1:
-                intent = new Intent(view.getContext(), memoryInput_Page.class);
-                startActivityForResult(intent, 100);
+                intent = new Intent(view.getContext(), Result.class);
+                intent.putExtra("result", total_score);
+                startActivity(intent);
                 break;
             case 2:
                 intent = new Intent(view.getContext(), attention_Page.class);
@@ -169,6 +171,12 @@ public class QuizHOME extends AppCompatActivity {
             case 7:
                 intent = new Intent(view.getContext(), fluency_Page.class);
                 startActivityForResult(intent, 100);
+                break;
+            case 8:
+                intent = new Intent(view.getContext(), Result.class);
+                intent.putExtra("result", total_score);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

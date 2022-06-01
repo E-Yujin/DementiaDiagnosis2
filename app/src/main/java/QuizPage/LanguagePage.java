@@ -79,7 +79,7 @@ public class LanguagePage extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString());
+                tts.onInit(status, question.getText().toString(), "default");
                 //tts.UtteranceProgress(announce.getText().toString());
             }
         }, sttBtn, submit);
@@ -116,7 +116,7 @@ public class LanguagePage extends AppCompatActivity {
 
                 if (QP.user_ans.isEmpty()) {
                     announce.setText("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
-                    tts.speakOut(announce.getText().toString());
+                    tts.speakOut(announce.getText().toString(), "default");
                 } else {
                     for (String data : correct) {
                         if (QP.user_ans.contains(data)) {
@@ -130,12 +130,12 @@ public class LanguagePage extends AppCompatActivity {
                         image.setImageResource(R.drawable.swing);
                         tts.isStopUtt = false;
                         QP.Submit();
-                        tts.speakOut(question.getText().toString());
+                        tts.speakOut(question.getText().toString(), "default");
                     } else if (QP.current == 1) {
                         image.setImageResource(R.drawable.dice);
                         tts.isStopUtt = false;
                         QP.Submit();
-                        tts.speakOut(question.getText().toString());
+                        tts.speakOut(question.getText().toString(), "default");
                     } else if (QP.current == 2) {
                         Intent intent = new Intent(LanguagePage.this, ComprehensionPage.class);
                         startActivityResult.launch(intent);

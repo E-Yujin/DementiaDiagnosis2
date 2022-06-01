@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cbnu.dementiadiagnosis">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -15,29 +15,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DementiaDiagnosis"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".RegisterActivity" android:exported="false"/>
-        <activity android:name=".SimpleTestActivity" android:exported="false"/>
-        <activity android:name=".HomeActivity" android:exported="false"/>
-        <activity android:name=".FirstActivity" android:exported="true">
+        <activity
+            android:name=".Result"
+            android:exported="true" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SimpleTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FirstActivity"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".QuizHOME"></activity>
+        <activity android:name=".Map"></activity>
+        <activity android:name="QuizPage.orientation_Page"></activity>
+        <activity android:name="QuizPage.memoryInput_Page"></activity>
+        <activity android:name="QuizPage.attention_Page"></activity>
+        <activity android:name="QuizPage.ExecutionPage"></activity>
+        <activity android:name="QuizPage.memoryOutput_Page"></activity>
+        <activity android:name="QuizPage.fluency_Page"></activity>
+        <activity android:name="QuizPage.SpaceTimePage"></activity>
+        <activity android:name="QuizPage.ComprehensionPage"></activity>
+        <activity android:name="QuizPage.LanguagePage"></activity>
 
-        <activity android:name=".QuizHOME"> </activity>
-        <activity android:name=".Map"> </activity>
-        <activity android:name="QuizPage.orientation_Page"> </activity>
-        <activity android:name="QuizPage.memoryInput_Page"> </activity>
-        <activity android:name="QuizPage.attention_Page"> </activity>
-        <activity android:name="QuizPage.ExecutionPage"> </activity>
-        <activity android:name="QuizPage.memoryOutput_Page"> </activity>
-        <activity android:name="QuizPage.fluency_Page"> </activity>
-        <activity android:name="QuizPage.SpaceTimePage"> </activity>
-        <meta-data android:name="com.kakao.sdk.AppKey"
-            android:value="deeed953cb0bd5ce8fb32d971a0039d7"/>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="deeed953cb0bd5ce8fb32d971a0039d7" />
     </application>
-
 
 </manifest>

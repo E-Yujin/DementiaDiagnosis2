@@ -60,7 +60,7 @@ public class fluency_Page extends AppCompatActivity {
                 sttBtn.setEnabled(false);
                 submit.setEnabled(false);
                 int time[] = {2000, 1000, 1000, 1001};
-                tts.onInit(status, question.getText().toString());
+                tts.onInit(status, question.getText().toString(), "default");
                 tem.add(flu.quiz.get(1));
                 tem.add(flu.quiz.get(2));
                 tem.add(flu.quiz.get(3));
@@ -145,7 +145,7 @@ public class fluency_Page extends AppCompatActivity {
             question.setText(flu.quiz.get(0));
             announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
             answer.setText("");
-            tts.speakOut(flu.quiz.get(0));
+            tts.speakOut(flu.quiz.get(0), "default");
             tem.add(flu.quiz.get(1));
             tem.add(flu.quiz.get(2));
             tem.add(flu.quiz.get(3));
