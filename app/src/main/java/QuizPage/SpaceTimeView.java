@@ -263,7 +263,7 @@ public class SpaceTimeView extends View {
     }
 
     private void touch_move(float x, float y) {
-        // draw line with finger move
+    // draw line with finger move
         Point p;
         if (isPathStarted) {
             mPath.reset();
@@ -489,7 +489,7 @@ public class SpaceTimeView extends View {
     }
 
     /**
-     Checks if user touch point with some tolerance
+      Checks if user touch point with some tolerance
      **/
     private boolean checkPoint(float x, float y, int pointIndex) {
         if (pointIndex >= mPoints.size() || pointIndex < 0) {

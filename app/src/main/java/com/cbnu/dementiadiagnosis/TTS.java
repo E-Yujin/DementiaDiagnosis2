@@ -197,6 +197,7 @@ public class TTS {
                                 }
                                 else if(i < say.size()){
                                     speakOut(say.get(i), id);
+                                    text.setText(say.get(i));
                                     if(say.get(i).contains("대답할 준비가 되셨다면")){
                                         sttButt.setEnabled(true);
                                         submit.setEnabled(true);
@@ -329,7 +330,7 @@ public class TTS {
         CharSequence text = say;
         tts.setPitch((float) 0.6);
         tts.setSpeechRate((float) 1);
-        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,"default");
+        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,"Done");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

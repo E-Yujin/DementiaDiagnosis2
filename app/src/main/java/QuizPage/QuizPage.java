@@ -57,29 +57,53 @@ public class QuizPage {
     }
 
     public String ans_filter(String num){
-        String tem = num.replace(".", "")
-                .replace(",", "")
-                .replace("?", "")
-                .replace("년", "")
-                .replace("도", "")
-                .replace("일", "")
-                .replace("시월", "십월")
-                .replace("유월", "육월")
-                .replace("월", "")
-                .replace("요일", "")
-                .replace("이다", "")
-                .replace("이요", "")
-                .replace("이야", "")
-                .replace("이지", "")
-                .replace("이죠", "")
-                .replace("이지요", "")
-                .replace("이고", "")
-                .replace("이며", "")
-                .replace("이라서", "")
-                .replace("이어서", "")
-                .replace("이었다", "")
-                .replace("이기", "")
-                .replace("이기에", "");
+        String tem;
+        if(current != 3){
+            tem = num.replace(".", "")
+                    .replace(",", "")
+                    .replace("?", "")
+                    .replace("년", "")
+                    .replace("도", "")
+                    .replace("일", "")
+                    .replace("시월", "십월")
+                    .replace("유월", "육월")
+                    .replace("월", "")
+                    .replace("요일", "")
+                    .replace("이다", "")
+                    .replace("이요", "")
+                    .replace("이야", "")
+                    .replace("이지", "")
+                    .replace("이죠", "")
+                    .replace("이지요", "")
+                    .replace("이고", "")
+                    .replace("이며", "")
+                    .replace("이라서", "")
+                    .replace("이어서", "")
+                    .replace("이었다", "")
+                    .replace("이기", "")
+                    .replace("입니다", "")
+                    .replace("이기에", "");
+        }
+        else{
+            tem = num.replace(".", "")
+                    .replace(",", "")
+                    .replace("?", "")
+                    .replace("요일", "")
+                    .replace("이다", "")
+                    .replace("이요", "")
+                    .replace("이야", "")
+                    .replace("이지", "")
+                    .replace("이죠", "")
+                    .replace("이지요", "")
+                    .replace("이고", "")
+                    .replace("이며", "")
+                    .replace("이라서", "")
+                    .replace("이어서", "")
+                    .replace("이었다", "")
+                    .replace("이기", "")
+                    .replace("입니다", "")
+                    .replace("이기에", "");
+        }
         return tem;
     }
 
