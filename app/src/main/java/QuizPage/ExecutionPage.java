@@ -7,12 +7,14 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
@@ -32,13 +34,13 @@ public class ExecutionPage extends AppCompatActivity {
     ExecutionOne executionOne;
     ExecutionTwo executionTwo;
     ExecutionThree executionThree;
-    TextView question;
-    TextView announce, total_score;
+    TextView question, announce;
+    EditText answer;
     String total;
-    Button submit;
+    Button sttBtn, submit;
     QuizPage QP;
+    MainSTT stt;
     TTS tts;
-    int c = 0;
 
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
@@ -50,10 +52,11 @@ public class ExecutionPage extends AppCompatActivity {
         setContentView(R.layout.execution);
 
         question = findViewById(R.id.question);
+        answer = findViewById(R.id.result);
         announce = findViewById(R.id.textView);
+        sttBtn = findViewById(R.id.sttStart);
         submit = findViewById(R.id.btnSubmit);
         execution = new Execution();
-        total_score = findViewById(R.id.score);
 
         // Fragment 객체 선언
         fragmentManager = (FragmentManager)getSupportFragmentManager();
@@ -70,68 +73,99 @@ public class ExecutionPage extends AppCompatActivity {
                 tts.onInit(status, question.getText().toString());
                 tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
                 tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
-                tem.add("그렇다면 여기 빈칸에는 무엇이 들어가야 할까요?");
-                tem.add(announce.getText().toString());
+                tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
                 tts.UtteranceProgress(tem, "continue", time, question);
             }
-        }, submit);
-        QP = new QuizPage(tts, question, announce, submit, execution.quiz);
+        }, sttBtn, submit);
+        stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
+        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn,submit, execution.quiz);
+
+        sttBtn.setEnabled(false);
+
+        sttBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
+                stt.start_STT();
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (c) {
+                stt.Stop();
+                tts.Stop();
+                tts.isStopUtt = true;
+
+                QP.user_ans = answer.getText().toString()
+                        .replace(",","")
+                        .replace(".", "");
+
+                switch (QP.current) {
                     case 0:
                         total = executionOne.oneResult();
-                        Log.d("total_one", total);
+                        Log.d("result", "oneResult");
                         break;
                     case 1:
                         total = executionTwo.twoResult();
-                        Log.d("total_two", total);
+                        Log.d("result", "twoResult");
                         break;
                     case 2:
-                        total = executionThree.threeResult();
-                        Log.d("total_three", total);
+                        total = answer.getText().toString();
+                        Log.d("result", "threeResult " + total);
                         break;
                     default:
                         Log.d("case default!!", "넘어감");
                         break;
                 }
+
+                List<String> correct = new ArrayList<>();
+                correct.clear();
+                for(String data : execution.crr_ans[QP.current]){
+                    correct.add(data);
+                }
+
+                answer.setText("");
+
                 if(total.isEmpty()) {
-                    total_score.setText("응답을 하셔야 넘어가실 수 있습니다");
+                    Toast.makeText(getApplicationContext(),"응답을 하셔야 넘어가실 수 있습니다", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     tts.Stop();
                     tts.isStopUtt = true;
 
-                    String correct = execution.crr_ans[QP.current].get(0);
-
-                    if(correct.equals(total)) {
-                        execution.score++;
+                    for(String data : correct){
+                        if(total.contains(data)){
+                            execution.score ++;
+                        }
+                        if(QP.current + 1 < execution.score){
+                            execution.score = QP.current + 1;
+                        }
                     }
-                    c++;
+
                     if(QP.current == 0) {
                         tts.isStopUtt = false;
-                        QP.Submit();
+                        QP.current++;
+                        question.setText(execution.quiz.get(QP.current));
                         tts.speakOut(question.getText().toString());
                         tem.clear();
-                        tem.add("별이 이렇게 다른 위치로 이동합니다.");
+                        tem.add("별이 각자 다른 위치로 이동합니다.");
                         tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
-                        tem.add("여기서는 네 칸중 별이 어디에 위치하게 될까요?");
-                        announce.setText("잘 생각해보시고, 네 칸중 한칸을 선택해주세요");
-                        tem.add(announce.getText().toString());
+                        tem.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
                         tts.UtteranceProgress(tem, "continue", time, question);
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
                     }
                     else if(QP.current == 1) {
+                        sttBtn.setEnabled(true);
+                        answer.setVisibility(View.VISIBLE);
+                        announce.setVisibility(View.VISIBLE);
                         tts.isStopUtt = false;
-                        QP.Submit();//2
+                        QP.current++;
+                        question.setText(execution.quiz.get(QP.current));
                         tts.speakOut(question.getText().toString());
                         tem.clear();
                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
-                        tem.add("여기는 무엇이 들어갈 차례일까요?");
-                        announce.setText("잘 생각해보시고, 들어갈 단어를 입력해주세요");
-                        tem.add(announce.getText().toString());
+                        tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
                         tts.UtteranceProgress(tem, "continue", time, question);
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
                     }

@@ -73,8 +73,6 @@ public class orientation extends question{
 
     }
 
-
-
     public String returnYEAR(){
         return Date[0];
     }

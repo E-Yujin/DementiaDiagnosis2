@@ -13,12 +13,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import QuizPage.ComprehensionPage;
 import QuizPage.ExecutionPage;
+import QuizPage.LanguagePage;
+import QuizPage.SpaceTimePage;
 import QuizPage.attention_Page;
 import QuizPage.fluency_Page;
 import QuizPage.memoryInput_Page;
 import QuizPage.memoryOutput_Page;
 import QuizPage.orientation_Page;
+import questions.LanguageFunc;
 
 public class QuizHOME extends AppCompatActivity {
 
@@ -144,18 +148,22 @@ public class QuizHOME extends AppCompatActivity {
                 startActivityForResult(intent, 100);
                 break;
             case 3:
-                intent = new Intent(view.getContext(), ExecutionPage.class);
+                intent = new Intent(view.getContext(), SpaceTimePage.class);
                 startActivityForResult(intent, 100);
                 break;
             case 4:
-                intent = new Intent(view.getContext(), memoryOutput_Page.class);
+                intent = new Intent(view.getContext(), ExecutionPage.class);
                 startActivityForResult(intent, 100);
                 break;
             case 5:
-                intent = new Intent(view.getContext(), fluency_Page.class);
+                intent = new Intent(view.getContext(), memoryOutput_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 6:
+                intent = new Intent(view.getContext(), LanguagePage.class);
+                startActivityForResult(intent, 100);
+                break;
+            case 7:
                 intent = new Intent(view.getContext(), fluency_Page.class);
                 startActivityForResult(intent, 100);
                 break;

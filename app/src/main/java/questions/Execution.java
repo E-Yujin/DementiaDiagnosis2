@@ -22,6 +22,7 @@ public class Execution extends question{
 
         this.crr_ans[0].add("원");
         this.crr_ans[1].add("3");
-        this.crr_ans[2].add("겨울");
+        this.crr_ans[2].add("사 여름");
+        this.crr_ans[2].add("4 여름");
     }
 }

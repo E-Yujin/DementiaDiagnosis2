@@ -1,14 +1,20 @@
 package QuizPage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +39,7 @@ public class LanguagePage extends AppCompatActivity {
     EditText answer;
     Button sttBtn;
     Button submit;
+    ActivityResultLauncher<Intent> startActivityResult;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,11 +56,31 @@ public class LanguagePage extends AppCompatActivity {
 
         image.setImageResource(R.drawable.toothbrush);
 
+        startActivityResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Log.d("launcher_intent", "성공!!!!!!!!!!!");
+                            assert result.getData() != null;
+                            int num = result.getData().getIntExtra("comprehension", 0);
+                            languageFunc.score += num;
+
+                            Intent intent = new Intent();
+                            intent.putExtra("isDone", true);
+                            intent.putExtra("score", languageFunc.score);
+                            setResult(1, intent);
+                            finish();
+                        }
+                    }
+                });
+
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 tts.onInit(status, question.getText().toString());
-                tts.UtteranceProgress(announce.getText().toString());
+                //tts.UtteranceProgress(announce.getText().toString());
             }
         }, sttBtn, submit);
         stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
@@ -75,59 +102,55 @@ public class LanguagePage extends AppCompatActivity {
                 tts.isStopUtt = true;
 
                 QP.user_ans = answer.getText().toString()
-                        .replace(" ","")
-                        .replace(",","")
+                        .replace(" ", "")
+                        .replace(",", "")
                         .replace(".", "");
 
                 List<String> correct = new ArrayList<>();
                 correct.clear();
-                for(String data : languageFunc.crr_ans[QP.current]){
+                for (String data : languageFunc.crr_ans[QP.current]) {
                     correct.add(data);
                 }
 
                 answer.setText("");
 
-                if(QP.user_ans.isEmpty()){
+                if (QP.user_ans.isEmpty()) {
                     announce.setText("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
                     tts.speakOut(announce.getText().toString());
-                }
-                else
-                {
-                    for(String data : correct){
-                        if(QP.user_ans.contains(data)){
-                            languageFunc.score ++;
+                } else {
+                    for (String data : correct) {
+                        if (QP.user_ans.contains(data)) {
+                            languageFunc.score++;
                         }
-                        if(QP.current + 1 < languageFunc.score){
+                        /*if (QP.current + 1 < languageFunc.score) {
                             languageFunc.score = QP.current + 1;
-                        }
+                        }*/
                     }
-                    if(QP.current == 0){
+                    if (QP.current == 0) {
                         image.setImageResource(R.drawable.swing);
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
-                    }
-                    else if(QP.current == 1){
+                    } else if (QP.current == 1) {
                         image.setImageResource(R.drawable.dice);
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
-                    }
-                    else if(QP.current == 2){
-                        image.setImageResource(R.drawable.toothbrush);
-                        tts.isStopUtt = false;
+                    } else if (QP.current == 2) {
+                        Intent intent = new Intent(LanguagePage.this, ComprehensionPage.class);
+                        startActivityResult.launch(intent);
+                        overridePendingTransition(0, 0);
+                        intent.putExtra("isDone", true);
+                        intent.putExtra("score", languageFunc.score);
+                        setResult(1, intent);
                         QP.Submit();
-                        tts.speakOut(question.getText().toString());
-                    }
-                    else if(QP.current == 3){
-                        Intent resultIntent = new Intent();
-
-                        resultIntent.putExtra("isDone", true);
-                        resultIntent.putExtra("score", languageFunc.score);
-
-                        setResult(1, resultIntent);
+                    } /*else if(QP.current == 3) {
+                        Intent intent = new Intent();
+                        intent.putExtra("isDone", true);
+                        intent.putExtra("score", languageFunc.score);
+                        setResult(1, intent);
                         finish();
-                    }
+                    }*/
                 }
             }
         });

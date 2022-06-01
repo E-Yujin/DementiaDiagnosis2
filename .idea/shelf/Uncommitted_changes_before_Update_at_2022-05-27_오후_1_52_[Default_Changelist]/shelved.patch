@@ -1,0 +1,862 @@
+Index: app/src/main/java/questions/Execution.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package questions;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\n\r\npublic class Execution extends question{\r\n\r\n    public Execution() {\r\n        this.num = 3;\r\n        this.quiz = new ArrayList<>();\r\n        this.crr_ans = new ArrayList[this.num];\r\n        for(int i = 0; i < this.num; i++) {\r\n            this.crr_ans[i] = new ArrayList<>();\r\n        }\r\n        this.isDone = new boolean[this.num];\r\n        this.score = 0;\r\n        Arrays.fill(isDone, false);\r\n\r\n        this.quiz.add(\"여기 모양들이 정해진 순서로 나옵니다.\\n\");\r\n        this.quiz.add(\"여기 네 칸 중의 한 칸에\\n별이 하나 있습니다.\\n\");\r\n        this.quiz.add(\"카드에 숫자와 계절이 하나씩 적혀 있습니다.\\n\");\r\n\r\n        this.crr_ans[0].add(\"원\");\r\n        this.crr_ans[1].add(\"3\");\r\n        this.crr_ans[2].add(\"겨울\");\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/questions/Execution.java b/app/src/main/java/questions/Execution.java
+--- a/app/src/main/java/questions/Execution.java	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/java/questions/Execution.java	(date 1652591030643)
+@@ -22,6 +22,7 @@
+ 
+         this.crr_ans[0].add("원");
+         this.crr_ans[1].add("3");
+-        this.crr_ans[2].add("겨울");
++        this.crr_ans[2].add("사");
++        this.crr_ans[2].add("여름");
+     }
+ }
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.cbnu.dementiadiagnosis\">\r\n\r\n    <uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>\r\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.DementiaDiagnosis\"\r\n        android:usesCleartextTraffic=\"true\">\r\n\r\n        <activity android:name=\".RegisterActivity\" android:exported=\"false\"/>\r\n        <activity android:name=\".SimpleTestActivity\" android:exported=\"false\"/>\r\n        <activity android:name=\".HomeActivity\" android:exported=\"false\"/>\r\n        <activity android:name=\".FirstActivity\" android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\"/>\r\n                <category android:name=\"android.intent.category.LAUNCHER\"/>\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <activity android:name=\".QuizHOME\"> </activity>\r\n        <activity android:name=\"QuizPage.orientation_Page\"> </activity>\r\n        <activity android:name=\"QuizPage.memoryInput_Page\"> </activity>\r\n        <activity android:name=\"QuizPage.attention_Page\"> </activity>\r\n        <activity android:name=\"QuizPage.ExecutionPage\"> </activity>\r\n\r\n    </application>\r\n\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/AndroidManifest.xml	(date 1651721903135)
+@@ -2,8 +2,8 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     package="com.cbnu.dementiadiagnosis">
+ 
+-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+-    <uses-permission android:name="android.permission.INTERNET"/>
++    <uses-permission android:name="android.permission.RECORD_AUDIO" />
++    <uses-permission android:name="android.permission.INTERNET" />
+ 
+     <application
+         android:allowBackup="true"
+@@ -13,24 +13,30 @@
+         android:supportsRtl="true"
+         android:theme="@style/Theme.DementiaDiagnosis"
+         android:usesCleartextTraffic="true">
+-
+-        <activity android:name=".RegisterActivity" android:exported="false"/>
+-        <activity android:name=".SimpleTestActivity" android:exported="false"/>
+-        <activity android:name=".HomeActivity" android:exported="false"/>
+-        <activity android:name=".FirstActivity" android:exported="true">
++        <activity
++            android:name=".RegisterActivity"
++            android:exported="false" />
++        <activity
++            android:name=".SimpleTestActivity"
++            android:exported="false" />
++        <activity
++            android:name=".HomeActivity"
++            android:exported="false" />
++        <activity
++            android:name=".FirstActivity"
++            android:exported="true">
+             <intent-filter>
+-                <action android:name="android.intent.action.MAIN"/>
+-                <category android:name="android.intent.category.LAUNCHER"/>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-
+-        <activity android:name=".QuizHOME"> </activity>
+-        <activity android:name="QuizPage.orientation_Page"> </activity>
+-        <activity android:name="QuizPage.memoryInput_Page"> </activity>
+-        <activity android:name="QuizPage.attention_Page"> </activity>
+-        <activity android:name="QuizPage.ExecutionPage"> </activity>
+-
++        <activity android:name=".QuizHOME"></activity>
++        <activity android:name="QuizPage.orientation_Page"></activity>
++        <activity android:name="QuizPage.memoryInput_Page"></activity>
++        <activity android:name="QuizPage.attention_Page"></activity>
++        <activity android:name="QuizPage.ExecutionPage"></activity>
++        <activity android:name="QuizPage.LanguagePage"></activity>
+     </application>
+ 
+-
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/res/layout/execution_star.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <ImageView\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"100dp\"\r\n            android:layout_marginEnd=\"7dp\"\r\n            android:src=\"@drawable/star_one\"\r\n            android:scaleType=\"fitXY\"/>\r\n\r\n        <ImageView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"37dp\"\r\n            android:layout_marginEnd=\"5dp\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/ic_forward\" />\r\n\r\n        <ImageView\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"100dp\"\r\n            android:layout_marginEnd=\"7dp\"\r\n            android:src=\"@drawable/star_two\"\r\n            android:scaleType=\"fitXY\"/>\r\n\r\n        <ImageView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"38dp\"\r\n            android:layout_marginEnd=\"5dp\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/ic_forward\" />\r\n\r\n        <ImageView\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"100dp\"\r\n            android:src=\"@drawable/star_three\"\r\n            android:scaleType=\"fitXY\"/>\r\n\r\n    </LinearLayout>\r\n\r\n    <ImageView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:layout_marginEnd=\"70dp\"\r\n        android:layout_gravity=\"end\"\r\n        android:scaleX=\"3.0\"\r\n        android:scaleY=\"3.0\"\r\n        android:src=\"@drawable/ic_forward_two\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <FrameLayout\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\">\r\n\r\n            <ImageButton\r\n                android:id=\"@+id/btnOne\"\r\n                android:layout_width=\"80dp\"\r\n                android:layout_height=\"80dp\"\r\n                android:scaleType=\"fitXY\"\r\n                android:padding=\"0dp\"\r\n                android:src=\"@drawable/star_four_one\"/>\r\n\r\n            <ImageView\r\n                android:id=\"@+id/starOne\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"5dp\"\r\n                android:minHeight=\"80dp\"\r\n                android:minWidth=\"80dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:visibility=\"invisible\"\r\n                android:src=\"@drawable/ic_star\"/>\r\n        </FrameLayout>\r\n\r\n        <FrameLayout\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\">\r\n\r\n            <ImageButton\r\n                android:id=\"@+id/btnTwo\"\r\n                android:layout_width=\"80dp\"\r\n                android:layout_height=\"80dp\"\r\n                android:scaleType=\"fitXY\"\r\n                android:padding=\"0dp\"\r\n                android:src=\"@drawable/star_four_two\"\r\n                android:contentDescription=\"TODO\" />\r\n\r\n            <ImageView\r\n                android:id=\"@+id/starTwo\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"5dp\"\r\n                android:minHeight=\"80dp\"\r\n                android:minWidth=\"80dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:visibility=\"invisible\"\r\n                android:src=\"@drawable/ic_star\"/>\r\n        </FrameLayout>\r\n\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <FrameLayout\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\">\r\n\r\n            <ImageButton\r\n                android:id=\"@+id/btnThree\"\r\n                android:layout_width=\"80dp\"\r\n                android:layout_height=\"80dp\"\r\n                android:scaleType=\"fitXY\"\r\n                android:padding=\"0dp\"\r\n                android:src=\"@drawable/star_four_three\"/>\r\n\r\n            <ImageView\r\n                android:id=\"@+id/starThree\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"5dp\"\r\n                android:minHeight=\"80dp\"\r\n                android:minWidth=\"80dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:visibility=\"invisible\"\r\n                android:src=\"@drawable/ic_star\"/>\r\n        </FrameLayout>\r\n\r\n        <FrameLayout\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\">\r\n\r\n            <ImageButton\r\n                android:id=\"@+id/btnFour\"\r\n                android:layout_width=\"80dp\"\r\n                android:layout_height=\"80dp\"\r\n                android:scaleType=\"fitXY\"\r\n                android:padding=\"0dp\"\r\n                android:src=\"@drawable/star_four_four\"/>\r\n\r\n            <ImageView\r\n                android:id=\"@+id/starFour\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"5dp\"\r\n                android:minHeight=\"80dp\"\r\n                android:minWidth=\"80dp\"\r\n                android:layout_gravity=\"center\"\r\n                android:visibility=\"invisible\"\r\n                android:src=\"@drawable/ic_star\"/>\r\n        </FrameLayout>\r\n\r\n    </LinearLayout>\r\n\r\n    <!--<Button\r\n        android:id=\"@+id/submit_star\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:backgroundTint=\"#2196F3\"\r\n        android:text=\"정답 제출\" />-->\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/execution_star.xml b/app/src/main/res/layout/execution_star.xml
+--- a/app/src/main/res/layout/execution_star.xml	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/res/layout/execution_star.xml	(date 1652423938484)
+@@ -1,8 +1,8 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:gravity="center"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_gravity="center"
+     android:orientation="vertical">
+ 
+     <LinearLayout
+@@ -12,8 +12,8 @@
+         android:orientation="horizontal">
+ 
+         <ImageView
+-            android:layout_width="100dp"
+-            android:layout_height="100dp"
++            android:layout_width="90dp"
++            android:layout_height="90dp"
+             android:layout_marginEnd="7dp"
+             android:src="@drawable/star_one"
+             android:scaleType="fitXY"/>
+@@ -28,8 +28,8 @@
+             android:src="@drawable/ic_forward" />
+ 
+         <ImageView
+-            android:layout_width="100dp"
+-            android:layout_height="100dp"
++            android:layout_width="90dp"
++            android:layout_height="90dp"
+             android:layout_marginEnd="7dp"
+             android:src="@drawable/star_two"
+             android:scaleType="fitXY"/>
+@@ -44,8 +44,8 @@
+             android:src="@drawable/ic_forward" />
+ 
+         <ImageView
+-            android:layout_width="100dp"
+-            android:layout_height="100dp"
++            android:layout_width="90dp"
++            android:layout_height="90dp"
+             android:src="@drawable/star_three"
+             android:scaleType="fitXY"/>
+ 
+@@ -64,6 +64,7 @@
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_gravity="center"
+         android:layout_marginTop="20dp"
+         android:orientation="horizontal">
+ 
+@@ -121,6 +122,7 @@
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_gravity="center"
+         android:orientation="horizontal">
+ 
+         <FrameLayout
+Index: app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cbnu.dementiadiagnosis;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\n\r\nimport QuizPage.ExecutionPage;\r\nimport QuizPage.attention_Page;\r\nimport QuizPage.memoryInput_Page;\r\nimport QuizPage.orientation_Page;\r\n\r\npublic class QuizHOME extends AppCompatActivity {\r\n\r\n    TextView Title;\r\n    TextView Announce;\r\n    TextView Intend_value;\r\n    Button sttBtn;\r\n    private boolean isDone[];\r\n    private int current = 0;\r\n    private ArrayList<String> first, second;\r\n    public List<String> announce;\r\n    private long backBtnTime = 0;\r\n    private int total_score = 0;\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.quiz_home);\r\n\r\n        announce = new ArrayList();\r\n        isDone = new boolean[8];\r\n        Arrays.fill(isDone,false);\r\n\r\n        sttBtn = findViewById(R.id.sttStart);\r\n        Title = findViewById(R.id.title);\r\n        Announce = findViewById(R.id.announce);\r\n        Intend_value = findViewById(R.id.intent);\r\n\r\n        first = new ArrayList<>();\r\n        second = new ArrayList<>();\r\n\r\n        init_Announce();\r\n\r\n        Title.setText(announce.get(current));\r\n\r\n        sttBtn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = null;\r\n                switchPage(intent, view);\r\n            }\r\n        });\r\n    }\r\n\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {\r\n        super.onActivityResult(requestCode, resultCode, resultIntent);\r\n        if (requestCode == 100 && resultCode == 1) {\r\n            isDone[current] = resultIntent.getBooleanExtra(\"isDone\", false);\r\n            total_score += resultIntent.getIntExtra(\"score\", 0);\r\n        }\r\n        if (requestCode == 100 && resultCode == 2) {\r\n            isDone[current] = resultIntent.getBooleanExtra(\"isDone\", false);\r\n            first = resultIntent.getStringArrayListExtra(\"First\");\r\n            second = resultIntent.getStringArrayListExtra(\"Second\");\r\n        }\r\n    }\r\n\r\n    @Override\r\n    protected void onStart() {\r\n        super.onStart();\r\n        if(isDone[current]){\r\n            current ++;\r\n            Title.setText(announce.get(current));\r\n            if(current == 1){\r\n                Intend_value.setText(Integer.toString(total_score));\r\n            }\r\n            else if(current == 2){\r\n                String tem = \"맞춘 말 : \";\r\n                for(String data : first) {\r\n                    tem += data;\r\n                }\r\n                Intend_value.setText(tem);\r\n            }\r\n            Toast.makeText(this, \"결과가 저장되었습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }\r\n\r\n    public void setCurrent(int score){\r\n        isDone[current] = true;\r\n        total_score += score;\r\n    }\r\n\r\n    private void init_Announce(){\r\n\r\n        announce.add(\"지금부터 '지남력'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '기억 등록'을\\n시행하겠습니다.\");\r\n        announce.add(\"지금부터 '주의력'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '시공간 기능'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '집행 기능'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '기억력'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '언어 기능'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '유창성'을\\n검사해보겠습니다.\");\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onBackPressed() {\r\n        long curTime = System.currentTimeMillis();\r\n        long gapTime = curTime - backBtnTime;\r\n\r\n        if (0 <= gapTime && 2000 >= gapTime) {\r\n            super.onBackPressed();\r\n        } else {\r\n            backBtnTime = curTime;\r\n            Toast.makeText(this, \"지금 나가시면 진행된 검사가 저장되지 않습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }\r\n\r\n    private void switchPage(Intent intent, View view){\r\n        switch (current){\r\n\r\n            case 0:\r\n                intent = new Intent(view.getContext(), orientation_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 1:\r\n                intent = new Intent(view.getContext(), memoryInput_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 2:\r\n                intent = new Intent(view.getContext(), attention_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 3:\r\n                intent = new Intent(view.getContext(), ExecutionPage.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 4:\r\n                intent = new Intent(view.getContext(), orientation_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 5:\r\n                intent = new Intent(view.getContext(), orientation_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 6:\r\n                intent = new Intent(view.getContext(), orientation_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 7:\r\n                intent = new Intent(view.getContext(), orientation_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 8:\r\n                intent = new Intent(view.getContext(), orientation_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n\r\n        }\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java b/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java
+--- a/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java	(date 1652419513571)
+@@ -14,6 +14,7 @@
+ import java.util.List;
+ 
+ import QuizPage.ExecutionPage;
++import QuizPage.LanguagePage;
+ import QuizPage.attention_Page;
+ import QuizPage.memoryInput_Page;
+ import QuizPage.orientation_Page;
+@@ -133,7 +134,7 @@
+         switch (current){
+ 
+             case 0:
+-                intent = new Intent(view.getContext(), orientation_Page.class);
++                intent = new Intent(view.getContext(), ExecutionPage.class);
+                 startActivityForResult(intent, 100);
+                 break;
+             case 1:
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable-v24/round_button.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/ic_launcher_background.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/round_button.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_first.xml\" value=\"0.1539855072463768\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_formal_test.xml\" value=\"0.24895833333333334\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_home.xml\" value=\"0.17904761904761904\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_main.xml\" value=\"0.1721014492753623\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_register.xml\" value=\"0.16259057971014493\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_simple_test.xml\" value=\"0.24895833333333334\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/main_home.xml\" value=\"0.24947916666666667\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/quiz_home.xml\" value=\"0.15942028985507245\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_star.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/orientation.xml\" value=\"0.23385416666666667\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/quiz_home.xml\" value=\"0.1265625\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"Android Studio default JDK\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/.idea/misc.xml	(date 1653621705426)
+@@ -14,10 +14,29 @@
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_simple_test.xml" value="0.24895833333333334" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/main_home.xml" value="0.24947916666666667" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/quiz_home.xml" value="0.15942028985507245" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/bg01.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_star.xml" value="0.1" />
+-        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_circle.xml" value="0.10277777777777777" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_square.xml" value="0.10277777777777777" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_line.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_oval.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_rectangle.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_triangle.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/target_shape.xml" value="0.23385416666666667" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/triangle_blue.xml" value="0.10277777777777777" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.23333333333333334" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_simple_test.xml" value="0.23333333333333334" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/comprehension.xml" value="0.21770833333333334" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution.xml" value="0.23897058823529413" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_season.xml" value="0.264" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_shape.xml" value="0.264" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_star.xml" value="0.23731884057971014" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/language_func.xml" value="0.2" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml" value="0.23333333333333334" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/orientation.xml" value="0.23385416666666667" />
+-        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/quiz_home.xml" value="0.1265625" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/quiz_home.xml" value="0.4" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/space_time.xml" value="0.2" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/understand.xml" value="0.1" />
+       </map>
+     </option>
+   </component>
+Index: app/src/main/res/layout/execution_shape.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <ImageView\r\n            android:id=\"@+id/square_one\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"80dp\"\r\n            android:src=\"@drawable/square\"\r\n            android:scaleType=\"fitXY\"/>\r\n\r\n        <ImageView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"25dp\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/ic_forward\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/circle\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"80dp\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:src=\"@drawable/circle\"\r\n            android:scaleType=\"fitXY\"/>\r\n\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginEnd=\"15dp\"\r\n        android:layout_marginTop=\"10dp\">\r\n\r\n        <ImageView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"25dp\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/ic_forward\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/triangle_one\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"80dp\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:src=\"@drawable/triangle\"\r\n            android:scaleType=\"fitXY\"/>\r\n\r\n        <ImageView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:layout_marginTop=\"25dp\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/ic_forward\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/square\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"80dp\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:scaleType=\"fitXY\"\r\n            android:src=\"@drawable/square\" />\r\n\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_marginEnd=\"15dp\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <ImageView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"25dp\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/ic_forward\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/box\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"80dp\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:scaleType=\"fitXY\"\r\n            android:src=\"@drawable/box\" />\r\n\r\n        <ImageView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"25dp\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/ic_forward\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/triangle_two\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"80dp\"\r\n            android:layout_marginStart=\"5dp\"\r\n            android:scaleType=\"fitXY\"\r\n            android:src=\"@drawable/triangle\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/btnSquare\"\r\n            android:layout_width=\"90dp\"\r\n            android:layout_height=\"90dp\"\r\n            android:layout_marginRight=\"15dp\"\r\n            android:scaleType=\"fitXY\"\r\n            android:padding=\"0dp\"\r\n            android:contentDescription=\"square\"\r\n            android:src=\"@drawable/square\"\r\n            android:clickable=\"true\"\r\n            android:background=\"?selectableItemBackgroundBorderless\"\r\n            android:focusable=\"true\" />\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/btnCircle\"\r\n            android:layout_width=\"90dp\"\r\n            android:layout_height=\"90dp\"\r\n            android:layout_marginRight=\"15dp\"\r\n            android:scaleType=\"fitXY\"\r\n            android:padding=\"0dp\"\r\n            android:contentDescription=\"circle\"\r\n            android:src=\"@drawable/circle\"\r\n            android:clickable=\"true\"\r\n            android:background=\"?selectableItemBackgroundBorderless\"\r\n            android:focusable=\"true\" />\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/btnTriangle\"\r\n            android:layout_width=\"90dp\"\r\n            android:layout_height=\"90dp\"\r\n            android:scaleType=\"fitXY\"\r\n            android:padding=\"0dp\"\r\n            android:elevation=\"50dp\"\r\n            android:contentDescription=\"triangle\"\r\n            android:src=\"@drawable/triangle\"\r\n            android:clickable=\"true\"\r\n            android:background=\"?selectableItemBackgroundBorderless\"\r\n            android:focusable=\"true\" />\r\n\r\n    </LinearLayout>\r\n\r\n    <!--<Button\r\n        android:id=\"@+id/btnSubmit\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:backgroundTint=\"#2196F3\"\r\n        android:text=\"정답 제출\" />-->\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/execution_shape.xml b/app/src/main/res/layout/execution_shape.xml
+--- a/app/src/main/res/layout/execution_shape.xml	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/res/layout/execution_shape.xml	(date 1652423496311)
+@@ -2,14 +2,15 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:gravity="center"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_gravity="center"
+     android:orientation="vertical">
+ 
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_gravity="center"
+         android:orientation="horizontal">
+ 
+         <ImageView
+@@ -41,6 +42,7 @@
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_gravity="center"
+         android:layout_marginEnd="15dp"
+         android:layout_marginTop="10dp">
+ 
+@@ -82,6 +84,7 @@
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_gravity="center"
+         android:layout_marginTop="10dp"
+         android:layout_marginEnd="15dp"
+         android:orientation="horizontal">
+@@ -100,7 +103,8 @@
+             android:layout_height="80dp"
+             android:layout_marginStart="5dp"
+             android:scaleType="fitXY"
+-            android:src="@drawable/box" />
++            android:padding="20dp"
++            android:background="@drawable/box" />
+ 
+         <ImageView
+             android:layout_width="wrap_content"
+Index: app/src/main/res/layout/execution_season.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"350dp\"\r\n        android:layout_height=\"100dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"Question\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"80dp\"\r\n        android:layout_marginTop=\"5dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"Announce\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <ImageView\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"40dp\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:src=\"@drawable/season_one\"\r\n            android:scaleType=\"fitXY\"/>\r\n    </LinearLayout>\r\n\r\n    <TextView\r\n        android:id=\"@+id/total_score\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"총점\"\r\n        android:textSize=\"30sp\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/execution_season.xml b/app/src/main/res/layout/execution_season.xml
+--- a/app/src/main/res/layout/execution_season.xml	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/res/layout/execution_season.xml	(date 1652422929798)
+@@ -1,45 +1,190 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:gravity="center"
+-    android:orientation="vertical">
+-
+-    <TextView
+-        android:id="@+id/question"
+-        android:layout_width="350dp"
+-        android:layout_height="100dp"
+-        android:gravity="center"
+-        android:text="Question"
+-        android:textSize="20sp" />
+-
+-    <TextView
+-        android:id="@+id/textView"
+-        android:layout_width="300dp"
+-        android:layout_height="80dp"
+-        android:layout_marginTop="5dp"
+-        android:gravity="center"
+-        android:text="Announce"
+-        android:textSize="15sp" />
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_gravity="center"
++    android:orientation="vertical">
++
++    <LinearLayout
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal">
++
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="1"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="10dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="봄"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="2"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:id="@+id/season"
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="여름"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++
++    </LinearLayout>
++
++    <ImageView
++        android:layout_width="40dp"
++        android:layout_height="40dp"
++        android:layout_gravity="end"
++        android:layout_marginEnd="5dp"
++        android:scaleType="fitXY"
++        android:rotation="90"
++        android:src="@drawable/shape_line"/>
+ 
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:orientation="horizontal">
++        android:layout_gravity="center">
++
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="겨울"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text=""
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="가을"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="3"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++    </LinearLayout>
+ 
+-        <ImageView
+-            android:layout_width="300dp"
+-            android:layout_height="40dp"
+-            android:layout_marginTop="10dp"
+-            android:src="@drawable/season_one"
+-            android:scaleType="fitXY"/>
+-    </LinearLayout>
++    <ImageView
++        android:layout_width="40dp"
++        android:layout_height="40dp"
++        android:layout_gravity="start"
++        android:layout_marginStart="5dp"
++        android:scaleType="fitXY"
++        android:rotation="90"
++        android:src="@drawable/shape_line"/>
+ 
+-    <TextView
+-        android:id="@+id/total_score"
++    <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:hint="총점"
+-        android:textSize="30sp"/>
++        android:layout_gravity="center">
++
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="5"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="봄"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text="6"
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++        <ImageView
++            android:layout_width="20dp"
++            android:layout_height="20dp"
++            android:layout_gravity="center"
++            android:src="@drawable/shape_line"/>
++        <TextView
++            android:layout_width="60dp"
++            android:layout_height="60dp"
++            android:gravity="center"
++            android:text=""
++            android:textSize="25sp"
++            android:textStyle="bold"
++            android:background="@drawable/bg01"/>
++    </LinearLayout>
+ 
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/execution.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ExecutionPage\"\r\n    android:padding=\"10dp\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"50dp\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"Question\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"50dp\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"Announce\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <FrameLayout\r\n        android:id=\"@+id/frame_layout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"450dp\"\r\n        tools:layout_editor_absoluteX=\"203dp\"\r\n        tools:layout_editor_absoluteY=\"281dp\">\r\n    </FrameLayout>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnSubmit\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:backgroundTint=\"#2196F3\"\r\n        android:text=\"정답 제출\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/score\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"123456\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/execution.xml b/app/src/main/res/layout/execution.xml
+--- a/app/src/main/res/layout/execution.xml	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/res/layout/execution.xml	(date 1652424583877)
+@@ -3,7 +3,6 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ExecutionPage"
+     android:padding="10dp"
+     android:gravity="center"
+     android:orientation="vertical">
+@@ -19,31 +18,50 @@
+     <TextView
+         android:id="@+id/textView"
+         android:layout_width="match_parent"
+-        android:layout_height="50dp"
++        android:layout_height="wrap_content"
+         android:gravity="center"
+         android:hint="Announce"
+         android:textSize="15sp" />
+ 
+     <FrameLayout
+         android:id="@+id/frame_layout"
+-        android:layout_width="match_parent"
+-        android:layout_height="450dp"
+-        tools:layout_editor_absoluteX="203dp"
+-        tools:layout_editor_absoluteY="281dp">
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="20dp">
+     </FrameLayout>
+ 
+-    <Button
+-        android:id="@+id/btnSubmit"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="20dp"
+-        android:backgroundTint="#2196F3"
+-        android:text="정답 제출" />
+-
+-    <TextView
+-        android:id="@+id/score"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="123456"/>
++    <EditText
++        android:id="@+id/result"
++        android:visibility="invisible"
++        android:layout_width="240dp"
++        android:layout_height="70dp"
++        android:layout_marginBottom="10dp"
++        android:layout_gravity="center"
++        android:ems="10"
++        android:gravity="center"
++        android:hint="당신의 말이 나타납니다."
++        android:inputType="text"
++        android:textSize="15sp" />
++
++    <LinearLayout
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:orientation="horizontal">
++
++        <Button
++            android:id="@+id/sttStart"
++            android:layout_width="100dp"
++            android:layout_height="wrap_content"
++            android:layout_gravity="center"
++            android:layout_marginEnd="30dp"
++            android:text="말하기" />
++        <Button
++            android:id="@+id/btnSubmit"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:backgroundTint="#2196F3"
++            android:text="정답 제출" />
++    </LinearLayout>
+ 
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/QuizPage/ExecutionPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package QuizPage;\r\n\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.speech.tts.TextToSpeech;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.fragment.app.FragmentManager;\r\n\r\nimport com.cbnu.dementiadiagnosis.R;\r\nimport com.cbnu.dementiadiagnosis.TTS;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport fragment.ExecutionOne;\r\nimport fragment.ExecutionThree;\r\nimport fragment.ExecutionTwo;\r\nimport questions.Execution;\r\n\r\n\r\npublic class ExecutionPage extends AppCompatActivity {\r\n\r\n    Execution execution;\r\n    FragmentManager fragmentManager;\r\n    ExecutionOne executionOne;\r\n    ExecutionTwo executionTwo;\r\n    ExecutionThree executionThree;\r\n    TextView question;\r\n    TextView announce, total_score;\r\n    String total;\r\n    Button submit;\r\n    QuizPage QP;\r\n    TTS tts;\r\n    int c = 0;\r\n\r\n    private long backBtnTime = 0;\r\n    List<String> tem = new ArrayList<>();\r\n    int[] time = {2000, 2000, 2000, 2000};\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.execution);\r\n\r\n        question = findViewById(R.id.question);\r\n        announce = findViewById(R.id.textView);\r\n        submit = findViewById(R.id.btnSubmit);\r\n        execution = new Execution();\r\n        total_score = findViewById(R.id.score);\r\n\r\n        // Fragment 객체 선언\r\n        fragmentManager = (FragmentManager)getSupportFragmentManager();\r\n        executionOne = new ExecutionOne();\r\n        executionTwo = new ExecutionTwo();\r\n        executionThree = new ExecutionThree();\r\n\r\n        // 제일 처음 띄워줄 뷰 설정\r\n        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionOne).commit();\r\n\r\n        tts = new TTS(this, new TextToSpeech.OnInitListener() {\r\n            @Override\r\n            public void onInit(int status) {\r\n                tts.onInit(status, question.getText().toString());\r\n                tem.add(\"모양들을 보면서 어떤 순서로 나오는지 생각해보세요.\");\r\n                tem.add(\"네모, 동그라미, 세모, 네모, 빈칸, 세모\");\r\n                tem.add(\"그렇다면 여기 빈칸에는 무엇이 들어가야 할까요?\");\r\n                tem.add(announce.getText().toString());\r\n                tts.UtteranceProgress(tem, \"continue\", time, question);\r\n            }\r\n        }, submit);\r\n        QP = new QuizPage(tts, question, announce, submit, execution.quiz);\r\n\r\n        submit.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                switch (c) {\r\n                    case 0:\r\n                        total = executionOne.oneResult();\r\n                        Log.d(\"total_one\", total);\r\n                        break;\r\n                    case 1:\r\n                        total = executionTwo.twoResult();\r\n                        Log.d(\"total_two\", total);\r\n                        break;\r\n                    case 2:\r\n                        total = executionThree.threeResult();\r\n                        Log.d(\"total_three\", total);\r\n                        break;\r\n                    default:\r\n                        Log.d(\"case default!!\", \"넘어감\");\r\n                        break;\r\n                }\r\n                if(total.isEmpty()) {\r\n                    total_score.setText(\"응답을 하셔야 넘어가실 수 있습니다\");\r\n                }\r\n                else {\r\n                    tts.Stop();\r\n                    tts.isStopUtt = true;\r\n\r\n                    String correct = execution.crr_ans[QP.current].get(0);\r\n\r\n                    if(correct.equals(total)) {\r\n                        execution.score++;\r\n                    }\r\n                    c++;\r\n                    if(QP.current == 0) {\r\n                        tts.isStopUtt = false;\r\n                        QP.Submit();\r\n                        tts.speakOut(question.getText().toString());\r\n                        tem.clear();\r\n                        tem.add(\"별이 이렇게 다른 위치로 이동합니다.\");\r\n                        tem.add(\"어떤 식으로 이동하는지 잘 생각해 보십시오.\");\r\n                        tem.add(\"여기서는 네 칸중 별이 어디에 위치하게 될까요?\");\r\n                        announce.setText(\"잘 생각해보시고, 네 칸중 한칸을 선택해주세요\");\r\n                        tem.add(announce.getText().toString());\r\n                        tts.UtteranceProgress(tem, \"continue\", time, question);\r\n                        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();\r\n                    }\r\n                    else if(QP.current == 1) {\r\n                        tts.isStopUtt = false;\r\n                        QP.Submit();//2\r\n                        tts.speakOut(question.getText().toString());\r\n                        tem.clear();\r\n                        tem.add(\"'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.\");\r\n                        tem.add(\"여기는 무엇이 들어갈 차례일까요?\");\r\n                        announce.setText(\"잘 생각해보시고, 들어갈 단어를 입력해주세요\");\r\n                        tem.add(announce.getText().toString());\r\n                        tts.UtteranceProgress(tem, \"continue\", time, question);\r\n                        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();\r\n                    }\r\n                    else if(QP.current == 2) {\r\n                        Intent resultIntent = new Intent();\r\n\r\n                        resultIntent.putExtra(\"isDone\", true);\r\n                        resultIntent.putExtra(\"score\", execution.score);\r\n\r\n                        setResult(1, resultIntent);\r\n                        finish();\r\n                    }\r\n                }\r\n            }\r\n        });\r\n    }\r\n\r\n    @Override\r\n    public void onBackPressed() {\r\n        long curTime = System.currentTimeMillis();\r\n        long gapTime = curTime - backBtnTime;\r\n\r\n        if (0 <= gapTime && 2000 >= gapTime) {\r\n            super.onBackPressed();\r\n        } else {\r\n            backBtnTime = curTime;\r\n            Toast.makeText(this, \"지금 나가시면 진행된 검사가 저장되지 않습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/QuizPage/ExecutionPage.java b/app/src/main/java/QuizPage/ExecutionPage.java
+--- a/app/src/main/java/QuizPage/ExecutionPage.java	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/java/QuizPage/ExecutionPage.java	(date 1652594979656)
+@@ -7,16 +7,19 @@
+ import android.util.Log;
+ import android.view.View;
+ import android.widget.Button;
++import android.widget.EditText;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.fragment.app.FragmentManager;
+ 
++import com.cbnu.dementiadiagnosis.MainSTT;
+ import com.cbnu.dementiadiagnosis.R;
+ import com.cbnu.dementiadiagnosis.TTS;
+ 
+ import java.util.ArrayList;
++import java.util.Arrays;
+ import java.util.List;
+ 
+ import fragment.ExecutionOne;
+@@ -33,12 +36,15 @@
+     ExecutionTwo executionTwo;
+     ExecutionThree executionThree;
+     TextView question;
+-    TextView announce, total_score;
++    TextView announce;
++    EditText answer;
+     String total;
+-    Button submit;
++    Button submit, sttBtn;;
++    MainSTT stt;
+     QuizPage QP;
+     TTS tts;
+     int c = 0;
++    String[] splitThree;
+ 
+     private long backBtnTime = 0;
+     List<String> tem = new ArrayList<>();
+@@ -52,8 +58,9 @@
+         question = findViewById(R.id.question);
+         announce = findViewById(R.id.textView);
+         submit = findViewById(R.id.btnSubmit);
++        sttBtn = findViewById(R.id.sttStart);
++        answer = findViewById(R.id.result);
+         execution = new Execution();
+-        total_score = findViewById(R.id.score);
+ 
+         // Fragment 객체 선언
+         fragmentManager = (FragmentManager)getSupportFragmentManager();
+@@ -67,6 +74,7 @@
+         tts = new TTS(this, new TextToSpeech.OnInitListener() {
+             @Override
+             public void onInit(int status) {
++                sttBtn.setEnabled(false);
+                 tts.onInit(status, question.getText().toString());
+                 tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
+                 tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
+@@ -75,8 +83,17 @@
+                 tts.UtteranceProgress(tem, "continue", time, question);
+             }
+         }, submit);
++        stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
+         QP = new QuizPage(tts, question, announce, submit, execution.quiz);
+ 
++        sttBtn.setOnClickListener(new View.OnClickListener() {
++            public void onClick(View v) {
++                tts.isStopUtt = true;
++                tts.Stop();
++                stt.start_STT();
++            }
++        });
++
+         submit.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+@@ -90,28 +107,39 @@
+                         Log.d("total_two", total);
+                         break;
+                     case 2:
+-                        total = executionThree.threeResult();
++                        total = answer.getText().toString().replace(".", "");
++                        splitThree = total.split(" ");
+                         Log.d("total_three", total);
+                         break;
+                     default:
+                         Log.d("case default!!", "넘어감");
+                         break;
+                 }
+-                if(total.isEmpty()) {
+-                    total_score.setText("응답을 하셔야 넘어가실 수 있습니다");
++                QP.user_ans = total;
++
++                List<String> correct = new ArrayList<>();
++                correct.clear();
++                for(String data : execution.crr_ans[QP.current]){
++                    correct.add(data);
++                }
++
++                answer.setText("");
++
++                if(QP.user_ans.isEmpty()){
++                    announce.setText("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
++                    tts.speakOut(announce.getText().toString());
+                 }
+                 else {
+                     tts.Stop();
+                     tts.isStopUtt = true;
+-
+-                    String correct = execution.crr_ans[QP.current].get(0);
+-
+-                    if(correct.equals(total)) {
+-                        execution.score++;
+-                    }
+                     c++;
++
+                     if(QP.current == 0) {
++                        if(QP.user_ans.equals(correct.get(0))){
++                            execution.score ++;
++                        }
+                         tts.isStopUtt = false;
++                        sttBtn.setEnabled(false);
+                         QP.Submit();
+                         tts.speakOut(question.getText().toString());
+                         tem.clear();
+@@ -124,18 +152,27 @@
+                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
+                     }
+                     else if(QP.current == 1) {
++                        if(QP.user_ans.equals(correct.get(0))){
++                            execution.score ++;
++                        }
+                         tts.isStopUtt = false;
++                        sttBtn.setEnabled(true);
++                        answer.setVisibility(View.VISIBLE);
+                         QP.Submit();//2
+                         tts.speakOut(question.getText().toString());
+                         tem.clear();
+                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
+-                        tem.add("여기는 무엇이 들어갈 차례일까요?");
+-                        announce.setText("잘 생각해보시고, 들어갈 단어를 입력해주세요");
++                        tem.add("두 빈칸에는 무엇이 들어갈 차례일까요?");
++                        announce.setText("잘 생각해보시고, 들어갈 두 단어를 순서대로 말씀해주세요");
+                         tem.add(announce.getText().toString());
+                         tts.UtteranceProgress(tem, "continue", time, question);
+                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+                     }
+                     else if(QP.current == 2) {
++                        if(splitThree[0].equals(correct.get(0))){
++                            if(splitThree[1].equals(correct.get(1)))
++                                execution.score ++;
++                        }
+                         Intent resultIntent = new Intent();
+ 
+                         resultIntent.putExtra("isDone", true);
+Index: app/src/main/java/fragment/ExecutionTwo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package fragment;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.cbnu.dementiadiagnosis.R;\r\n\r\n\r\npublic class ExecutionTwo extends Fragment {\r\n\r\n    ImageButton squareOne, squareTwo, squareThree, squareFour;\r\n    ImageView star1, star2, star3, star4;\r\n    String check;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view;\r\n\r\n        view = inflater.inflate(R.layout.execution_star, container, false);\r\n        squareOne = view.findViewById(R.id.btnOne);\r\n        squareTwo = view.findViewById(R.id.btnTwo);\r\n        squareThree = view.findViewById(R.id.btnThree);\r\n        squareFour = view.findViewById(R.id.btnFour);\r\n\r\n        star1 = view.findViewById(R.id.starOne);\r\n        star2 = view.findViewById(R.id.starTwo);\r\n        star3 = view.findViewById(R.id.starThree);\r\n        star4 = view.findViewById(R.id.starFour);\r\n        showStar();\r\n\r\n        return view;\r\n    }\r\n\r\n    // 정답 영역 클릭 시, 별 모양 표시\r\n    public void showStar() {\r\n        squareOne.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                check = \"1\";\r\n                star1.setVisibility(View.VISIBLE);\r\n                star2.setVisibility(View.INVISIBLE);\r\n                star3.setVisibility(View.INVISIBLE);\r\n                star4.setVisibility(View.INVISIBLE);\r\n            }\r\n        });\r\n        squareTwo.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                check = \"2\";\r\n                star2.setVisibility(View.VISIBLE);\r\n                star1.setVisibility(View.INVISIBLE);\r\n                star3.setVisibility(View.INVISIBLE);\r\n                star4.setVisibility(View.INVISIBLE);\r\n            }\r\n        });\r\n        squareThree.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                check = \"3\";\r\n                star3.setVisibility(View.VISIBLE);\r\n                star1.setVisibility(View.INVISIBLE);\r\n                star2.setVisibility(View.INVISIBLE);\r\n                star4.setVisibility(View.INVISIBLE);\r\n            }\r\n        });\r\n        squareFour.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                check = \"4\";\r\n                star4.setVisibility(View.VISIBLE);\r\n                star1.setVisibility(View.INVISIBLE);\r\n                star2.setVisibility(View.INVISIBLE);\r\n                star3.setVisibility(View.INVISIBLE);\r\n            }\r\n        });\r\n    }\r\n    public String twoResult() {\r\n        return check;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/fragment/ExecutionTwo.java b/app/src/main/java/fragment/ExecutionTwo.java
+--- a/app/src/main/java/fragment/ExecutionTwo.java	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/java/fragment/ExecutionTwo.java	(date 1652594979680)
+@@ -18,7 +18,7 @@
+ 
+     ImageButton squareOne, squareTwo, squareThree, squareFour;
+     ImageView star1, star2, star3, star4;
+-    String check;
++    String check = "";
+ 
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+Index: app/src/main/java/fragment/ExecutionThree.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package fragment;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.cbnu.dementiadiagnosis.R;\r\n\r\n\r\npublic class ExecutionThree extends Fragment {\r\n\r\n    Button btnSubmit;\r\n    int three_score = 0;\r\n    int get_two_score = 0;\r\n    TextView total;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view;\r\n        view = inflater.inflate(R.layout.execution_season, container, false);\r\n\r\n        return view;\r\n    }\r\n\r\n    public String threeResult() {\r\n        return \"sf\";\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/fragment/ExecutionThree.java b/app/src/main/java/fragment/ExecutionThree.java
+--- a/app/src/main/java/fragment/ExecutionThree.java	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/java/fragment/ExecutionThree.java	(date 1652430879122)
+@@ -11,16 +11,12 @@
+ import androidx.annotation.Nullable;
+ import androidx.fragment.app.Fragment;
+ 
++import com.cbnu.dementiadiagnosis.MainSTT;
+ import com.cbnu.dementiadiagnosis.R;
+ 
+ 
+ public class ExecutionThree extends Fragment {
+ 
+-    Button btnSubmit;
+-    int three_score = 0;
+-    int get_two_score = 0;
+-    TextView total;
+-
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -34,8 +30,4 @@
+ 
+         return view;
+     }
+-
+-    public String threeResult() {
+-        return "sf";
+-    }
+ }
+Index: app/src/main/java/fragment/ExecutionOne.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package fragment;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.cbnu.dementiadiagnosis.R;\r\n\r\npublic class ExecutionOne extends Fragment {\r\n\r\n    ImageView result; // 정답 도형이 들어가는 뷰\r\n    ImageButton resSquare, resTriangle, resCircle; // 도형 정답 버튼\r\n    String check = \"\";\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.execution_shape, container, false);\r\n\r\n        result = view.findViewById(R.id.box);\r\n        resSquare = view.findViewById(R.id.btnSquare);\r\n        resTriangle = view.findViewById(R.id.btnTriangle);\r\n        resCircle = view.findViewById(R.id.btnCircle);\r\n\r\n        clickShape();\r\n        return view;\r\n    }\r\n\r\n    // 정답 선택 함수\r\n    public void clickShape() {\r\n        // 사각형을 선택한 경우\r\n        resSquare.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                check = \"사각형\";\r\n                result.setImageResource(R.drawable.res_square);\r\n            }\r\n        });\r\n        // 삼각형을 선택한 경우\r\n        resTriangle.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                check = \"삼각형\";\r\n                result.setImageResource(R.drawable.res_triangle);\r\n            }\r\n        });\r\n        // 원을 선택한 경우\r\n        resCircle.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                check = \"원\";\r\n                result.setImageResource(R.drawable.res_circle);\r\n            }\r\n        });\r\n    }\r\n    // 답 전달 함수\r\n    public String oneResult() {\r\n        return check;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/fragment/ExecutionOne.java b/app/src/main/java/fragment/ExecutionOne.java
+--- a/app/src/main/java/fragment/ExecutionOne.java	(revision 11e9e32c591f0747f0dca9f97cbbacd9a1bfaa69)
++++ b/app/src/main/java/fragment/ExecutionOne.java	(date 1651893087992)
+@@ -45,7 +45,7 @@
+             @Override
+             public void onClick(View v) {
+                 check = "사각형";
+-                result.setImageResource(R.drawable.res_square);
++                result.setImageResource(R.drawable.shape_rectangle);
+             }
+         });
+         // 삼각형을 선택한 경우
+@@ -53,7 +53,7 @@
+             @Override
+             public void onClick(View v) {
+                 check = "삼각형";
+-                result.setImageResource(R.drawable.res_triangle);
++                result.setImageResource(R.drawable.shape_triangle);
+             }
+         });
+         // 원을 선택한 경우
+@@ -61,7 +61,7 @@
+             @Override
+             public void onClick(View v) {
+                 check = "원";
+-                result.setImageResource(R.drawable.res_circle);
++                result.setImageResource(R.drawable.shape_oval);
+             }
+         });
+     }

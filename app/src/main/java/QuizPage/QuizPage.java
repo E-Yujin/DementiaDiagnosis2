@@ -40,14 +40,14 @@ public class QuizPage {
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
     }
 
-    public QuizPage(TTS Tts, TextView quest, TextView ann, Button sub, List<String> quiz) {
+    public QuizPage(TTS Tts, TextView quest, TextView ann, Button sttB, Button sub, int n, List<String> quiz) {
         tts = Tts;
         question = quest;
         announce = ann;
-        title_quest = quiz;
+        sttBtn = sub;
         submit = sub;
-        question.setText(title_quest.get(current));
-        announce.setText("아래 세개의 도형 중 하나를 선택해주세요!");
+        title_quest = quiz;
+        question.setText(title_quest.get(n));
     }
 
     public void Submit(){

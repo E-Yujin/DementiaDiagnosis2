@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExecutionPage"
-    android:padding="10dp"
+    tools:context="QuizPage.ExecutionPage"
+    android:padding="20dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -19,31 +19,51 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:hint="Announce"
+        android:visibility="invisible"
         android:textSize="15sp" />
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="400dp"
         tools:layout_editor_absoluteX="203dp"
         tools:layout_editor_absoluteY="281dp">
     </FrameLayout>
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/result"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#2196F3"
-        android:text="정답 제출" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:hint="당신의 말이 나타납니다."
+        android:visibility="invisible"/>
 
-    <TextView
-        android:id="@+id/score"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="123456"/>
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/sttStart"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="40dp"
+            android:text="말하기" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#2196F3"
+            android:text="정답 제출" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -18,7 +18,7 @@ public class ExecutionTwo extends Fragment {
 
     ImageButton squareOne, squareTwo, squareThree, squareFour;
     ImageView star1, star2, star3, star4;
-    String check;
+    String check="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

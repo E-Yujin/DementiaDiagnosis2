@@ -16,14 +16,17 @@ public class LanguageFunc extends question{
         this.score = 0;
         Arrays.fill(isDone, false);
 
-        this.quiz.add("여기 있는 그림의 이름을 말씀해주세요\n");
-        this.quiz.add("여기 있는 그림의 이름을 말씀해주세요\n");
-        this.quiz.add("여기 있는 그림의 이름을 말씀해주세요\n");
-        this.quiz.add("여기 있는 그림의 이름을 말씀해주세요\n");
+        this.quiz.add("아래 그림의 이름을 말씀해주세요\n");
+        this.quiz.add("아래 그림의 이름을 말씀해주세요\n");
+        this.quiz.add("아래 그림의 이름을 말씀해주세요\n");
+        this.quiz.add("아래 5개의 동그라미를\n\n" +
+                "1이라고 쓰여있는 공간에 2개를 옮기고,\n\n" +
+                "2이라고 쓰여있는 공간에 3개를 옮기세요.");
 
         this.crr_ans[0].add("칫솔");
         this.crr_ans[1].add("그네");
         this.crr_ans[2].add("주사위");
-        this.crr_ans[3].add("오른쪽");
+        this.crr_ans[3].add("2");
+        this.crr_ans[3].add("3");
     }
 }
