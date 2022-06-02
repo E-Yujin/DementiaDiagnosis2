@@ -77,8 +77,10 @@ public class orientation_Page extends AppCompatActivity {
                     String[] ansArray = QP.user_ans.split("");
                     String toDigit = "";
                     for(String s : ansArray){
-                        if(Character.isDigit(s.charAt(0))) {
-                            toDigit += s;
+                        if(!s.equals("")) {
+                            if(Character.isDigit(s.charAt(0))) {
+                                toDigit += s;
+                            }
                         }
                     }
                     if(toDigit.equals("")){

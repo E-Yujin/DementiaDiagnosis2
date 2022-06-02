@@ -194,7 +194,16 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                String date = year + "/" + month + "/" + day;
+                String date = null;
+                String s_month = Integer.toString(month), s_day = Integer.toString(day);
+
+                if(month < 10) {
+                    s_month = "0" + month;
+                }
+                if(day < 10) {
+                    s_day = "0" + day;
+                }
+                date = year + "/" + s_month + "/" + s_day;
                 userBirth.setText(date);
             }
         };

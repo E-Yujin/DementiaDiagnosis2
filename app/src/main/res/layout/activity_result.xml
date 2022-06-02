@@ -5,7 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".Result">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이름"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="나이"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/edu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="학력"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/total"
@@ -14,4 +36,15 @@
         android:gravity="center"
         android:text="TextView"
         android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/resMessage"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="결과 메세지"
+        android:textSize="18sp"
+        android:background="@drawable/edge"/>
+
 </LinearLayout>

@@ -115,6 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // 무학여부 나이 테이블 데이터
     private void fillEduAgeTable() {
+        // 문맹, 무학, 초등, 중등, 고등, 대학
         EducationAge fifty = new EducationAge(50, 0, 0, 22, 24, 26, 27);
         addEduAgeTable(fifty);
         EducationAge sixty = new EducationAge(60, 0, 16, 21, 23, 25, 26);

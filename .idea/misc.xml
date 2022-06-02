@@ -3,16 +3,50 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.1" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_result.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_star.xml" value="0.1" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fluency.xml" value="0.16983695652173914" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/map.xml" value="0.10666666666666667" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml" value="0.17346014492753623" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_output.xml" value="0.17346014492753623" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/orientation.xml" value="0.1" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/quiz_home.xml" value="0.10733695652173914" />
-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/space_time.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable-v24/round_button.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/round_button.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_first.xml" value="0.1539855072463768" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_formal_test.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_home.xml" value="0.17904761904761904" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_main.xml" value="0.1721014492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_register.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_simple_test.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/main_home.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/quiz_home.xml" value="0.15942028985507245" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/bg01.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/edge.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_baseline_home.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_star.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_circle.xml" value="0.10277777777777777" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_square.xml" value="0.10277777777777777" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_line.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_oval.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_rectangle.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_triangle.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/target_shape.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/triangle_blue.xml" value="0.10277777777777777" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_comprehension_page.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_result.xml" value="0.152" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_simple_test.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/bottom_navigation.xml" value="0.1490036231884058" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/comprehension.xml" value="0.176" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution.xml" value="0.176" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_season.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_shape.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_star.xml" value="0.23731884057971014" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_chart.xml" value="0.14492753623188406" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_setting.xml" value="0.14492753623188406" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/language_func.xml" value="0.2" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/orientation.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/quiz_home.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/space_time.xml" value="0.2" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/understand.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/menu/bottom_navigation.xml" value="0.264" />
       </map>
     </option>
   </component>
