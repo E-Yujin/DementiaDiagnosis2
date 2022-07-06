@@ -16,7 +16,7 @@ public class memoryInput extends question {
         this.score = new Integer(0);
         Arrays.fill(isDone, false);
 
-        this.quiz.add("지금부터외우셔야 하는 문장 하나를 불러드리겠습니다.\n" +
+        this.quiz.add("지금부터외우셔야 하는\n문장 하나를 불러드리겠습니다.\n" +
                 "끝까지 잘 듣고 따라 해 보세요.");
         this.quiz.add("잘 하셨습니다.\n제가 다시 한번 불러드리겠습니다.\n" +
                 "이번에도 다시 여쭈어 볼테니\n잘 듣고 따라 해 보세요.");

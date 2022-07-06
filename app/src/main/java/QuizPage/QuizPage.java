@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,8 @@ public class QuizPage {
     TextView question;
     TextView announce;
     EditText answer;
-    Button sttBtn, submit;
+    ImageButton sttBtn;
+    Button submit;
 
     public int current = 0;
     protected List<String> title_quest;
@@ -25,7 +27,7 @@ public class QuizPage {
     public String user_ans, correct;
 
     public QuizPage(MainSTT Stt, TTS Tts, TextView quest, TextView ann, EditText ans,
-                    Button sttB,Button sub, List<String> quiz){
+                    ImageButton sttB,Button sub, List<String> quiz){
 
         stt = Stt;
         tts = Tts;
@@ -40,11 +42,11 @@ public class QuizPage {
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
     }
 
-    public QuizPage(TTS Tts, TextView quest, TextView ann, Button sttB, Button sub, int n, List<String> quiz) {
+    public QuizPage(TTS Tts, TextView quest, TextView ann, ImageButton sttB, Button sub, int n, List<String> quiz) {
         tts = Tts;
         question = quest;
         announce = ann;
-        sttBtn = sub;
+        sttBtn = sttB;
         submit = sub;
         title_quest = quiz;
         question.setText(title_quest.get(n));
@@ -118,7 +120,6 @@ public class QuizPage {
         question.setText(title_quest.get(current));
         announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
         answer.setText("");
-        sttBtn.setText("말하기");
         sttBtn.setEnabled(true);
         submit.setEnabled(true);
     }

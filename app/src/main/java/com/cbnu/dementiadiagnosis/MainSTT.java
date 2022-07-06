@@ -3,6 +3,7 @@ package com.cbnu.dementiadiagnosis;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -13,6 +14,7 @@ import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.EditText;
 
@@ -36,7 +38,7 @@ public class MainSTT{
 
     private TTS tts;
 
-    Button sttBtn;
+    ImageButton sttBtn;
     Button submit;
     EditText result;
     TextView textView;
@@ -59,11 +61,12 @@ public class MainSTT{
     private int startingIndex = -1; // 녹음 시작 인덱스
     private int endIndex = -1;
     private int cnt = 0;// 카운터
+    boolean transforming = false;
 
     private short[] buffer = null;
 
     public MainSTT (AppCompatActivity context, EditText editText, TextView announce,
-                    TextView quiz, Button Btn, Button sub, TTS talk){
+                    TextView quiz, ImageButton Btn, Button sub, TTS talk){
         if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
             ActivityCompat.requestPermissions(
                     context, new String[]{Manifest.permission.INTERNET,
@@ -111,7 +114,6 @@ public class MainSTT{
                 case 1:
                     result.setText("");
                     textView.setText(v);
-                    sttBtn.setText("말했어요!");
                     submit.setEnabled(false);
                     break;
                 // 목소리가 인식되었음(버튼 또는 max time)
@@ -123,14 +125,12 @@ public class MainSTT{
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
                     textView.setText(v);
-                    sttBtn.setText("말하기");
                     submit.setEnabled(true);
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
                     textView.setText(v);
                     sttBtn.setEnabled(true);
-                    sttBtn.setText("다시 말하기");
                     submit.setEnabled(true);
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
@@ -142,7 +142,6 @@ public class MainSTT{
                         result.setText(s);
                     }
                     sttBtn.setEnabled(true);
-                    sttBtn.setText("그만 말하기");
                     submit.setEnabled(false);
                     break;
                 case 6:
@@ -158,7 +157,6 @@ public class MainSTT{
                         textView.setText("잘 알아듣지 못했어요.\n다시 말씀해주세요!");
                     }
                     sttBtn.setEnabled(true);
-                    sttBtn.setText("다시 말하기");
                     submit.setEnabled(true);
                     break;
                 case 7:
@@ -230,11 +228,12 @@ public class MainSTT{
                 });
                 threadRecog.start();
                 try {
-                    threadRecog.join(60000);
+                    threadRecog.join(120000);
                     if (threadRecog.isAlive()) {
                         threadRecog.interrupt();
-                        SendMessage("1분 동안 말씀하지 않아 인식을 종료합니다.\n" +
+                        SendMessage("2분 동안 말씀하지 않아 인식을 종료합니다.\n" +
                                 "'말하기'를 다시 누르고 말씀해주세요.", 4);
+                        forceStop = true;
                     }
                 } catch (InterruptedException e) {
                     SendMessage("Interrupted", 4);
@@ -259,7 +258,7 @@ public class MainSTT{
             recData.add(inBuffer);
             level = (int) (total / ret);
             if (voiceReconize == false) {
-                if (level > 300) {
+                if (level > 350) {
                     if (cnt == 0)
                         startingIndex = recData.size();
                     cnt++;
@@ -285,7 +284,7 @@ public class MainSTT{
                     cnt++;
                 }
                 // 도중에 다시 소리가 커지는 경우 잠시 쉬었다가 계속 말하는 경우이므로 cnt 값은 0
-                if (level > 300) {
+                if (level > 350) {
                     cnt = 0;
                 }
                 // endIndex 를 저장하고 레벨체킹을 끝냄
@@ -301,14 +300,12 @@ public class MainSTT{
 
                     Thread PR_Thread = new Thread(new Runnable() {
                         @Override
-                        public void run(){
+                        public synchronized void run(){
                             int flag;
-                            flag = PrintResult(endIndex, startingIndex, recData);
-                            if(flag == -1){
-                                SendMessage("ERROR: 429", 8);
-                            }
-                            else SendMessage("들었어요!", 5);
-
+                            flag = PrintResult(this, endIndex, startingIndex, recData);
+                            if (flag == -1) {
+                                SendMessage("ERROR", 8);
+                            } else SendMessage("들었어요!", 5);
                             recData.clear();
                         }
                     });
@@ -321,11 +318,12 @@ public class MainSTT{
         }
     }
 
-    public int PrintResult(int endIndex, int startingIndex, LinkedList<short[]> recData){
+    public int PrintResult(Runnable context, int endIndex, int startingIndex, LinkedList<short[]> recData){
         short[] buffer;
         int lenSpeech = 0;
         byte [] speechData = new byte [maxLenSpeech * 2];
 
+        Log.d("record_i", "short to byte");
         for (int i = startingIndex; i < endIndex; i++) {
             buffer = recData.get(i);
             for (int j = 0; j < buffer.length; j++) {
@@ -336,19 +334,19 @@ public class MainSTT{
                 speechData[lenSpeech * 2] = (byte) (buffer[j] & 0x00FF);
                 speechData[lenSpeech * 2 + 1] = (byte) ((buffer[j] & 0xFF00) >> 8);
                 lenSpeech++;
-                Log.d("record_i", Integer.toString(lenSpeech));
             }
         }
 
-        Log.d("record_d", sendDataAndGetResult(speechData, lenSpeech));
-        result_text = sendDataAndGetResult(speechData, lenSpeech);
+            Log.d("record_d", sendDataAndGetResult(speechData, lenSpeech));
+            result_text = sendDataAndGetResult(speechData, lenSpeech);
+            if(result_text.contains("ERROR")) return -1;
+            if(result_text.contains("-1")) return -1;
+            else return 0;
 
-        if(result_text.contains("ERROR") && result_text.contains("429")) return -1;
-        if(result_text.contains("-1")) return -1;
-        else return 0;
     }
 
     public String sendDataAndGetResult (byte[] speechData, int lenSpeech) {
+        transforming = true;
         Log.d("record_n", "STT 작동!");
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
         String accessKey = "140889f3-77c9-4522-a5af-5f8a3898b740";
@@ -388,11 +386,14 @@ public class MainSTT{
             if ( responseCode == 200 ) {
                 InputStream is = new BufferedInputStream(con.getInputStream());
                 responBody = readStream(is);
+                transforming = false;
                 return responBody;
             }
             else
+                transforming = false;
                 return "ERROR: " + Integer.toString(responseCode);
         } catch (Throwable t) {
+            transforming = false;
             return "ERROR: " + t.toString();
         }
     }
@@ -402,7 +403,6 @@ public class MainSTT{
             forceStop = true;
             isStop_state = true;
             sttBtn.setEnabled(true);
-            sttBtn.setText("말하기");
         }
     }
 

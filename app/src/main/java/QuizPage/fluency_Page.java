@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class fluency_Page extends AppCompatActivity {
     TextView question;
     TextView announce;
     EditText answer;
-    Button sttBtn;
+    ImageButton sttBtn;
     Button submit;
     List<String> tem = new ArrayList<>();
 
@@ -47,7 +48,7 @@ public class fluency_Page extends AppCompatActivity {
         question = (TextView) findViewById(R.id.question);
         announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
-        sttBtn = (Button) findViewById(R.id.sttStart);
+        sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
         flu = new fluency();
         stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
@@ -79,7 +80,6 @@ public class fluency_Page extends AppCompatActivity {
             public void onClick(View v) {
                 stt.Stop();
                 tts.Stop();
-                sttBtn.setText("말하기");
                 QP.user_ans = answer.getText().toString().replace(".", "");
                 String ans[] = QP.user_ans.split(" ");
                 int correct = 0;

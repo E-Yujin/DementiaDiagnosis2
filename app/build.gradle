@@ -40,4 +40,6 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('libs/libDaumMapAndroid.jar')
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'me.relex:circleindicator:1.2.2'
 }

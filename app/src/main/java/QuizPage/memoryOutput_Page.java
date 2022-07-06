@@ -6,6 +6,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class memoryOutput_Page extends AppCompatActivity {
     TextView question;
     TextView announce;
     EditText answer;
-    Button sttBtn;
+    ImageButton sttBtn;
     Button submit;
 
     boolean first[];
@@ -47,7 +48,7 @@ public class memoryOutput_Page extends AppCompatActivity {
         answer = (EditText) findViewById(R.id.result);
         answer.setEnabled(true);
         answer.setHint("이 항목에서는 키보드 입력이 불가능합니다.");
-        sttBtn = (Button) findViewById(R.id.sttStart);
+        sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
         memo_out = new memoryOutput();
 
@@ -77,7 +78,6 @@ public class memoryOutput_Page extends AppCompatActivity {
                 stt.Stop();
                 tts.Stop();
                 sttBtn.setEnabled(true);
-                sttBtn.setText("말하기");
                 tts.isStopUtt = true;
 
                 QP.user_ans = answer.getText().toString();
@@ -119,15 +119,6 @@ public class memoryOutput_Page extends AppCompatActivity {
                         memo_out.score ++;
                     }
                     QP.current ++;
-                    if(QP.current == 6){
-                        Intent resultIntent = new Intent();
-
-                        resultIntent.putExtra("isDone", true);
-                        resultIntent.putExtra("score", memo_out.score);
-
-                        setResult(1, resultIntent);
-                        finish();
-                    }
                     while (QP.current < 6){
                         if(!first[QP.current]){
                             question.setText(memo_out.quiz.get(QP.current));
@@ -136,6 +127,15 @@ public class memoryOutput_Page extends AppCompatActivity {
                             break;
                         }
                         else QP.current ++;
+                    }
+                    if(QP.current == 6){
+                        Intent resultIntent = new Intent();
+
+                        resultIntent.putExtra("isDone", true);
+                        resultIntent.putExtra("score", memo_out.score);
+
+                        setResult(1, resultIntent);
+                        finish();
                     }
                 }
             }

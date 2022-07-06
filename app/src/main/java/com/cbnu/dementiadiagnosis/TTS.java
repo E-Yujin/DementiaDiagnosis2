@@ -9,6 +9,7 @@ import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -23,9 +24,10 @@ public class TTS {
     private final Bundle params = new Bundle();
     Handler handler = new Handler();
     public boolean isStopUtt = false;
-    Button sttButt, submit;
+    ImageButton sttButt;
+    Button submit;
 
-    public TTS(Context context, TextToSpeech.OnInitListener listener, Button sttB, Button sub){
+    public TTS(Context context, TextToSpeech.OnInitListener listener, ImageButton sttB, Button sub){
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, null);
         tts = new TextToSpeech(context, listener);
         sttButt = sttB;
@@ -53,6 +55,10 @@ public class TTS {
                         public void run() {
                             if(!s.contains("Done"))
                                 speakOut(say,"Done");
+                            else {
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
+                            }
                         }
                     }, 500);
                 }
@@ -80,7 +86,10 @@ public class TTS {
                         public void run() {
                             if(!s.contains("Done"))
                                 speakOut(say,"Done");
-                            return;
+                            else {
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
+                            }
                         }
                     }, time);
                 }
@@ -108,19 +117,15 @@ public class TTS {
                         @Override
                         public void run() {
                             if(!s.contains("Done")){
-                                if(!s.contains("continue")){
-                                    speakOut(say.get(i), id);
-                                    i++;
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
                                 }
-                                else if(i < say.size()){
-                                    speakOut(say.get(i), id);
-
-                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
-                                        sttButt.setEnabled(true);
-                                        submit.setEnabled(true);
-                                    }
-                                    i++;
-                                }
+                                else speakOut(say.get(i), id);
+                                i++;
+                            }
+                            else{
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
                             }
                         }
                     }, 500);
@@ -150,18 +155,15 @@ public class TTS {
                         @Override
                         public void run() {
                             if(!s.contains("Done")){
-                                if(!s.contains("continue")){
-                                    speakOut(say.get(i), id);
-                                    i++;
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
                                 }
-                                else if(i < say.size()){
-                                    speakOut(say.get(i), id);
-                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
-                                        sttButt.setEnabled(true);
-                                        submit.setEnabled(true);
-                                    }
-                                    i++;
-                                }
+                                else speakOut(say.get(i), id);
+                                i++;
+                            }
+                            else{
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
                             }
                         }
                     }, times[i]);
@@ -190,20 +192,16 @@ public class TTS {
                         @Override
                         public void run() {
                             if(!s.contains("Done")){
-                                if(!s.contains("continue")){
-                                    text.setText(say.get(i));
-                                    speakOut(say.get(i), id);
-                                    i++;
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
                                 }
-                                else if(i < say.size()){
-                                    speakOut(say.get(i), id);
-                                    text.setText(say.get(i));
-                                    if(say.get(i).contains("대답할 준비가 되셨다면")){
-                                        sttButt.setEnabled(true);
-                                        submit.setEnabled(true);
-                                    }
-                                    i++;
-                                }
+                                else speakOut(say.get(i), id);
+                                text.setText(say.get(i));
+                                i++;
+                            }
+                            else{
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
                             }
                         }
                     }, 500);
@@ -233,20 +231,16 @@ public class TTS {
                         @Override
                         public void run() {
                             if(!s.contains("Done")){
-                                if(!s.contains("continue")){
-                                    text.setText(say.get(i));
-                                    speakOut(say.get(i), id);
-                                    i++;
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
                                 }
-                                else if(i < say.size()){
-                                    text.setText(say.get(i));
-                                    speakOut(say.get(i), id);
-                                    /*if(say.get(i).contains("대답할 준비가 되셨다면")){
-                                        sttButt.setEnabled(true);
-                                        submit.setEnabled(true);
-                                    }*/
-                                    i++;
-                                }
+                                else speakOut(say.get(i), id);
+                                text.setText(say.get(i));
+                                i++;
+                            }
+                            else{
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
                             }
                         }
                     }, times[i]);
@@ -260,8 +254,7 @@ public class TTS {
         }
     }
     // 여러 문장을 말하는데 텍스트뷰 변경이 필요하고 수동으로 텀을 조절하고 싶을 때
-
-    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, Button btn, EditText ans){
+    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, ImageButton btn, EditText ans){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 int i = 0;

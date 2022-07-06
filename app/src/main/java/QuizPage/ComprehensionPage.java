@@ -15,6 +15,7 @@ import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +31,8 @@ public class ComprehensionPage extends AppCompatActivity {
 
     private ImageView mImg, image2, image3, image4, image5;
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
-    private Button sttBtn, submit;
+    private ImageButton sttBtn;
+    private Button submit;
     int resLeft, resRight; // 정답 체크
     LanguageFunc languageFunc;
     TTS tts;

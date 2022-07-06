@@ -6,6 +6,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +33,10 @@ public class memoryInput_Page extends AppCompatActivity {
     TextView question;
     TextView announce;
     EditText answer;
-    Button sttBtn;
+    ImageButton sttBtn;
     Button submit;
+
+    boolean isfirst = true;
 
     ArrayList<String> first, second;
     List<String> tem = new ArrayList<>();
@@ -43,23 +47,23 @@ public class memoryInput_Page extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.memory_input);
+        final TextInputLayout TIL = findViewById(R.id.goolelayout);
 
         question = (TextView) findViewById(R.id.question);
         announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
-        answer.setEnabled(false);
-        answer.setHint("이 항목에서는 키보드 입력이 불가능합니다.");
-        sttBtn = (Button) findViewById(R.id.sttStart);
+        answer = TIL.getEditText();
+        answer.setEnabled(true);
+        sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
         memo_in = new memoryInput();
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                int[] time = {0, 1000, 1000};
-                tts.onInit(status, question.getText().toString(), "default");
+                int[] time = {1000, 500};
+                tts.onInit(status, question.getText().toString(), "continue");
                 tem.add("민수는.....자전거를 타고.....공원에 가서....11시부터...야구를 했다.");
-                tem.add(announce.getText().toString());
                 tts.UtteranceProgress(tem, "continue", time);
             }
         }, sttBtn, submit);
@@ -80,10 +84,10 @@ public class memoryInput_Page extends AppCompatActivity {
         });
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                isfirst = false;
                 stt.Stop();
                 tts.Stop();
                 sttBtn.setEnabled(true);
-                sttBtn.setText("말하기");
                 tts.isStopUtt = true;
 
                 QP.user_ans = answer.getText().toString();
@@ -162,21 +166,18 @@ public class memoryInput_Page extends AppCompatActivity {
         sttBtn.setEnabled(false);
         submit.setEnabled(false);
         if(QP.current < 2){
-            if(announce.getText() != "대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!"){
-                QP.Start();
-                tts.speakOut(question.getText().toString());
-                tts.UtteranceProgress(tem,"continue");
-            }
-            else {
-                tts.speakOut(question.getText().toString());
-                tts.UtteranceProgress(tem,"continue");
-            }
+            question.setText(memo_in.quiz.get(QP.current));
+            announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
+            answer.setText("");
+            tts.speakOut(question.getText().toString(),"continue");
+            tts.UtteranceProgress(tem,"continue");
         }
         else{
             tts.speakOut(question.getText().toString());
             announce.setText("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!");
             tts.UtteranceProgress(announce.getText().toString());
             sttBtn.setEnabled(false);
+            submit.setEnabled(true);
             submit.setText("확인");
         }
     }

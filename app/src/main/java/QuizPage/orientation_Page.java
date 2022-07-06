@@ -6,6 +6,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class orientation_Page extends AppCompatActivity {
     TextView question;
     TextView announce;
     EditText answer;
-    Button sttBtn;
+    ImageButton sttBtn;
     Button submit;
 
     private long backBtnTime = 0;
@@ -44,7 +45,7 @@ public class orientation_Page extends AppCompatActivity {
         question = (TextView) findViewById(R.id.question);
         announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
-        sttBtn = (Button) findViewById(R.id.sttStart);
+        sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
         ortt_main = new orientation();
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
@@ -69,7 +70,6 @@ public class orientation_Page extends AppCompatActivity {
                 stt.Stop();
                 tts.Stop();
                 sttBtn.setEnabled(true);
-                sttBtn.setText("말하기");
                 tts.isStopUtt = true;
                 QP.user_ans = QP.ans_filter(answer.getText().toString());
 

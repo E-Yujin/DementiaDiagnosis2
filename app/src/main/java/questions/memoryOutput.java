@@ -32,6 +32,7 @@ public class memoryOutput extends question {
         this.crr_ans[2].add("자전거");
         this.crr_ans[3].add("공원");
         this.crr_ans[4].add("11시");
+        this.crr_ans[4].add("열 한시");
         this.crr_ans[5].add("야구");
     }
 }

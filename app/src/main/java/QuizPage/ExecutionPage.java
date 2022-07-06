@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,8 @@ public class ExecutionPage extends AppCompatActivity {
     TextView question, announce;
     EditText answer;
     String total;
-    Button sttBtn, submit;
+    ImageButton sttBtn;
+    Button submit;
     QuizPage QP;
     MainSTT stt;
     TTS tts;

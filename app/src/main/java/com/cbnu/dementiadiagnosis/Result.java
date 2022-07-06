@@ -114,7 +114,7 @@ public class Result extends AppCompatActivity {
         if(total < edu_num) {
             msg.setText(val_name + "님의 진단 결과 점수는 " + total + "점 입니다."
                     + "가입 시 입력한 나이와 학력을 바탕으로 출력한 결과 " + edu_num +
-                    "점수 미만의 결과가 나오면 정기 검진을 받아보시는 것을 권해드립니다.");
+                    "점수 미만입니다.\n치매가 의심되는 상태이니 정기 검진을 받아보시는 것을 권해드립니다.");
         } else {
             msg.setText(val_name + "님의 진단 결과 점수는 " + total + "점 입니다."
                     + "가입 시 입력한 나이와 학력을 바탕으로 출력한 결과" + edu_num +

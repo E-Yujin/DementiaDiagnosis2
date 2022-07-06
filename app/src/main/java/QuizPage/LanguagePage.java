@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class LanguagePage extends AppCompatActivity {
     TextView announce;
     ImageView image;
     EditText answer;
-    Button sttBtn;
+    ImageButton sttBtn;
     Button submit;
     ActivityResultLauncher<Intent> startActivityResult;
 
@@ -50,7 +51,7 @@ public class LanguagePage extends AppCompatActivity {
         announce = (TextView) findViewById(R.id.announce);
         image = (ImageView) findViewById(R.id.question_image);
         answer = (EditText) findViewById(R.id.result);
-        sttBtn = (Button) findViewById(R.id.sttStart);
+        sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.btnSubmit);
         languageFunc = new LanguageFunc();
 
@@ -98,7 +99,6 @@ public class LanguagePage extends AppCompatActivity {
                 stt.Stop();
                 tts.Stop();
                 sttBtn.setEnabled(true);
-                sttBtn.setText("말하기");
                 tts.isStopUtt = true;
 
                 QP.user_ans = answer.getText().toString()

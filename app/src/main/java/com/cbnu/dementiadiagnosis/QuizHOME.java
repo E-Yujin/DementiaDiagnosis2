@@ -140,13 +140,12 @@ public class QuizHOME extends AppCompatActivity {
     private void switchPage(Intent intent, View view){
         switch (current){
             case 0:
-                intent = new Intent(view.getContext(), orientation_Page.class);
+                intent = new Intent(view.getContext(), memoryInput_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 1:
-                intent = new Intent(view.getContext(), Result.class);
-                intent.putExtra("result", total_score);
-                startActivity(intent);
+                intent = new Intent(view.getContext(), memoryInput_Page.class);
+                startActivityForResult(intent, 100);
                 break;
             case 2:
                 intent = new Intent(view.getContext(), attention_Page.class);
