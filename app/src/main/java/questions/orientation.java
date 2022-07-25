@@ -19,9 +19,9 @@ public class orientation extends question {
         for (int i = 0; i < this.num; i++) {
             this.crr_ans[i] = new ArrayList<>();
         }
-        this.isDone = new boolean[this.num];
-        this.score = new Integer(0);
-        Arrays.fill(isDone, false);
+        this.user_ans = new String[this.num];
+        this.scores = new int[10];
+        this.Tscore = new Integer(0);
 
         long getDate = System.currentTimeMillis();
         Date DateData = new Date(getDate);

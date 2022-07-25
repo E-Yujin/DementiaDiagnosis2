@@ -10,21 +10,21 @@
 
     <TextView
         android:id="@+id/question"
-        android:layout_width="364dp"
-        android:layout_height="149dp"
-        android:fontFamily="@font/jejugothic"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
         android:gravity="center"
+        android:fontFamily="@font/jejugothic"
+        android:lineSpacingExtra ="10dp"
+        android:letterSpacing="0.04"
         android:text="안녕하세요.\n폰트 테스트 중입니다."
         android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="309dp"
-        android:layout_height="102dp"
-        android:fontFamily="@font/jejugothic"
-        android:gravity="center"
-        android:text="안녕하세요. 폰트 테스트 중입니다."
-        android:textSize="15sp" />
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/helper_jump"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/goolelayout"
@@ -32,9 +32,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="40dp"
         android:fontFamily="@font/jejugothic"
+        android:lineSpacingExtra ="10dp"
         android:hint="입력 불가 항목"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -47,7 +48,9 @@
             android:id="@+id/result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:gravity="center"
+            android:fontFamily="@font/jejugothic"
+            android:lineSpacingExtra ="10dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

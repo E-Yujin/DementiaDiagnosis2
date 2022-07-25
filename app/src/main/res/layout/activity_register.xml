@@ -30,6 +30,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:text="진단하기 앞서 간단한 정보를\n입력해주시길 바랍니다"
                 android:textColor="#757575"
                 android:textSize="18sp"/>
@@ -45,6 +48,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="이름"
+                    android:fontFamily="@font/jejugothic"
+                    android:lineSpacingExtra ="10dp"
+                    android:letterSpacing="0.04"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:inputType="text"/>
@@ -62,6 +68,9 @@
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
                     android:hint="생년월일"
+                    android:fontFamily="@font/jejugothic"
+                    android:lineSpacingExtra ="10dp"
+                    android:letterSpacing="0.04"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:inputType="text"/>
@@ -73,6 +82,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="성별"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
@@ -89,6 +101,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="남"
+                    android:fontFamily="@font/jejugothic"
+                    android:lineSpacingExtra ="10dp"
+                    android:letterSpacing="0.04"
                     android:textSize="18sp"/>
 
                 <RadioButton
@@ -97,6 +112,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:text="여"
+                    android:fontFamily="@font/jejugothic"
+                    android:lineSpacingExtra ="10dp"
+                    android:letterSpacing="0.04"
                     android:textSize="18sp"/>
             </RadioGroup>
 
@@ -105,6 +123,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="성별을 선택해주세요"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:textColor="#FF0000"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -115,6 +136,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:text="무학여부"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
@@ -131,6 +155,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="문맹"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
                         android:textSize="18sp"/>
                     <RadioButton
                         android:id="@+id/radioTwo"
@@ -138,6 +165,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="무학"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
                         android:textSize="18sp"/>
                 </TableRow>
 
@@ -147,6 +177,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="초등졸업"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
                         android:textSize="18sp" />
                     <RadioButton
                         android:id="@+id/radioFour"
@@ -154,6 +187,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="중등졸업"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
                         android:textSize="18sp" />
                 </TableRow>
 
@@ -163,6 +199,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="고등졸업"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
                         android:textSize="18sp" />
                     <RadioButton
                         android:id="@+id/radioSix"
@@ -170,6 +209,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="대학졸업이상"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
                         android:textSize="18sp" />
                 </TableRow>
 
@@ -180,6 +222,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="무학여부를 선택해주세요"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:textColor="#FF0000"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -190,7 +235,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="사용자 정보 기억하기" />
+                android:text="사용자 정보 기억하기"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"/>
 
             <Button
                 android:id="@+id/btnInsert"
@@ -199,6 +247,9 @@
                 android:layout_gravity="center"
                 android:background="#FF6168FF"
                 android:text="시작하기"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:textSize="20sp" />
 
         </LinearLayout>

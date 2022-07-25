@@ -55,6 +55,10 @@ public class LanguagePage extends AppCompatActivity {
         submit = (Button) findViewById(R.id.btnSubmit);
         languageFunc = new LanguageFunc();
 
+        Intent intent;
+        intent = getIntent();
+        languageFunc.scores = intent.getIntArrayExtra("scores");
+
         image.setImageResource(R.drawable.toothbrush);
 
         startActivityResult = registerForActivityResult(
@@ -66,12 +70,14 @@ public class LanguagePage extends AppCompatActivity {
                             Log.d("launcher_intent", "성공!!!!!!!!!!!");
                             assert result.getData() != null;
                             int num = result.getData().getIntExtra("comprehension", 0);
-                            languageFunc.score += num;
+                            languageFunc.Tscore += num;
 
-                            Intent intent = new Intent();
-                            intent.putExtra("isDone", true);
-                            intent.putExtra("score", languageFunc.score);
-                            setResult(1, intent);
+                            languageFunc.scores[7] = languageFunc.Tscore;
+
+                            Intent intent = new Intent(getApplicationContext(), fluency_Page.class);
+                            intent.putExtra("scores", languageFunc.scores);
+                            startActivity(intent);
+
                             finish();
                         }
                     }
@@ -83,9 +89,9 @@ public class LanguagePage extends AppCompatActivity {
                 tts.onInit(status, question.getText().toString(), "default");
                 //tts.UtteranceProgress(announce.getText().toString());
             }
-        }, sttBtn, submit);
-        stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, submit, languageFunc.quiz);
+        });
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, languageFunc.quiz);
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -120,7 +126,7 @@ public class LanguagePage extends AppCompatActivity {
                 } else {
                     for (String data : correct) {
                         if (QP.user_ans.contains(data)) {
-                            languageFunc.score++;
+                            languageFunc.Tscore++;
                         }
                         /*if (QP.current + 1 < languageFunc.score) {
                             languageFunc.score = QP.current + 1;
@@ -141,7 +147,7 @@ public class LanguagePage extends AppCompatActivity {
                         startActivityResult.launch(intent);
                         overridePendingTransition(0, 0);
                         intent.putExtra("isDone", true);
-                        intent.putExtra("score", languageFunc.score);
+                        intent.putExtra("score", languageFunc.Tscore);
                         setResult(1, intent);
                         QP.Submit();
                     } /*else if(QP.current == 3) {

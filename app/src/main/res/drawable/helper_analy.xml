@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/analy_0"
+        android:duration="150"/>
+    <item android:drawable="@drawable/analy_1"
+        android:duration="150"/>
+    <item android:drawable="@drawable/analy_2"
+        android:duration="150"/>
+    <item android:drawable="@drawable/analy_3"
+        android:duration="150"/>
+    <item android:drawable="@drawable/analy_4"
+        android:duration="150"/>
+
+</animation-list>

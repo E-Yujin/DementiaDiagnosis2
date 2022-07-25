@@ -51,6 +51,7 @@ public class MainSTT{
     int maxLenSpeech = 16000 * 45;
     int lenSpeech = 0;
     public boolean isRecording = false;
+    public boolean isListening = false;
     boolean forceStop = false;
     boolean isStop_state = false;
 
@@ -62,6 +63,10 @@ public class MainSTT{
     private int endIndex = -1;
     private int cnt = 0;// 카운터
     boolean transforming = false;
+    boolean isRecognize = false;
+    boolean isAnalysing = false;
+    boolean isTooFast = false;
+    public boolean isFluency = false;
 
     private short[] buffer = null;
 
@@ -80,14 +85,29 @@ public class MainSTT{
         tts = talk;
     }
 
+    public MainSTT (AppCompatActivity context, EditText editText,
+                    TextView quiz, ImageButton Btn, Button sub, TTS talk){
+        if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
+            ActivityCompat.requestPermissions(
+                    context, new String[]{Manifest.permission.INTERNET,
+                            Manifest.permission.RECORD_AUDIO},PERMISSION);
+        }
+        result = editText;
+        question = quiz;
+        sttBtn = Btn;
+        submit = sub;
+        tts = talk;
+    }
+
     public void start_STT() {
         if (isRecording) {
+            Log.d("record_확인", "오디오 릴리즈!");
             forceStop = true;
         } else {
             try {
                 new Thread(new Runnable() {
                     public void run() {
-                        Log.d("record", "녹음 시작!");
+                        Log.d("record_확인", "녹음 시작!");
                         SendMessage("듣는 중...", 1);
                         try {
                             recordSpeech();
@@ -100,6 +120,7 @@ public class MainSTT{
             } catch (Throwable t) {
                 forceStop = false;
                 isRecording = false;
+                isListening = false;
             }
         }
     }
@@ -113,57 +134,116 @@ public class MainSTT{
                 // 녹음이 시작되었음(버튼)
                 case 1:
                     result.setText("");
-                    textView.setText(v);
+                    //textView.setText(v);
+                    isListening = true;
+                    isRecognize = false;
+                    isAnalysing= false;
+                    isTooFast = false;
                     submit.setEnabled(false);
                     break;
                 // 목소리가 인식되었음(버튼 또는 max time)
                 case 2:
-                    textView.setText(v);
+                    //textView.setText(v);
+                    isListening = false;
+                    isRecognize = true;
+                    isAnalysing= false;
+                    isTooFast = false;
                     sttBtn.setEnabled(false);
                     submit.setEnabled(false);
                     break;
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
-                    textView.setText(v);
+                    //textView.setText(v);
+                    isListening = false;
+                    isRecognize = false;
+                    isAnalysing= false;
+                    isTooFast = true;
                     submit.setEnabled(true);
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
-                    textView.setText(v);
+                    //textView.setText(v);
+                    isListening = false;
+                    isRecognize = false;
+                    isAnalysing= false;
+                    isTooFast = true;
                     sttBtn.setEnabled(true);
                     submit.setEnabled(true);
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
-                    textView.setText("인식 완료!");
-                    if(!SplitResult().equals("ASR_NOTOKEN")){
+                    //textView.setText("인식 완료!");
+                    if(isRecording) {
+                        isListening = true;
+                        isRecognize = false;
+                        isAnalysing = false;
+                        isTooFast = false;
+                        if (isFluency) {
+                            sttBtn.setEnabled(false);
+                            submit.setEnabled(false);
+                        } else {
+                            sttBtn.setEnabled(true);
+                            submit.setEnabled(true);
+                        }
+                    }
+                    else{ // STT가 종료되었는데도 인식은 종료되지 않은 경우
+                        isListening = false;
+                        isRecognize = false;
+                        isAnalysing = false;
+                        isTooFast = false;
+                        if (isFluency) {
+                            sttBtn.setEnabled(false);
+                            submit.setEnabled(true);
+                        } else {
+                            sttBtn.setEnabled(true);
+                            submit.setEnabled(true);
+                        }
+                    }
+
+                    if (!SplitResult().equals("ASR_NOTOKEN")) {
                         String s;
                         s = result.getText().toString() + SplitResult() + " ";
                         result.setText(s);
                     }
-                    sttBtn.setEnabled(true);
-                    submit.setEnabled(false);
                     break;
-                case 6:
+                case 6: // 녹음을 정상적으로 마침
                     if(!result.getText().toString().equals("")){
                         String str = result.getText().toString().substring(0,
                                 result.getText().toString().length() - 1);
-                        textView.setText("\"" + str + "\"" +
+                        /*textView.setText("\"" + str + "\"" +
                                 " 라고 말씀하신 게 맞나요?\n\n" +
                                 "맞으시면 아래 파란 상자를 눌러주세요.\n"+
-                                "아니라면 보라색 상자를 눌러 다시 말씀해주세요.");
+                                "아니라면 보라색 상자를 눌러 다시 말씀해주세요.");*/
                     }
                     else{
-                        textView.setText("잘 알아듣지 못했어요.\n다시 말씀해주세요!");
+                        //textView.setText("잘 알아듣지 못했어요.\n다시 말씀해주세요!");
                     }
-                    sttBtn.setEnabled(true);
-                    submit.setEnabled(true);
+                    isListening = false;
+                    isRecognize = false;
+                    isAnalysing= false;
+                    isTooFast = false;
+                    if(isFluency){
+                        sttBtn.setEnabled(false);
+                        submit.setEnabled(true);
+                    }
+                    else{
+                        sttBtn.setEnabled(true);
+                        submit.setEnabled(true);
+                    }
                     break;
-                case 7:
-                    textView.setText("인식 중...");
+                case 7: // 텍스트 변환이 진행 중임.
+                    //textView.setText("인식 중...");
+                    isListening = false;
+                    isRecognize = false;
+                    isAnalysing= true;
+                    isTooFast = false;
                     break;
-                case 8:
-                    textView.setText("조금 더 천천히 말씀해주세요.");
+                case 8: // 에러
+                    //textView.setText("조금 더 천천히 말씀해주세요.");
+                    isListening = false;
+                    isRecognize = false;
+                    isAnalysing= false;
+                    isTooFast = true;
                     break;
             }
             super.handleMessage(msg);
@@ -215,11 +295,13 @@ public class MainSTT{
             else {
                 forceStop = false;
                 isRecording = true;
+                isListening = true;
                 audio.startRecording();
                 Thread threadRecog = new Thread(new Runnable() {
                     public void run() {
                         Recordingloop(audio, bufferSize);
                         isRecording = false;
+                        isListening = false;
                         SendMessage("말하기 완료.", 6);
                         audio.stop();
                         audio.release();
@@ -403,6 +485,7 @@ public class MainSTT{
             forceStop = true;
             isStop_state = true;
             sttBtn.setEnabled(true);
+            isListening = false;
         }
     }
 

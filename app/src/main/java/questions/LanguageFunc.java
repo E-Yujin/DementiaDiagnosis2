@@ -12,9 +12,9 @@ public class LanguageFunc extends question{
         for(int i = 0; i < this.num; i++) {
             this.crr_ans[i] = new ArrayList<>();
         }
-        this.isDone = new boolean[this.num];
-        this.score = 0;
-        Arrays.fill(isDone, false);
+        this.user_ans = new String[this.num];
+        this.scores = new int[10];
+        this.Tscore = new Integer(0);
 
         this.quiz.add("아래 그림의 이름을 말씀해주세요\n");
         this.quiz.add("아래 그림의 이름을 말씀해주세요\n");

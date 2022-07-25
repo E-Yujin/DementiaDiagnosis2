@@ -38,7 +38,6 @@ public class ComprehensionPage extends AppCompatActivity {
     TTS tts;
     QuizPage QP;
     TextView question;
-    TextView announce;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,6 @@ public class ComprehensionPage extends AppCompatActivity {
         sttBtn = findViewById(R.id.sttStart);
         submit = findViewById(R.id.btnSubmit);
         question = findViewById(R.id.question);
-        announce = findViewById(R.id.textView);
         languageFunc = new LanguageFunc();
 
         mImg.setTag(IMAGEVIEW_TAG);
@@ -82,8 +80,8 @@ public class ComprehensionPage extends AppCompatActivity {
                 tts.onInit(status, question.getText().toString(), "default");
                 //tts.UtteranceProgress(announce.getText().toString());
             }
-        }, sttBtn, submit);
-        QP = new QuizPage(tts, question, announce, sttBtn, submit, 3, languageFunc.quiz);
+        });
+        QP = new QuizPage(tts, question, sttBtn, submit, 3, languageFunc.quiz);
 
         sttBtn.setEnabled(false);
 
@@ -92,14 +90,15 @@ public class ComprehensionPage extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(resLeft == 2 && resRight == 3) {
-                    languageFunc.score = 1;
+                    languageFunc.Tscore = 1;
                 } else {
-                    languageFunc.score = 0;
+                    languageFunc.Tscore = 0;
                 }
                 Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
-                intent.putExtra("comprehension" , languageFunc.score);
-                Log.d("comprehension", "" + languageFunc.score);
+                intent.putExtra("comprehension" , languageFunc.Tscore);
+                Log.d("comprehension", "" + languageFunc.Tscore);
                 setResult(RESULT_OK, intent);
+
                 finish();
             }
         });

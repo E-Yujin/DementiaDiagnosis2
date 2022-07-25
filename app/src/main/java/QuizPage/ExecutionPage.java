@@ -35,7 +35,7 @@ public class ExecutionPage extends AppCompatActivity {
     ExecutionOne executionOne;
     ExecutionTwo executionTwo;
     ExecutionThree executionThree;
-    TextView question, announce;
+    TextView question;
     EditText answer;
     String total;
     ImageButton sttBtn;
@@ -55,10 +55,13 @@ public class ExecutionPage extends AppCompatActivity {
 
         question = findViewById(R.id.question);
         answer = findViewById(R.id.result);
-        announce = findViewById(R.id.textView);
         sttBtn = findViewById(R.id.sttStart);
         submit = findViewById(R.id.btnSubmit);
         execution = new Execution();
+
+        Intent intent;
+        intent = getIntent();
+        execution.scores = intent.getIntArrayExtra("scores");
 
         // Fragment 객체 선언
         fragmentManager = (FragmentManager)getSupportFragmentManager();
@@ -72,15 +75,15 @@ public class ExecutionPage extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString(), "default");
+                tts.onInit(status, question.getText().toString(), "default", 1000);
                 tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
                 tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
                 tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
-                tts.UtteranceProgress(tem, "continue", time, question);
+                tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
             }
-        }, sttBtn, submit);
-        stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn,submit, execution.quiz);
+        });
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        QP = new QuizPage(stt, tts, question, answer, sttBtn,submit, execution.quiz);
 
         sttBtn.setEnabled(false);
 
@@ -138,10 +141,10 @@ public class ExecutionPage extends AppCompatActivity {
 
                     for(String data : correct){
                         if(total.contains(data)){
-                            execution.score ++;
+                            execution.Tscore ++;
                         }
-                        if(QP.current + 1 < execution.score){
-                            execution.score = QP.current + 1;
+                        if(QP.current + 1 < execution.Tscore){
+                            execution.Tscore = QP.current + 1;
                         }
                     }
 
@@ -154,13 +157,12 @@ public class ExecutionPage extends AppCompatActivity {
                         tem.add("별이 각자 다른 위치로 이동합니다.");
                         tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
                         tem.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
-                        tts.UtteranceProgress(tem, "continue", time, question);
+                        tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
                     }
                     else if(QP.current == 1) {
                         sttBtn.setEnabled(true);
                         answer.setVisibility(View.VISIBLE);
-                        announce.setVisibility(View.VISIBLE);
                         tts.isStopUtt = false;
                         QP.current++;
                         question.setText(execution.quiz.get(QP.current));
@@ -168,16 +170,16 @@ public class ExecutionPage extends AppCompatActivity {
                         tem.clear();
                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
                         tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
-                        tts.UtteranceProgress(tem, "continue", time, question);
+                        tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
                     }
                     else if(QP.current == 2) {
-                        Intent resultIntent = new Intent();
+                        execution.scores[5] = execution.Tscore;
 
-                        resultIntent.putExtra("isDone", true);
-                        resultIntent.putExtra("score", execution.score);
+                        Intent intent = new Intent(getApplicationContext(), memoryOutput_Page.class);
+                        intent.putExtra("scores", execution.scores);
+                        startActivity(intent);
 
-                        setResult(1, resultIntent);
                         finish();
                     }
                 }

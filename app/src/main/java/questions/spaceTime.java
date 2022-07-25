@@ -17,9 +17,9 @@ public class spaceTime extends question {
         for (int i = 0; i < this.num; i++) {
             this.crr_ans[i] = new ArrayList<>();
         }
-        this.isDone = new boolean[this.num];
-        this.score = new Integer(0);
-        Arrays.fill(isDone, false);
+        this.user_ans = new String[this.num];
+        this.scores = new int[10];
+        this.Tscore = new Integer(0);
 
         this.quiz.add("여기 점을 연결하여 그린 그림이 있습니다.");
         this.quiz.add("이 그림과 똑같이 되도록");

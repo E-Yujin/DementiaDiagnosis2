@@ -45,8 +45,10 @@ public class SpaceTimeView extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(10);
         dPaint = new Paint();
-        dPaint.setColor(Color.GREEN);
+        dPaint.setColor(Color.BLACK);
         dPaint.setStrokeWidth(20);
+        dPaint.setStrokeJoin(Paint.Join.ROUND);
+        dPaint.setStrokeCap(Paint.Cap.ROUND);
         mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
 
         Point p1 = new Point(50, 20);
@@ -123,8 +125,10 @@ public class SpaceTimeView extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(10);
         dPaint = new Paint();
-        dPaint.setColor(Color.GREEN);
+        dPaint.setColor(Color.BLACK);
         dPaint.setStrokeWidth(20);
+        dPaint.setStrokeJoin(Paint.Join.ROUND);
+        dPaint.setStrokeCap(Paint.Cap.ROUND);
         mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
 
         Point p1 = new Point(50, 20);
@@ -201,8 +205,10 @@ public class SpaceTimeView extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(10);
         dPaint = new Paint();
-        dPaint.setColor(Color.GREEN);
+        dPaint.setColor(Color.BLACK);
         dPaint.setStrokeWidth(20);
+        dPaint.setStrokeJoin(Paint.Join.ROUND);
+        dPaint.setStrokeCap(Paint.Cap.ROUND);
         mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
     }
 
@@ -247,7 +253,7 @@ public class SpaceTimeView extends View {
 
     private void touch_start(float x, float y) {
 
-        for(int i = 0; i < 25; i++){
+        for (int i = 0; i < 25; i++) {
             mLastPointIndex = i;
             if (checkPoint(x, y, mLastPointIndex)) {
                 mPath.reset();
@@ -263,183 +269,143 @@ public class SpaceTimeView extends View {
     }
 
     private void touch_move(float x, float y) {
-    // draw line with finger move
+        // draw line with finger move
         Point p;
         if (isPathStarted) {
             mPath.reset();
             p = mPoints.get(mLastPointIndex);
             mPath.moveTo(p.x, p.y);
             int nextPointIndex;
-            if(mLastPointIndex == 0){
+            if (mLastPointIndex == 0) {
                 if (checkPoint(x, y, mLastPointIndex + 1)) {
                     drawPath(p, mLastPointIndex + 1);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 5)) {
                     drawPath(p, mLastPointIndex + 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 6)) {
                     drawPath(p, mLastPointIndex + 6);
-                }
-                else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if(mLastPointIndex == 4){
+            } else if (mLastPointIndex == 4) {
                 if (checkPoint(x, y, mLastPointIndex - 1)) {
                     drawPath(p, mLastPointIndex - 1);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 4)) {
                     drawPath(p, mLastPointIndex + 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 5)) {
                     drawPath(p, mLastPointIndex + 5);
-                }
-                else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if(mLastPointIndex == 20){
+            } else if (mLastPointIndex == 20) {
                 if (checkPoint(x, y, mLastPointIndex + 1)) {
                     drawPath(p, mLastPointIndex + 1);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 4)) {
                     drawPath(p, mLastPointIndex - 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 5)) {
                     drawPath(p, mLastPointIndex - 5);
-                }else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if(mLastPointIndex == 24){
+            } else if (mLastPointIndex == 24) {
                 if (checkPoint(x, y, mLastPointIndex - 1)) {
                     drawPath(p, mLastPointIndex - 1);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 6)) {
                     drawPath(p, mLastPointIndex - 6);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 5)) {
                     drawPath(p, mLastPointIndex - 5);
-                }else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if(mLastPointIndex > 0 && mLastPointIndex <= 3){
+            } else if (mLastPointIndex > 0 && mLastPointIndex <= 3) {
                 if (checkPoint(x, y, mLastPointIndex + 1)) {
                     drawPath(p, mLastPointIndex + 1);
                 }
                 if (checkPoint(x, y, mLastPointIndex - 1)) {
                     drawPath(p, mLastPointIndex - 1);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 4)) {
                     drawPath(p, mLastPointIndex + 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 5)) {
                     drawPath(p, mLastPointIndex + 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 6)) {
                     drawPath(p, mLastPointIndex + 6);
-                }
-                else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if(mLastPointIndex == 5 || mLastPointIndex == 10 || mLastPointIndex == 15){
+            } else if (mLastPointIndex == 5 || mLastPointIndex == 10 || mLastPointIndex == 15) {
                 if (checkPoint(x, y, mLastPointIndex + 1)) {
                     drawPath(p, mLastPointIndex + 1);
                 }
                 if (checkPoint(x, y, mLastPointIndex - 5)) {
                     drawPath(p, mLastPointIndex - 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 4)) {
                     drawPath(p, mLastPointIndex - 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 5)) {
                     drawPath(p, mLastPointIndex + 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 6)) {
                     drawPath(p, mLastPointIndex + 6);
-                }
-                else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if(mLastPointIndex == 9 || mLastPointIndex == 14 || mLastPointIndex == 19){
+            } else if (mLastPointIndex == 9 || mLastPointIndex == 14 || mLastPointIndex == 19) {
                 if (checkPoint(x, y, mLastPointIndex - 1)) {
                     drawPath(p, mLastPointIndex - 1);
                 }
                 if (checkPoint(x, y, mLastPointIndex - 5)) {
                     drawPath(p, mLastPointIndex - 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 4)) {
                     drawPath(p, mLastPointIndex + 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 5)) {
                     drawPath(p, mLastPointIndex + 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 6)) {
                     drawPath(p, mLastPointIndex - 6);
-                }
-                else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if(mLastPointIndex > 20 && mLastPointIndex <= 23){
+            } else if (mLastPointIndex > 20 && mLastPointIndex <= 23) {
                 if (checkPoint(x, y, mLastPointIndex + 1)) {
                     drawPath(p, mLastPointIndex + 1);
                 }
                 if (checkPoint(x, y, mLastPointIndex - 1)) {
                     drawPath(p, mLastPointIndex - 1);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 4)) {
                     drawPath(p, mLastPointIndex - 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 5)) {
                     drawPath(p, mLastPointIndex - 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 6)) {
                     drawPath(p, mLastPointIndex - 6);
-                }
-                else {
+                } else {
                     mPath.lineTo(x, y);
                 }
-            }
-            else if((mLastPointIndex > 5 && mLastPointIndex <= 8)||
-                    (mLastPointIndex > 10 && mLastPointIndex <= 13)||
-                    (mLastPointIndex > 15 && mLastPointIndex <= 18)){
+            } else if ((mLastPointIndex > 5 && mLastPointIndex <= 8) ||
+                    (mLastPointIndex > 10 && mLastPointIndex <= 13) ||
+                    (mLastPointIndex > 15 && mLastPointIndex <= 18)) {
                 if (checkPoint(x, y, mLastPointIndex + 1)) {
                     drawPath(p, mLastPointIndex + 1);
                 }
                 if (checkPoint(x, y, mLastPointIndex - 1)) {
                     drawPath(p, mLastPointIndex - 1);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 4)) {
                     drawPath(p, mLastPointIndex + 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 4)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 4)) {
                     drawPath(p, mLastPointIndex - 4);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 5)) {
                     drawPath(p, mLastPointIndex + 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 5)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 5)) {
                     drawPath(p, mLastPointIndex - 5);
-                }
-                else if (checkPoint(x, y, mLastPointIndex + 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex + 6)) {
                     drawPath(p, mLastPointIndex + 6);
-                }
-                else if (checkPoint(x, y, mLastPointIndex - 6)) {
+                } else if (checkPoint(x, y, mLastPointIndex - 6)) {
                     drawPath(p, mLastPointIndex - 6);
-                }
-                else {
+                } else {
                     mPath.lineTo(x, y);
                 }
             }
         }
     }
-    public void drawPath(Point p, int PointIndex){
-        Log.d("path_start",Integer.toString(mLastPointIndex));
-        Log.d("path_end",Integer.toString(PointIndex));
+
+    public void drawPath(Point p, int PointIndex) {
+        Log.d("path_start", Integer.toString(mLastPointIndex));
+        Log.d("path_end", Integer.toString(PointIndex));
         answer.add(Integer.toString(mLastPointIndex));
         answer.add(Integer.toString(PointIndex));
         int nextPointIndex;
@@ -450,13 +416,12 @@ public class SpaceTimeView extends View {
         mPath.reset();
         mLastPointIndex = nextPointIndex;
     }
+
     /**
      * Draws line.
      */
     private void touch_up(float x, float y) {
         mPath.reset();
-        if(Score_cal()) Log.d("path_iscorrect", "correct!");
-        else Log.d("path_iscorrect", "wrong!");
     }
 
     /**
@@ -489,7 +454,7 @@ public class SpaceTimeView extends View {
     }
 
     /**
-      Checks if user touch point with some tolerance
+     * Checks if user touch point with some tolerance
      **/
     private boolean checkPoint(float x, float y, int pointIndex) {
         if (pointIndex >= mPoints.size() || pointIndex < 0) {
@@ -520,34 +485,60 @@ public class SpaceTimeView extends View {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
         return (int) px;
     }
-    public boolean Score_cal(){
-        String correct[] = {"1", "5", "5", "11", "1", "7", "7", "12", "11", "12", "11",
-                "16", "16", "17", "17", "18", "18", "13", "13", "8", "8", "7", "13", "17"};
+
+    public int Score_cal(String[] correct) {
         boolean isCorrect = false;
-        boolean buffer[] = new boolean[correct.length/2];
+        int isWrong = 0;
+        boolean buffer[] = new boolean[correct.length / 2];
         int count = 0;
         Arrays.fill(buffer, false);
-        for(int i = 0; i < answer.size(); i+=2){
-            for(int j = 0; j < correct.length; j+=2){
-                if(answer.get(i).equals(correct[j]) && answer.get(i+1).equals(correct[j+1])){
+        for (int i = 0; i < answer.size(); i += 2) {
+            for (int j = 0; j < correct.length; j += 2) {
+                if (answer.get(i).equals(correct[j]) && answer.get(i + 1).equals(correct[j + 1])) {
                     isCorrect = true;
-                    buffer[j-count] = true;
+                    buffer[j - count] = true;
                     break;
-                }
-                else if(answer.get(i).equals(correct[j+1]) && answer.get(i+1).equals(correct[j])){
+                } else if (answer.get(i).equals(correct[j + 1]) && answer.get(i + 1).equals(correct[j])) {
                     isCorrect = true;
-                    buffer[j-count] = true;
+                    buffer[j - count] = true;
                     break;
                 }
                 count++;
             }
-            if(!isCorrect) return false;
+            if (!isCorrect) isWrong++;
             isCorrect = false;
             count = 0;
         }
-        for(boolean a : buffer){
-            if(!a) return false;
+
+        for (boolean a : buffer) {
+            if (!a) isWrong++;
         }
-        return true;
+
+        if (isWrong > 2) return 0;
+        else if(isWrong == 1) return 1;
+        else return 2;
+    }
+
+    public int getScore(){
+        String correct[] = {"1", "5", "5", "11", "1", "7", "7", "12", "11", "12", "11",
+                "16", "16", "17", "17", "18", "18", "13", "13", "8", "8", "7", "13", "17"};
+
+        String half_correct[] = {"2", "6", "6", "12", "2", "8", "8", "13", "12", "13", "12",
+                "17", "17", "18", "18", "19", "19", "14", "14", "9", "9", "8", "14", "18"};
+
+        String half_correct2[] = {"6", "10", "10", "16", "6", "12", "12", "17", "16", "17", "16",
+                "21", "21", "22", "22", "23", "23", "18", "18", "13", "13", "12", "18", "22"};
+
+        String half_correct3[] = {"7", "11", "11", "17", "7", "13", "13", "18", "17", "18", "17",
+                "22", "22", "23", "23", "24", "24", "19", "19", "14", "15", "13", "19", "23"};
+
+
+        if(Score_cal((half_correct)) == 2) return 1;
+        else if(Score_cal((half_correct2)) == 2) return 1;
+        else if(Score_cal((half_correct3)) == 2) return 1;
+        else if(Score_cal(correct) == 2) return 2;
+        else if(Score_cal(correct) == 1) return 1;
+        else if(Score_cal(correct) == 0) return 0;
+        else return 0;
     }
 }

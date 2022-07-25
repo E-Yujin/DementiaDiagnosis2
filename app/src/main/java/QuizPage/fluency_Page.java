@@ -8,13 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
+import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
@@ -30,11 +33,13 @@ public class fluency_Page extends AppCompatActivity {
     TTS tts;
     QuizPage QP;
     TextView question;
-    TextView announce;
     EditText answer;
     ImageButton sttBtn;
     Button submit;
     List<String> tem = new ArrayList<>();
+    ImageView helper_img;
+    Helper helper;
+
 
     private long backBtnTime = 0;
 
@@ -46,13 +51,19 @@ public class fluency_Page extends AppCompatActivity {
         setContentView(R.layout.orientation);
 
         question = (TextView) findViewById(R.id.question);
-        announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
         flu = new fluency();
-        stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, submit, flu.quiz);
+
+        Intent intent;
+        intent = getIntent();
+        flu.scores = intent.getIntArrayExtra("scores");
+
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt.isFluency = true;
+        QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, flu.quiz);
+        helper_img = findViewById(R.id.img);
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -60,14 +71,17 @@ public class fluency_Page extends AppCompatActivity {
                 answer.setEnabled(false);
                 sttBtn.setEnabled(false);
                 submit.setEnabled(false);
-                int time[] = {2000, 1000, 1000, 1001};
-                tts.onInit(status, question.getText().toString(), "default");
+                int time[] = {1500, 1000, 1000, 1001};
+                tts.onInit(status, question.getText().toString(), "default", 1000);
                 tem.add(flu.quiz.get(1));
                 tem.add(flu.quiz.get(2));
                 tem.add(flu.quiz.get(3));
-                tts.UtteranceProgress(tem, "continue", time, question, sttBtn, answer);
+                tts.UtteranceProgress(tem, "continue", time, question, answer, stt);
             }
-        }, sttBtn, submit);
+        });
+
+        helper = new Helper(tts, stt, helper_img, this);
+        helper.setTest();
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -81,6 +95,7 @@ public class fluency_Page extends AppCompatActivity {
                 stt.Stop();
                 tts.Stop();
                 QP.user_ans = answer.getText().toString().replace(".", "");
+                QP.user_ans = answer.getText().toString().replace(",", "");
                 String ans[] = QP.user_ans.split(" ");
                 int correct = 0;
 
@@ -90,21 +105,24 @@ public class fluency_Page extends AppCompatActivity {
                     }
                 }
                 if(correct >= 15){
-                    flu.score = 2;
+                    flu.Tscore = 2;
                 }
                 else if(correct >= 9){
-                    flu.score = 1;
+                    flu.Tscore = 1;
                 }
                 else{
-                    flu.score = 0;
+                    flu.Tscore = 0;
                 }
 
-                Intent resultIntent = new Intent();
+                flu.scores[8] = flu.Tscore;
 
-                resultIntent.putExtra("isDone", true);
-                resultIntent.putExtra("score", flu.score);
+                Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
+                intent.putExtra("scores", flu.scores);
+                intent.putExtra("isDone", true);
+                startActivity(intent);
 
-                setResult(1, resultIntent);
+                stt.isFluency = false;
+
                 finish();
             }
         });
@@ -143,13 +161,12 @@ public class fluency_Page extends AppCompatActivity {
             submit.setEnabled(false);
             int time[] = {2000, 1000, 1000, 1001};
             question.setText(flu.quiz.get(0));
-            announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
             answer.setText("");
             tts.speakOut(flu.quiz.get(0), "default");
             tem.add(flu.quiz.get(1));
             tem.add(flu.quiz.get(2));
             tem.add(flu.quiz.get(3));
-            tts.UtteranceProgress(tem, "continue", time, question, sttBtn, answer);
+            tts.UtteranceProgress(tem, "continue", time, question, answer, stt);
         }
         else{
             tem.clear();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import QuizPage.ComprehensionPage;
 import QuizPage.ExecutionPage;
 import QuizPage.LanguagePage;
 import QuizPage.SpaceTimePage;
@@ -22,7 +22,7 @@ import QuizPage.fluency_Page;
 import QuizPage.memoryInput_Page;
 import QuizPage.memoryOutput_Page;
 import QuizPage.orientation_Page;
-import questions.LanguageFunc;
+
 
 public class QuizHOME extends AppCompatActivity {
 
@@ -30,13 +30,16 @@ public class QuizHOME extends AppCompatActivity {
     TextView Announce;
     TextView Intend_value;
     Button sttBtn;
-    private boolean isDone[];
+    ImageView helper_img;
+    Helper helper;
+
     private int current = 0;
     private ArrayList<String> first, second;
     public List<String> announce;
     private long backBtnTime = 0;
     private int part_score[];
     private int total_score = 0;
+    boolean isDone = false;
 
 
     @Override
@@ -45,14 +48,13 @@ public class QuizHOME extends AppCompatActivity {
         setContentView(R.layout.quiz_home);
 
         announce = new ArrayList();
-        isDone = new boolean[9];
         part_score = new int[8];
-        Arrays.fill(isDone,false);
 
         sttBtn = findViewById(R.id.sttStart);
         Title = findViewById(R.id.title);
         Announce = findViewById(R.id.announce);
         Intend_value = findViewById(R.id.intent);
+        helper_img = findViewById(R.id.img);
 
         first = new ArrayList<>();
         second = new ArrayList<>();
@@ -60,6 +62,8 @@ public class QuizHOME extends AppCompatActivity {
         init_Announce();
 
         Title.setText(announce.get(current));
+        helper = new Helper(helper_img, this);
+        helper.setNomal();
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,58 +72,51 @@ public class QuizHOME extends AppCompatActivity {
                 switchPage(intent, view);
             }
         });
+
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
         super.onActivityResult(requestCode, resultCode, resultIntent);
         if (requestCode == 100 && resultCode == 1) {
-            isDone[current] = resultIntent.getBooleanExtra("isDone", false);
-            part_score[current] = resultIntent.getIntExtra("score", 0);
-            total_score += part_score[current];
+            current = 1;
+            part_score = resultIntent.getIntArrayExtra("part_score");
+
+            for(int i = 0; i < part_score.length; i++){
+                total_score += part_score[i];
+            }
+
+            Toast.makeText(this, "결과가 저장되었습니다.",
+                    Toast.LENGTH_SHORT).show();
         }
-        if (requestCode == 100 && resultCode == 2) {
-            isDone[current] = resultIntent.getBooleanExtra("isDone", false);
-            first = resultIntent.getStringArrayListExtra("First");
-            second = resultIntent.getStringArrayListExtra("Second");
-        }
-    }
+    }*/
+    //혹시나 안되면 주석 풀어보기
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(isDone[current]){
-            current ++;
-            Title.setText(announce.get(current));
-            if(current == 2){
-                String tem = "맞춘 말 : ";
-                for(String data : first) {
-                    tem += data;
-                }
-                Intend_value.setText(tem);
+
+        Intent intent;
+        intent = getIntent();
+        part_score = intent.getIntArrayExtra("scores");
+        isDone = intent.getBooleanExtra("isDone", false);
+
+        if(isDone){
+            current = 1;
+            sttBtn.setText("결과 보기");
+            for(int i = 0; i < part_score.length; i++){
+                total_score += part_score[i];
             }
-            else {
-                Intend_value.setText(Integer.toString(total_score));
-            }
+            Intend_value.setText(Integer.toString(total_score));
+
             Toast.makeText(this, "결과가 저장되었습니다.",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void setCurrent(int score){
-        isDone[current] = true;
-        total_score += score;
+        Title.setText(announce.get(current));
     }
 
     private void init_Announce(){
         announce.add("지금부터 '지남력'을\n검사해보겠습니다.");
-        announce.add("지금부터 '기억 등록'을\n시행하겠습니다.");
-        announce.add("지금부터 '주의력'을\n검사해보겠습니다.");
-        announce.add("지금부터 '시공간 기능'을\n검사해보겠습니다.");
-        announce.add("지금부터 '집행 기능'을\n검사해보겠습니다.");
-        announce.add("지금부터 '기억력'을\n검사해보겠습니다.");
-        announce.add("지금부터 '언어 기능'을\n검사해보겠습니다.");
-        announce.add("지금부터 '유창성'을\n검사해보겠습니다.");
         announce.add("결과 출력");
     }
 
@@ -140,38 +137,10 @@ public class QuizHOME extends AppCompatActivity {
     private void switchPage(Intent intent, View view){
         switch (current){
             case 0:
-                intent = new Intent(view.getContext(), memoryInput_Page.class);
+                intent = new Intent(view.getContext(), orientation_Page.class);
                 startActivityForResult(intent, 100);
                 break;
             case 1:
-                intent = new Intent(view.getContext(), memoryInput_Page.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 2:
-                intent = new Intent(view.getContext(), attention_Page.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 3:
-                intent = new Intent(view.getContext(), SpaceTimePage.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 4:
-                intent = new Intent(view.getContext(), ExecutionPage.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 5:
-                intent = new Intent(view.getContext(), memoryOutput_Page.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 6:
-                intent = new Intent(view.getContext(), LanguagePage.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 7:
-                intent = new Intent(view.getContext(), fluency_Page.class);
-                startActivityForResult(intent, 100);
-                break;
-            case 8:
                 intent = new Intent(view.getContext(), Result.class);
                 intent.putExtra("result", total_score);
                 startActivity(intent);

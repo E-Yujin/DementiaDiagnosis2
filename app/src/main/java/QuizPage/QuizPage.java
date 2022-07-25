@@ -16,7 +16,6 @@ public class QuizPage {
     MainSTT stt;
     TTS tts;
     TextView question;
-    TextView announce;
     EditText answer;
     ImageButton sttBtn;
     Button submit;
@@ -26,26 +25,23 @@ public class QuizPage {
 
     public String user_ans, correct;
 
-    public QuizPage(MainSTT Stt, TTS Tts, TextView quest, TextView ann, EditText ans,
+    public QuizPage(MainSTT Stt, TTS Tts, TextView quest, EditText ans,
                     ImageButton sttB,Button sub, List<String> quiz){
 
         stt = Stt;
         tts = Tts;
         question = quest;
-        announce = ann;
         answer = ans;
         sttBtn = sttB;
         submit = sub;
         title_quest = quiz;
 
         question.setText(title_quest.get(current));
-        announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
     }
 
-    public QuizPage(TTS Tts, TextView quest, TextView ann, ImageButton sttB, Button sub, int n, List<String> quiz) {
+    public QuizPage(TTS Tts, TextView quest, ImageButton sttB, Button sub, int n, List<String> quiz) {
         tts = Tts;
         question = quest;
-        announce = ann;
         sttBtn = sttB;
         submit = sub;
         title_quest = quiz;
@@ -55,7 +51,6 @@ public class QuizPage {
     public void Submit(){
         current ++;
         question.setText(title_quest.get(current));
-        announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
     }
 
     public String ans_filter(String num){
@@ -118,7 +113,6 @@ public class QuizPage {
 
     public void Start(){
         question.setText(title_quest.get(current));
-        announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
         answer.setText("");
         sttBtn.setEnabled(true);
         submit.setEnabled(true);

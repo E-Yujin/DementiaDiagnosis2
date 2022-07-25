@@ -12,9 +12,9 @@ public class attention extends question{
         for (int i = 0; i < this.num; i++) {
             this.crr_ans[i] = new ArrayList<>();
         }
-        this.isDone = new boolean[this.num];
-        this.score = new Integer(0);
-        Arrays.fill(isDone, false);
+        this.user_ans = new String[this.num];
+        this.scores = new int[10];
+        this.Tscore = new Integer(0);
 
         this.quiz.add("제가 불러드리는 숫자를\n그대로 따라 해 주세요.");
         this.quiz.add("한 번 더 제가 불러드리는 숫자를\n그대로 따라 해 주시면 됩니다.");

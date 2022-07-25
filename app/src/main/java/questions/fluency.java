@@ -19,9 +19,9 @@ public class fluency extends question{
         for (int i = 0; i < this.num; i++) {
             this.crr_ans[i] = new ArrayList<>();
         }
-        this.isDone = new boolean[this.num];
-        this.score = new Integer(0);
-        Arrays.fill(isDone, false);
+        this.user_ans = new String[this.num];
+        this.scores = new int[10];
+        this.Tscore = new Integer(0);
 
         this.quiz.add("지금부터 제가 그만이라고 말할 때까지 과일이나 채소를 최대한 많이 이야기해 주세요.");
         this.quiz.add("준비되셨지요?");

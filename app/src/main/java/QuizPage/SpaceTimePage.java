@@ -45,17 +45,22 @@ public class SpaceTimePage extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         ST = new spaceTime();
         STV = (SpaceTimeView) findViewById(R.id.canvas);
+
+        Intent intent;
+        intent = getIntent();
+        ST.scores = intent.getIntArrayExtra("scores");
+
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 question.setText(ST.quiz.get(0));
-                tts.onInit(status, ST.quiz.get(0), "default");
+                tts.onInit(status, ST.quiz.get(0), "default", 1000);
                 tem.add(ST.quiz.get(1));
                 tem.add(ST.quiz.get(2));
                 tem.add(ST.quiz.get(3));
-                tts.UtteranceProgress(tem, "continue", question);
+                tts.UtteranceProgress(tem, "continue", question, submit);
             }
-        }, submit);
+        });
 
         eraser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -67,18 +72,14 @@ public class SpaceTimePage extends AppCompatActivity {
                 tts.Stop();
                 tts.isStopUtt = true;
 
-                if(STV.Score_cal()){
-                    ST.score = 1;
-                }
-                else{
-                    ST.score = 0;
-                }
-                Intent resultIntent = new Intent();
+                ST.Tscore = STV.getScore();
 
-                resultIntent.putExtra("isDone", true);
-                resultIntent.putExtra("score", ST.score);
+                ST.scores[4] = ST.Tscore;
 
-                setResult(1, resultIntent);
+                Intent intent = new Intent(getApplicationContext(), ExecutionPage.class);
+                intent.putExtra("scores", ST.scores);
+                startActivity(intent);
+
                 finish();
             }
         });
@@ -118,7 +119,7 @@ public class SpaceTimePage extends AppCompatActivity {
             tem.add(ST.quiz.get(1));
             tem.add(ST.quiz.get(2));
             tem.add(ST.quiz.get(3));
-            tts.UtteranceProgress(tem, "continue", question);
+            tts.UtteranceProgress(tem, "continue", question, submit);
         }
     }
 

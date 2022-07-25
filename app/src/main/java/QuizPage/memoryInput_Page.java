@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
@@ -31,10 +33,11 @@ public class memoryInput_Page extends AppCompatActivity {
     TTS tts;
     QuizPage QP;
     TextView question;
-    TextView announce;
     EditText answer;
     ImageButton sttBtn;
     Button submit;
+    ImageView helper_img;
+    Helper helper;
 
     boolean isfirst = true;
 
@@ -50,27 +53,34 @@ public class memoryInput_Page extends AppCompatActivity {
         final TextInputLayout TIL = findViewById(R.id.goolelayout);
 
         question = (TextView) findViewById(R.id.question);
-        announce = (TextView) findViewById(R.id.textView);
         answer = (EditText) findViewById(R.id.result);
         answer = TIL.getEditText();
         answer.setEnabled(true);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (Button) findViewById(R.id.submit);
+        helper_img = findViewById(R.id.img);
         memo_in = new memoryInput();
+
+        Intent intent;
+        intent = getIntent();
+        memo_in.scores = intent.getIntArrayExtra("scores");
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 int[] time = {1000, 500};
-                tts.onInit(status, question.getText().toString(), "continue");
+                tts.onInit(status, question.getText().toString(), "continue", 1000);
                 tem.add("민수는.....자전거를 타고.....공원에 가서....11시부터...야구를 했다.");
-                tts.UtteranceProgress(tem, "continue", time);
+                tts.UtteranceProgress(tem, "continue", time, sttBtn, submit);
             }
-        }, sttBtn, submit);
-        stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn,submit, memo_in.quiz);
+        });
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        QP = new QuizPage(stt, tts, question, answer, sttBtn,submit, memo_in.quiz);
         first = new ArrayList<>();
         second = new ArrayList<>();
+
+        helper = new Helper(tts, stt, helper_img, this);
+        helper.setTest();
 
         sttBtn.setEnabled(false);
         submit.setEnabled(false);
@@ -107,7 +117,7 @@ public class memoryInput_Page extends AppCompatActivity {
                     }
                     QP.Submit();
                     tts.speakOut(question.getText().toString(), "default");
-                    tts.UtteranceProgress(tem,"continue");
+                    tts.UtteranceProgress(tem,"continue", sttBtn, submit);
                 }
                 else if(QP.current == 1){
                     tts.isStopUtt = false;
@@ -119,20 +129,18 @@ public class memoryInput_Page extends AppCompatActivity {
                     }
                     QP.Submit();
                     tts.speakOut(question.getText().toString());
-                    announce.setText("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!");
-                    tts.UtteranceProgress(announce.getText().toString());
+                    tts.UtteranceProgress();
                     sttBtn.setEnabled(false);
                     submit.setEnabled(true);
                     submit.setText("확인");
                 }
                 else{
-                    Intent resultIntent = new Intent();
+                    memo_in.scores[2] = memo_in.Tscore;
 
-                    resultIntent.putExtra("isDone", true);
-                    resultIntent.putExtra("First", first);
-                    resultIntent.putExtra("Second", second);
+                    Intent intent = new Intent(getApplicationContext(), attention_Page.class);
+                    intent.putExtra("scores", memo_in.scores);
+                    startActivity(intent);
 
-                    setResult(2, resultIntent);
                     finish();
                 }
             }
@@ -155,8 +163,10 @@ public class memoryInput_Page extends AppCompatActivity {
 
     @Override
     protected void onStop(){
+        tts.isStopUtt = true;
         super.onStop();
-        QP.Stop();
+        tts.Stop();
+        stt.Stop();
     }
 
     @Override
@@ -167,15 +177,13 @@ public class memoryInput_Page extends AppCompatActivity {
         submit.setEnabled(false);
         if(QP.current < 2){
             question.setText(memo_in.quiz.get(QP.current));
-            announce.setText("대답할 준비가 되셨다면\n아래 보라색 상자를 눌러 말씀해주세요!");
             answer.setText("");
             tts.speakOut(question.getText().toString(),"continue");
-            tts.UtteranceProgress(tem,"continue");
+            tts.UtteranceProgress(tem,"continue", sttBtn, submit);
         }
         else{
             tts.speakOut(question.getText().toString());
-            announce.setText("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!");
-            tts.UtteranceProgress(announce.getText().toString());
+            tts.UtteranceProgress("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!", sttBtn, submit);
             sttBtn.setEnabled(false);
             submit.setEnabled(true);
             submit.setText("확인");

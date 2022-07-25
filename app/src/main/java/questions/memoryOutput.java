@@ -12,9 +12,9 @@ public class memoryOutput extends question {
         for (int i = 0; i < this.num; i++) {
             this.crr_ans[i] = new ArrayList<>();
         }
-        this.isDone = new boolean[this.num];
-        this.score = new Integer(0);
-        Arrays.fill(isDone, false);
+        this.user_ans = new String[this.num];
+        this.scores = new int[10];
+        this.Tscore = new Integer(0);
 
         this.quiz.add("제가 조금 전에 외우라고 불러드렸던 문장을 다시 한번 말씀해 주세요.");
         this.quiz.add("제가 아까 어떤 사람의 이름을 말했는데 누구일까요?");

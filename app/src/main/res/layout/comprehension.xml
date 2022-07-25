@@ -9,19 +9,15 @@
     tools:context="QuizPage.ComprehensionPage">
 
     <TextView
+        android:fontFamily="@font/jejugothic"
+        android:lineSpacingExtra ="10dp"
+        android:letterSpacing="0.04"
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="Question"
         android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/announce"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="15sp" />
 
     <LinearLayout
         android:id="@+id/ball"
@@ -81,6 +77,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:text="1"
                 android:textSize="25sp"
                 android:textStyle="bold"/>
@@ -98,6 +97,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="2"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
                 android:textSize="25sp"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -111,16 +113,15 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/sttStart"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#6C6C6C"
-            android:layout_marginEnd="40dp"
-            android:text="말하기"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitCenter"
+            android:layout_marginEnd="30dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/mic_color_drawable"
+            />
 
         <Button
             android:id="@+id/btnSubmit"
@@ -129,6 +130,9 @@
             android:layout_gravity="center"
             android:backgroundTint="#00BCD4"
             android:text="정답 제출"
+            android:fontFamily="@font/jejugothic"
+            android:lineSpacingExtra ="10dp"
+            android:letterSpacing="0.04"
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />

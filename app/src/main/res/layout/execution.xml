@@ -3,28 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="QuizPage.ExecutionPage"
     android:padding="20dp"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
+        android:fontFamily="@font/jejugothic"
+        android:lineSpacingExtra ="10dp"
+        android:letterSpacing="0.04"
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:hint="Question"
         android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:hint="Announce"
-        android:visibility="invisible"
-        android:textSize="15sp" />
 
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -34,28 +28,50 @@
         tools:layout_editor_absoluteY="281dp">
     </FrameLayout>
 
-    <EditText
-        android:id="@+id/result"
-        android:layout_width="250dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/goolelayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:hint="당신의 말이 나타납니다."
-        android:visibility="invisible"/>
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:fontFamily="@font/jejugothic"
+        android:lineSpacingExtra ="10dp"
+        android:hint="당신의 대답"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35">
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/jejugothic"
+            android:lineSpacingExtra ="10dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/sttStart"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="40dp"
-            android:text="말하기" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitCenter"
+            android:layout_marginEnd="30dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/mic_color_drawable"
+            />
 
         <Button
             android:id="@+id/btnSubmit"
