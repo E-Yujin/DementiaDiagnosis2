@@ -39,7 +39,7 @@ public class LanguagePage extends AppCompatActivity {
     ImageView image;
     EditText answer;
     ImageButton sttBtn;
-    Button submit;
+    ImageButton submit;
     ActivityResultLauncher<Intent> startActivityResult;
 
     @Override
@@ -52,12 +52,12 @@ public class LanguagePage extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.question_image);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
-        submit = (Button) findViewById(R.id.btnSubmit);
+        submit = (ImageButton) findViewById(R.id.btnSubmit);
         languageFunc = new LanguageFunc();
 
-        Intent intent;
+        /*Intent intent;
         intent = getIntent();
-        languageFunc.scores = intent.getIntArrayExtra("scores");
+        languageFunc.scores = intent.getIntArrayExtra("scores");*/
 
         image.setImageResource(R.drawable.toothbrush);
 

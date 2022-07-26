@@ -131,35 +131,35 @@ public class SpaceTimeView extends View {
         dPaint.setStrokeCap(Paint.Cap.ROUND);
         mTouchTolerance = dp2px(TOUCH_TOLERANCE_DP);
 
-        Point p1 = new Point(50, 20);
-        Point p2 = new Point(250, 20);
-        Point p3 = new Point(450, 20);
-        Point p4 = new Point(650, 20);
-        Point p5 = new Point(850, 20);
+        Point p1 = new Point(50, 50);
+        Point p2 = new Point(200, 50);
+        Point p3 = new Point(350, 50);
+        Point p4 = new Point(500, 50);
+        Point p5 = new Point(650, 50);
 
-        Point p6 = new Point(50, 220);
-        Point p7 = new Point(250, 220);
-        Point p8 = new Point(450, 220);
-        Point p9 = new Point(650, 220);
-        Point p10 = new Point(850, 220);
+        Point p6 = new Point(50, 200);
+        Point p7 = new Point(200, 200);
+        Point p8 = new Point(350, 200);
+        Point p9 = new Point(500, 200);
+        Point p10 = new Point(650, 200);
 
-        Point p11 = new Point(50, 420);
-        Point p12 = new Point(250, 420);
-        Point p13 = new Point(450, 420);
-        Point p14 = new Point(650, 420);
-        Point p15 = new Point(850, 420);
+        Point p11 = new Point(50, 350);
+        Point p12 = new Point(200, 350);
+        Point p13 = new Point(350, 350);
+        Point p14 = new Point(500, 350);
+        Point p15 = new Point(650, 350);
 
-        Point p16 = new Point(50, 620);
-        Point p17 = new Point(250, 620);
-        Point p18 = new Point(450, 620);
-        Point p19 = new Point(650, 620);
-        Point p20 = new Point(850, 620);
+        Point p16 = new Point(50, 500);
+        Point p17 = new Point(200, 500);
+        Point p18 = new Point(350, 500);
+        Point p19 = new Point(500, 500);
+        Point p20 = new Point(650, 500);
 
-        Point p21 = new Point(50, 820);
-        Point p22 = new Point(250, 820);
-        Point p23 = new Point(450, 820);
-        Point p24 = new Point(650, 820);
-        Point p25 = new Point(850, 820);
+        Point p21 = new Point(50, 650);
+        Point p22 = new Point(200, 650);
+        Point p23 = new Point(350, 650);
+        Point p24 = new Point(500, 650);
+        Point p25 = new Point(650, 650);
 
         mPoints.add(p1);
         mPoints.add(p2);

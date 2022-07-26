@@ -35,7 +35,7 @@ public class memoryInput_Page extends AppCompatActivity {
     TextView question;
     EditText answer;
     ImageButton sttBtn;
-    Button submit;
+    ImageButton submit;
     ImageView helper_img;
     Helper helper;
 
@@ -57,7 +57,7 @@ public class memoryInput_Page extends AppCompatActivity {
         answer = TIL.getEditText();
         answer.setEnabled(true);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
-        submit = (Button) findViewById(R.id.submit);
+        submit = (ImageButton) findViewById(R.id.submit);
         helper_img = findViewById(R.id.img);
         memo_in = new memoryInput();
 
@@ -132,7 +132,6 @@ public class memoryInput_Page extends AppCompatActivity {
                     tts.UtteranceProgress();
                     sttBtn.setEnabled(false);
                     submit.setEnabled(true);
-                    submit.setText("확인");
                 }
                 else{
                     memo_in.scores[2] = memo_in.Tscore;
@@ -186,7 +185,6 @@ public class memoryInput_Page extends AppCompatActivity {
             tts.UtteranceProgress("다음 단계로 이동하시려면\n아래 파란 상자를 눌러주세요!", sttBtn, submit);
             sttBtn.setEnabled(false);
             submit.setEnabled(true);
-            submit.setText("확인");
         }
     }
 

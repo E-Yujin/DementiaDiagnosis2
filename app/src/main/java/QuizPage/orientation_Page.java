@@ -30,7 +30,7 @@ public class orientation_Page extends AppCompatActivity {
     TextView question;
     EditText answer;
     ImageButton sttBtn;
-    Button submit;
+    ImageButton submit;
     ImageView helper_img;
     Helper helper;
 
@@ -45,7 +45,7 @@ public class orientation_Page extends AppCompatActivity {
         question = (TextView) findViewById(R.id.question);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
-        submit = (Button) findViewById(R.id.submit);
+        submit = (ImageButton) findViewById(R.id.submit);
         helper_img = findViewById(R.id.img);
         ortt_main = new orientation();
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);

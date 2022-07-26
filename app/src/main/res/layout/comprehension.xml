@@ -9,133 +9,197 @@
     tools:context="QuizPage.ComprehensionPage">
 
     <TextView
+        android:id="@+id/type"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
         android:fontFamily="@font/jejugothic"
-        android:lineSpacingExtra ="10dp"
+        android:gravity="center"
         android:letterSpacing="0.04"
-        android:id="@+id/question"
+        android:lineSpacingExtra="10dp"
+        android:text="TextView"
+        android:textSize="14sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/grey"/>
+    <TextView
+        android:id="@+id/process_num"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/jejugothic"
+        android:gravity="center"
+        android:layout_gravity="right"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="10dp"
+        android:text="TextView"
+        android:textSize="10sp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="Question"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:id="@+id/ball"
-        android:layout_width="360dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/shape_oval"
-            app:tint="#00BCD4" />
-        <ImageView
-            android:id="@+id/image2"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/shape_oval"
-            app:tint="#00BCD4" />
-        <ImageView
-            android:id="@+id/image3"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/shape_oval"
-            app:tint="#00BCD4" />
-        <ImageView
-            android:id="@+id/image4"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/shape_oval"
-            app:tint="#00BCD4" />
-        <ImageView
-            android:id="@+id/image5"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/shape_oval"
-            app:tint="#00BCD4" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp">
-
-        <LinearLayout
-            android:id="@+id/left"
-            android:layout_width="170dp"
-            android:layout_height="200dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/normal_shape"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
-                android:letterSpacing="0.04"
-                android:text="1"
-                android:textSize="25sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/right"
-            android:layout_width="170dp"
-            android:layout_height="200dp"
-            android:background="@drawable/normal_shape"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="2"
-                android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
-                android:letterSpacing="0.04"
-                android:textSize="25sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/sttStart"
-            android:layout_width="50dp"
+            android:id="@+id/before"
+            android:layout_width="35dp"
             android:layout_height="50dp"
-            android:scaleType="fitCenter"
-            android:layout_marginEnd="30dp"
+            android:layout_gravity="center"
             android:background="@android:color/transparent"
-            android:src="@drawable/mic_color_drawable"
+            android:scaleType="fitCenter"
+            app:tint="@color/grey"
+            android:src="@drawable/before" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             />
 
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#00BCD4"
-            android:text="정답 제출"
-            android:fontFamily="@font/jejugothic"
-            android:lineSpacingExtra ="10dp"
-            android:letterSpacing="0.04"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
+            <TextView
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04"
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Question"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/ball"
+                android:layout_width="360dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape_oval"
+                    app:tint="#00BCD4" />
+                <ImageView
+                    android:id="@+id/image2"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape_oval"
+                    app:tint="#00BCD4" />
+                <ImageView
+                    android:id="@+id/image3"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape_oval"
+                    app:tint="#00BCD4" />
+                <ImageView
+                    android:id="@+id/image4"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape_oval"
+                    app:tint="#00BCD4" />
+                <ImageView
+                    android:id="@+id/image5"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape_oval"
+                    app:tint="#00BCD4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+
+                <LinearLayout
+                    android:id="@+id/left"
+                    android:layout_width="130dp"
+                    android:layout_height="200dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/normal_shape"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
+                        android:text="1"
+                        android:textSize="25sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/right"
+                    android:layout_width="130dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/normal_shape"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="2"
+                        android:fontFamily="@font/jejugothic"
+                        android:lineSpacingExtra ="10dp"
+                        android:letterSpacing="0.04"
+                        android:textSize="25sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/sttStart"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:src="@drawable/mic_color_drawable"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="35dp"
+            android:layout_height="50dp"
+            app:tint="@color/grey"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/after"
+            />
+    </LinearLayout>
 </LinearLayout>

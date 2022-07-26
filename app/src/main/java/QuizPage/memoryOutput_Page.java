@@ -34,7 +34,7 @@ public class memoryOutput_Page extends AppCompatActivity {
     TextView question;
     EditText answer;
     ImageButton sttBtn;
-    Button submit;
+    ImageButton submit;
     ImageView helper_img;
     Helper helper;
 
@@ -53,7 +53,7 @@ public class memoryOutput_Page extends AppCompatActivity {
         answer = TIL.getEditText();
         answer.setEnabled(true);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
-        submit = (Button) findViewById(R.id.submit);
+        submit = (ImageButton) findViewById(R.id.submit);
         memo_out = new memoryOutput();
         helper_img = findViewById(R.id.img);
 
@@ -184,7 +184,6 @@ public class memoryOutput_Page extends AppCompatActivity {
         else{
             tts.speakOut(question.getText().toString());
             sttBtn.setEnabled(false);
-            submit.setText("확인");
         }
     }
 

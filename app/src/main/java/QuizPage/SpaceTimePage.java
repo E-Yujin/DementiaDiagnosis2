@@ -6,6 +6,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class SpaceTimePage extends AppCompatActivity {
     TTS tts;
     TextView question;
     Button eraser;
-    Button submit;
+    ImageButton submit;
 
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
@@ -42,7 +43,7 @@ public class SpaceTimePage extends AppCompatActivity {
 
         question = (TextView) findViewById(R.id.announce);
         eraser = (Button) findViewById(R.id.eraser);
-        submit = (Button) findViewById(R.id.submit);
+        submit = (ImageButton) findViewById(R.id.submit);
         ST = new spaceTime();
         STV = (SpaceTimeView) findViewById(R.id.canvas);
 

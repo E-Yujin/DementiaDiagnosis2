@@ -39,7 +39,7 @@ public class MainSTT{
     private TTS tts;
 
     ImageButton sttBtn;
-    Button submit;
+    ImageButton submit;
     EditText result;
     TextView textView;
     TextView question;
@@ -71,7 +71,7 @@ public class MainSTT{
     private short[] buffer = null;
 
     public MainSTT (AppCompatActivity context, EditText editText, TextView announce,
-                    TextView quiz, ImageButton Btn, Button sub, TTS talk){
+                    TextView quiz, ImageButton Btn, ImageButton sub, TTS talk){
         if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
             ActivityCompat.requestPermissions(
                     context, new String[]{Manifest.permission.INTERNET,
@@ -86,7 +86,7 @@ public class MainSTT{
     }
 
     public MainSTT (AppCompatActivity context, EditText editText,
-                    TextView quiz, ImageButton Btn, Button sub, TTS talk){
+                    TextView quiz, ImageButton Btn, ImageButton sub, TTS talk){
         if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
             ActivityCompat.requestPermissions(
                     context, new String[]{Manifest.permission.INTERNET,

@@ -32,7 +32,7 @@ public class ComprehensionPage extends AppCompatActivity {
     private ImageView mImg, image2, image3, image4, image5;
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
     private ImageButton sttBtn;
-    private Button submit;
+    private ImageButton submit;
     int resLeft, resRight; // 정답 체크
     LanguageFunc languageFunc;
     TTS tts;
