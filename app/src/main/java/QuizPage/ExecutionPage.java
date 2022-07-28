@@ -201,4 +201,17 @@ public class ExecutionPage extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStop(){
+        tts.isStopUtt = true;
+        super.onStop();
+        tts.Stop();
+        stt.Stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        QP.Destroy();
+    }
 }

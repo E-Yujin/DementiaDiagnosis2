@@ -1,7 +1,10 @@
 package database;
 
+import static user.SharedPreference.getSharedPreferences;
+
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,6 +13,8 @@ import androidx.annotation.Nullable;
 
 import database.TableContract.*;
 import user.EducationAge;
+import user.Score;
+import user.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +23,7 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "user.db";
-    private static final Integer DATABASE_VERSION = 1;
+    private static final Integer DATABASE_VERSION = 12;
 
     private SQLiteDatabase db;
 
@@ -32,12 +37,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // user table 생성
         final String SQL_CREATE_USER_TABLE = "CREATE TABLE " +
-                UserTable.TABLE_NAME + " ( " +
-                UserTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                UserTable.TABLE_NAME + "(" +
+                UserTable.COL_SERIAL_CODE + " TEXT PRIMARY KEY, " +
                 UserTable.COL_NAME + " TEXT, " +
                 UserTable.COL_BIRTH + " TEXT, " +
+                UserTable.COL_AGE + " INTEGER, " +
                 UserTable.COL_SEX + " TEXT, " +
-                UserTable.COL_EDU + " TEXT" + ")";
+                UserTable.COL_EDU + " TEXT, " +
+                UserTable.COL_SCORE + " INTEGER" + ")";
         db.execSQL(SQL_CREATE_USER_TABLE);
 
         // education table 생성
@@ -52,41 +59,82 @@ public class DBHelper extends SQLiteOpenHelper {
                 EduAgeTable.COL_UNIVERSITY + " INTEGER" + ")";
         db.execSQL(SQL_CREATE_EDU_TABLE);
         fillEduAgeTable();
+
+        // score table 생성
+        final String SQL_CREATE_SCORE_TABLE = "CREATE TABLE " +
+                ScoreTable.TABLE_NAME + "(" +
+                ScoreTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ScoreTable.COL_ORIENTATION + " INTEGER, " +
+                ScoreTable.COL_MEMORY + " INTEGER, " +
+                ScoreTable.COL_ATTENTION + " INTEGER, " +
+                ScoreTable.COL_SPACETIME + " INTEGER, " +
+                ScoreTable.COL_EXECUTION + " INTEGER, " +
+                ScoreTable.COL_LANGUAGE + " INTEGER, " +
+                ScoreTable.COL_TOTAL + " INTEGER, " +
+                ScoreTable.COL_DATE + " TEXT, " +
+                ScoreTable.COL_SERIAL_CODE + " TEXT, FOREIGN KEY" + "(" + ScoreTable.COL_SERIAL_CODE + ")" + " REFERENCES " + UserTable.TABLE_NAME +
+                "(" + UserTable.COL_SERIAL_CODE + "))";
+        db.execSQL(SQL_CREATE_SCORE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + EduAgeTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ScoreTable.TABLE_NAME);
         onCreate(db);
     }
 
     // 사용자 등록
-    public long registerUser(String name, String birth, String sex, String education) {
+    public long registerUser(String serialCode, String name, String birth, int age, String sex, String education, int score) {
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(UserTable.COL_SERIAL_CODE, serialCode);
         values.put(UserTable.COL_NAME, name);
         values.put(UserTable.COL_BIRTH, birth);
+        values.put(UserTable.COL_AGE, age);
         values.put(UserTable.COL_SEX, sex);
         values.put(UserTable.COL_EDU, education);
+        values.put(UserTable.COL_SCORE, score);
 
         long result = db.insert(UserTable.TABLE_NAME, null, values);
-
         return result;
     }
 
     // 사용자 삭제
-    public Integer deleteUser(String name) {
-        db = this. getWritableDatabase();
-        return db.delete(UserTable.TABLE_NAME, "name=?", new String[] {name});
+    public Integer deleteUser(String serial_code) {
+        db = this.getWritableDatabase();
+        return db.delete(UserTable.TABLE_NAME, "serialCode=?", new String[] {serial_code});
+    }
+
+    // 사용자 진단 기록 삭제
+    public Integer deleteScore(String serial_code) {
+        db = this.getWritableDatabase();
+        return db.delete(ScoreTable.TABLE_NAME, "serialCode=?", new String[] {serial_code});
+    }
+
+    // 사용자 정보 수정
+    public long updateData(String serial_code, String name, String birth,
+                           int age, String sex, String edu, int score) {
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UserTable.COL_NAME, name);
+        values.put(UserTable.COL_BIRTH, birth);
+        values.put(UserTable.COL_AGE, age);
+        values.put(UserTable.COL_SEX, sex);
+        values.put(UserTable.COL_EDU, edu);
+        values.put(UserTable.COL_SCORE, score);
+
+        long result = db.update(UserTable.TABLE_NAME, values, "serialCode=?", new String[]{ serial_code });
+        return result;
     }
 
     // 사용자 체크
-    public boolean checkUser(String name, String birth) {
+    public boolean checkUser(String name, String birth, String sex, String edu) {
         db = this.getReadableDatabase();
-        String [] columns = { UserTable._ID };
-        String selection = UserTable.COL_NAME + "=?" + " and " + UserTable.COL_BIRTH + "=?";
-        String [] selectionargs = { name, birth };
+        String [] columns = { UserTable.COL_SERIAL_CODE };
+        String selection = UserTable.COL_NAME + "=?" + " and " + UserTable.COL_BIRTH + "=?" + " and " + UserTable.COL_SEX + "=?" + " and " + UserTable.COL_EDU + "=?";
+        String [] selectionargs = { name, birth, sex, edu };
         Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionargs, null, null, null);
         int count = cursor.getCount();
         db.close();
@@ -97,20 +145,19 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    // 사용자 만나이 계산
-    public int getAge(int year, int month, int day) {
-        Calendar current = Calendar.getInstance();
-        int currentYear = current.get(Calendar.YEAR);
-        int currentMonth = current.get(Calendar.MONTH) + 1;
-        int currentDay = current.get(Calendar.DAY_OF_MONTH);
+    // 사용자 serial_code 저장하기
+    public String saveSerialCode(String name, String birth, String sex, String edu) {
+        db = this.getReadableDatabase();
+        String [] columns = { UserTable.COL_SERIAL_CODE };
+        String selection = UserTable.COL_NAME + "=?" + " and " + UserTable.COL_BIRTH + "=?" + " and " + UserTable.COL_SEX + "=?" + " and " + UserTable.COL_EDU + "=?";
+        String [] selectionargs = { name, birth, sex, edu };
+        Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionargs, null, null, null);
+        cursor.moveToFirst();
+        String result = cursor.getString(0);
+        db.close();
+        cursor.close();
 
-        int age = currentYear - year;
-
-        // 생일이 지나지 않은 경우 -1
-        if(month * 100 + day > currentMonth * 100 + currentDay) {
-            age--;
-        }
-        return age;
+        return result;
     }
 
     // 무학여부 나이 테이블 데이터
@@ -160,6 +207,92 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return eduAgeList;
+    }
+
+    // 점수 테이블 데이터 추가
+    public void scoreAdd(String serialCode, String date, int orientation, int memory, int attention, int spacetime, int execution, int language, int total) {
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ScoreTable.COL_SERIAL_CODE, serialCode);
+        values.put(ScoreTable.COL_DATE, date);
+        values.put(ScoreTable.COL_ORIENTATION, orientation);
+        values.put(ScoreTable.COL_MEMORY, memory);
+        values.put(ScoreTable.COL_ATTENTION, attention);
+        values.put(ScoreTable.COL_SPACETIME, spacetime);
+        values.put(ScoreTable.COL_EXECUTION, execution);
+        values.put(ScoreTable.COL_LANGUAGE, language);
+        values.put(ScoreTable.COL_TOTAL, total);
+
+        long result = db.insert(ScoreTable.TABLE_NAME, null, values);
+    }
+
+    // 진단 결과 점수 출력
+    public List<Score> getScoreList(String serial_code) {
+        List<Score> scoreList = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ScoreTable.TABLE_NAME +  " WHERE "+ ScoreTable.COL_SERIAL_CODE + "=?", new String[] {serial_code});
+
+        if(cursor.moveToFirst()) {
+            do {
+                Score score = new Score();
+                score.setSerial_code(cursor.getString(cursor.getColumnIndexOrThrow(ScoreTable.COL_SERIAL_CODE)));
+                score.setDate(cursor.getString(cursor.getColumnIndexOrThrow(ScoreTable.COL_DATE)));
+                score.setOrientation(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_ORIENTATION)));
+                score.setMemory(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_MEMORY)));
+                score.setAttention(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_ATTENTION)));
+                score.setSpacetime(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_SPACETIME)));
+                score.setExecution(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_EXECUTION)));
+                score.setLanguage(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_LANGUAGE)));
+                score.setTotal(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_TOTAL)));
+                scoreList.add(score);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        return scoreList;
+    }
+
+    // 같은 날짜의 진단 기록이 있는지 체크
+    public boolean checkScore(String serial_code, String date) {
+        db = getReadableDatabase();
+        String [] columns = { ScoreTable.COL_SERIAL_CODE };
+        String selection = ScoreTable.COL_SERIAL_CODE + "=?" + " and " + ScoreTable.COL_DATE + "=?";
+        String [] selectionargs = { serial_code, date };
+        Cursor cursor = db.query(ScoreTable.TABLE_NAME, columns, selection, selectionargs, null, null, null);
+        int count = cursor.getCount();
+        db.close();
+        cursor.close();
+        return count > 0;
+    }
+
+    // 같은 날짜의 진단 기록이 있는 경우, 이후의 진단 결과로 점수 갱신
+    public void changeScore(String serial_code, String date, int[] score) {
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ScoreTable.COL_ORIENTATION, score[1]);
+        values.put(ScoreTable.COL_MEMORY, score[2]);
+        values.put(ScoreTable.COL_ATTENTION, score[3]);
+        values.put(ScoreTable.COL_SPACETIME, score[4]);
+        values.put(ScoreTable.COL_EXECUTION, score[5]);
+        values.put(ScoreTable.COL_LANGUAGE, score[6]);
+        values.put(ScoreTable.COL_TOTAL, score[1] + score[2] + score[3] + score[4] + score[5] + score[6]);
+
+        long result = db.update(ScoreTable.TABLE_NAME, values, "serialCode=?" + " and " + "date=?", new String[]{ serial_code , date });
+    }
+
+    // 사용자 정보 출력
+    public User getUserInf(String serial_code) {
+        User user = new User();
+        db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + UserTable.TABLE_NAME + " WHERE " + ScoreTable.COL_SERIAL_CODE + "=?", new String[] {serial_code});
+
+        if(cursor.moveToFirst()) {
+            user.setName(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_NAME)));
+            user.setBirth(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_BIRTH)));
+            user.setSex(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_SEX)));
+            user.setEdu(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_EDU)));
+        }
+        cursor.close();
+        return user;
     }
 }
 

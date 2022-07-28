@@ -111,6 +111,7 @@ public class QuizHOME extends AppCompatActivity {
 
             Toast.makeText(this, "결과가 저장되었습니다.",
                     Toast.LENGTH_SHORT).show();
+
         }
         Title.setText(announce.get(current));
     }
@@ -142,7 +143,8 @@ public class QuizHOME extends AppCompatActivity {
                 break;
             case 1:
                 intent = new Intent(view.getContext(), Result.class);
-                intent.putExtra("result", total_score);
+                intent.putExtra("part_score", part_score);
+                intent.putExtra("total_score", total_score);
                 startActivity(intent);
                 finish();
                 break;

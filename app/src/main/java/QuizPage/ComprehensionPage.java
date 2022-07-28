@@ -33,6 +33,7 @@ public class ComprehensionPage extends AppCompatActivity {
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
     private ImageButton sttBtn;
     private Button submit;
+    private long backBtnTime = 0;
     int resLeft, resRight; // 정답 체크
     LanguageFunc languageFunc;
     TTS tts;
@@ -214,5 +215,32 @@ public class ComprehensionPage extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        } else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onStop(){
+        tts.isStopUtt = true;
+        super.onStop();
+        tts.Stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        QP.Destroy();
     }
 }

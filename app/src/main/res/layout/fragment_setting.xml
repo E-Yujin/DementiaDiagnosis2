@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#DCDCDC">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_account" />
+
+        <TextView
+            android:id="@+id/userIf_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="55dp"
+            android:text="홍길동님"
+            android:textSize="18sp"
+            android:fontFamily="@font/jejugothic"/>
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="설정 페이지"/>
+        android:id="@+id/userIf_retrieve"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/frame_layout"
+        android:layout_marginTop="50dp"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:text="사용자 정보 수정"
+        android:textColor="#636363"
+        android:fontFamily="@font/jejugothic"
+        android:textSize="16sp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/userIf_delete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/userIf_retrieve"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:text="사용자 정보 삭제"
+        android:textColor="#636363"
+        android:fontFamily="@font/jejugothic"
+        android:textSize="16sp" />
+
+</RelativeLayout>

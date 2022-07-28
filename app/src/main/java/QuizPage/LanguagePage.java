@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -41,6 +42,7 @@ public class LanguagePage extends AppCompatActivity {
     ImageButton sttBtn;
     Button submit;
     ActivityResultLauncher<Intent> startActivityResult;
+    private long backBtnTime = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,5 +162,33 @@ public class LanguagePage extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        } else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onStop(){
+        tts.isStopUtt = true;
+        super.onStop();
+        tts.Stop();
+        stt.Stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        QP.Destroy();
     }
 }

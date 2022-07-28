@@ -1,0 +1,1794 @@
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"main\">#FF6168FF</color>\r\n    <color name=\"lite_main\">#9499FF</color>\r\n    <color name=\"grey\">#595959</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/values/colors.xml	(date 1658035750813)
+@@ -10,4 +10,10 @@
+     <color name="main">#FF6168FF</color>
+     <color name="lite_main">#9499FF</color>
+     <color name="grey">#595959</color>
++    <color name="pink">#BEE3E3</color>
++    <color name="blue">#B6BEEC</color>
++    <color name="green">#C7EAC4</color>
++    <color name="yellow">#A2D5BE</color>
++    <color name="orange">#97BAD5</color>
++    <color name="purple">#A8E4FF</color>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/orientation.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:backgroundTint=\"#2196F3\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"364dp\"\r\n        android:layout_height=\"55dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"TextView\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"309dp\"\r\n        android:layout_height=\"225dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"TextView\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/result\"\r\n        android:layout_width=\"241dp\"\r\n        android:layout_height=\"70dp\"\r\n        android:ems=\"10\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"당신의 말이 나타납니다.\"\r\n        android:inputType=\"textPersonName\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/sttStart\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:text=\"말하기\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/submit\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:backgroundTint=\"#2196F3\"\r\n        android:text=\"정답 제출\" />\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/orientation.xml b/app/src/main/res/layout/orientation.xml
+--- a/app/src/main/res/layout/orientation.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/orientation.xml	(date 1658031695364)
+@@ -33,13 +33,14 @@
+         android:inputType="textPersonName"
+         android:textSize="15sp" />
+ 
+-    <Button
++    <ImageButton
+         android:id="@+id/sttStart"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
++        android:layout_width="50dp"
++        android:layout_height="50dp"
+         android:layout_marginTop="50dp"
+-        android:text="말하기" />
+-
++        android:scaleType="fitCenter"
++        android:background="@android:color/transparent"
++        android:src="@drawable/mic_color_drawable" />
+     <Button
+         android:id="@+id/submit"
+         android:layout_width="wrap_content"
+Index: app/src/main/res/layout/activity_first.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    tools:context=\".FirstActivity\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"시작화면\\n로고\"\r\n        android:textSize=\"30sp\"\r\n        android:gravity=\"center\"/>\r\n\r\n    <ImageView\r\n        android:layout_width=\"120dp\"\r\n        android:layout_height=\"120dp\"\r\n        android:background=\"#FF6168FF\"\r\n        />\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_first.xml b/app/src/main/res/layout/activity_first.xml
+--- a/app/src/main/res/layout/activity_first.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/activity_first.xml	(date 1658733239879)
+@@ -14,10 +14,4 @@
+         android:textSize="30sp"
+         android:gravity="center"/>
+ 
+-    <ImageView
+-        android:layout_width="120dp"
+-        android:layout_height="120dp"
+-        android:background="#FF6168FF"
+-        />
+-
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/drawable/round_button.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<shape xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:padding=\"10dp\"\r\n    android:shape=\"rectangle\" >\r\n    <solid android:color=\"#FF0000\" />\r\n    <corners\r\n        android:bottomLeftRadius=\"16dp\"\r\n        android:bottomRightRadius=\"16dp\"\r\n        android:topLeftRadius=\"16dp\"\r\n        android:topRightRadius=\"16dp\" />\r\n</shape>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/round_button.xml b/app/src/main/res/drawable/round_button.xml
+--- a/app/src/main/res/drawable/round_button.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/drawable/round_button.xml	(date 1658034052659)
+@@ -2,7 +2,7 @@
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+     android:padding="10dp"
+     android:shape="rectangle" >
+-    <solid android:color="#FF0000" />
++    <solid android:color="#DADADA" />
+     <corners
+         android:bottomLeftRadius="16dp"
+         android:bottomRightRadius="16dp"
+Index: app/src/main/res/layout/language_func.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:padding=\"10dp\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"Question\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/announce\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"70dp\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"Announce\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/question_image\"\r\n        android:layout_width=\"330dp\"\r\n        android:layout_height=\"330dp\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/result\"\r\n        android:layout_width=\"240dp\"\r\n        android:layout_height=\"70dp\"\r\n        android:ems=\"10\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"당신의 말이 나타납니다.\"\r\n        android:inputType=\"text\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <Button\r\n            android:id=\"@+id/sttStart\"\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginEnd=\"30dp\"\r\n            android:text=\"말하기\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnSubmit\"\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:backgroundTint=\"#2196F3\"\r\n            android:text=\"정답 제출\" />\r\n    </LinearLayout>\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/language_func.xml b/app/src/main/res/layout/language_func.xml
+--- a/app/src/main/res/layout/language_func.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/language_func.xml	(date 1658032313865)
+@@ -44,13 +44,13 @@
+         android:layout_gravity="center"
+         android:orientation="horizontal">
+ 
+-        <Button
++        <ImageButton
+             android:id="@+id/sttStart"
+-            android:layout_width="100dp"
+-            android:layout_height="wrap_content"
+-            android:layout_gravity="center"
+-            android:layout_marginEnd="30dp"
+-            android:text="말하기" />
++            android:layout_width="50dp"
++            android:layout_height="50dp"
++            android:scaleType="fitCenter"
++            android:background="@android:color/transparent"
++            android:src="@drawable/mic_color_drawable" />
+ 
+         <Button
+             android:id="@+id/btnSubmit"
+Index: app/src/main/res/layout/comprehension.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:gravity=\"center\"\r\n    tools:context=\"QuizPage.ComprehensionPage\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"Question\"\r\n        android:textSize=\"18sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/announce\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:gravity=\"center\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/ball\"\r\n        android:layout_width=\"360dp\"\r\n        android:layout_height=\"80dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:gravity=\"center\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <ImageView\r\n            android:id=\"@+id/image\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:src=\"@drawable/shape_oval\"\r\n            app:tint=\"#00BCD4\" />\r\n        <ImageView\r\n            android:id=\"@+id/image2\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:src=\"@drawable/shape_oval\"\r\n            app:tint=\"#00BCD4\" />\r\n        <ImageView\r\n            android:id=\"@+id/image3\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:src=\"@drawable/shape_oval\"\r\n            app:tint=\"#00BCD4\" />\r\n        <ImageView\r\n            android:id=\"@+id/image4\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:src=\"@drawable/shape_oval\"\r\n            app:tint=\"#00BCD4\" />\r\n        <ImageView\r\n            android:id=\"@+id/image5\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:src=\"@drawable/shape_oval\"\r\n            app:tint=\"#00BCD4\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        android:layout_marginTop=\"30dp\">\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/left\"\r\n            android:layout_width=\"170dp\"\r\n            android:layout_height=\"200dp\"\r\n            android:layout_marginEnd=\"20dp\"\r\n            android:background=\"@drawable/normal_shape\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_gravity=\"center\"\r\n                android:text=\"1\"\r\n                android:textSize=\"25sp\"\r\n                android:textStyle=\"bold\"/>\r\n        </LinearLayout>\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/right\"\r\n            android:layout_width=\"170dp\"\r\n            android:layout_height=\"200dp\"\r\n            android:background=\"@drawable/normal_shape\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_gravity=\"center\"\r\n                android:text=\"2\"\r\n                android:textSize=\"25sp\"\r\n                android:textStyle=\"bold\"/>\r\n        </LinearLayout>\r\n\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:layout_gravity=\"center\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <Button\r\n            android:id=\"@+id/sttStart\"\r\n            android:layout_width=\"150dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:backgroundTint=\"#6C6C6C\"\r\n            android:layout_marginEnd=\"40dp\"\r\n            android:text=\"말하기\"\r\n            android:textSize=\"17sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnSubmit\"\r\n            android:layout_width=\"150dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:backgroundTint=\"#00BCD4\"\r\n            android:text=\"정답 제출\"\r\n            android:textColor=\"@color/white\"\r\n            android:textSize=\"17sp\"\r\n            android:textStyle=\"bold\" />\r\n    </LinearLayout>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/comprehension.xml b/app/src/main/res/layout/comprehension.xml
+--- a/app/src/main/res/layout/comprehension.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/comprehension.xml	(date 1658032313840)
+@@ -111,16 +111,13 @@
+         android:layout_gravity="center"
+         android:orientation="horizontal">
+ 
+-        <Button
++        <ImageButton
+             android:id="@+id/sttStart"
+-            android:layout_width="150dp"
+-            android:layout_height="wrap_content"
+-            android:layout_gravity="center"
+-            android:backgroundTint="#6C6C6C"
+-            android:layout_marginEnd="40dp"
+-            android:text="말하기"
+-            android:textSize="17sp"
+-            android:textStyle="bold" />
++            android:layout_width="50dp"
++            android:layout_height="50dp"
++            android:scaleType="fitCenter"
++            android:background="@android:color/transparent"
++            android:src="@drawable/mic_color_drawable" />
+ 
+         <Button
+             android:id="@+id/btnSubmit"
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.cbnu.dementiadiagnosis\">\r\n\r\n    <uses-permission android:name=\"android.permission.RECORD_AUDIO\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.DementiaDiagnosis\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity\r\n            android:name=\".Result\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".RegisterActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".SimpleTestActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".HomeActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".FirstActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity android:name=\".QuizHOME\"></activity>\r\n        <activity android:name=\".Map\"></activity>\r\n        <activity android:name=\"QuizPage.orientation_Page\"></activity>\r\n        <activity android:name=\"QuizPage.memoryInput_Page\"></activity>\r\n        <activity android:name=\"QuizPage.attention_Page\"></activity>\r\n        <activity android:name=\"QuizPage.ExecutionPage\"></activity>\r\n        <activity android:name=\"QuizPage.memoryOutput_Page\"></activity>\r\n        <activity android:name=\"QuizPage.fluency_Page\"></activity>\r\n        <activity android:name=\"QuizPage.SpaceTimePage\"></activity>\r\n        <activity android:name=\"QuizPage.ComprehensionPage\"></activity>\r\n        <activity android:name=\"QuizPage.LanguagePage\"></activity>\r\n\r\n        <meta-data\r\n            android:name=\"com.kakao.sdk.AppKey\"\r\n            android:value=\"deeed953cb0bd5ce8fb32d971a0039d7\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/AndroidManifest.xml	(date 1658674804697)
+@@ -36,17 +36,17 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity android:name=".QuizHOME"></activity>
+-        <activity android:name=".Map"></activity>
+-        <activity android:name="QuizPage.orientation_Page"></activity>
+-        <activity android:name="QuizPage.memoryInput_Page"></activity>
+-        <activity android:name="QuizPage.attention_Page"></activity>
+-        <activity android:name="QuizPage.ExecutionPage"></activity>
+-        <activity android:name="QuizPage.memoryOutput_Page"></activity>
+-        <activity android:name="QuizPage.fluency_Page"></activity>
+-        <activity android:name="QuizPage.SpaceTimePage"></activity>
+-        <activity android:name="QuizPage.ComprehensionPage"></activity>
+-        <activity android:name="QuizPage.LanguagePage"></activity>
++        <activity android:name=".QuizHOME" />
++        <activity android:name=".Map" />
++        <activity android:name="QuizPage.orientation_Page" />
++        <activity android:name="QuizPage.memoryInput_Page" />
++        <activity android:name="QuizPage.attention_Page" />
++        <activity android:name="QuizPage.ExecutionPage" />
++        <activity android:name="QuizPage.memoryOutput_Page" />
++        <activity android:name="QuizPage.fluency_Page" />
++        <activity android:name="QuizPage.SpaceTimePage" />
++        <activity android:name="QuizPage.ComprehensionPage" />
++        <activity android:name="QuizPage.LanguagePage" />
+ 
+         <meta-data
+             android:name="com.kakao.sdk.AppKey"
+Index: app/src/main/java/QuizPage/LanguagePage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package QuizPage;\r\n\r\nimport android.app.Activity;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.speech.tts.TextToSpeech;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.activity.result.ActivityResult;\r\nimport androidx.activity.result.ActivityResultCallback;\r\nimport androidx.activity.result.ActivityResultLauncher;\r\nimport androidx.activity.result.contract.ActivityResultContracts;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.cbnu.dementiadiagnosis.MainSTT;\r\nimport com.cbnu.dementiadiagnosis.R;\r\nimport com.cbnu.dementiadiagnosis.TTS;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport questions.LanguageFunc;\r\nimport questions.attention;\r\n\r\npublic class LanguagePage extends AppCompatActivity {\r\n    LanguageFunc languageFunc;\r\n    MainSTT stt;\r\n    TTS tts;\r\n    QuizPage QP;\r\n    TextView question;\r\n    TextView announce;\r\n    ImageView image;\r\n    EditText answer;\r\n    ImageButton sttBtn;\r\n    Button submit;\r\n    ActivityResultLauncher<Intent> startActivityResult;\r\n\r\n    @Override\r\n    protected void onCreate(@Nullable Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.language_func);\r\n\r\n        question = (TextView) findViewById(R.id.question);\r\n        announce = (TextView) findViewById(R.id.announce);\r\n        image = (ImageView) findViewById(R.id.question_image);\r\n        answer = (EditText) findViewById(R.id.result);\r\n        sttBtn = (ImageButton) findViewById(R.id.sttStart);\r\n        submit = (Button) findViewById(R.id.btnSubmit);\r\n        languageFunc = new LanguageFunc();\r\n\r\n        image.setImageResource(R.drawable.toothbrush);\r\n\r\n        startActivityResult = registerForActivityResult(\r\n                new ActivityResultContracts.StartActivityForResult(),\r\n                new ActivityResultCallback<ActivityResult>() {\r\n                    @Override\r\n                    public void onActivityResult(ActivityResult result) {\r\n                        if (result.getResultCode() == RESULT_OK) {\r\n                            Log.d(\"launcher_intent\", \"성공!!!!!!!!!!!\");\r\n                            assert result.getData() != null;\r\n                            int num = result.getData().getIntExtra(\"comprehension\", 0);\r\n                            languageFunc.score += num;\r\n\r\n                            Intent intent = new Intent();\r\n                            intent.putExtra(\"isDone\", true);\r\n                            intent.putExtra(\"score\", languageFunc.score);\r\n                            setResult(1, intent);\r\n                            finish();\r\n                        }\r\n                    }\r\n                });\r\n\r\n        tts = new TTS(this, new TextToSpeech.OnInitListener() {\r\n            @Override\r\n            public void onInit(int status) {\r\n                tts.onInit(status, question.getText().toString(), \"default\");\r\n                //tts.UtteranceProgress(announce.getText().toString());\r\n            }\r\n        }, sttBtn, submit);\r\n        stt = new MainSTT(this, answer, announce, question, sttBtn, submit, tts);\r\n        QP = new QuizPage(stt, tts, question, announce, answer, sttBtn, submit, languageFunc.quiz);\r\n\r\n        sttBtn.setOnClickListener(new View.OnClickListener() {\r\n            public void onClick(View v) {\r\n                tts.isStopUtt = true;\r\n                tts.Stop();\r\n                stt.start_STT();\r\n            }\r\n        });\r\n        submit.setOnClickListener(new View.OnClickListener() {\r\n            public void onClick(View v) {\r\n                stt.Stop();\r\n                tts.Stop();\r\n                sttBtn.setEnabled(true);\r\n                tts.isStopUtt = true;\r\n\r\n                QP.user_ans = answer.getText().toString()\r\n                        .replace(\" \", \"\")\r\n                        .replace(\",\", \"\")\r\n                        .replace(\".\", \"\");\r\n\r\n                List<String> correct = new ArrayList<>();\r\n                correct.clear();\r\n                for (String data : languageFunc.crr_ans[QP.current]) {\r\n                    correct.add(data);\r\n                }\r\n\r\n                answer.setText(\"\");\r\n\r\n                if (QP.user_ans.isEmpty()) {\r\n                    announce.setText(\"무응답으로 넘어가실 수 없습니다.\\n아시는 대로 천천히 말씀해주시면 됩니다.\");\r\n                    tts.speakOut(announce.getText().toString(), \"default\");\r\n                } else {\r\n                    for (String data : correct) {\r\n                        if (QP.user_ans.contains(data)) {\r\n                            languageFunc.score++;\r\n                        }\r\n                        /*if (QP.current + 1 < languageFunc.score) {\r\n                            languageFunc.score = QP.current + 1;\r\n                        }*/\r\n                    }\r\n                    if (QP.current == 0) {\r\n                        image.setImageResource(R.drawable.swing);\r\n                        tts.isStopUtt = false;\r\n                        QP.Submit();\r\n                        tts.speakOut(question.getText().toString(), \"default\");\r\n                    } else if (QP.current == 1) {\r\n                        image.setImageResource(R.drawable.dice);\r\n                        tts.isStopUtt = false;\r\n                        QP.Submit();\r\n                        tts.speakOut(question.getText().toString(), \"default\");\r\n                    } else if (QP.current == 2) {\r\n                        Intent intent = new Intent(LanguagePage.this, ComprehensionPage.class);\r\n                        startActivityResult.launch(intent);\r\n                        overridePendingTransition(0, 0);\r\n                        intent.putExtra(\"isDone\", true);\r\n                        intent.putExtra(\"score\", languageFunc.score);\r\n                        setResult(1, intent);\r\n                        QP.Submit();\r\n                    } /*else if(QP.current == 3) {\r\n                        Intent intent = new Intent();\r\n                        intent.putExtra(\"isDone\", true);\r\n                        intent.putExtra(\"score\", languageFunc.score);\r\n                        setResult(1, intent);\r\n                        finish();\r\n                    }*/\r\n                }\r\n            }\r\n        });\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/QuizPage/LanguagePage.java b/app/src/main/java/QuizPage/LanguagePage.java
+--- a/app/src/main/java/QuizPage/LanguagePage.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/QuizPage/LanguagePage.java	(date 1658742570854)
+@@ -66,7 +66,9 @@
+                             Log.d("launcher_intent", "성공!!!!!!!!!!!");
+                             assert result.getData() != null;
+                             int num = result.getData().getIntExtra("comprehension", 0);
++                            Log.d("num : ", num + "");
+                             languageFunc.score += num;
++                            Log.d("score : ", languageFunc.score + "");
+ 
+                             Intent intent = new Intent();
+                             intent.putExtra("isDone", true);
+Index: app/src/main/res/font/font_resource.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<font-family xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <font\r\n        android:fontStyle=\"normal\"\r\n        android:fontWeight=\"400\"\r\n        android:font=\"@font/jejuhallasan\" />\r\n    <font\r\n        android:fontStyle=\"italic\"\r\n        android:fontWeight=\"400\"\r\n        android:font=\"@font/jejugothic\" />\r\n</font-family>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/font/font_resource.xml b/app/src/main/res/font/font_resource.xml
+--- a/app/src/main/res/font/font_resource.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/font/font_resource.xml	(date 1658030833706)
+@@ -3,7 +3,7 @@
+     <font
+         android:fontStyle="normal"
+         android:fontWeight="400"
+-        android:font="@font/jejuhallasan" />
++        android:font="@font/jejugothic" />
+     <font
+         android:fontStyle="italic"
+         android:fontWeight="400"
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/edge.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_color_drawable.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_default.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_disable.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_pressed.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/round_button.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/font/font_resource.xml\" value=\"0.19814814814814816\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_first.xml\" value=\"0.13333333333333333\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml\" value=\"0.4466666666666667\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml\" value=\"0.4466666666666667\" />\r\n        <entry key=\"..\\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_output.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable-v24/round_button.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/ic_launcher_background.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/round_button.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_first.xml\" value=\"0.1539855072463768\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_formal_test.xml\" value=\"0.24895833333333334\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_home.xml\" value=\"0.17904761904761904\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_main.xml\" value=\"0.1721014492753623\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_register.xml\" value=\"0.16259057971014493\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/activity_simple_test.xml\" value=\"0.24895833333333334\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/main_home.xml\" value=\"0.24947916666666667\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/quiz_home.xml\" value=\"0.15942028985507245\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/bg01.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/edge.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_baseline_home.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_star.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_circle.xml\" value=\"0.10277777777777777\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_square.xml\" value=\"0.10277777777777777\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_line.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_oval.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_rectangle.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_triangle.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/target_shape.xml\" value=\"0.23385416666666667\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/triangle_blue.xml\" value=\"0.10277777777777777\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_comprehension_page.xml\" value=\"0.24947916666666667\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_home.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml\" value=\"0.23333333333333334\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_result.xml\" value=\"0.152\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_simple_test.xml\" value=\"0.23333333333333334\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/bottom_navigation.xml\" value=\"0.1490036231884058\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/comprehension.xml\" value=\"0.176\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution.xml\" value=\"0.176\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_season.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_shape.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_star.xml\" value=\"0.23731884057971014\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_chart.xml\" value=\"0.14492753623188406\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_home.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_setting.xml\" value=\"0.14492753623188406\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/language_func.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml\" value=\"0.23333333333333334\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/orientation.xml\" value=\"0.23385416666666667\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/quiz_home.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/space_time.xml\" value=\"0.2\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/understand.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/menu/bottom_navigation.xml\" value=\"0.264\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"Android Studio default JDK\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/.idea/misc.xml	(date 1658759571044)
+@@ -3,17 +3,6 @@
+   <component name="DesignSurface">
+     <option name="filePathToZoomLevelMap">
+       <map>
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/edge.xml" value="0.1" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_color_drawable.xml" value="0.1" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_default.xml" value="0.1" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_disable.xml" value="0.1" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/mic_pressed.xml" value="0.1" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/round_button.xml" value="0.1" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/font/font_resource.xml" value="0.19814814814814816" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_first.xml" value="0.13333333333333333" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.4466666666666667" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml" value="0.4466666666666667" />
+-        <entry key="..\:/Users/YooJin/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_output.xml" value="0.22" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable-v24/round_button.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/drawable/round_button.xml" value="0.1" />
+@@ -26,35 +15,55 @@
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/main_home.xml" value="0.24947916666666667" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis/app/src/main/res/layout/quiz_home.xml" value="0.15942028985507245" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/bg01.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/bg_updown.xml" value="0.12222222222222222" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/edge.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/fade_red.xml" value="0.12314814814814815" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_account.xml" value="0.125" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_baseline_home.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_fill.xml" value="0.21666666666666667" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_full.xml" value="0.12222222222222222" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_help.xml" value="0.22314814814814815" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_star.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/line.xml" value="0.2605128205128205" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/progressbar.xml" value="0.14537037037037037" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_circle.xml" value="0.10277777777777777" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_square.xml" value="0.10277777777777777" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/round_button.xml" value="0.1648148148148148" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_home.xml" value="0.16944444444444445" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_line.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_oval.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_rectangle.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/shape_triangle.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/target_shape.xml" value="0.23385416666666667" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/triangle_blue.xml" value="0.10277777777777777" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/font/font_resource.xml" value="0.1734375" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_comprehension_page.xml" value="0.24947916666666667" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_first.xml" value="0.15670289855072464" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_home.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.23333333333333334" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_result.xml" value="0.152" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_result_list.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_simple_test.xml" value="0.23333333333333334" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_user_inf.xml" value="0.264" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/bottom_navigation.xml" value="0.1490036231884058" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/comprehension.xml" value="0.176" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/dialog_full.xml" value="0.6" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/dialog_retrieve.xml" value="0.264" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution.xml" value="0.176" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_season.xml" value="0.264" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_shape.xml" value="0.264" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/execution_star.xml" value="0.23731884057971014" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fluency.xml" value="0.24230072463768115" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_chart.xml" value="0.14492753623188406" />
+-        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_home.xml" value="0.1" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/fragment_setting.xml" value="0.14492753623188406" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/language_func.xml" value="0.2" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_input.xml" value="0.23333333333333334" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/memory_output.xml" value="0.17617753623188406" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/orientation.xml" value="0.23385416666666667" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/quiz_home.xml" value="0.264" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/recycler_result.xml" value="0.2189695550351288" />
++        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/result_view.xml" value="0.2" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/space_time.xml" value="0.2" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/understand.xml" value="0.1" />
+         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/menu/bottom_navigation.xml" value="0.264" />
+Index: settings.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>dependencyResolutionManagement {\r\n    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\r\n    repositories {\r\n        google()\r\n        mavenCentral()\r\n        jcenter() // Warning: this repository is going to shut down soon\r\n    }\r\n}\r\nrootProject.name = \"DementiaDiagnosis\"\r\ninclude ':app'\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.gradle b/settings.gradle
+--- a/settings.gradle	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/settings.gradle	(date 1658034576967)
+@@ -3,7 +3,7 @@
+     repositories {
+         google()
+         mavenCentral()
+-        jcenter() // Warning: this repository is going to shut down soon
++        maven { url 'https://jitpack.io' }
+     }
+ }
+ rootProject.name = "DementiaDiagnosis"
+Index: app/src/main/java/com/cbnu/dementiadiagnosis/RegisterActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cbnu.dementiadiagnosis;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.app.Activity;\r\nimport android.app.DatePickerDialog;\r\nimport android.content.Intent;\r\nimport android.graphics.Color;\r\nimport android.graphics.drawable.ColorDrawable;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.view.inputmethod.InputMethodManager;\r\nimport android.widget.Button;\r\nimport android.widget.CheckBox;\r\nimport android.widget.DatePicker;\r\nimport android.widget.EditText;\r\nimport android.widget.RadioButton;\r\nimport android.widget.RadioGroup;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport database.DBHelper;\r\nimport user.RadioButtonTable;\r\nimport user.SharedPreference;\r\n\r\nimport java.util.Calendar;\r\n\r\npublic class RegisterActivity extends AppCompatActivity {\r\n\r\n    private DBHelper db;\r\n    private EditText userName, userBirth;\r\n    private Button btnInsert;\r\n    private RadioGroup userSex;\r\n    private RadioButton radioOne, radioTwo, radioThree, radioFour, radioFive, radioSix;\r\n    private RadioButtonTable userEdu;\r\n    private TextView sexError, eduError;\r\n    private DatePickerDialog.OnDateSetListener mDateSetListener;\r\n    private CheckBox checkBox;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_register);\r\n\r\n        db = new DBHelper(this);\r\n        userName = findViewById(R.id.name);\r\n        userBirth = findViewById(R.id.birth);\r\n        userSex = findViewById(R.id.radioGroupSex);\r\n        userEdu = findViewById(R.id.radioGroupEdu);\r\n        btnInsert = findViewById(R.id.btnInsert);\r\n        radioOne = findViewById(R.id.radioOne);\r\n        radioTwo = findViewById(R.id.radioTwo);\r\n        radioThree = findViewById(R.id.radioThree);\r\n        radioFour = findViewById(R.id.radioFour);\r\n        radioFive = findViewById(R.id.radioFive);\r\n        radioSix = findViewById(R.id.radioSix);\r\n        sexError = findViewById(R.id.sexError);\r\n        eduError = findViewById(R.id.eduError);\r\n        checkBox = findViewById(R.id.checkBox);\r\n\r\n        // 생년월일 datePicker\r\n        birthFun();\r\n        // 키보드 숨기기\r\n        applyHideKeyboard();\r\n        // 등록버튼 실행\r\n        btnInsertFun();\r\n\r\n    }\r\n\r\n    // 키보드 숨기기\r\n    public void hideKeyboard(View view) {\r\n        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);\r\n        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);\r\n    }\r\n\r\n    // 키보드 숨기기 적용\r\n    public void applyHideKeyboard() {\r\n        // 이름 EditView 이외의 부분을 누르면 keyboard 숨기기\r\n        userName.setOnFocusChangeListener(new View.OnFocusChangeListener() {\r\n            @Override\r\n            public void onFocusChange(View v, boolean hasFocus) {\r\n                if(!hasFocus)\r\n                    hideKeyboard(v);\r\n            }\r\n        });\r\n        // 생년월일 EditView 이외의 부분을 누르면 keyboard 숨기기\r\n        userBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {\r\n            @Override\r\n            public void onFocusChange(View v, boolean hasFocus) {\r\n                if(!hasFocus)\r\n                    hideKeyboard(v);\r\n            }\r\n        });\r\n    }\r\n\r\n    // 사용자 입력값 체크\r\n    public boolean checkAllValue() {\r\n        String name = userName.getText().toString().trim();\r\n        String birth = userBirth.getText().toString().trim();\r\n\r\n        if(name.isEmpty()) {\r\n            userName.setError(\"이름을 입력해주세요\");\r\n            return false;\r\n        }\r\n        if(birth.isEmpty()) {\r\n            userBirth.setError(\"생년월일을 입력해주세요\");\r\n            return false;\r\n        }\r\n        if(userSex.getCheckedRadioButtonId() == -1) {\r\n            sexError.setVisibility(View.VISIBLE);\r\n            return false;\r\n        }\r\n        else {\r\n            sexError.setVisibility(View.INVISIBLE);\r\n        }\r\n        if(!radioOne.isChecked() && !radioTwo.isChecked() && !radioThree.isChecked() &&\r\n                !radioFour.isChecked() && !radioFive.isChecked() && !radioSix.isChecked()) {\r\n            eduError.setVisibility(View.VISIBLE);\r\n            return false;\r\n        }\r\n        else {\r\n            eduError.setVisibility(View.INVISIBLE);\r\n        }\r\n        return true;\r\n    }\r\n\r\n    // 등록버튼 처리 함수\r\n    public void btnInsertFun() {\r\n        btnInsert.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                RadioButton sexRb = findViewById(userSex.getCheckedRadioButtonId());\r\n                String name = userName.getText().toString().trim();\r\n                String birth = userBirth.getText().toString().trim();\r\n                boolean checked = checkAllValue();\r\n\r\n                // 모든 정보를 다 입력했을 경우\r\n                if(checked) {\r\n                    String sex = sexRb.getText().toString();\r\n                    String edu = userEdu.getEduValue();\r\n                    boolean check = db.checkUser(name, birth);\r\n                    boolean autoCheck = checkBox.isChecked();\r\n\r\n                    // 이미 등록한 사용자\r\n                    if(check) {\r\n                        if(autoCheck) {// 자동 사용자 등록 체크한 경우\r\n                            SharedPreference.setUserInf(RegisterActivity.this, name, birth, sex, edu);\r\n                        }\r\n                        Toast.makeText(RegisterActivity.this, \"로그인\", Toast.LENGTH_SHORT).show();\r\n                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));\r\n                        finish();\r\n                    }\r\n                    // 새로운 사용자\r\n                    else {\r\n                        long val = db.registerUser(name, birth, sex, edu);\r\n\r\n                        if(val > 0) {\r\n                            if(autoCheck) {// 자동 사용자 등록 체크한 경우\r\n                                SharedPreference.setUserInf(RegisterActivity.this, name, birth, sex, edu);\r\n                            }\r\n                            Toast.makeText(RegisterActivity.this, \"회원등록 완료\", Toast.LENGTH_SHORT).show();\r\n                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));\r\n                            finish();\r\n                        }\r\n                        else {\r\n                            Toast.makeText(RegisterActivity.this, \"회원등록 실패\", Toast.LENGTH_SHORT).show();\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        });\r\n    }\r\n\r\n    // 생년월일 datePicker\r\n    public void birthFun() {\r\n        userBirth.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Calendar cal = Calendar.getInstance();\r\n                int year = cal.get(Calendar.YEAR);\r\n                int month = cal.get(Calendar.MONTH);\r\n                int day = cal.get(Calendar.DAY_OF_MONTH);\r\n\r\n                DatePickerDialog dialog = new DatePickerDialog(\r\n                        RegisterActivity.this,\r\n                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,\r\n                        mDateSetListener,\r\n                        year, month, day);\r\n                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));\r\n                dialog.show();\r\n            }\r\n        });\r\n        mDateSetListener = new DatePickerDialog.OnDateSetListener() {\r\n            @Override\r\n            public void onDateSet(DatePicker datePicker, int year, int month, int day) {\r\n                month = month + 1;\r\n                String date = null;\r\n                String s_month = Integer.toString(month), s_day = Integer.toString(day);\r\n\r\n                if(month < 10) {\r\n                    s_month = \"0\" + month;\r\n                }\r\n                if(day < 10) {\r\n                    s_day = \"0\" + day;\r\n                }\r\n                date = year + \"/\" + s_month + \"/\" + s_day;\r\n                userBirth.setText(date);\r\n            }\r\n        };\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cbnu/dementiadiagnosis/RegisterActivity.java b/app/src/main/java/com/cbnu/dementiadiagnosis/RegisterActivity.java
+--- a/app/src/main/java/com/cbnu/dementiadiagnosis/RegisterActivity.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/com/cbnu/dementiadiagnosis/RegisterActivity.java	(date 1658672481585)
+@@ -1,7 +1,5 @@
+ package com.cbnu.dementiadiagnosis;
+ 
+-import androidx.appcompat.app.AppCompatActivity;
+-
+ import android.app.Activity;
+ import android.app.DatePickerDialog;
+ import android.content.Intent;
+@@ -19,11 +17,15 @@
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
++import androidx.appcompat.app.AppCompatActivity;
++
++import java.util.Calendar;
++import java.util.Random;
++
+ import database.DBHelper;
+ import user.RadioButtonTable;
+ import user.SharedPreference;
+-
+-import java.util.Calendar;
++import user.User;
+ 
+ public class RegisterActivity extends AppCompatActivity {
+ 
+@@ -36,6 +38,7 @@
+     private TextView sexError, eduError;
+     private DatePickerDialog.OnDateSetListener mDateSetListener;
+     private CheckBox checkBox;
++    private User user;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+@@ -43,6 +46,7 @@
+         setContentView(R.layout.activity_register);
+ 
+         db = new DBHelper(this);
++        user = new User();
+         userName = findViewById(R.id.name);
+         userBirth = findViewById(R.id.birth);
+         userSex = findViewById(R.id.radioGroupSex);
+@@ -64,7 +68,6 @@
+         applyHideKeyboard();
+         // 등록버튼 실행
+         btnInsertFun();
+-
+     }
+ 
+     // 키보드 숨기기
+@@ -130,33 +133,39 @@
+             @Override
+             public void onClick(View v) {
+                 RadioButton sexRb = findViewById(userSex.getCheckedRadioButtonId());
+-                String name = userName.getText().toString().trim();
+-                String birth = userBirth.getText().toString().trim();
++                user.setName(userName.getText().toString().trim());
++                user.setBirth(userBirth.getText().toString().trim());
+                 boolean checked = checkAllValue();
+ 
+                 // 모든 정보를 다 입력했을 경우
+                 if(checked) {
+-                    String sex = sexRb.getText().toString();
+-                    String edu = userEdu.getEduValue();
+-                    boolean check = db.checkUser(name, birth);
++                    user.setSex(sexRb.getText().toString());
++                    user.setEdu(userEdu.getEduValue());
++                    boolean check = db.checkUser(user.getName(), user.getBirth());
+                     boolean autoCheck = checkBox.isChecked();
+ 
+                     // 이미 등록한 사용자
+                     if(check) {
+                         if(autoCheck) {// 자동 사용자 등록 체크한 경우
+-                            SharedPreference.setUserInf(RegisterActivity.this, name, birth, sex, edu);
++                            SharedPreference.setUserInf(RegisterActivity.this, user.getSerial_code(), user.getName(), user.getBirth(), user.getSex(), user.getEdu());
++                        }else {
++                            user.setSerial_code(db.saveSerialCode(user.getName(), user.getBirth()));
++                            SharedPreference.setSerialCodeInf(RegisterActivity.this, user.getSerial_code());
+                         }
+                         Toast.makeText(RegisterActivity.this, "로그인", Toast.LENGTH_SHORT).show();
+-                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
++                        startActivity(new Intent(RegisterActivity.this, UserInfActivity.class));
+                         finish();
+                     }
+                     // 새로운 사용자
+                     else {
+-                        long val = db.registerUser(name, birth, sex, edu);
++                        user.setSerial_code(getRandomString(5));
++                        long val = db.registerUser(user.getSerial_code(), user.getName(), user.getBirth(), user.getSex(), user.getEdu());
+ 
+                         if(val > 0) {
+                             if(autoCheck) {// 자동 사용자 등록 체크한 경우
+-                                SharedPreference.setUserInf(RegisterActivity.this, name, birth, sex, edu);
++                                SharedPreference.setUserInf(RegisterActivity.this, user.getSerial_code(), user.getName(), user.getBirth(), user.getSex(), user.getEdu());
++                            }else {
++                                SharedPreference.setSerialCodeInf(RegisterActivity.this, user.getSerial_code());
+                             }
+                             Toast.makeText(RegisterActivity.this, "회원등록 완료", Toast.LENGTH_SHORT).show();
+                             startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+@@ -209,4 +218,16 @@
+         };
+     }
+ 
++    // 랜덤 일련번호 부여
++    public static String getRandomString(int num) {
++        final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
++        StringBuilder result = new StringBuilder();
++        while (num > 0) {
++            Random random = new Random();
++            result.append(characters.charAt(random.nextInt(characters.length())));
++            num--;
++        }
++        return result.toString();
++    }
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cbnu.dementiadiagnosis;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\n\r\nimport QuizPage.ComprehensionPage;\r\nimport QuizPage.ExecutionPage;\r\nimport QuizPage.LanguagePage;\r\nimport QuizPage.SpaceTimePage;\r\nimport QuizPage.attention_Page;\r\nimport QuizPage.fluency_Page;\r\nimport QuizPage.memoryInput_Page;\r\nimport QuizPage.memoryOutput_Page;\r\nimport QuizPage.orientation_Page;\r\nimport questions.LanguageFunc;\r\n\r\npublic class QuizHOME extends AppCompatActivity {\r\n\r\n    TextView Title;\r\n    TextView Announce;\r\n    TextView Intend_value;\r\n    Button sttBtn;\r\n    private boolean isDone[];\r\n    private int current = 0;\r\n    private ArrayList<String> first, second;\r\n    public List<String> announce;\r\n    private long backBtnTime = 0;\r\n    private int part_score[];\r\n    private int total_score = 0;\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.quiz_home);\r\n\r\n        announce = new ArrayList();\r\n        isDone = new boolean[9];\r\n        part_score = new int[8];\r\n        Arrays.fill(isDone,false);\r\n\r\n        sttBtn = findViewById(R.id.sttStart);\r\n        Title = findViewById(R.id.title);\r\n        Announce = findViewById(R.id.announce);\r\n        Intend_value = findViewById(R.id.intent);\r\n\r\n        first = new ArrayList<>();\r\n        second = new ArrayList<>();\r\n\r\n        init_Announce();\r\n\r\n        Title.setText(announce.get(current));\r\n\r\n        sttBtn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = null;\r\n                switchPage(intent, view);\r\n            }\r\n        });\r\n    }\r\n\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {\r\n        super.onActivityResult(requestCode, resultCode, resultIntent);\r\n        if (requestCode == 100 && resultCode == 1) {\r\n            isDone[current] = resultIntent.getBooleanExtra(\"isDone\", false);\r\n            part_score[current] = resultIntent.getIntExtra(\"score\", 0);\r\n            total_score += part_score[current];\r\n        }\r\n        if (requestCode == 100 && resultCode == 2) {\r\n            isDone[current] = resultIntent.getBooleanExtra(\"isDone\", false);\r\n            first = resultIntent.getStringArrayListExtra(\"First\");\r\n            second = resultIntent.getStringArrayListExtra(\"Second\");\r\n        }\r\n    }\r\n\r\n    @Override\r\n    protected void onStart() {\r\n        super.onStart();\r\n        if(isDone[current]){\r\n            current ++;\r\n            Title.setText(announce.get(current));\r\n            if(current == 2){\r\n                String tem = \"맞춘 말 : \";\r\n                for(String data : first) {\r\n                    tem += data;\r\n                }\r\n                Intend_value.setText(tem);\r\n            }\r\n            else {\r\n                Intend_value.setText(Integer.toString(total_score));\r\n            }\r\n            Toast.makeText(this, \"결과가 저장되었습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }\r\n\r\n    public void setCurrent(int score){\r\n        isDone[current] = true;\r\n        total_score += score;\r\n    }\r\n\r\n    private void init_Announce(){\r\n        announce.add(\"지금부터 '지남력'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '기억 등록'을\\n시행하겠습니다.\");\r\n        announce.add(\"지금부터 '주의력'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '시공간 기능'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '집행 기능'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '기억력'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '언어 기능'을\\n검사해보겠습니다.\");\r\n        announce.add(\"지금부터 '유창성'을\\n검사해보겠습니다.\");\r\n        announce.add(\"결과 출력\");\r\n    }\r\n\r\n    @Override\r\n    public void onBackPressed() {\r\n        long curTime = System.currentTimeMillis();\r\n        long gapTime = curTime - backBtnTime;\r\n\r\n        if (0 <= gapTime && 2000 >= gapTime) {\r\n            super.onBackPressed();\r\n        } else {\r\n            backBtnTime = curTime;\r\n            Toast.makeText(this, \"지금 나가시면 진행된 검사가 저장되지 않습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }\r\n\r\n    private void switchPage(Intent intent, View view){\r\n        switch (current){\r\n            case 0:\r\n                intent = new Intent(view.getContext(), memoryInput_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 1:\r\n                intent = new Intent(view.getContext(), memoryInput_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 2:\r\n                intent = new Intent(view.getContext(), attention_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 3:\r\n                intent = new Intent(view.getContext(), SpaceTimePage.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 4:\r\n                intent = new Intent(view.getContext(), ExecutionPage.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 5:\r\n                intent = new Intent(view.getContext(), memoryOutput_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 6:\r\n                intent = new Intent(view.getContext(), LanguagePage.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 7:\r\n                intent = new Intent(view.getContext(), fluency_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 8:\r\n                intent = new Intent(view.getContext(), Result.class);\r\n                intent.putExtra(\"result\", total_score);\r\n                startActivity(intent);\r\n                finish();\r\n                break;\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java b/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java
+--- a/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java	(date 1658741923544)
+@@ -140,11 +140,11 @@
+     private void switchPage(Intent intent, View view){
+         switch (current){
+             case 0:
+-                intent = new Intent(view.getContext(), memoryInput_Page.class);
++                intent = new Intent(view.getContext(), orientation_Page.class);
+                 startActivityForResult(intent, 100);
+                 break;
+             case 1:
+-                intent = new Intent(view.getContext(), memoryInput_Page.class);
++                intent = new Intent(view.getContext(), LanguagePage.class);
+                 startActivityForResult(intent, 100);
+                 break;
+             case 2:
+Index: app/src/main/java/fragment/FragmentChart.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package fragment;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.cbnu.dementiadiagnosis.R;\r\n\r\npublic class FragmentChart extends Fragment {\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_chart, container, false);\r\n\r\n        return view;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/fragment/FragmentChart.java b/app/src/main/java/fragment/FragmentChart.java
+--- a/app/src/main/java/fragment/FragmentChart.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/fragment/FragmentChart.java	(date 1658727961404)
+@@ -1,18 +1,49 @@
+ package fragment;
+ 
++import android.annotation.SuppressLint;
++import android.graphics.Color;
++import android.graphics.drawable.Drawable;
+ import android.os.Bundle;
++import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.ImageButton;
+ 
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
++import androidx.core.content.ContextCompat;
+ import androidx.fragment.app.Fragment;
++import androidx.recyclerview.widget.LinearLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
+ 
+ import com.cbnu.dementiadiagnosis.R;
++import com.cbnu.dementiadiagnosis.RecyclerAdapter;
++import com.github.mikephil.charting.charts.LineChart;
++import com.github.mikephil.charting.components.Legend;
++import com.github.mikephil.charting.components.XAxis;
++import com.github.mikephil.charting.components.YAxis;
++import com.github.mikephil.charting.data.Entry;
++import com.github.mikephil.charting.data.LineData;
++import com.github.mikephil.charting.data.LineDataSet;
++import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
++import com.github.mikephil.charting.utils.Utils;
++
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Objects;
++
++import database.DBHelper;
++import user.Data;
++import user.Score;
++import user.SharedPreference;
+ 
+ public class FragmentChart extends Fragment {
+ 
++    RecyclerAdapter adapter;
++    ArrayList<Entry> values;
++    View view;
++
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -21,8 +52,98 @@
+     @Nullable
+     @Override
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+-        View view = inflater.inflate(R.layout.fragment_chart, container, false);
++        view = inflater.inflate(R.layout.fragment_chart, container, false);
++        values = new ArrayList<>();
++
++        LineChart chart = view.findViewById(R.id.linechart);
++        chart.animateY(1000);
++        chart.setDragEnabled(true);
++        chart.setScaleEnabled(false);
++        chart.setPinchZoom(false);
++        chart.setDrawGridBackground(false);
++        chart.getDescription().setEnabled(false);
++        chart.setDrawBorders(true);
++        chart.setBorderColor(Color.LTGRAY);
++
++        Legend legend = chart.getLegend();
++        legend.setEnabled(false);
++
++        XAxis xAxis = chart.getXAxis();
++        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
++        xAxis.setDrawGridLines(false);
++        xAxis.setDrawAxisLine(false);
++
++        YAxis yLAxis = chart.getAxisLeft();
++        yLAxis.setDrawGridLines(false);
++        yLAxis.setDrawAxisLine(false);
++
++        YAxis yRAxis = chart.getAxisRight();
++        yRAxis.setDrawLabels(false);
++        yRAxis.setDrawGridLines(false);
++        yRAxis.setDrawAxisLine(false);
++
++        // 결과 목록 생성
++        init();
++        getData();
++
++        LineDataSet set1;
++        set1 = new LineDataSet(values, "진단 점수");
++        set1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
++        set1.setDrawFilled(true);
++        set1.setDrawHighlightIndicators(false);
++
++        if (Utils.getSDKInt() >= 18) {
++            // drawables only supported on api level 18 and above
++            Drawable drawable = ContextCompat.getDrawable(requireActivity().getApplication(), R.drawable.fade_red);
++            set1.setFillDrawable(drawable);
++        } else {
++            set1.setFillColor(Color.BLACK);
++        }
++
++        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
++        dataSets.add(set1);
++
++        LineData data = new LineData(dataSets);
++
++        set1.setColor(Color.parseColor("#A0BDE1"));
++        set1.setCircleColor(Color.BLACK);
++
++        chart.setData(data);
+ 
+         return view;
+     }
++
++    // 결과 목록 생성
++    public void init() {
++        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
++
++        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireActivity().getApplication());
++        recyclerView.setLayoutManager(linearLayoutManager);
++
++        adapter = new RecyclerAdapter();
++        recyclerView.setAdapter(adapter);
++    }
++
++    // 데이터 추가
++    @SuppressLint("NotifyDataSetChanged")
++    public void getData() {
++        List<Score> scoreList = new ArrayList<>();
++        DBHelper dbHelper = new DBHelper(requireActivity().getApplication());
++
++        scoreList = dbHelper.getScoreList(SharedPreference.getSerialCode(requireActivity().getApplication()));
++        for(int i = 0; i < scoreList.size(); i++) {
++            Score score = new Score();
++            score.setOrientation(scoreList.get(i).getOrientation());
++            score.setMemory(scoreList.get(i).getMemory());
++            score.setAttention(scoreList.get(i).getAttention());
++            score.setSpacetime(scoreList.get(i).getSpacetime());
++            score.setExecution(scoreList.get(i).getExecution());
++            score.setLanguage(scoreList.get(i).getLanguage());
++            score.setDate(scoreList.get(i).getDate());
++            score.setTotal(scoreList.get(i).getTotal());
++            values.add(new Entry(i, scoreList.get(i).getTotal()));
++            adapter.addItem(score);
++        }
++        adapter.notifyDataSetChanged();
++    }
+ }
+Index: app/src/main/java/database/DBHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package database;\r\n\r\nimport android.content.ContentValues;\r\nimport android.content.Context;\r\nimport android.database.Cursor;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.database.sqlite.SQLiteOpenHelper;\r\n\r\nimport androidx.annotation.Nullable;\r\n\r\nimport database.TableContract.*;\r\nimport user.EducationAge;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Calendar;\r\nimport java.util.List;\r\n\r\npublic class DBHelper extends SQLiteOpenHelper {\r\n\r\n    private static final String DATABASE_NAME = \"user.db\";\r\n    private static final Integer DATABASE_VERSION = 1;\r\n\r\n    private SQLiteDatabase db;\r\n\r\n    public DBHelper(@Nullable Context context) {\r\n        super(context, DATABASE_NAME, null, DATABASE_VERSION);\r\n    }\r\n\r\n    @Override\r\n    public void onCreate(SQLiteDatabase db) {\r\n        this.db = db;\r\n\r\n        // user table 생성\r\n        final String SQL_CREATE_USER_TABLE = \"CREATE TABLE \" +\r\n                UserTable.TABLE_NAME + \" ( \" +\r\n                UserTable._ID + \" INTEGER PRIMARY KEY AUTOINCREMENT, \" +\r\n                UserTable.COL_NAME + \" TEXT, \" +\r\n                UserTable.COL_BIRTH + \" TEXT, \" +\r\n                UserTable.COL_SEX + \" TEXT, \" +\r\n                UserTable.COL_EDU + \" TEXT\" + \")\";\r\n        db.execSQL(SQL_CREATE_USER_TABLE);\r\n\r\n        // education table 생성\r\n        final String SQL_CREATE_EDU_TABLE = \"CREATE TABLE \" +\r\n                EduAgeTable.TABLE_NAME + \" ( \" +\r\n                EduAgeTable.COL_AGE + \" INTEGER PRIMARY KEY AUTOINCREMENT, \" +\r\n                EduAgeTable.COL_ILLITERATE + \" INTEGER, \" +\r\n                EduAgeTable.COL_UNEDUCATED + \" INTEGER, \" +\r\n                EduAgeTable.COL_ELESCHOOL + \" INTEGER, \" +\r\n                EduAgeTable.COL_SECSCHOOL + \" INTEGER, \" +\r\n                EduAgeTable.COL_HIGHSCHOOL + \" INTEGER, \" +\r\n                EduAgeTable.COL_UNIVERSITY + \" INTEGER\" + \")\";\r\n        db.execSQL(SQL_CREATE_EDU_TABLE);\r\n        fillEduAgeTable();\r\n    }\r\n\r\n    @Override\r\n    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {\r\n        db.execSQL(\"DROP TABLE IF EXISTS \" + UserTable.TABLE_NAME);\r\n        db.execSQL(\"DROP TABLE IF EXISTS \" + EduAgeTable.TABLE_NAME);\r\n        onCreate(db);\r\n    }\r\n\r\n    // 사용자 등록\r\n    public long registerUser(String name, String birth, String sex, String education) {\r\n        db = this.getWritableDatabase();\r\n        ContentValues values = new ContentValues();\r\n        values.put(UserTable.COL_NAME, name);\r\n        values.put(UserTable.COL_BIRTH, birth);\r\n        values.put(UserTable.COL_SEX, sex);\r\n        values.put(UserTable.COL_EDU, education);\r\n\r\n        long result = db.insert(UserTable.TABLE_NAME, null, values);\r\n\r\n        return result;\r\n    }\r\n\r\n    // 사용자 삭제\r\n    public Integer deleteUser(String name) {\r\n        db = this. getWritableDatabase();\r\n        return db.delete(UserTable.TABLE_NAME, \"name=?\", new String[] {name});\r\n    }\r\n\r\n    // 사용자 체크\r\n    public boolean checkUser(String name, String birth) {\r\n        db = this.getReadableDatabase();\r\n        String [] columns = { UserTable._ID };\r\n        String selection = UserTable.COL_NAME + \"=?\" + \" and \" + UserTable.COL_BIRTH + \"=?\";\r\n        String [] selectionargs = { name, birth };\r\n        Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionargs, null, null, null);\r\n        int count = cursor.getCount();\r\n        db.close();\r\n        cursor.close();\r\n        if (count > 0)\r\n            return true;\r\n        else\r\n            return false;\r\n    }\r\n\r\n    // 사용자 만나이 계산\r\n    public int getAge(int year, int month, int day) {\r\n        Calendar current = Calendar.getInstance();\r\n        int currentYear = current.get(Calendar.YEAR);\r\n        int currentMonth = current.get(Calendar.MONTH) + 1;\r\n        int currentDay = current.get(Calendar.DAY_OF_MONTH);\r\n\r\n        int age = currentYear - year;\r\n\r\n        // 생일이 지나지 않은 경우 -1\r\n        if(month * 100 + day > currentMonth * 100 + currentDay) {\r\n            age--;\r\n        }\r\n        return age;\r\n    }\r\n\r\n    // 무학여부 나이 테이블 데이터\r\n    private void fillEduAgeTable() {\r\n        // 문맹, 무학, 초등, 중등, 고등, 대학\r\n        EducationAge fifty = new EducationAge(50, 0, 0, 22, 24, 26, 27);\r\n        addEduAgeTable(fifty);\r\n        EducationAge sixty = new EducationAge(60, 0, 16, 21, 23, 25, 26);\r\n        addEduAgeTable(sixty);\r\n        EducationAge seventy = new EducationAge(70, 13, 14, 19, 22, 22, 25);\r\n        addEduAgeTable(seventy);\r\n        EducationAge eighty = new EducationAge(80, 10, 11, 16, 18, 20, 22);\r\n        addEduAgeTable(eighty);\r\n    }\r\n\r\n    // 무학여부 나이 테이블 데이터 추가\r\n    private void addEduAgeTable(EducationAge educationAge) {\r\n        ContentValues values  = new ContentValues();\r\n        values.put(EduAgeTable.COL_AGE, educationAge.getAge());\r\n        values.put(EduAgeTable.COL_ILLITERATE, educationAge.getIlliterate());\r\n        values.put(EduAgeTable.COL_UNEDUCATED, educationAge.getUneducated());\r\n        values.put(EduAgeTable.COL_ELESCHOOL, educationAge.getElementarySchool());\r\n        values.put(EduAgeTable.COL_SECSCHOOL, educationAge.getSecondarySchool());\r\n        values.put(EduAgeTable.COL_HIGHSCHOOL, educationAge.getHighSchool());\r\n        values.put(EduAgeTable.COL_UNIVERSITY, educationAge.getUniversity());\r\n        db.insert(EduAgeTable.TABLE_NAME, null, values);\r\n    }\r\n\r\n    // 무학여부 나이 테이블 데이터 가져오기\r\n    public List<EducationAge> getAllEduTable() {\r\n        List<EducationAge> eduAgeList = new ArrayList<>();\r\n        db = getReadableDatabase();\r\n        Cursor cursor = db.rawQuery(\"SELECT * FROM \" + EduAgeTable.TABLE_NAME, null);\r\n\r\n        if(cursor.moveToFirst()) {\r\n            do {\r\n                EducationAge educationAge = new EducationAge();\r\n                educationAge.setAge(cursor.getInt(cursor.getColumnIndexOrThrow(EduAgeTable.COL_AGE)));\r\n                educationAge.setIlliterate(cursor.getInt(cursor.getColumnIndexOrThrow(EduAgeTable.COL_ILLITERATE)));\r\n                educationAge.setUneducated(cursor.getInt(cursor.getColumnIndexOrThrow(EduAgeTable.COL_UNEDUCATED)));\r\n                educationAge.setElementarySchool(cursor.getInt(cursor.getColumnIndexOrThrow(EduAgeTable.COL_ELESCHOOL)));\r\n                educationAge.setSecondarySchool(cursor.getInt(cursor.getColumnIndexOrThrow(EduAgeTable.COL_SECSCHOOL)));\r\n                educationAge.setHighSchool(cursor.getInt(cursor.getColumnIndexOrThrow(EduAgeTable.COL_HIGHSCHOOL)));\r\n                educationAge.setUniversity(cursor.getInt(cursor.getColumnIndexOrThrow(EduAgeTable.COL_UNIVERSITY)));\r\n                eduAgeList.add(educationAge);\r\n            } while(cursor.moveToNext());\r\n        }\r\n        cursor.close();\r\n        return eduAgeList;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/database/DBHelper.java b/app/src/main/java/database/DBHelper.java
+--- a/app/src/main/java/database/DBHelper.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/database/DBHelper.java	(date 1658741671304)
+@@ -10,6 +10,8 @@
+ 
+ import database.TableContract.*;
+ import user.EducationAge;
++import user.Score;
++import user.User;
+ 
+ import java.util.ArrayList;
+ import java.util.Calendar;
+@@ -18,7 +20,7 @@
+ public class DBHelper extends SQLiteOpenHelper {
+ 
+     private static final String DATABASE_NAME = "user.db";
+-    private static final Integer DATABASE_VERSION = 1;
++    private static final Integer DATABASE_VERSION = 3;
+ 
+     private SQLiteDatabase db;
+ 
+@@ -32,8 +34,8 @@
+ 
+         // user table 생성
+         final String SQL_CREATE_USER_TABLE = "CREATE TABLE " +
+-                UserTable.TABLE_NAME + " ( " +
+-                UserTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
++                UserTable.TABLE_NAME + "(" +
++                UserTable.COL_SERIAL_CODE + " TEXT PRIMARY KEY, " +
+                 UserTable.COL_NAME + " TEXT, " +
+                 UserTable.COL_BIRTH + " TEXT, " +
+                 UserTable.COL_SEX + " TEXT, " +
+@@ -52,39 +54,75 @@
+                 EduAgeTable.COL_UNIVERSITY + " INTEGER" + ")";
+         db.execSQL(SQL_CREATE_EDU_TABLE);
+         fillEduAgeTable();
++
++        // score table 생성
++        final String SQL_CREATE_SCORE_TABLE = "CREATE TABLE " +
++                ScoreTable.TABLE_NAME + "(" +
++                ScoreTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
++                ScoreTable.COL_ORIENTATION + " INTEGER, " +
++                ScoreTable.COL_MEMORY + " INTEGER, " +
++                ScoreTable.COL_ATTENTION + " INTEGER, " +
++                ScoreTable.COL_SPACETIME + " INTEGER, " +
++                ScoreTable.COL_EXECUTION + " INTEGER, " +
++                ScoreTable.COL_LANGUAGE + " INTEGER, " +
++                ScoreTable.COL_TOTAL + " INTEGER, " +
++                ScoreTable.COL_DATE + " TEXT, " +
++                ScoreTable.COL_SERIAL_CODE + " TEXT, FOREIGN KEY" + "(" + ScoreTable.COL_SERIAL_CODE + ")" + " REFERENCES " + UserTable.TABLE_NAME +
++                "(" + UserTable.COL_SERIAL_CODE + "))";
++        db.execSQL(SQL_CREATE_SCORE_TABLE);
+     }
+ 
+     @Override
+     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+         db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE_NAME);
+         db.execSQL("DROP TABLE IF EXISTS " + EduAgeTable.TABLE_NAME);
++        db.execSQL("DROP TABLE IF EXISTS " + ScoreTable.TABLE_NAME);
+         onCreate(db);
+     }
+ 
+     // 사용자 등록
+-    public long registerUser(String name, String birth, String sex, String education) {
++    public long registerUser(String serialCode, String name, String birth, String sex, String education) {
+         db = this.getWritableDatabase();
+         ContentValues values = new ContentValues();
++        values.put(UserTable.COL_SERIAL_CODE, serialCode);
+         values.put(UserTable.COL_NAME, name);
+         values.put(UserTable.COL_BIRTH, birth);
+         values.put(UserTable.COL_SEX, sex);
+         values.put(UserTable.COL_EDU, education);
+ 
+         long result = db.insert(UserTable.TABLE_NAME, null, values);
+-
+         return result;
+     }
+ 
+     // 사용자 삭제
+     public Integer deleteUser(String name) {
+-        db = this. getWritableDatabase();
++        db = this.getWritableDatabase();
+         return db.delete(UserTable.TABLE_NAME, "name=?", new String[] {name});
+     }
+ 
++    // 사용자 진단 기록 삭제
++    public Integer deleteScore(String serial_code) {
++        db = this.getWritableDatabase();
++        return db.delete(ScoreTable.TABLE_NAME, "serialCode=?", new String[] {serial_code});
++    }
++
++    // 사용자 정보 수정
++    public long updateData(String id, String name, String birth, String sex, String edu) {
++        db = this.getWritableDatabase();
++        ContentValues values = new ContentValues();
++        values.put(UserTable.COL_NAME, name);
++        values.put(UserTable.COL_BIRTH, birth);
++        values.put(UserTable.COL_SEX, sex);
++        values.put(UserTable.COL_EDU, edu);
++
++        long result = db.update(UserTable.TABLE_NAME, values, "id=?", new String[]{ id });
++        return result;
++    }
++
+     // 사용자 체크
+     public boolean checkUser(String name, String birth) {
+         db = this.getReadableDatabase();
+-        String [] columns = { UserTable._ID };
++        String [] columns = { UserTable.COL_SERIAL_CODE };
+         String selection = UserTable.COL_NAME + "=?" + " and " + UserTable.COL_BIRTH + "=?";
+         String [] selectionargs = { name, birth };
+         Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionargs, null, null, null);
+@@ -97,6 +135,21 @@
+             return false;
+     }
+ 
++    // 사용자 serial_code 저장하기
++    public String saveSerialCode(String name, String birth) {
++        db = this.getReadableDatabase();
++        String [] columns = { UserTable.COL_SERIAL_CODE };
++        String selection = UserTable.COL_NAME + "=?" + " and " + UserTable.COL_BIRTH + "=?";
++        String [] selectionargs = { name, birth };
++        Cursor cursor = db.query(UserTable.TABLE_NAME, columns, selection, selectionargs, null, null, null);
++        cursor.moveToFirst();
++        String result = cursor.getString(0);
++        db.close();
++        cursor.close();
++
++        return result;
++    }
++
+     // 사용자 만나이 계산
+     public int getAge(int year, int month, int day) {
+         Calendar current = Calendar.getInstance();
+@@ -161,5 +214,63 @@
+         cursor.close();
+         return eduAgeList;
+     }
++
++    // 점수 테이블 데이터 추가
++    public void scoreAdd(String serialCode, String date, int orientation, int memory, int attention, int spacetime, int execution, int language, int total) {
++        db = this.getWritableDatabase();
++        ContentValues values = new ContentValues();
++        values.put(ScoreTable.COL_SERIAL_CODE, serialCode);
++        values.put(ScoreTable.COL_DATE, date);
++        values.put(ScoreTable.COL_ORIENTATION, orientation);
++        values.put(ScoreTable.COL_MEMORY, memory);
++        values.put(ScoreTable.COL_ATTENTION, attention);
++        values.put(ScoreTable.COL_SPACETIME, spacetime);
++        values.put(ScoreTable.COL_EXECUTION, execution);
++        values.put(ScoreTable.COL_LANGUAGE, language);
++        values.put(ScoreTable.COL_TOTAL, total);
++
++        long result = db.insert(ScoreTable.TABLE_NAME, null, values);
++    }
++
++    // 진단 결과 점수 출력
++    public List<Score> getScoreList(String serial_code) {
++        List<Score> scoreList = new ArrayList<>();
++        db = getReadableDatabase();
++        Cursor cursor = db.rawQuery("SELECT * FROM " + ScoreTable.TABLE_NAME +  " WHERE "+ ScoreTable.COL_SERIAL_CODE + "=?", new String[] {serial_code});
++
++        if(cursor.moveToFirst()) {
++            do {
++                Score score = new Score();
++                score.setSerial_code(cursor.getString(cursor.getColumnIndexOrThrow(ScoreTable.COL_SERIAL_CODE)));
++                score.setDate(cursor.getString(cursor.getColumnIndexOrThrow(ScoreTable.COL_DATE)));
++                score.setOrientation(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_ORIENTATION)));
++                score.setMemory(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_MEMORY)));
++                score.setAttention(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_ATTENTION)));
++                score.setSpacetime(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_SPACETIME)));
++                score.setExecution(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_EXECUTION)));
++                score.setLanguage(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_LANGUAGE)));
++                score.setTotal(cursor.getInt(cursor.getColumnIndexOrThrow(ScoreTable.COL_TOTAL)));
++                scoreList.add(score);
++            } while(cursor.moveToNext());
++        }
++        cursor.close();
++        return scoreList;
++    }
++
++    // 사용자 정보 출력
++    public User getUserInf(String serial_code) {
++        User user = new User();
++        db = getReadableDatabase();
++        Cursor cursor = db.rawQuery("SELECT * FROM " + UserTable.TABLE_NAME + " WHERE " + ScoreTable.COL_SERIAL_CODE + "=?", new String[] {serial_code});
++
++        if(cursor.moveToFirst()) {
++            user.setName(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_NAME)));
++            user.setBirth(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_BIRTH)));
++            user.setSex(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_SEX)));
++            user.setEdu(cursor.getString(cursor.getColumnIndexOrThrow(UserTable.COL_EDU)));
++        }
++        cursor.close();
++        return user;
++    }
+ }
+ 
+Index: app/src/main/java/database/TableContract.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package database;\r\n\r\nimport android.provider.BaseColumns;\r\n\r\npublic final class TableContract {\r\n\r\n    private TableContract() {}\r\n\r\n    public static class UserTable implements BaseColumns {\r\n        public static final String TABLE_NAME = \"userTable\";\r\n        public static final String COL_NAME = \"name\";\r\n        public static final String COL_BIRTH = \"birth\";\r\n        public static final String COL_SEX = \"sex\";\r\n        public static final String COL_EDU = \"education\";\r\n    }\r\n\r\n    public static class EduAgeTable implements BaseColumns {\r\n        public static final String TABLE_NAME = \"eduAgeTable\";\r\n        public static final String COL_AGE = \"age\"; // 나이\r\n        public static final String COL_ILLITERATE = \"illiterate\"; // 비문해\r\n        public static final String COL_UNEDUCATED= \"uneducated\"; // 무학\r\n        public static final String COL_ELESCHOOL =\"elementarySchool\"; // 초등졸업\r\n        public static final String COL_SECSCHOOL = \"secondarySchool\"; // 중등졸업\r\n        public static final String COL_HIGHSCHOOL = \"highSchool\"; // 고등졸업\r\n        public static final String COL_UNIVERSITY = \"university\"; // 대학졸업\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/database/TableContract.java b/app/src/main/java/database/TableContract.java
+--- a/app/src/main/java/database/TableContract.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/database/TableContract.java	(date 1658670696975)
+@@ -8,6 +8,7 @@
+ 
+     public static class UserTable implements BaseColumns {
+         public static final String TABLE_NAME = "userTable";
++        public static final String COL_SERIAL_CODE = "serialCode";
+         public static final String COL_NAME = "name";
+         public static final String COL_BIRTH = "birth";
+         public static final String COL_SEX = "sex";
+@@ -24,4 +25,17 @@
+         public static final String COL_HIGHSCHOOL = "highSchool"; // 고등졸업
+         public static final String COL_UNIVERSITY = "university"; // 대학졸업
+     }
++
++    public static class ScoreTable implements BaseColumns {
++        public static final String TABLE_NAME = "scoreTable";
++        public static final String COL_SERIAL_CODE = "serialCode"; // 일련코드
++        public static final String COL_DATE = "date"; // 날짜
++        public static final String COL_ORIENTATION = "orientation"; // 지남력
++        public static final String COL_MEMORY = "memory"; // 기억력
++        public static final String COL_ATTENTION = "attention"; // 주의력
++        public static final String COL_SPACETIME = "spacetime"; // 시공간기능
++        public static final String COL_EXECUTION = "execution"; // 집행기능
++        public static final String COL_LANGUAGE = "language"; // 언어기능
++        public static final String COL_TOTAL = "total"; // 총 합계
++    }
+ }
+Index: app/src/main/java/user/SharedPreference.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user;\r\n\r\nimport android.content.Context;\r\nimport android.content.SharedPreferences;\r\nimport android.preference.PreferenceManager;\r\n\r\npublic class SharedPreference {\r\n    static String PREFERENCES_NAME = \"pref_user\";\r\n\r\n    static String pref_user_name = \"name\";\r\n    static String pref_user_birth = \"birth\";\r\n    static String pref_user_sex = \"sex\";\r\n    static String pref_user_edu = \"edu\";\r\n\r\n    static public SharedPreferences getSharedPreferences(Context ctx) {\r\n        return PreferenceManager.getDefaultSharedPreferences(ctx);\r\n    }\r\n\r\n    // 사용자 정보 저장\r\n    public static void setUserInf(Context ctx, String name, String birth, String sex, String edu) {\r\n        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();\r\n        editor.putString(pref_user_name, name);\r\n        editor.putString(pref_user_birth, birth);\r\n        editor.putString(pref_user_sex, sex);\r\n        editor.putString(pref_user_edu, edu);\r\n        editor.commit();\r\n    }\r\n\r\n    // 저장된 사용자 이름 가져오기\r\n    public static String getUserName(Context ctx) {\r\n        return getSharedPreferences(ctx).getString(pref_user_name, \"\");\r\n    }\r\n    // 저장된 사용자 생년월일 가져오기\r\n    public static String getUserBirth(Context ctx) {\r\n        return getSharedPreferences(ctx).getString(pref_user_birth, \"\");\r\n    }\r\n    // 저장된 사용자 성별 가져오기\r\n    public static String getUserSex(Context ctx) {\r\n        return getSharedPreferences(ctx).getString(pref_user_sex, \"\");\r\n    }\r\n    // 저장된 사용자 학력 가져오기\r\n    public static String getUserEdu(Context ctx) {\r\n        return getSharedPreferences(ctx).getString(pref_user_edu, \"\");\r\n    }\r\n\r\n    //로그아웃 시 데이터 삭제\r\n    public static void clear_user(Context ctx) {\r\n        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();\r\n        editor.clear();\r\n        editor.commit();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/user/SharedPreference.java b/app/src/main/java/user/SharedPreference.java
+--- a/app/src/main/java/user/SharedPreference.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/user/SharedPreference.java	(date 1658672481525)
+@@ -7,6 +7,7 @@
+ public class SharedPreference {
+     static String PREFERENCES_NAME = "pref_user";
+ 
++    static String pref_user_serial_code = "serial_code";
+     static String pref_user_name = "name";
+     static String pref_user_birth = "birth";
+     static String pref_user_sex = "sex";
+@@ -17,8 +18,9 @@
+     }
+ 
+     // 사용자 정보 저장
+-    public static void setUserInf(Context ctx, String name, String birth, String sex, String edu) {
++    public static void setUserInf(Context ctx, String serial_code, String name, String birth, String sex, String edu) {
+         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
++        editor.putString(pref_user_serial_code, serial_code);
+         editor.putString(pref_user_name, name);
+         editor.putString(pref_user_birth, birth);
+         editor.putString(pref_user_sex, sex);
+@@ -26,6 +28,18 @@
+         editor.commit();
+     }
+ 
++    // 사용자 일련코드 정보 저장
++    public static void setSerialCodeInf(Context ctx, String serial_code) {
++        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
++        editor.putString(pref_user_serial_code, serial_code);
++        editor.apply();
++    }
++
++    // 저장된 사용자 일련코드 가져오기
++    public static String getSerialCode(Context ctx) {
++        return getSharedPreferences(ctx).getString(pref_user_serial_code, "");
++    }
++
+     // 저장된 사용자 이름 가져오기
+     public static String getUserName(Context ctx) {
+         return getSharedPreferences(ctx).getString(pref_user_name, "");
+Index: app/src/main/res/layout/activity_result.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".Result\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/name\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"이름\"\r\n        android:textSize=\"20sp\"/>\r\n\r\n    <TextView\r\n        android:id=\"@+id/age\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"나이\"\r\n        android:textSize=\"20sp\"/>\r\n\r\n    <TextView\r\n        android:id=\"@+id/edu\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"학력\"\r\n        android:textSize=\"20sp\"/>\r\n\r\n    <TextView\r\n        android:id=\"@+id/total\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:gravity=\"center\"\r\n        android:text=\"TextView\"\r\n        android:textSize=\"25sp\"/>\r\n\r\n    <TextView\r\n        android:id=\"@+id/resMessage\"\r\n        android:layout_width=\"300dp\"\r\n        android:layout_height=\"180dp\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"결과 메세지\"\r\n        android:textSize=\"18sp\"\r\n        android:background=\"@drawable/edge\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_result.xml b/app/src/main/res/layout/activity_result.xml
+--- a/app/src/main/res/layout/activity_result.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/activity_result.xml	(date 1658672481672)
+@@ -1,50 +1,216 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:gravity="center"
+-    android:orientation="vertical"
+-    tools:context=".Result">
++    tools:context=".Result">
++
++    <TextView
++        android:id="@+id/score"
++        android:layout_width="130dp"
++        android:layout_height="130dp"
++        android:layout_above="@+id/barChart"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="20dp"
++        android:background="@drawable/shape_oval"
++        android:backgroundTint="#DDDDDD"
++        android:gravity="center"
++        android:text="30"
++        android:textSize="45dp" />
++
++    <androidx.cardview.widget.CardView
++        android:id="@+id/helpMessage"
++        android:layout_width="280dp"
++        android:layout_height="160dp"
++        android:layout_marginStart="50dp"
++        android:layout_marginTop="50dp"
++        android:layout_marginBottom="50dp"
++        android:backgroundTint="#F1F3FD"
++        android:visibility="invisible"
++        app:cardCornerRadius="10dp"
++        app:cardElevation="10dp">
++
++    </androidx.cardview.widget.CardView>
++
++    <TextView
++        android:id="@+id/orientation"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_above="@+id/barChart2"
++        android:layout_toStartOf="@+id/barChart"
++        android:layout_marginBottom="9dp"
++        android:layout_marginEnd="10dp"
++        android:textSize="12sp"
++        android:textColor="#BABABA"
++        android:text="지남력" />
++
++    <ProgressBar
++        android:id="@+id/barChart"
++        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
++        android:layout_width="250dp"
++        android:layout_height="12dp"
++        android:layout_above="@+id/barChart2"
++        android:layout_centerHorizontal="true"
++        android:layout_marginTop="10dp"
++        android:layout_marginBottom="10dp"
++        android:progress="30"
++        android:progressDrawable="@drawable/progressbar" />
++
++    <TextView
++        android:id="@+id/memory"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_above="@+id/barChart3"
++        android:layout_marginEnd="10dp"
++        android:layout_marginBottom="9dp"
++        android:layout_toStartOf="@+id/barChart2"
++        android:text="기억력"
++        android:textColor="#BABABA"
++        android:textSize="12sp" />
++
++    <ProgressBar
++        android:id="@+id/barChart2"
++        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
++        android:layout_width="250dp"
++        android:layout_height="12dp"
++        android:layout_above="@+id/barChart3"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="10dp"
++        android:progress="50"
++        android:progressDrawable="@drawable/progressbar" />
+ 
+     <TextView
+-        android:id="@+id/name"
++        android:id="@+id/attention"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="이름"
+-        android:textSize="20sp"/>
++        android:layout_above="@+id/barChart4"
++        android:layout_marginEnd="10dp"
++        android:layout_marginBottom="9dp"
++        android:layout_toStartOf="@+id/barChart3"
++        android:text="주의력"
++        android:textColor="#BABABA"
++        android:textSize="12sp" />
++
++    <ProgressBar
++        android:id="@+id/barChart3"
++        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
++        android:layout_width="250dp"
++        android:layout_height="12dp"
++        android:layout_above="@+id/barChart4"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="10dp"
++        android:progress="20"
++        android:progressDrawable="@drawable/progressbar" />
+ 
+     <TextView
+-        android:id="@+id/age"
++        android:id="@+id/spacetime"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="나이"
+-        android:textSize="20sp"/>
++        android:layout_above="@+id/barChart5"
++        android:layout_toStartOf="@+id/barChart4"
++        android:layout_marginBottom="9dp"
++        android:layout_marginEnd="10dp"
++        android:textSize="12sp"
++        android:textColor="#BABABA"
++        android:text="시공간" />
++
++    <ProgressBar
++        android:id="@+id/barChart4"
++        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
++        android:layout_width="250dp"
++        android:layout_height="12dp"
++        android:layout_above="@+id/barChart5"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="10dp"
++        android:progress="50"
++        android:progressDrawable="@drawable/progressbar" />
+ 
+     <TextView
+-        android:id="@+id/edu"
++        android:id="@+id/execution"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="학력"
+-        android:textSize="20sp"/>
++        android:layout_above="@+id/barChart6"
++        android:layout_marginEnd="10dp"
++        android:layout_toStartOf="@+id/barChart5"
++        android:layout_marginBottom="9dp"
++        android:text="집행기능"
++        android:textColor="#BABABA"
++        android:textSize="12sp" />
++
++    <ProgressBar
++        android:id="@+id/barChart5"
++        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
++        android:layout_width="250dp"
++        android:layout_height="12dp"
++        android:layout_above="@+id/barChart6"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="10dp"
++        android:progress="70"
++        android:progressDrawable="@drawable/progressbar" />
+ 
+     <TextView
+-        android:id="@+id/total"
++        android:id="@+id/language"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_above="@+id/result_text"
++        android:layout_marginEnd="10dp"
++        android:layout_marginBottom="28dp"
++        android:layout_toStartOf="@+id/barChart6"
++        android:text="언어기능"
++        android:textColor="#BABABA"
++        android:textSize="12sp" />
++
++    <ProgressBar
++        android:id="@+id/barChart6"
++        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
++        android:layout_width="250dp"
++        android:layout_height="12dp"
++        android:layout_above="@+id/result_text"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="30dp"
++        android:progress="30"
++        android:progressDrawable="@drawable/progressbar" />
++
++    <ImageView
++        android:id="@+id/help"
++        android:layout_width="30dp"
++        android:layout_height="30dp"
++        android:layout_alignParentEnd="true"
++        android:layout_marginTop="35dp"
++        android:layout_marginEnd="40dp"
++        android:src="@drawable/ic_help" />
++
++    <androidx.appcompat.widget.AppCompatButton
++        android:id="@+id/endBtn"
++        android:layout_width="300dp"
++        android:layout_height="48dp"
++        android:layout_alignParentBottom="true"
++        android:layout_centerHorizontal="true"
++        android:layout_marginBottom="50dp"
+         android:gravity="center"
+-        android:text="TextView"
+-        android:textSize="25sp"/>
++        android:background="@drawable/round_button"
++        android:backgroundTint="#6799FF"
++        android:elevation="10dp"
++        android:text="확 인"
++        android:textColor="@color/black"
++        android:textSize="18dp" />
++
++    <androidx.cardview.widget.CardView
++        android:id="@+id/result_text"
++        android:layout_width="300dp"
++        android:layout_height="200dp"
++        android:layout_marginBottom="30dp"
++        android:layout_centerHorizontal="true"
++        android:layout_above="@+id/endBtn"
++        app:cardElevation="10dp">
+ 
+-    <TextView
+-        android:id="@+id/resMessage"
+-        android:layout_width="300dp"
+-        android:layout_height="180dp"
+-        android:layout_marginTop="30dp"
+-        android:gravity="center"
+-        android:text="결과 메세지"
+-        android:textSize="18sp"
+-        android:background="@drawable/edge"/>
+-
+-</LinearLayout>
+\ No newline at end of file
++        <TextView
++            android:layout_width="300dp"
++            android:layout_height="230dp"
++            android:gravity="center"
++            android:text="여기는 진단 결과 설명이 나오는 부분.\n
++여기는 진단 결과 설명이 나오는 부분.\n여기는 진단 결과 설명이 나오는 부분.\n
++여기는 진단 결과 설명이 나오는 부분.\n여기는 진단 결과 설명이 나오는 부분." />
++    </androidx.cardview.widget.CardView>
++</RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/cbnu/dementiadiagnosis/Result.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cbnu.dementiadiagnosis;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.Intent;\r\nimport android.database.Cursor;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.widget.TextView;\r\n\r\nimport org.w3c.dom.Text;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport database.DBHelper;\r\nimport database.TableContract;\r\nimport user.EducationAge;\r\nimport user.SharedPreference;\r\nimport user.User;\r\n\r\npublic class Result extends AppCompatActivity {\r\n    int total;\r\n    TextView score;\r\n    TextView name, age, edu;\r\n    TextView msg;\r\n    DBHelper dbHelper;\r\n    int year, month, day;\r\n    String birth, val_name, val_edu;\r\n\r\n    List<EducationAge> eduAgeList = new ArrayList<>();\r\n\r\n    @SuppressLint(\"SetTextI18n\")\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_result);\r\n        Intent intent;\r\n\r\n        intent = getIntent();\r\n        total = intent.getIntExtra(\"result\", 0);\r\n        score = findViewById(R.id.total);\r\n        name = findViewById(R.id.name);\r\n        age = findViewById(R.id.age);\r\n        edu = findViewById(R.id.edu);\r\n        msg = findViewById(R.id.resMessage);\r\n\r\n        score.setText(\"총점 : \" + Integer.toString(total));\r\n        val_name = SharedPreference.getUserName(getApplication());\r\n        name.setText(val_name);\r\n        val_edu = SharedPreference.getUserEdu(getApplication());\r\n        edu.setText(val_edu);\r\n\r\n        birth = SharedPreference.getUserBirth(getApplication());\r\n        Log.d(\"birth\", birth);\r\n        year = Integer.parseInt(birth.substring(0, 4));\r\n        Log.d(\"year\", \"\" + year);\r\n        if(birth.charAt(5) == '0') {\r\n            month = Integer.parseInt(birth.substring(6, 7));\r\n        } else {\r\n            month = Integer.parseInt(birth.substring(5, 7));\r\n        }\r\n        Log.d(\"month\", \"\"+month);\r\n\r\n        if(birth.charAt(8) == '0') {\r\n            day = Integer.parseInt(birth.substring(9, 10));\r\n        } else {\r\n            day = Integer.parseInt(birth.substring(8, 10));\r\n        }\r\n        Log.d(\"day\", \"\"+day);\r\n        dbHelper = new DBHelper(getApplication());\r\n        int res = dbHelper.getAge(year, month, day);\r\n        age.setText(Integer.toString(res));\r\n\r\n        eduAgeList = dbHelper.getAllEduTable();\r\n        int age_num = 0;\r\n        int edu_num = 0;\r\n\r\n        if(res < 60) {\r\n            age_num = 0;\r\n        } else if(res < 70) {\r\n            age_num = 1;\r\n        } else if(res < 80) {\r\n            age_num = 2;\r\n        } else {\r\n            age_num = 3;\r\n        }\r\n\r\n        switch (val_edu) {\r\n            case \"문맹\":\r\n                edu_num = eduAgeList.get(age_num).getIlliterate();\r\n                break;\r\n            case \"무학\":\r\n                edu_num = eduAgeList.get(age_num).getUneducated();\r\n                break;\r\n            case \"초등졸업\":\r\n                edu_num = eduAgeList.get(age_num).getElementarySchool();\r\n                break;\r\n            case \"중등졸업\":\r\n                edu_num = eduAgeList.get(age_num).getSecondarySchool();\r\n                break;\r\n            case \"고등졸업\":\r\n                edu_num = eduAgeList.get(age_num).getHighSchool();\r\n                break;\r\n            case \"대학졸업이상\":\r\n                edu_num = eduAgeList.get(age_num).getUniversity();\r\n                break;\r\n            default:\r\n                break;\r\n        }\r\n\r\n        if(total < edu_num) {\r\n            msg.setText(val_name + \"님의 진단 결과 점수는 \" + total + \"점 입니다.\"\r\n                    + \"가입 시 입력한 나이와 학력을 바탕으로 출력한 결과 \" + edu_num +\r\n                    \"점수 미만입니다.\\n치매가 의심되는 상태이니 정기 검진을 받아보시는 것을 권해드립니다.\");\r\n        } else {\r\n            msg.setText(val_name + \"님의 진단 결과 점수는 \" + total + \"점 입니다.\"\r\n                    + \"가입 시 입력한 나이와 학력을 바탕으로 출력한 결과\" + edu_num +\r\n                    \"으로 정상 수치가 나왔습니다.\");\r\n        }\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cbnu/dementiadiagnosis/Result.java b/app/src/main/java/com/cbnu/dementiadiagnosis/Result.java
+--- a/app/src/main/java/com/cbnu/dementiadiagnosis/Result.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/com/cbnu/dementiadiagnosis/Result.java	(date 1658672481862)
+@@ -1,18 +1,41 @@
+ package com.cbnu.dementiadiagnosis;
+ 
++import androidx.annotation.RequiresApi;
+ import androidx.appcompat.app.AppCompatActivity;
++import androidx.cardview.widget.CardView;
++import androidx.core.content.ContextCompat;
+ 
++import android.animation.ObjectAnimator;
+ import android.annotation.SuppressLint;
+ import android.content.Intent;
+ import android.database.Cursor;
+ import android.database.sqlite.SQLiteDatabase;
++import android.graphics.Color;
++import android.graphics.PorterDuff;
++import android.os.Build;
+ import android.os.Bundle;
+ import android.util.Log;
++import android.view.View;
++import android.view.animation.DecelerateInterpolator;
++import android.widget.Button;
++import android.widget.ImageButton;
++import android.widget.ImageView;
++import android.widget.ProgressBar;
+ import android.widget.TextView;
+ 
++import com.github.mikephil.charting.charts.HorizontalBarChart;
++import com.github.mikephil.charting.charts.LineChart;
++import com.github.mikephil.charting.components.XAxis;
++import com.github.mikephil.charting.data.BarData;
++import com.github.mikephil.charting.data.BarDataSet;
++import com.github.mikephil.charting.data.BarEntry;
++import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
++
+ import org.w3c.dom.Text;
+ 
++import java.text.SimpleDateFormat;
+ import java.util.ArrayList;
++import java.util.Date;
+ import java.util.List;
+ 
+ import database.DBHelper;
+@@ -22,104 +45,79 @@
+ import user.User;
+ 
+ public class Result extends AppCompatActivity {
+-    int total;
+-    TextView score;
+-    TextView name, age, edu;
+-    TextView msg;
+-    DBHelper dbHelper;
+-    int year, month, day;
+-    String birth, val_name, val_edu;
++    ProgressBar progressBar1, progressBar2, progressBar3, progressBar4, progressBar5, progressBar6;
++    Button endBtn;
++    ImageView helpImage;
++    CardView helpMsg;
++    DBHelper db;
+ 
+-    List<EducationAge> eduAgeList = new ArrayList<>();
+-
+-    @SuppressLint("SetTextI18n")
++    @RequiresApi(api = Build.VERSION_CODES.O)
++    @SuppressLint({"UseCompatLoadingForDrawables", "ObjectAnimatorBinding"})
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_result);
+-        Intent intent;
+-
+-        intent = getIntent();
+-        total = intent.getIntExtra("result", 0);
+-        score = findViewById(R.id.total);
+-        name = findViewById(R.id.name);
+-        age = findViewById(R.id.age);
+-        edu = findViewById(R.id.edu);
+-        msg = findViewById(R.id.resMessage);
+-
+-        score.setText("총점 : " + Integer.toString(total));
+-        val_name = SharedPreference.getUserName(getApplication());
+-        name.setText(val_name);
+-        val_edu = SharedPreference.getUserEdu(getApplication());
+-        edu.setText(val_edu);
+-
+-        birth = SharedPreference.getUserBirth(getApplication());
+-        Log.d("birth", birth);
+-        year = Integer.parseInt(birth.substring(0, 4));
+-        Log.d("year", "" + year);
+-        if(birth.charAt(5) == '0') {
+-            month = Integer.parseInt(birth.substring(6, 7));
+-        } else {
+-            month = Integer.parseInt(birth.substring(5, 7));
+-        }
+-        Log.d("month", ""+month);
+-
+-        if(birth.charAt(8) == '0') {
+-            day = Integer.parseInt(birth.substring(9, 10));
+-        } else {
+-            day = Integer.parseInt(birth.substring(8, 10));
+-        }
+-        Log.d("day", ""+day);
+-        dbHelper = new DBHelper(getApplication());
+-        int res = dbHelper.getAge(year, month, day);
+-        age.setText(Integer.toString(res));
+ 
+-        eduAgeList = dbHelper.getAllEduTable();
+-        int age_num = 0;
+-        int edu_num = 0;
++        db = new DBHelper(this);
++        progressBar1 = findViewById(R.id.barChart);
++        progressBar2 = findViewById(R.id.barChart2);
++        progressBar3 = findViewById(R.id.barChart3);
++        progressBar4 = findViewById(R.id.barChart4);
++        progressBar5 = findViewById(R.id.barChart5);
++        progressBar6 = findViewById(R.id.barChart6);
++        endBtn = findViewById(R.id.endBtn);
++        helpImage = findViewById(R.id.help);
++        helpMsg = findViewById(R.id.helpMessage);
+ 
+-        if(res < 60) {
+-            age_num = 0;
+-        } else if(res < 70) {
+-            age_num = 1;
+-        } else if(res < 80) {
+-            age_num = 2;
+-        } else {
+-            age_num = 3;
+-        }
+-
+-        switch (val_edu) {
+-            case "문맹":
+-                edu_num = eduAgeList.get(age_num).getIlliterate();
+-                break;
+-            case "무학":
+-                edu_num = eduAgeList.get(age_num).getUneducated();
+-                break;
+-            case "초등졸업":
+-                edu_num = eduAgeList.get(age_num).getElementarySchool();
+-                break;
+-            case "중등졸업":
+-                edu_num = eduAgeList.get(age_num).getSecondarySchool();
+-                break;
+-            case "고등졸업":
+-                edu_num = eduAgeList.get(age_num).getHighSchool();
+-                break;
+-            case "대학졸업이상":
+-                edu_num = eduAgeList.get(age_num).getUniversity();
+-                break;
+-            default:
+-                break;
+-        }
+-
+-        if(total < edu_num) {
+-            msg.setText(val_name + "님의 진단 결과 점수는 " + total + "점 입니다."
+-                    + "가입 시 입력한 나이와 학력을 바탕으로 출력한 결과 " + edu_num +
+-                    "점수 미만입니다.\n치매가 의심되는 상태이니 정기 검진을 받아보시는 것을 권해드립니다.");
+-        } else {
+-            msg.setText(val_name + "님의 진단 결과 점수는 " + total + "점 입니다."
+-                    + "가입 시 입력한 나이와 학력을 바탕으로 출력한 결과" + edu_num +
+-                    "으로 정상 수치가 나왔습니다.");
+-        }
++        // 도움말 클릭
++        helpImage.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                if(helpMsg.getVisibility() == View.INVISIBLE) {
++                    helpMsg.setVisibility(View.VISIBLE);
++                    helpImage.setColorFilter(Color.parseColor("#F8DA8D"), PorterDuff.Mode.SRC_IN);
++                } else {
++                    helpMsg.setVisibility(View.INVISIBLE);
++                    helpImage.setColorFilter(Color.parseColor("#7D7D7D"), PorterDuff.Mode.SRC_IN);
++                }
++            }
++        });
++
++        int random = (int) (Math.random() * 50);
++        int score_orientation = random + 10;
++        int score_memory = random + 5;
++        int score_attention = random + 7;
++        int score_spacetime = random + 20;
++        int score_execution = random + 15;
++        int score_language = random + 3;
++        int score_total = score_orientation + score_memory + score_attention + score_spacetime + score_execution + score_language;
++
++        setProgressWithAnimation(progressBar1, score_orientation);
++        setProgressWithAnimation(progressBar2, score_memory);
++        setProgressWithAnimation(progressBar3, score_attention);
++        setProgressWithAnimation(progressBar4, score_spacetime);
++        setProgressWithAnimation(progressBar5, score_execution);
++        setProgressWithAnimation(progressBar6, score_language);
+ 
++        String serial_code = SharedPreference.getSerialCode(getApplication());
++        long now = System.currentTimeMillis();
++        Date date = new Date(now);
++        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
++        String getDate = sdf.format(date);
++
++        endBtn.setOnClickListener(v -> {
++            db.scoreAdd(serial_code, getDate, score_orientation, score_memory, score_attention,
++                    score_spacetime, score_execution, score_language, score_total);
++
++            Intent intent = new Intent(Result.this, HomeActivity.class);
++            startActivity(intent);
++        });
++    }
++
++    public void setProgressWithAnimation(ProgressBar progressBar, int progress) {
++        ObjectAnimator objectAnimator = ObjectAnimator.ofInt(progressBar, "progress", 0, progress);
++        objectAnimator.setDuration(1300);
++        objectAnimator.setInterpolator(new DecelerateInterpolator());
++        objectAnimator.start();
+     }
+ }
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n}\r\n\r\nandroid {\r\n    compileSdk 31\r\n\r\n    defaultConfig {\r\n        applicationId \"com.cbnu.dementiadiagnosis\"\r\n        minSdk 21\r\n        targetSdk 31\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.appcompat:appcompat:1.4.1'\r\n    implementation 'com.google.android.material:material:1.5.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'\r\n    implementation 'com.android.support:design:28.0.0'\r\n    testImplementation 'junit:junit:4.+'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.3'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'\r\n    implementation 'com.google.code.gson:gson:2.8.5'\r\n    implementation 'commons-lang:commons-lang:2.6'\r\n    implementation fileTree(include: ['*.jar'], dir: 'libs')\r\n    implementation files('libs/libDaumMapAndroid.jar')\r\n    implementation 'com.google.android.material:material:1.4.0'\r\n    implementation 'me.relex:circleindicator:1.2.2'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/build.gradle	(date 1658033609526)
+@@ -29,17 +29,18 @@
+ 
+ dependencies {
+ 
+-    implementation 'androidx.appcompat:appcompat:1.4.1'
+-    implementation 'com.google.android.material:material:1.5.0'
+-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
++    implementation 'androidx.appcompat:appcompat:1.4.2'
++    implementation 'com.google.android.material:material:1.6.1'
++    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'//noinspection GradleCompatible
+     implementation 'com.android.support:design:28.0.0'
+     testImplementation 'junit:junit:4.+'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+-    implementation 'com.google.code.gson:gson:2.8.5'
++    implementation 'com.google.code.gson:gson:2.8.6'
+     implementation 'commons-lang:commons-lang:2.6'
+     implementation fileTree(include: ['*.jar'], dir: 'libs')
+     implementation files('libs/libDaumMapAndroid.jar')
+-    implementation 'com.google.android.material:material:1.4.0'
++    implementation 'com.google.android.material:material:1.6.1'
+     implementation 'me.relex:circleindicator:1.2.2'
++    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+ }
+\ No newline at end of file
+Index: app/src/main/java/user/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package user;\r\n\r\npublic class User {\r\n\r\n    private int id;\r\n    private String name;\r\n    private String birth;\r\n    private String sex;\r\n    private String edu;\r\n\r\n    public User() {}\r\n\r\n    public User(String name, String birth, String sex, String edu) {\r\n        this.name = name;\r\n        this.birth = birth;\r\n        this.sex = sex;\r\n        this.edu = edu;\r\n    }\r\n\r\n    public int getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(int id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public void setName(String name) {\r\n        this.name = name;\r\n    }\r\n\r\n    public String getBirth() {\r\n        return birth;\r\n    }\r\n\r\n    public void setBirth(String birth) {\r\n        this.birth = birth;\r\n    }\r\n\r\n    public String getSex() {\r\n        return sex;\r\n    }\r\n\r\n    public void setSex(String sex) {\r\n        this.sex = sex;\r\n    }\r\n\r\n    public String getEdu() {\r\n        return edu;\r\n    }\r\n\r\n    public void setEdu(String edu) {\r\n        this.edu = edu;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/user/User.java b/app/src/main/java/user/User.java
+--- a/app/src/main/java/user/User.java	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/java/user/User.java	(date 1658672481627)
+@@ -2,7 +2,7 @@
+ 
+ public class User {
+ 
+-    private int id;
++    private String serial_code;
+     private String name;
+     private String birth;
+     private String sex;
+@@ -10,19 +10,20 @@
+ 
+     public User() {}
+ 
+-    public User(String name, String birth, String sex, String edu) {
++    public User(String serial_code, String name, String birth, String sex, String edu) {
++        this.serial_code = serial_code;
+         this.name = name;
+         this.birth = birth;
+         this.sex = sex;
+         this.edu = edu;
+     }
+ 
+-    public int getId() {
+-        return id;
++    public String getSerial_code() {
++        return serial_code;
+     }
+ 
+-    public void setId(int id) {
+-        this.id = id;
++    public void setSerial_code(String serial_code) {
++        this.serial_code = serial_code;
+     }
+ 
+     public String getName() {
+Index: app/src/main/res/layout/fluency.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:backgroundTint=\"#2196F3\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"364dp\"\r\n        android:layout_height=\"55dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"TextView\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"309dp\"\r\n        android:layout_height=\"225dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"TextView\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/result\"\r\n        android:layout_width=\"241dp\"\r\n        android:layout_height=\"70dp\"\r\n        android:ems=\"10\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"당신의 말이 나타납니다.\"\r\n        android:inputType=\"textPersonName\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/sttStart\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:text=\"말하기\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/submit\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:backgroundTint=\"#2196F3\"\r\n        android:text=\"정답 제출\" />\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fluency.xml b/app/src/main/res/layout/fluency.xml
+--- a/app/src/main/res/layout/fluency.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/fluency.xml	(date 1658032313909)
+@@ -33,12 +33,14 @@
+         android:inputType="textPersonName"
+         android:textSize="15sp" />
+ 
+-    <Button
++    <ImageButton
+         android:id="@+id/sttStart"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
++        android:layout_width="50dp"
++        android:layout_height="50dp"
+         android:layout_marginTop="50dp"
+-        android:text="말하기" />
++        android:scaleType="fitCenter"
++        android:background="@android:color/transparent"
++        android:src="@drawable/mic_color_drawable" />
+ 
+     <Button
+         android:id="@+id/submit"
+Index: app/src/main/res/layout/memory_output.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:backgroundTint=\"#2196F3\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"364dp\"\r\n        android:layout_height=\"149dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"TextView\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"309dp\"\r\n        android:layout_height=\"102dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"TextView\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/result\"\r\n        android:layout_width=\"321dp\"\r\n        android:layout_height=\"70dp\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:ems=\"10\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"당신의 말이 나타납니다.\"\r\n        android:inputType=\"textPersonName\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/sttStart\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:text=\"말하기\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/submit\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:backgroundTint=\"#2196F3\"\r\n        android:text=\"정답 제출\" />\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/memory_output.xml b/app/src/main/res/layout/memory_output.xml
+--- a/app/src/main/res/layout/memory_output.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/memory_output.xml	(date 1658032676794)
+@@ -35,12 +35,14 @@
+         android:inputType="textPersonName"
+         android:textSize="15sp" />
+ 
+-    <Button
++    <ImageButton
+         android:id="@+id/sttStart"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
++        android:layout_width="50dp"
++        android:layout_height="50dp"
+         android:layout_marginTop="50dp"
+-        android:text="말하기" />
++        android:scaleType="fitCenter"
++        android:background="@android:color/transparent"
++        android:src="@drawable/mic_color_drawable" />
+ 
+     <Button
+         android:id="@+id/submit"
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        mavenCentral()\r\n        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}\r\n    }\r\n    dependencies {\r\n        classpath \"com.android.tools.build:gradle:7.0.3\"\r\n\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/build.gradle	(date 1658034233700)
+@@ -6,7 +6,7 @@
+         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
+     }
+     dependencies {
+-        classpath "com.android.tools.build:gradle:7.0.3"
++        classpath "com.android.tools.build:gradle:7.0.4"
+ 
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+Index: app/src/main/res/layout/execution.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\"QuizPage.ExecutionPage\"\r\n    android:padding=\"20dp\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"50dp\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"Question\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"5dp\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"Announce\"\r\n        android:visibility=\"invisible\"\r\n        android:textSize=\"15sp\" />\r\n\r\n    <FrameLayout\r\n        android:id=\"@+id/frame_layout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"400dp\"\r\n        tools:layout_editor_absoluteX=\"203dp\"\r\n        tools:layout_editor_absoluteY=\"281dp\">\r\n    </FrameLayout>\r\n\r\n    <EditText\r\n        android:id=\"@+id/result\"\r\n        android:layout_width=\"250dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:gravity=\"center\"\r\n        android:hint=\"당신의 말이 나타납니다.\"\r\n        android:visibility=\"invisible\"/>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <Button\r\n            android:id=\"@+id/sttStart\"\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginEnd=\"40dp\"\r\n            android:text=\"말하기\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnSubmit\"\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:backgroundTint=\"#2196F3\"\r\n            android:text=\"정답 제출\" />\r\n    </LinearLayout>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/execution.xml b/app/src/main/res/layout/execution.xml
+--- a/app/src/main/res/layout/execution.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/execution.xml	(date 1658032313808)
+@@ -49,13 +49,13 @@
+         android:layout_gravity="center"
+         android:orientation="horizontal">
+ 
+-        <Button
++        <ImageButton
+             android:id="@+id/sttStart"
+-            android:layout_width="100dp"
+-            android:layout_height="wrap_content"
+-            android:layout_gravity="center"
+-            android:layout_marginEnd="40dp"
+-            android:text="말하기" />
++            android:layout_width="50dp"
++            android:layout_height="50dp"
++            android:scaleType="fitCenter"
++            android:background="@android:color/transparent"
++            android:src="@drawable/mic_color_drawable" />
+ 
+         <Button
+             android:id="@+id/btnSubmit"
+Index: app/src/main/res/layout/fragment_chart.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/chart\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"테스트 결과 기록\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_chart.xml b/app/src/main/res/layout/fragment_chart.xml
+--- a/app/src/main/res/layout/fragment_chart.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/fragment_chart.xml	(date 1658674160386)
+@@ -1,14 +1,36 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:gravity="center"
+     android:orientation="vertical">
+ 
+     <TextView
+-        android:id="@+id/chart"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:layout_marginTop="20dp"
++        android:layout_marginBottom="5dp"
++        android:textSize="18sp"
++        android:textColor="@color/black"
++        android:text="기 록"/>
++
++    <com.github.mikephil.charting.charts.LineChart
++        android:id="@+id/linechart"
++        android:layout_width="match_parent"
++        android:layout_height="200dp"
++        android:layout_margin="5dp"/>
++
++    <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:text="테스트 결과 기록"/>
++        android:layout_margin="10dp"
++        android:text="이전 결과 기록"/>
+ 
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/recyclerView"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:padding="5dp"
++        android:background="@drawable/bg_updown"/>
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n     <Button\r\n        android:id=\"@+id/simpleTest\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"150dp\"\r\n        android:text=\"간이검사\"\r\n        android:textSize=\"20sp\"\r\n        android:textStyle=\"bold\"/>\r\n\r\n    <Button\r\n        android:id=\"@+id/formalTest\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"150dp\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:text=\"정규검사\"\r\n        android:textSize=\"20sp\"\r\n        android:textStyle=\"bold\"/>\r\n\r\n    <Button\r\n        android:id=\"@+id/btnLogout\"\r\n        android:layout_width=\"150dp\"\r\n        android:layout_height=\"55dp\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:backgroundTint=\"#C5C5C5\"\r\n        android:text=\"로그아웃\"\r\n        android:textSize=\"20sp\"\r\n        android:textColor=\"@color/black\"\r\n        android:textStyle=\"bold\"\r\n        android:minHeight=\"48dp\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_home.xml b/app/src/main/res/layout/fragment_home.xml
+--- a/app/src/main/res/layout/fragment_home.xml	(revision 161961e1f63191aacb2988dfed49171e8b3bc398)
++++ b/app/src/main/res/layout/fragment_home.xml	(date 1658761067769)
+@@ -1,37 +1,106 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:gravity="center"
+-    android:orientation="vertical">
++    android:background="#F9F9F9">
++
++    <TextView
++        android:id="@+id/text_hello"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="40dp"
++        android:layout_marginTop="40dp"
++        android:text="안녕하세요"
++        android:textColor="@color/black"
++        android:textSize="22sp" />
++
++    <TextView
++        android:id="@+id/text_name"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_below="@+id/text_hello"
++        android:layout_marginStart="40dp"
++        android:layout_marginTop="5dp"
++        android:text="홍길동님"
++        android:textColor="@color/black"
++        android:textSize="22sp"
++        android:textStyle="bold" />
++
++    <View
++        android:id="@+id/line"
++        android:layout_width="match_parent"
++        android:layout_height="40dp"
++        android:layout_below="@+id/text_name"
++        android:layout_marginTop="50dp"
++        android:background="@color/white" />
+ 
+-     <Button
++    <TextView
++        android:id="@+id/text_view1"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_alignStart="@+id/simpleTest"
++        android:layout_marginTop="230dp"
++        android:layout_marginBottom="10dp"
++        android:text="자가 진단"
++        android:textColor="#888888"
++        android:textSize="14sp" />
++
++    <androidx.appcompat.widget.AppCompatButton
+         android:id="@+id/simpleTest"
+-        android:layout_width="200dp"
++        android:layout_width="140dp"
+         android:layout_height="150dp"
+-        android:text="간이검사"
+-        android:textSize="20sp"
+-        android:textStyle="bold"/>
++        android:layout_below="@+id/text_view1"
++        android:layout_alignStart="@+id/practice"
++        android:background="@drawable/shape_home"
++        android:backgroundTint="#E6E8F3"
++        android:elevation="10dp"
++        android:text="간 이\n검 사"
++        android:textSize="20sp" />
+ 
+-    <Button
++    <androidx.appcompat.widget.AppCompatButton
+         android:id="@+id/formalTest"
+-        android:layout_width="200dp"
++        android:layout_width="140dp"
+         android:layout_height="150dp"
+-        android:layout_marginTop="20dp"
+-        android:text="정규검사"
+-        android:textSize="20sp"
+-        android:textStyle="bold"/>
++        android:layout_alignTop="@+id/simpleTest"
++        android:layout_alignEnd="@+id/practice"
++        android:background="@drawable/shape_home"
++        android:backgroundTint="#CFD4EF"
++        android:elevation="10dp"
++        android:text="정 규\n검 사"
++        android:textSize="20sp" />
++
++    <TextView
++        android:id="@+id/text_view2"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_below="@+id/simpleTest"
++        android:layout_alignStart="@+id/practice"
++        android:layout_marginTop="30dp"
++        android:text="기억력 향상 게임"
++        android:textColor="#888888"
++        android:textSize="14sp" />
++
++    <androidx.appcompat.widget.AppCompatButton
++        android:id="@+id/practice"
++        android:layout_width="300dp"
++        android:layout_height="90dp"
++        android:layout_below="@+id/text_view2"
++        android:layout_centerHorizontal="true"
++        android:layout_marginTop="10dp"
++        android:background="@drawable/shape_home" />
+ 
+     <Button
+         android:id="@+id/btnLogout"
+         android:layout_width="150dp"
+         android:layout_height="55dp"
+-        android:layout_marginTop="20dp"
++        android:layout_below="@+id/practice"
++        android:layout_centerHorizontal="true"
++        android:layout_marginTop="40dp"
+         android:backgroundTint="#C5C5C5"
++        android:minHeight="48dp"
+         android:text="로그아웃"
++        android:textColor="@color/black"
+         android:textSize="20sp"
+-        android:textColor="@color/black"
+-        android:textStyle="bold"
+-        android:minHeight="48dp"/>
++        android:textStyle="bold" />
+ 
+-</LinearLayout>
+\ No newline at end of file
++</RelativeLayout>
+\ No newline at end of file

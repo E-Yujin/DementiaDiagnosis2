@@ -2,27 +2,32 @@ package user;
 
 public class User {
 
-    private int id;
+    private String serial_code;
     private String name;
     private String birth;
+    private int age;
     private String sex;
     private String edu;
+    private int score;
 
     public User() {}
 
-    public User(String name, String birth, String sex, String edu) {
+    public User(String serial_code, String name, String birth, int age, String sex, String edu, int score) {
+        this.serial_code = serial_code;
         this.name = name;
         this.birth = birth;
+        this.age = age;
         this.sex = sex;
         this.edu = edu;
+        this.score = score;
     }
 
-    public int getId() {
-        return id;
+    public String getSerial_code() {
+        return serial_code;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSerial_code(String serial_code) {
+        this.serial_code = serial_code;
     }
 
     public String getName() {
@@ -41,6 +46,14 @@ public class User {
         this.birth = birth;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public String getSex() {
         return sex;
     }
@@ -56,4 +69,13 @@ public class User {
     public void setEdu(String edu) {
         this.edu = edu;
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
 }
