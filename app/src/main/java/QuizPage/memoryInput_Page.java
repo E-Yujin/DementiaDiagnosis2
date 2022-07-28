@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +33,13 @@ public class memoryInput_Page extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question;
+    TextView question, type, p_num;
     EditText answer;
     ImageButton sttBtn;
-    ImageButton submit;
+    ImageButton submit, undo;
     ImageView helper_img;
     Helper helper;
+    ProgressBar pro_bar;
 
     boolean isfirst = true;
 
@@ -53,13 +55,21 @@ public class memoryInput_Page extends AppCompatActivity {
         final TextInputLayout TIL = findViewById(R.id.goolelayout);
 
         question = (TextView) findViewById(R.id.question);
+        type = (TextView) findViewById(R.id.type);
+        p_num = (TextView) findViewById(R.id.process_num);
         answer = (EditText) findViewById(R.id.result);
         answer = TIL.getEditText();
         answer.setEnabled(true);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (ImageButton) findViewById(R.id.submit);
+        undo = (ImageButton) findViewById(R.id.before);
         helper_img = findViewById(R.id.img);
         memo_in = new memoryInput();
+        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+
+        type.setText("기억등록");
+       p_num.setText("3/17");
+        pro_bar.setProgress(10);
 
         Intent intent;
         intent = getIntent();
@@ -92,6 +102,14 @@ public class memoryInput_Page extends AppCompatActivity {
                 stt.start_STT();
             }
         });
+
+        undo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "기억력 항목에서는 뒤로가기를 할 수 없습니다.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 isfirst = false;
@@ -105,6 +123,7 @@ public class memoryInput_Page extends AppCompatActivity {
                 answer.setText("");
 
                 if(QP.current == 0){
+                    pro_bar.setProgress(15);
                     tts.isStopUtt = false;
                     sttBtn.setEnabled(false);
                     submit.setEnabled(false);
@@ -120,6 +139,7 @@ public class memoryInput_Page extends AppCompatActivity {
                     tts.UtteranceProgress(tem,"continue", sttBtn, submit);
                 }
                 else if(QP.current == 1){
+                    pro_bar.setProgress(20);
                     tts.isStopUtt = false;
                     for(int i = 0; i<5; i++){
                         QP.correct = memo_in.crr_ans[i].get(0);
@@ -127,6 +147,7 @@ public class memoryInput_Page extends AppCompatActivity {
                             second.add(QP.correct);
                         }
                     }
+                    p_num.setText("4/17");
                     QP.Submit();
                     tts.speakOut(question.getText().toString());
                     tts.UtteranceProgress();

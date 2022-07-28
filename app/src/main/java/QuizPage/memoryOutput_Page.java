@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,13 @@ public class memoryOutput_Page extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question;
+    TextView question, type, p_num;
     EditText answer;
     ImageButton sttBtn;
-    ImageButton submit;
+    ImageButton submit, undo;
     ImageView helper_img;
     Helper helper;
+    ProgressBar pro_bar;
 
     boolean first[];
 
@@ -49,13 +51,21 @@ public class memoryOutput_Page extends AppCompatActivity {
         final TextInputLayout TIL = findViewById(R.id.goolelayout);
 
         question = (TextView) findViewById(R.id.question);
+        type = (TextView) findViewById(R.id.type);
+        p_num = (TextView) findViewById(R.id.process_num);
         answer = (EditText) findViewById(R.id.result);
         answer = TIL.getEditText();
         answer.setEnabled(true);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (ImageButton) findViewById(R.id.submit);
+        undo = (ImageButton) findViewById(R.id.before);
         memo_out = new memoryOutput();
         helper_img = findViewById(R.id.img);
+        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+
+        type.setText("기억회상");
+        p_num.setText("12/17");
+        pro_bar.setProgress(55);
 
         Intent intent;
         intent = getIntent();
@@ -84,6 +94,14 @@ public class memoryOutput_Page extends AppCompatActivity {
                 stt.start_STT();
             }
         });
+
+        undo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "기억력 항목에서는 뒤로가기를 할 수 없습니다.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // 설정 초기화
@@ -97,11 +115,18 @@ public class memoryOutput_Page extends AppCompatActivity {
                 answer.setText("");
 
                 if(QP.current == 0){
+                    pro_bar.setProgress(60);
                     for(int i = 0; i<5; i++){
                         QP.correct = memo_out.crr_ans[0].get(i);
                         if(QP.user_ans.contains(QP.correct)){
                             first[i+1] = true;
                             memo_out.Tscore += 2;
+                        }
+                        else if(QP.correct == "11시"){
+                            if(QP.user_ans.contains("열 한시")){
+                                first[i+1] = true;
+                                memo_out.Tscore += 2;
+                            }
                         }
                     }
                     if(memo_out.Tscore == 10){ // 점수가 만점이면 액티비티 종료.
@@ -129,6 +154,11 @@ public class memoryOutput_Page extends AppCompatActivity {
                     if(QP.user_ans.contains(QP.correct)){
                         memo_out.Tscore ++;
                     }
+                    else if(QP.correct == "11시"){
+                        if(QP.user_ans.contains("열 한시")){
+                            memo_out.Tscore ++;
+                        }
+                    }
                     QP.current ++;
                     while (QP.current < 6){
                         if(!first[QP.current]){
@@ -139,6 +169,7 @@ public class memoryOutput_Page extends AppCompatActivity {
                         else QP.current ++;
                     }
                     if(QP.current == 6){
+                        pro_bar.setProgress(70);
                         memo_out.scores[6] = memo_out.Tscore;
 
                         Intent intent = new Intent(getApplicationContext(), LanguagePage.class);

@@ -15,11 +15,11 @@ public class orientation extends question {
 
         this.num = 5;
         this.quiz = new ArrayList<>();
-        this.crr_ans = new ArrayList[this.num];
-        for (int i = 0; i < this.num; i++) {
+        this.crr_ans = new ArrayList[6];
+        for (int i = 0; i < 6; i++) {
             this.crr_ans[i] = new ArrayList<>();
         }
-        this.user_ans = new String[this.num];
+        this.user_ans = new String[6];
         this.scores = new int[10];
         this.Tscore = new Integer(0);
 
@@ -58,7 +58,7 @@ public class orientation extends question {
                 break;
 
         }
-
+        this.quiz.add("오늘 날짜를 말씀해주세요.");
         this.quiz.add("올해는 몇 년도입니까?");
         this.quiz.add("지금은 몇 월입니까?");
         this.quiz.add("오늘은 며칠입니까?");
@@ -66,10 +66,14 @@ public class orientation extends question {
         this.quiz.add("지금 있는 곳은 어디입니까?");
 
         this.crr_ans[0].add(Date[0]);
-        this.crr_ans[1].add(returnMONTH());
-        this.crr_ans[2].add(returnDATE());
-        this.crr_ans[3].add(day);
-        this.crr_ans[4].add("미정");
+        this.crr_ans[0].add(returnMONTH());
+        this.crr_ans[0].add(returnDATE());
+        this.crr_ans[0].add(day);
+        this.crr_ans[1].add(Date[0]);
+        this.crr_ans[2].add(returnMONTH());
+        this.crr_ans[3].add(returnDATE());
+        this.crr_ans[4].add(day);
+        this.crr_ans[5].add("미정");
 
     }
 

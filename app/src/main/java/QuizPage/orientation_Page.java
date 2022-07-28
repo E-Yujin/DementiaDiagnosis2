@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,11 @@ import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import questions.orientation;
 
 public class orientation_Page extends AppCompatActivity {
@@ -27,12 +33,16 @@ public class orientation_Page extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question;
+    TextView question, type, p_num;
     EditText answer;
     ImageButton sttBtn;
-    ImageButton submit;
+    ImageButton submit, undo;
     ImageView helper_img;
+    ProgressBar pro_bar;
     Helper helper;
+    boolean[] isCorrect;
+    boolean[] isWrong;
+    String[] U_answers;
 
     private long backBtnTime = 0;
 
@@ -43,13 +53,27 @@ public class orientation_Page extends AppCompatActivity {
         setContentView(R.layout.orientation);
 
         question = (TextView) findViewById(R.id.question);
+        type = (TextView) findViewById(R.id.type);
+        p_num = (TextView) findViewById(R.id.process_num);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (ImageButton) findViewById(R.id.submit);
+        undo = (ImageButton) findViewById(R.id.before);
+        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         helper_img = findViewById(R.id.img);
         ortt_main = new orientation();
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, ortt_main.quiz);
+        QP.isOrient = true;
+        isCorrect = new boolean[4];
+        Arrays.fill(isCorrect, false);
+        isWrong = new boolean[4];
+        Arrays.fill(isWrong, false);
+        U_answers = new String[ortt_main.num];
+
+        type.setText("지남력");
+        p_num.setText("1/17");
+        pro_bar.setProgress(1);
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -68,6 +92,33 @@ public class orientation_Page extends AppCompatActivity {
                 stt.start_STT();
             }
         });
+
+        undo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if(QP.current == 0){
+                    Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                if(QP.current > 0){
+                    pro_bar.setProgress(5);
+                    for(int i = isWrong.length - 1; i > 0; i--){
+                        if(!isWrong[i]){
+                            QP.current = i;
+                            break;
+                        } // 모두 정답이면 첫 문제로 점프
+                        else QP.current = 0;
+                    }
+                    tts.isStopUtt = false;
+                    question.setText(ortt_main.quiz.get(QP.current));
+                    answer.setText("");
+                    tts.speakOut(question.getText().toString());
+                    if(QP.current == 0){
+
+                    }
+                }
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stt.Stop();
@@ -77,59 +128,161 @@ public class orientation_Page extends AppCompatActivity {
 
                 QP.user_ans = QP.ans_filter(answer.getText().toString());
 
-                if(QP.current < 3 && !QP.user_ans.equals("")){
-                    String[] ansArray = QP.user_ans.split("");
-                    String toDigit = "";
-                    for(String s : ansArray){
-                        if(!s.equals("")) {
-                            if(Character.isDigit(s.charAt(0))) {
-                                toDigit += s;
-                            }
-                        }
-                    }
-                    if(toDigit.equals("")){
-                        QP.user_ans = ortt_main.KorTran(QP.user_ans);
-                        /*if(QP.current == 0) answer.setText(QP.user_ans+"년");
-                        else if(QP.current == 1) answer.setText(QP.user_ans+"월");
-                        else if(QP.current == 2) answer.setText(QP.user_ans+"일");*/
-                    }
-                    else{
-                        QP.user_ans = toDigit;
-                        /*if(QP.current == 0) answer.setText(QP.user_ans+"년");
-                        else if(QP.current == 1) answer.setText(QP.user_ans+"월");
-                        else if(QP.current == 2) answer.setText(QP.user_ans+"일");*/
-                    }
-                }
-                //else if(QP.current == 3) answer.setText(QP.user_ans+"요일");
-
-                QP.correct = ortt_main.crr_ans[QP.current].get(0);
-
                 if(QP.user_ans.isEmpty()){
                     tts.speakOut("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
                 }
                 else
                 {
-                    if(QP.user_ans.contains(QP.correct)){
-                        ortt_main.Tscore ++;
+                    //날짜 숫자로 변환
+                    if(QP.current == 0 && !QP.user_ans.equals("")){ // 첫 물음의 경우
+                        Arrays.fill(isCorrect, false);
+                        pro_bar.setProgress(5);
+                        String[] answers = QP.user_ans.split(" ");
+                        for(int i = 0; i < answers.length; i++){
+                            String str = "";
+                            if(answers[i].contains("년도")){
+                                if(i-2 >= 0){
+                                    str = answers[i-2] + answers[i-1] + answers[i].replace("년", "");
+                                }
+                                else if(i-1 >= 0){
+                                    str = answers[i-1] + answers[i].replace("년", "");
+                                }
+                                else if(i >= 0){
+                                    str = answers[i].replace("년", "");
+                                }
+                                if(dateFilter(str).equals(ortt_main.crr_ans[0].get(0))){
+                                    isCorrect[0] = true;
+                                }
+                                U_answers[0] = dateFilter(str);
+                            }
+                            else if(answers[i].contains("년")){
+                                if(i-2 >= 0){
+                                    str = answers[i-2] + answers[i-1] + answers[i].replace("년", "");
+                                }
+                                else if(i-1 >= 0){
+                                    str = answers[i-1] + answers[i].replace("년", "");
+                                }
+                                else if(i >= 0){
+                                    str = answers[i].replace("년", "");
+                                }
+                                if(dateFilter(str).equals(ortt_main.crr_ans[0].get(0))){
+                                    isCorrect[0] = true;
+                                }
+                                U_answers[0] = dateFilter(str);
+                            }
+                            else if(answers[i].contains("월")){
+                                U_answers[1] = dateFilter(answers[i]);
+                                if(dateFilter(answers[i]).equals(ortt_main.crr_ans[0].get(1))){
+                                    isCorrect[1] = true;
+                                }
+                            }
+                            else if(answers[i].contains("요일")){
+                                U_answers[3] = answers[i];
+                                if(answers[i].contains(ortt_main.crr_ans[0].get(3))){
+                                    isCorrect[3] = true;
+                                }
+                            }
+                            else if(answers[i].contains("일")){
+                                if(!answers[i-1].contains("월") && !answers[i-1].contains("년")
+                                        && !answers[i-1].contains("년도") && !answers[i-1].contains("요일")){
+                                    if(answers[i-1].contains("십")){
+                                        str = answers[i-1] + answers[i];
+                                        str = str.substring(0, str.length()-1);
+                                        if(dateFilter(str).equals(ortt_main.crr_ans[0].get(2))){
+                                            isCorrect[2] = true;
+                                        }
+                                        U_answers[2] = dateFilter(str);
+                                    }
+                                }
+                                else {
+                                    if(dateFilter(answers[i]).equals(ortt_main.crr_ans[0].get(2))){
+                                        isCorrect[2] = true;
+                                    }
+                                    U_answers[2] = dateFilter(answers[i]);
+                                }
+                            }
+                        }
+                        isWrong = isCorrect;
                     }
+                    else if(QP.current < 4 && !QP.user_ans.equals("")){ // 틀린 것이 있을 경우
+                        QP.user_ans = dateFilter(QP.user_ans);
+                        U_answers[QP.current-1] = dateFilter(QP.user_ans);
+                    }
+                    else {
+                        pro_bar.setProgress(10);
+                        U_answers[QP.current-1] = QP.user_ans;
+                    }
+
+                    //다음 문제 화면 전환
                     if(QP.current < 4){
+                        for(int i = 0; i < isCorrect.length; i++){
+                            if(!isCorrect[i]){
+                                QP.current = i;
+                                isCorrect[i] = true;
+                                break;
+                            } // 모두 정답이면 공간지남력 문제로 점프
+                            else QP.current = 4;
+                        }
+                    }
+                    if(QP.current == 4){
+                        p_num.setText("2/17");
+                    }
+
+                    if(QP.current < 5){
                         answer.setText("");
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
                     }
-                    else if(QP.current == 4){
+                    else if(QP.current == 5){
+
+                        ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
+
                         ortt_main.scores[1] = ortt_main.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(), memoryInput_Page.class);
+                        Intent intent = new Intent(getApplicationContext(),memoryInput_Page.class);
                         intent.putExtra("scores", ortt_main.scores);
                         startActivity(intent);
 
+                        QP.isOrient = false;
+
                         finish();
                     }
+
                 }
             }
         });
+    }
+
+    String dateFilter(String userAns){
+        String[] ansArray = userAns.split("");
+        String toDigit = "";
+        for(String s : ansArray){
+            if(!s.equals("")) {
+                if(Character.isDigit(s.charAt(0))) {
+                    toDigit += s;
+                }
+            }
+        }
+
+        if(toDigit.equals("")){
+            userAns = ortt_main.KorTran(userAns);
+        }
+        else{
+            userAns = toDigit;
+        }
+
+        return userAns;
+    }
+
+    int cal_score(String[] ans, List<String>[] crr){
+        int score = 0;
+        if(ans.length == crr.length-1){
+            for(int i = 0; i < ans.length; i++){
+                if(ans[i].contains(crr[i + 1].get(0))) score ++;
+            }
+        }
+        return score;
     }
 
     @Override
@@ -160,6 +313,12 @@ public class orientation_Page extends AppCompatActivity {
         tts.isStopUtt = false;
         QP.Start();
         tts.speakOut(question.getText().toString());
+        if(QP.current == 0){
+            pro_bar.setProgress(5);
+        }
+        if(QP.current == 1){
+            pro_bar.setProgress(10);
+        }
     }
 
     @Override

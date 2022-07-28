@@ -26,7 +26,6 @@ public class LanguageFunc extends question{
         this.crr_ans[0].add("칫솔");
         this.crr_ans[1].add("그네");
         this.crr_ans[2].add("주사위");
-        this.crr_ans[3].add("2");
-        this.crr_ans[3].add("3");
+        this.crr_ans[3].add("OK");
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,14 +33,14 @@ public class fluency_Page extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question;
+    TextView question, type, p_num;
     EditText answer;
     ImageButton sttBtn;
-    ImageButton submit;
+    ImageButton submit, undo;
     List<String> tem = new ArrayList<>();
     ImageView helper_img;
     Helper helper;
-
+    ProgressBar pro_bar;
 
     private long backBtnTime = 0;
 
@@ -51,10 +52,14 @@ public class fluency_Page extends AppCompatActivity {
         setContentView(R.layout.orientation);
 
         question = (TextView) findViewById(R.id.question);
+        type = (TextView) findViewById(R.id.type);
+        p_num = (TextView) findViewById(R.id.process_num);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (ImageButton) findViewById(R.id.submit);
+        undo = (ImageButton) findViewById(R.id.before);
         flu = new fluency();
+        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
 
         Intent intent;
         intent = getIntent();
@@ -80,6 +85,10 @@ public class fluency_Page extends AppCompatActivity {
             }
         });
 
+        type.setText("유창성(집행기능)");
+        p_num.setText("17/17");
+        pro_bar.setProgress(90);
+
         helper = new Helper(tts, stt, helper_img, this);
         helper.setTest();
 
@@ -90,8 +99,17 @@ public class fluency_Page extends AppCompatActivity {
                     stt.start_STT();
             }
         });
+
+        undo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                pro_bar.setProgress(100);
                 stt.Stop();
                 tts.Stop();
                 QP.user_ans = answer.getText().toString().replace(".", "");

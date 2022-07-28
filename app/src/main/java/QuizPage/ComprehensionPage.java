@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +32,15 @@ public class ComprehensionPage extends AppCompatActivity {
 
     private ImageView mImg, image2, image3, image4, image5;
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
-    private ImageButton sttBtn;
-    private ImageButton submit;
+    private ImageButton submit, undo;
     int resLeft, resRight; // 정답 체크
     LanguageFunc languageFunc;
     TTS tts;
-    QuizPage QP;
-    TextView question;
+    TextView question, type, p_num;
+    String Okey = "";
+    ProgressBar pro_bar;
+
+    private long backBtnTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,10 +53,17 @@ public class ComprehensionPage extends AppCompatActivity {
         image3 = findViewById(R.id.image3);
         image4 = findViewById(R.id.image4);
         image5 = findViewById(R.id.image5);
-        sttBtn = findViewById(R.id.sttStart);
         submit = findViewById(R.id.btnSubmit);
         question = findViewById(R.id.question);
         languageFunc = new LanguageFunc();
+        type = (TextView) findViewById(R.id.type);
+        p_num = (TextView) findViewById(R.id.process_num);
+        undo = (ImageButton) findViewById(R.id.before);
+        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+
+        type.setText("언어기능");
+        p_num.setText("16/17");
+        pro_bar.setProgress(85);
 
         mImg.setTag(IMAGEVIEW_TAG);
         image2.setTag(IMAGEVIEW_TAG);
@@ -77,26 +87,35 @@ public class ComprehensionPage extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString(), "default");
+                tts.onInit(status, question.getText().toString());
                 //tts.UtteranceProgress(announce.getText().toString());
             }
         });
-        QP = new QuizPage(tts, question, sttBtn, submit, 3, languageFunc.quiz);
 
-        sttBtn.setEnabled(false);
+        undo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                tts.Stop();
+                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
+                intent.putExtra("current" , 2);
+                intent.putExtra("comprehension" , "yet");
+                setResult(RESULT_OK, intent);
 
+                finish();
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pro_bar.setProgress(90);
                 if(resLeft == 2 && resRight == 3) {
-                    languageFunc.Tscore = 1;
+                    Okey = "OK";
                 } else {
-                    languageFunc.Tscore = 0;
+                    Okey = "notOk";
                 }
                 Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
-                intent.putExtra("comprehension" , languageFunc.Tscore);
-                Log.d("comprehension", "" + languageFunc.Tscore);
+                intent.putExtra("comprehension" , Okey);
+                intent.putExtra("current" , -1);
+                Log.d("comprehension", Okey);
                 setResult(RESULT_OK, intent);
 
                 finish();
@@ -214,5 +233,41 @@ public class ComprehensionPage extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        } else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onStop(){
+        tts.isStopUtt = true;
+        super.onStop();
+        tts.Stop();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        tts.isStopUtt = false;
+        question.setText(languageFunc.quiz.get(3));
+        tts.speakOut(question.getText().toString());
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tts.Destroy();
     }
 }

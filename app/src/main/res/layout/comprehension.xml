@@ -18,22 +18,39 @@
         android:letterSpacing="0.04"
         android:lineSpacingExtra="10dp"
         android:text="TextView"
-        android:textSize="14sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/grey"/>
-    <TextView
-        android:id="@+id/process_num"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:fontFamily="@font/jejugothic"
-        android:gravity="center"
-        android:layout_gravity="right"
-        android:letterSpacing="0.04"
-        android:lineSpacingExtra="10dp"
-        android:text="TextView"
-        android:textSize="10sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:max="100"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/process_num"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:textColor="@color/main"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="10dp"
+            android:text="0/17"
+            android:textSize="13sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Question"
+                android:text="아래 5개의 동그라미를\n\n1이라고 쓰여있는 공간에\n2개를 옮기고,\n\n2이라고 쓰여있는 공간에\n3개를 옮기세요."
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -170,14 +187,6 @@
                 android:layout_weight="1"
                 />
 
-            <ImageButton
-                android:id="@+id/sttStart"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="fitCenter"
-                android:background="@android:color/transparent"
-                android:src="@drawable/mic_color_drawable"
-                />
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"

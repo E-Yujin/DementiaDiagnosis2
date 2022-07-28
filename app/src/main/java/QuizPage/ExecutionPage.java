@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,18 +36,20 @@ public class ExecutionPage extends AppCompatActivity {
     ExecutionOne executionOne;
     ExecutionTwo executionTwo;
     ExecutionThree executionThree;
-    TextView question;
+    TextView question, type, p_num;
     EditText answer;
     String total;
     ImageButton sttBtn;
-    ImageButton submit;
+    ImageButton submit, undo;
     QuizPage QP;
     MainSTT stt;
     TTS tts;
+    String[] U_answers;
+    ProgressBar pro_bar;
 
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
-    int[] time = {2000, 2000, 2000, 2000};
+    int[] time = {1000, 1000, 1000, 1000};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +57,23 @@ public class ExecutionPage extends AppCompatActivity {
         setContentView(R.layout.execution);
 
         question = findViewById(R.id.question);
+        type = (TextView) findViewById(R.id.type);
+        p_num = (TextView) findViewById(R.id.process_num);
         answer = findViewById(R.id.result);
         sttBtn = findViewById(R.id.sttStart);
         submit = findViewById(R.id.btnSubmit);
+        undo = (ImageButton) findViewById(R.id.before);
         execution = new Execution();
+        U_answers = new String[execution.num];
+        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
 
         Intent intent;
         intent = getIntent();
         execution.scores = intent.getIntArrayExtra("scores");
+
+        type.setText("집행기능");
+        p_num.setText("9/17");
+        pro_bar.setProgress(40);
 
         // Fragment 객체 선언
         fragmentManager = (FragmentManager)getSupportFragmentManager();
@@ -75,11 +87,12 @@ public class ExecutionPage extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString(), "default", 1000);
+                tts.onInit(status, question.getText().toString(), "default");
+                tem.clear();
                 tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
                 tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
                 tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
-                tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                tts.UtteranceProgress(tem, "continue", question, sttBtn, submit);
             }
         });
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
@@ -94,7 +107,50 @@ public class ExecutionPage extends AppCompatActivity {
                 stt.start_STT();
             }
         });
-
+        undo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if(QP.current == 0){
+                    Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                if(QP.current > 0){
+                    QP.current --;
+                    tts.isStopUtt = false;
+                    question.setText(execution.quiz.get(QP.current));
+                    answer.setText("");
+                    tts.speakOut(question.getText().toString(),"default");
+                    if(QP.current == 0){
+                        pro_bar.setProgress(40);
+                        p_num.setText("9/17");
+                        tem.clear();
+                        tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
+                        tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
+                        tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
+                        tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionOne).commit();
+                    }
+                    else if(QP.current == 1){
+                        pro_bar.setProgress(45);
+                        p_num.setText("10/17");
+                        tem.clear();
+                        tem.add("별이 각자 다른 위치로 이동합니다.");
+                        tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
+                        tem.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
+                        tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
+                    }
+                    else if(QP.current == 2){
+                        pro_bar.setProgress(50);
+                        p_num.setText("11/17");
+                        tem.clear();
+                        tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
+                        tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+                        tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+                    }
+                }
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,11 +180,6 @@ public class ExecutionPage extends AppCompatActivity {
                         break;
                 }
 
-                List<String> correct = new ArrayList<>();
-                correct.clear();
-                for(String data : execution.crr_ans[QP.current]){
-                    correct.add(data);
-                }
 
                 answer.setText("");
 
@@ -139,19 +190,14 @@ public class ExecutionPage extends AppCompatActivity {
                     tts.Stop();
                     tts.isStopUtt = true;
 
-                    for(String data : correct){
-                        if(total.contains(data)){
-                            execution.Tscore ++;
-                        }
-                        if(QP.current + 1 < execution.Tscore){
-                            execution.Tscore = QP.current + 1;
-                        }
-                    }
+                    U_answers[QP.current] = total;
 
                     if(QP.current == 0) {
+                        pro_bar.setProgress(45);
                         tts.isStopUtt = false;
                         QP.current++;
                         question.setText(execution.quiz.get(QP.current));
+                        p_num.setText("10/17");
                         tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("별이 각자 다른 위치로 이동합니다.");
@@ -161,10 +207,12 @@ public class ExecutionPage extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
                     }
                     else if(QP.current == 1) {
+                        pro_bar.setProgress(50);
                         sttBtn.setEnabled(true);
                         answer.setVisibility(View.VISIBLE);
                         tts.isStopUtt = false;
                         QP.current++;
+                        p_num.setText("11/17");
                         question.setText(execution.quiz.get(QP.current));
                         tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
@@ -174,6 +222,9 @@ public class ExecutionPage extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
                     }
                     else if(QP.current == 2) {
+                        pro_bar.setProgress(55);
+                        execution.Tscore = cal_score(U_answers, execution.crr_ans);
+
                         execution.scores[5] = execution.Tscore;
 
                         Intent intent = new Intent(getApplicationContext(), memoryOutput_Page.class);
@@ -185,6 +236,29 @@ public class ExecutionPage extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    int cal_score(String[] ans, List<String>[] crr){
+        int score = 0;
+        if(ans.length == crr.length){
+            for(int i = 0; i < ans.length; i++){
+                if(crr[i].size() > 1){
+                    for(String s : crr[i]){
+                        if(ans[i].contains(s)) score ++;
+                    }
+                }
+                else if(ans[i].contains(crr[i].get(0))) score ++;
+            }
+        }
+        return score;
+    }
+
+    @Override
+    protected void onStop(){
+        tts.isStopUtt = true;
+        super.onStop();
+        tts.Stop();
+        stt.Stop();
     }
 
     @Override
@@ -199,6 +273,12 @@ public class ExecutionPage extends AppCompatActivity {
             Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        QP.Destroy();
     }
 
 }

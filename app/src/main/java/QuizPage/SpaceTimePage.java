@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +30,10 @@ public class SpaceTimePage extends AppCompatActivity {
     spaceTime ST;
     SpaceTimeView STV;
     TTS tts;
-    TextView question;
+    TextView question, type, p_num;
     Button eraser;
-    ImageButton submit;
+    ImageButton submit, undo;
+    ProgressBar pro_bar;
 
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
@@ -42,14 +44,22 @@ public class SpaceTimePage extends AppCompatActivity {
         setContentView(R.layout.space_time);
 
         question = (TextView) findViewById(R.id.announce);
+        type = (TextView) findViewById(R.id.type);
+        p_num = (TextView) findViewById(R.id.process_num);
         eraser = (Button) findViewById(R.id.eraser);
         submit = (ImageButton) findViewById(R.id.submit);
+        undo = (ImageButton) findViewById(R.id.before);
         ST = new spaceTime();
         STV = (SpaceTimeView) findViewById(R.id.canvas);
+        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
 
         Intent intent;
         intent = getIntent();
         ST.scores = intent.getIntArrayExtra("scores");
+
+        type.setText("시공간 기능");
+        p_num.setText("8/17");
+        pro_bar.setProgress(35);
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -68,6 +78,14 @@ public class SpaceTimePage extends AppCompatActivity {
                 STV.clear();
             }
         });
+
+        undo.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tts.Stop();
@@ -76,6 +94,8 @@ public class SpaceTimePage extends AppCompatActivity {
                 ST.Tscore = STV.getScore();
 
                 ST.scores[4] = ST.Tscore;
+
+                pro_bar.setProgress(40);
 
                 Intent intent = new Intent(getApplicationContext(), ExecutionPage.class);
                 intent.putExtra("scores", ST.scores);

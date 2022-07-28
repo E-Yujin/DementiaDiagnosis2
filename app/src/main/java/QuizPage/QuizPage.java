@@ -24,6 +24,7 @@ public class QuizPage {
     protected List<String> title_quest;
 
     public String user_ans, correct;
+    public boolean isOrient = false;
 
     public QuizPage(MainSTT Stt, TTS Tts, TextView quest, EditText ans,
                     ImageButton sttB,ImageButton sub, List<String> quiz){
@@ -55,52 +56,37 @@ public class QuizPage {
 
     public String ans_filter(String num){
         String tem;
-        if(current != 3){
-            tem = num.replace(".", "")
-                    .replace(",", "")
-                    .replace("?", "")
-                    .replace("년", "")
+        tem = num.replace(".", "")
+                .replace(",", "")
+                .replace("?", "")
+                .replace("이다", "")
+                .replace("이요", "")
+                .replace("이야", "")
+                .replace("이지", "")
+                .replace("이죠", "")
+                .replace("이지요", "")
+                .replace("이고", "")
+                .replace("이며", "")
+                .replace("이라서", "")
+                .replace("이어서", "")
+                .replace("이었다", "")
+                .replace("이기", "")
+                .replace("입니다", "")
+                .replace("이기에", "");
+
+        if(isOrient && current > 0 && current < 5){
+            tem = num.replace("년", "")
                     .replace("도", "")
                     .replace("일", "")
                     .replace("시월", "십월")
                     .replace("유월", "육월")
                     .replace("월", "")
-                    .replace("요일", "")
-                    .replace("이다", "")
-                    .replace("이요", "")
-                    .replace("이야", "")
-                    .replace("이지", "")
-                    .replace("이죠", "")
-                    .replace("이지요", "")
-                    .replace("이고", "")
-                    .replace("이며", "")
-                    .replace("이라서", "")
-                    .replace("이어서", "")
-                    .replace("이었다", "")
-                    .replace("이기", "")
-                    .replace("입니다", "")
-                    .replace("이기에", "");
+                    .replace("요일", "");
         }
-        else{
-            tem = num.replace(".", "")
-                    .replace(",", "")
-                    .replace("?", "")
-                    .replace("요일", "")
-                    .replace("이다", "")
-                    .replace("이요", "")
-                    .replace("이야", "")
-                    .replace("이지", "")
-                    .replace("이죠", "")
-                    .replace("이지요", "")
-                    .replace("이고", "")
-                    .replace("이며", "")
-                    .replace("이라서", "")
-                    .replace("이어서", "")
-                    .replace("이었다", "")
-                    .replace("이기", "")
-                    .replace("입니다", "")
-                    .replace("이기에", "");
+        else if (isOrient && current == 5){
+            tem = num.replace("요일", "");
         }
+
         return tem;
     }
 
