@@ -54,7 +54,7 @@ public class TTS {
             });
         }
     }
-    public void UtteranceProgress(String say, ImageButton sttButt, Button submit){
+    public void UtteranceProgress(String say, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 @Override
@@ -86,7 +86,7 @@ public class TTS {
         }
     }
     // 한 문장만 말할 때
-    public void UtteranceProgress(String say, int time, ImageButton sttButt, Button submit){
+    public void UtteranceProgress(String say, int time, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 @Override
@@ -118,7 +118,7 @@ public class TTS {
         }
     }
     // 한 문장을 말하는데 수동으로 텀을 조절하고 싶을 때
-    public void UtteranceProgress(List<String> say, String id, ImageButton sttButt, Button submit){
+    public void UtteranceProgress(List<String> say, String id, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 int i = 0;
@@ -156,7 +156,7 @@ public class TTS {
         }
     }
     // 여러 문장을 말할 때
-    public void UtteranceProgress(List<String> say, String id, int[] times, ImageButton sttButt, Button submit){
+    public void UtteranceProgress(List<String> say, String id, int[] times, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 int i = 0;
@@ -195,7 +195,7 @@ public class TTS {
         }
     }
     // 여러 문장을 말하는데 수동으로 텀을 조절하고 싶을 때
-    public void UtteranceProgress(List<String> say, String id, TextView text, ImageButton sttButt, Button submit){
+    public void UtteranceProgress(List<String> say, String id, TextView text, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 int i = 0;
@@ -233,7 +233,7 @@ public class TTS {
             });
         }
     }
-    public void UtteranceProgress(List<String> say, String id, TextView text, Button submit){
+    public void UtteranceProgress(List<String> say, String id, TextView text, ImageButton submit){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 int i = 0;
@@ -271,7 +271,7 @@ public class TTS {
         }
     }
     // 여러 문장을 말하며 텍스트뷰 변경이 필요할 때
-    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, ImageButton sttButt, Button submit){
+    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
             tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                 int i = 0;

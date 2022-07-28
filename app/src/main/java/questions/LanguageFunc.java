@@ -20,8 +20,8 @@ public class LanguageFunc extends question{
         this.quiz.add("아래 그림의 이름을 말씀해주세요\n");
         this.quiz.add("아래 그림의 이름을 말씀해주세요\n");
         this.quiz.add("아래 5개의 동그라미를\n\n" +
-                "1이라고 쓰여있는 공간에 2개를 옮기고,\n\n" +
-                "2이라고 쓰여있는 공간에 3개를 옮기세요.");
+                "1이라고 쓰여있는 공간에\n2개를 옮기고,\n\n" +
+                "2이라고 쓰여있는 공간에\n3개를 옮기세요.");
 
         this.crr_ans[0].add("칫솔");
         this.crr_ans[1].add("그네");

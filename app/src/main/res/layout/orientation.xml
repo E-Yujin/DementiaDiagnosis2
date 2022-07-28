@@ -5,73 +5,147 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="#2196F3"
-    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/question"
-        android:layout_width="300dp"
-        android:layout_height="180dp"
+        android:id="@+id/type"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
         android:letterSpacing="0.04"
         android:lineSpacingExtra="10dp"
         android:text="TextView"
-        android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/helper_jump"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"/>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/goolelayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="40dp"
+        android:textSize="14sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/grey"/>
+    <TextView
+        android:id="@+id/process_num"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:fontFamily="@font/jejugothic"
-        android:lineSpacingExtra ="10dp"
-        android:hint="당신의 대답"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35">
+        android:gravity="center"
+        android:layout_gravity="right"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="10dp"
+        android:text="TextView"
+        android:textSize="10sp" />
 
-        <com.google.android.material.textfield.TextInputEditText
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-            android:id="@+id/result"
+        <ImageButton
+            android:id="@+id/before"
+            android:layout_width="35dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:tint="@color/grey"
+            android:src="@drawable/before" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="10dp"
+            android:text="TextView"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/helper_jump" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/goolelayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
             android:fontFamily="@font/jejugothic"
-            android:lineSpacingExtra ="10dp"/>
+            android:lineSpacingExtra ="10dp"
+            android:hint="당신의 대답"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:fontFamily="@font/jejugothic"
+                android:gravity="center"
+                android:lineSpacingExtra="10dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <ImageButton
-        android:id="@+id/sttStart"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:scaleType="fitCenter"
-        android:background="@android:color/transparent"
-        android:src="@drawable/mic_color_drawable"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <ImageButton
+                android:id="@+id/sttStart"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:src="@drawable/mic_color_drawable"
+                />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="정답 제출" />
-
+        android:layout_width="35dp"
+        android:layout_height="50dp"
+        app:tint="@color/grey"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/after"
+        />
 </LinearLayout>
+
+    </LinearLayout>

@@ -39,7 +39,7 @@ public class ExecutionPage extends AppCompatActivity {
     EditText answer;
     String total;
     ImageButton sttBtn;
-    Button submit;
+    ImageButton submit;
     QuizPage QP;
     MainSTT stt;
     TTS tts;

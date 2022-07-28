@@ -18,7 +18,7 @@ public class QuizPage {
     TextView question;
     EditText answer;
     ImageButton sttBtn;
-    Button submit;
+    ImageButton submit;
 
     public int current = 0;
     protected List<String> title_quest;
@@ -26,7 +26,7 @@ public class QuizPage {
     public String user_ans, correct;
 
     public QuizPage(MainSTT Stt, TTS Tts, TextView quest, EditText ans,
-                    ImageButton sttB,Button sub, List<String> quiz){
+                    ImageButton sttB,ImageButton sub, List<String> quiz){
 
         stt = Stt;
         tts = Tts;
@@ -39,7 +39,7 @@ public class QuizPage {
         question.setText(title_quest.get(current));
     }
 
-    public QuizPage(TTS Tts, TextView quest, ImageButton sttB, Button sub, int n, List<String> quiz) {
+    public QuizPage(TTS Tts, TextView quest, ImageButton sttB, ImageButton sub, int n, List<String> quiz) {
         tts = Tts;
         question = quest;
         sttBtn = sttB;
