@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="40dp"
+        android:text="사용자 정보 수정"
+        android:textColor="#757575"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="#E4E4E4"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="이 름"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="90dp"
+        android:gravity="center"
+        android:hint="홍길동"
+        android:minHeight="48dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_birth"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_name"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="#E4E4E4"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="생 년 월 일"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edit_birth"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_name"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:hint="22/07/23"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_sex"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_birth"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="#E4E4E4"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="성 별"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/edit_sex"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_birth"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="20dp"
+        android:enabled="true"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:hint="남"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_edu"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_sex"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="#E4E4E4"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="학 력"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edit_edu"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_sex"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:hint="고등졸업"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancelBtn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_edu"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="취 소"
+        android:textSize="18sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/retrieveBtn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_edu"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="수 정"
+        android:textSize="18sp" />
+
+</RelativeLayout>
