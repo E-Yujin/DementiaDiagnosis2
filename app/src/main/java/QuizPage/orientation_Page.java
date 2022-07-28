@@ -240,7 +240,7 @@ public class orientation_Page extends AppCompatActivity {
 
                         ortt_main.scores[1] = ortt_main.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(),memoryInput_Page.class);
+                        Intent intent = new Intent(getApplicationContext(),LanguagePage.class);
                         intent.putExtra("scores", ortt_main.scores);
                         startActivity(intent);
 
