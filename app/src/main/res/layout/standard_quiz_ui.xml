@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageButton
+        android:id="@+id/left"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_left_right"
+        android:rotation="-90" />
+
+    <TextView
+        android:id="@+id/quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/jejugothic"
+        android:text="지남력"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/right"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/ic_left_right"
+        android:rotation="90" />
+
+    <ProgressBar
+        android:id="@+id/line"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/quiz"
+        android:layout_marginTop="20dp"
+        android:progress="20"
+        android:progressDrawable="@drawable/progressbar" />
+
+    <TextView
+        android:id="@+id/quizlong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/jejugothic"
+        android:text="오늘 날짜를 말씀해주세요."
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_below="@id/quizlong"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/default_0" />
+
+    <FrameLayout
+        android:id="@+id/gray_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/img"
+        android:background="@drawable/shape_round_bar"
+        android:backgroundTint="#F4F4F4">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="330dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:fontFamily="@font/jejugothic"
+                android:hint="답변이 여기에 나타납니다." />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/mic"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_mic"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:fontFamily="@font/jejugothic"
+            android:text="잘모르겠어요"
+            android:textSize="14sp"
+            android:textColor="#787878"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#DFDFDF"/>
+
+    </FrameLayout>
+</RelativeLayout>
