@@ -114,6 +114,7 @@
                 android:visibility="invisible" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/donknow"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
                 android:layout_below="@+id/sttStart"

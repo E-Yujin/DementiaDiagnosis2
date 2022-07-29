@@ -69,8 +69,8 @@
         android:id="@+id/gray_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
         android:layout_below="@+id/img"
+        android:layout_marginTop="40dp"
         android:background="@drawable/shape_round_bar"
         android:backgroundTint="#F4F4F4">
 
@@ -79,14 +79,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="330dp"
             android:layout_height="80dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:fontFamily="@font/jejugothic"
+                android:gravity="center"
                 android:hint="답변이 여기에 나타납니다." />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,20 +96,20 @@
             android:layout_height="65dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:background="@drawable/ic_mic"/>
+            android:background="@drawable/ic_mic" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="130dp"
             android:layout_height="40dp"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="40dp"
-            android:gravity="center"
-            android:fontFamily="@font/jejugothic"
-            android:text="잘모르겠어요"
-            android:textSize="14sp"
-            android:textColor="#787878"
             android:background="@drawable/round_button"
-            android:backgroundTint="#DFDFDF"/>
+            android:backgroundTint="#DFDFDF"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:text="잘모르겠어요"
+            android:textColor="#787878"
+            android:textSize="14sp" />
 
     </FrameLayout>
 </RelativeLayout>

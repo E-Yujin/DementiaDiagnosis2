@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
@@ -23,6 +24,7 @@ import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import questions.fluency;
@@ -33,7 +35,7 @@ public class fluency_Page extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question, type, p_num;
+    TextView question, type;
     EditText answer;
     ImageButton sttBtn;
     ImageButton submit, undo;
@@ -41,6 +43,7 @@ public class fluency_Page extends AppCompatActivity {
     ImageView helper_img;
     Helper helper;
     ProgressBar pro_bar;
+    AppCompatButton donKnow;
 
     private long backBtnTime = 0;
 
@@ -53,13 +56,15 @@ public class fluency_Page extends AppCompatActivity {
 
         question = (TextView) findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
-        p_num = (TextView) findViewById(R.id.process_num);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (ImageButton) findViewById(R.id.submit);
         undo = (ImageButton) findViewById(R.id.before);
         flu = new fluency();
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
+
+        answer.setHint("답변이 여기에 나타납니다.");
 
         Intent intent;
         intent = getIntent();
@@ -86,17 +91,50 @@ public class fluency_Page extends AppCompatActivity {
         });
 
         type.setText("유창성(집행기능)");
-        p_num.setText("17/17");
-        pro_bar.setProgress(90);
+        pro_bar.setProgress(95);
 
         helper = new Helper(tts, stt, helper_img, this);
         helper.setTest();
+
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.speakOut(question.getText().toString());
+            }
+        });
+
+        helper_img.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!tts.IsTalking() && !answer.getText().toString().equals(""))
+                    tts.speakOut(answer.getText().toString());
+            }
+        });
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                     tts.isStopUtt = true;
                     tts.Stop();
                     stt.start_STT();
+            }
+        });
+
+        donKnow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                pro_bar.setProgress(100);
+                stt.Stop();
+                tts.Stop();
+
+                flu.Tscore = 0;
+
+                flu.scores[8] = flu.Tscore;
+
+                Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
+                intent.putExtra("scores", flu.scores);
+                intent.putExtra("isDone", true);
+                startActivity(intent);
+
+                stt.isFluency = false;
+
+                finish();
             }
         });
 
@@ -172,6 +210,7 @@ public class fluency_Page extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         tts.isStopUtt = false;
+        answer.setHint("답변이 여기에 나타납니다.");
         if(!question.getText().equals("그만!")){
             tem.clear();
             answer.setEnabled(false);

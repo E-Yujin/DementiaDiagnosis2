@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/announce"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:gravity="center"
         android:lineSpacingExtra ="10dp"
         android:fontFamily="@font/jejugothic"
@@ -36,7 +36,6 @@
         android:gravity="center"
         android:fontFamily="@font/jejugothic"
         android:lineSpacingExtra ="10dp"
-        android:text="total_score"
         android:textSize="15sp" />
 
     <ImageView

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
@@ -30,10 +31,11 @@ public class SpaceTimePage extends AppCompatActivity {
     spaceTime ST;
     SpaceTimeView STV;
     TTS tts;
-    TextView question, type, p_num;
+    TextView question, type;
     Button eraser;
     ImageButton submit, undo;
     ProgressBar pro_bar;
+    AppCompatButton donKnow;
 
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
@@ -45,20 +47,19 @@ public class SpaceTimePage extends AppCompatActivity {
 
         question = (TextView) findViewById(R.id.announce);
         type = (TextView) findViewById(R.id.type);
-        p_num = (TextView) findViewById(R.id.process_num);
         eraser = (Button) findViewById(R.id.eraser);
         submit = (ImageButton) findViewById(R.id.submit);
         undo = (ImageButton) findViewById(R.id.before);
         ST = new spaceTime();
         STV = (SpaceTimeView) findViewById(R.id.canvas);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
         Intent intent;
         intent = getIntent();
         ST.scores = intent.getIntArrayExtra("scores");
 
         type.setText("시공간 기능");
-        p_num.setText("8/17");
         pro_bar.setProgress(35);
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
@@ -70,6 +71,35 @@ public class SpaceTimePage extends AppCompatActivity {
                 tem.add(ST.quiz.get(2));
                 tem.add(ST.quiz.get(3));
                 tts.UtteranceProgress(tem, "continue", question, submit);
+            }
+        });
+
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.speakOut(question.getText().toString());
+                tem.add(ST.quiz.get(1));
+                tem.add(ST.quiz.get(2));
+                tem.add(ST.quiz.get(3));
+                tts.UtteranceProgress(tem, "continue", question, submit);
+            }
+        });
+
+        donKnow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.Stop();
+                tts.isStopUtt = true;
+
+                ST.Tscore = 0;
+
+                ST.scores[4] = ST.Tscore;
+
+                pro_bar.setProgress(40);
+
+                Intent intent = new Intent(getApplicationContext(), ExecutionPage.class);
+                intent.putExtra("scores", ST.scores);
+                startActivity(intent);
+
+                finish();
             }
         });
 

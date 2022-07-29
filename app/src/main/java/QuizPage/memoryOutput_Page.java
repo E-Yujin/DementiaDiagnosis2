@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
@@ -32,13 +33,14 @@ public class memoryOutput_Page extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question, type, p_num;
+    TextView question, type;
     EditText answer;
     ImageButton sttBtn;
     ImageButton submit, undo;
     ImageView helper_img;
     Helper helper;
     ProgressBar pro_bar;
+    AppCompatButton donKnow;
 
     boolean first[];
 
@@ -47,12 +49,11 @@ public class memoryOutput_Page extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.memory_input);
+        setContentView(R.layout.orientation);
         final TextInputLayout TIL = findViewById(R.id.goolelayout);
 
         question = (TextView) findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
-        p_num = (TextView) findViewById(R.id.process_num);
         answer = (EditText) findViewById(R.id.result);
         answer = TIL.getEditText();
         answer.setEnabled(true);
@@ -62,10 +63,11 @@ public class memoryOutput_Page extends AppCompatActivity {
         memo_out = new memoryOutput();
         helper_img = findViewById(R.id.img);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
         type.setText("기억회상");
-        p_num.setText("12/17");
         pro_bar.setProgress(55);
+        answer.setHint("답변이 여기에 나타납니다.");
 
         Intent intent;
         intent = getIntent();
@@ -87,11 +89,52 @@ public class memoryOutput_Page extends AppCompatActivity {
         Arrays.fill(first, false);
         first[0] = true;
 
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.speakOut(question.getText().toString());
+            }
+        });
+
+        helper_img.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!tts.IsTalking() && !answer.getText().toString().equals(""))
+                    tts.speakOut(answer.getText().toString());
+            }
+        });
+
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tts.isStopUtt = true;
                 tts.Stop();
                 stt.start_STT();
+            }
+        });
+
+        donKnow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                answer.setText("");
+                QP.current ++;
+                if(QP.current == 0) QP.current = 6;
+                else{
+                    while (QP.current < 6){
+                        if(!first[QP.current]){
+                            question.setText(memo_out.quiz.get(QP.current));
+                            tts.speakOut(question.getText().toString());
+                            break;
+                        }
+                        else QP.current ++;
+                    }
+                }
+                if(QP.current == 6){
+                    pro_bar.setProgress(70);
+                    memo_out.scores[6] = memo_out.Tscore;
+
+                    Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
+                    intent.putExtra("scores", memo_out.scores);
+                    startActivity(intent);
+
+                    finish();
+                }
             }
         });
 
@@ -112,33 +155,57 @@ public class memoryOutput_Page extends AppCompatActivity {
 
                 QP.user_ans = answer.getText().toString();
 
-                answer.setText("");
-
-                if(QP.current == 0){
-                    pro_bar.setProgress(60);
-                    for(int i = 0; i<5; i++){
-                        QP.correct = memo_out.crr_ans[0].get(i);
-                        if(QP.user_ans.contains(QP.correct)){
-                            first[i+1] = true;
-                            memo_out.Tscore += 2;
-                        }
-                        else if(QP.correct == "11시"){
-                            if(QP.user_ans.contains("열 한시")){
+                if(QP.user_ans.isEmpty()){
+                    tts.speakOut("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
+                }
+                else{
+                    answer.setText("");
+                    if(QP.current == 0){
+                        pro_bar.setProgress(60);
+                        for(int i = 0; i<5; i++){
+                            QP.correct = memo_out.crr_ans[0].get(i);
+                            if(QP.user_ans.contains(QP.correct)){
                                 first[i+1] = true;
                                 memo_out.Tscore += 2;
                             }
+                            else if(QP.correct == "11시"){
+                                if(QP.user_ans.contains("열 한시")){
+                                    first[i+1] = true;
+                                    memo_out.Tscore += 2;
+                                }
+                            }
+                        }
+                        if(memo_out.Tscore == 10){ // 점수가 만점이면 액티비티 종료.
+                            memo_out.scores[6] = memo_out.Tscore;
+
+                            Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
+                            intent.putExtra("scores", memo_out.scores);
+                            startActivity(intent);
+
+                            finish();
+                        }
+                        else{
+                            while (QP.current < 6){
+                                if(!first[QP.current]){
+                                    question.setText(memo_out.quiz.get(QP.current));
+                                    tts.speakOut(question.getText().toString());
+                                    break;
+                                }
+                                else QP.current ++;
+                            }
                         }
                     }
-                    if(memo_out.Tscore == 10){ // 점수가 만점이면 액티비티 종료.
-                        memo_out.scores[6] = memo_out.Tscore;
-
-                        Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
-                        intent.putExtra("scores", memo_out.scores);
-                        startActivity(intent);
-
-                        finish();
-                    }
-                    else{
+                    else {
+                        QP.correct = memo_out.crr_ans[QP.current].get(0);
+                        if(QP.user_ans.contains(QP.correct)){
+                            memo_out.Tscore ++;
+                        }
+                        else if(QP.correct == "11시"){
+                            if(QP.user_ans.contains("열 한시")){
+                                memo_out.Tscore ++;
+                            }
+                        }
+                        QP.current ++;
                         while (QP.current < 6){
                             if(!first[QP.current]){
                                 question.setText(memo_out.quiz.get(QP.current));
@@ -147,36 +214,16 @@ public class memoryOutput_Page extends AppCompatActivity {
                             }
                             else QP.current ++;
                         }
-                    }
-                }
-                else {
-                    QP.correct = memo_out.crr_ans[QP.current].get(0);
-                    if(QP.user_ans.contains(QP.correct)){
-                        memo_out.Tscore ++;
-                    }
-                    else if(QP.correct == "11시"){
-                        if(QP.user_ans.contains("열 한시")){
-                            memo_out.Tscore ++;
-                        }
-                    }
-                    QP.current ++;
-                    while (QP.current < 6){
-                        if(!first[QP.current]){
-                            question.setText(memo_out.quiz.get(QP.current));
-                            tts.speakOut(question.getText().toString());
-                            break;
-                        }
-                        else QP.current ++;
-                    }
-                    if(QP.current == 6){
-                        pro_bar.setProgress(70);
-                        memo_out.scores[6] = memo_out.Tscore;
+                        if(QP.current == 6){
+                            pro_bar.setProgress(70);
+                            memo_out.scores[6] = memo_out.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
-                        intent.putExtra("scores", memo_out.scores);
-                        startActivity(intent);
+                            Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
+                            intent.putExtra("scores", memo_out.scores);
+                            startActivity(intent);
 
-                        finish();
+                            finish();
+                        }
                     }
                 }
             }
@@ -208,6 +255,7 @@ public class memoryOutput_Page extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        answer.setHint("답변이 여기에 나타납니다.");
         if(QP.current < 2){
             QP.Start();
             tts.speakOut(question.getText().toString());

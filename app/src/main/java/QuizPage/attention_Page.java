@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
@@ -21,6 +22,7 @@ import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import questions.attention;
@@ -30,7 +32,7 @@ public class attention_Page extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question, type, p_num;
+    TextView question, type;
     EditText answer;
     ImageButton sttBtn;
     ImageButton submit, undo;
@@ -38,6 +40,7 @@ public class attention_Page extends AppCompatActivity {
     Helper helper;
     String[] U_answers;
     ProgressBar pro_bar;
+    AppCompatButton donKnow;
 
     private long backBtnTime = 0;
 
@@ -50,7 +53,6 @@ public class attention_Page extends AppCompatActivity {
 
         question = (TextView) findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
-        p_num = (TextView) findViewById(R.id.process_num);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         submit = (ImageButton) findViewById(R.id.submit);
@@ -59,10 +61,12 @@ public class attention_Page extends AppCompatActivity {
         helper_img = findViewById(R.id.img);
         U_answers = new String[att.num];
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
         type.setText("주의력");
-        p_num.setText("5/17");
         pro_bar.setProgress(20);
+        answer.setHint("답변이 여기에 나타납니다.");
+        Arrays.fill(U_answers, "");
 
         Intent intent;
         intent = getIntent();
@@ -74,9 +78,10 @@ public class attention_Page extends AppCompatActivity {
                 tem.clear();
                 tts.onInit(status, question.getText().toString(), "default", 1000);
                 tem.add("6, 9, 7, 3");
-                tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+                tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                 sttBtn.setEnabled(false);
                 submit.setEnabled(false);
+                answer.setEnabled(false);
             }
         });
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
@@ -85,6 +90,35 @@ public class attention_Page extends AppCompatActivity {
         helper = new Helper(tts, stt, helper_img, this);
         helper.setTest();
 
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                question.setText(att.quiz.get(QP.current));
+                tts.speakOut(question.getText().toString(),"default");
+                if(QP.current == 0){
+                    tem.clear();
+                    tem.add("6, 9, 7, 3");
+                    tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
+                }
+                else if(QP.current == 1){
+                    tem.clear();
+                    tem.add("5, 7, 2, 8, 4");
+                    tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
+                }
+                else if(QP.current == 2){
+                    tem.clear();
+                    tem.add("금수강산");
+                    tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
+                }
+            }
+        });
+
+        helper_img.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!tts.IsTalking() && !answer.getText().toString().equals(""))
+                    tts.speakOut(answer.getText().toString());
+            }
+        });
+
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tts.isStopUtt = true;
@@ -92,6 +126,50 @@ public class attention_Page extends AppCompatActivity {
                 stt.start_STT();
             }
         });
+
+        donKnow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                answer.setText("");
+                if(QP.current == 0){
+                    pro_bar.setProgress(25);
+                    sttBtn.setEnabled(false);
+                    submit.setEnabled(false);
+                    answer.setEnabled(false);
+                    tts.isStopUtt = false;
+                    QP.Submit();
+                    tts.speakOut(question.getText().toString(), "default");
+                    tem.clear();
+                    tem.add("5, 7, 2, 8, 4");
+                    tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
+                }
+                else if(QP.current == 1){
+                    pro_bar.setProgress(30);
+                    sttBtn.setEnabled(false);
+                    submit.setEnabled(false);
+                    answer.setEnabled(false);
+                    tts.isStopUtt = false;
+                    QP.Submit();
+                    tts.speakOut(question.getText().toString(), "default");
+                    tem.clear();
+                    tem.add("금수강산");
+                    tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
+                }
+                else if(QP.current == 2){
+                    pro_bar.setProgress(35);
+
+                    att.Tscore = cal_score(U_answers, att.crr_ans);
+
+                    att.scores[3] = att.Tscore;
+
+                    Intent intent = new Intent(getApplicationContext(), SpaceTimePage.class);
+                    intent.putExtra("scores", att.scores);
+                    startActivity(intent);
+
+                    finish();
+                }
+            }
+        });
+
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 if(QP.current == 0){
@@ -105,27 +183,26 @@ public class attention_Page extends AppCompatActivity {
                     answer.setText("");
                     sttBtn.setEnabled(false);
                     submit.setEnabled(false);
+                    answer.setEnabled(false);
+
                     tts.speakOut(question.getText().toString(),"default");
                     if(QP.current == 0){
                         pro_bar.setProgress(20);
-                        p_num.setText("5/17");
                         tem.clear();
                         tem.add("6, 9, 7, 3");
-                        tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+                        tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                     }
                     else if(QP.current == 1){
                         pro_bar.setProgress(25);
-                        p_num.setText("6/17");
                         tem.clear();
                         tem.add("5, 7, 2, 8, 4");
-                        tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+                        tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                     }
                     else if(QP.current == 2){
                         pro_bar.setProgress(30);
-                        p_num.setText("7/17");
                         tem.clear();
                         tem.add("금수강산");
-                        tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+                        tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                     }
                 }
             }
@@ -142,38 +219,36 @@ public class attention_Page extends AppCompatActivity {
                         .replace(",","")
                         .replace(".", "");
 
-                answer.setText("");
-
                 if(QP.user_ans.isEmpty()){
                     tts.speakOut("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
                 }
                 else
                 {
                     U_answers[QP.current] = QP.user_ans;
-
+                    answer.setText("");
                     if(QP.current == 0){
                         pro_bar.setProgress(25);
                         sttBtn.setEnabled(false);
                         submit.setEnabled(false);
+                        answer.setEnabled(false);
                         tts.isStopUtt = false;
-                        p_num.setText("6/17");
                         QP.Submit();
                         tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("5, 7, 2, 8, 4");
-                        tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+                        tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                     }
                     else if(QP.current == 1){
                         pro_bar.setProgress(30);
                         sttBtn.setEnabled(false);
                         submit.setEnabled(false);
+                        answer.setEnabled(false);
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
-                        p_num.setText("7/17");
                         tem.add("금수강산");
-                        tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+                        tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                     }
                     else if(QP.current == 2){
                         pro_bar.setProgress(35);
@@ -234,27 +309,26 @@ public class attention_Page extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         tts.isStopUtt = false;
+        answer.setHint("답변이 여기에 나타납니다.");
         QP.Start();
         sttBtn.setEnabled(false);
         submit.setEnabled(false);
+        answer.setEnabled(false);
         tts.speakOut(question.getText().toString(),"default");
         if(QP.current == 0){
-            p_num.setText("5/17");
             tem.clear();
             tem.add("6, 9, 7, 3");
-            tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+            tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
         }
         else if(QP.current == 1){
-            p_num.setText("6/17");
             tem.clear();
             tem.add("5, 7, 2, 8, 4");
-            tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+            tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
         }
         else if(QP.current == 2){
-            p_num.setText("7/17");
             tem.clear();
             tem.add("금수강산");
-            tts.UtteranceProgress(tem, "continue", sttBtn, submit);
+            tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
         }
     }
 

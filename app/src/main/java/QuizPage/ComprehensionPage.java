@@ -1,6 +1,7 @@
 package QuizPage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
@@ -39,6 +40,7 @@ public class ComprehensionPage extends AppCompatActivity {
     String Okey = "";
     ProgressBar pro_bar;
     ImageButton leftBtn, rightBtn;
+    AppCompatButton donKnow;
 
     private long backBtnTime = 0;
 
@@ -59,6 +61,7 @@ public class ComprehensionPage extends AppCompatActivity {
         leftBtn = (ImageButton) findViewById(R.id.ic_left);
         rightBtn = (ImageButton) findViewById(R.id.ic_right);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
         type.setText("언어기능");
         pro_bar.setProgress(85);
@@ -87,6 +90,26 @@ public class ComprehensionPage extends AppCompatActivity {
             public void onInit(int status) {
                 tts.onInit(status, question.getText().toString());
                 //tts.UtteranceProgress(announce.getText().toString());
+            }
+        });
+
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.speakOut(question.getText().toString());
+            }
+        });
+
+        donKnow.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                pro_bar.setProgress(90);
+
+                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
+                intent.putExtra("comprehension" , "");
+                intent.putExtra("current" , -1);
+                Log.d("comprehension", Okey);
+                setResult(RESULT_OK, intent);
+
+                finish();
             }
         });
 
