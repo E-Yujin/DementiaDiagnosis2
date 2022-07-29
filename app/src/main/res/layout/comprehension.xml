@@ -1,102 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     tools:context="QuizPage.ComprehensionPage">
+
+    <ImageButton
+        android:id="@+id/ic_left"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_left_right"
+        android:rotation="-90" />
 
     <TextView
         android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/jejugothic"
+        android:text="지남력"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/ic_right"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/ic_left_right"
+        android:rotation="90" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_gravity="center"
+        android:layout_height="5dp"
+        android:layout_below="@+id/type"
+        android:layout_marginTop="20dp"
+        android:progress="20"
+        android:progressDrawable="@drawable/progressbar" />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
         android:letterSpacing="0.04"
         android:lineSpacingExtra="10dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/grey"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:max="100"
-            android:layout_weight="1" />
-        <TextView
-            android:id="@+id/process_num"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:fontFamily="@font/jejugothic"
-            android:gravity="center"
-            android:layout_gravity="right"
-            android:textColor="@color/main"
-            android:letterSpacing="0.04"
-            android:lineSpacingExtra="10dp"
-            android:text="0/17"
-            android:textSize="13sp" />
-    </LinearLayout>
+        android:text="아래 5개의 동그라미를\n\n1이라고 쓰여있는 공간에\n2개를 옮기고,\n\n2이라고 쓰여있는 공간에\n3개를 옮기세요."
+        android:textSize="18sp" />
 
     <LinearLayout
+        android:id="@+id/quiz_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/question"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/before"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:tint="@color/grey"
-            android:src="@drawable/before" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
 
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
-                android:letterSpacing="0.04"
-                android:id="@+id/question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="아래 5개의 동그라미를\n\n1이라고 쓰여있는 공간에\n2개를 옮기고,\n\n2이라고 쓰여있는 공간에\n3개를 옮기세요."
-                android:textSize="18sp" />
-
             <LinearLayout
                 android:id="@+id/ball"
-                android:layout_width="360dp"
+                android:layout_width="wrap_content"
                 android:layout_height="80dp"
-                android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -106,24 +86,28 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape_oval"
                     app:tint="#00BCD4" />
+
                 <ImageView
                     android:id="@+id/image2"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape_oval"
                     app:tint="#00BCD4" />
+
                 <ImageView
                     android:id="@+id/image3"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape_oval"
                     app:tint="#00BCD4" />
+
                 <ImageView
                     android:id="@+id/image4"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape_oval"
                     app:tint="#00BCD4" />
+
                 <ImageView
                     android:id="@+id/image5"
                     android:layout_width="60dp"
@@ -135,8 +119,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/left"
@@ -144,19 +128,20 @@
                     android:layout_height="200dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/normal_shape"
+                    android:backgroundTint="#EDEDED"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_marginTop="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
+                        android:lineSpacingExtra="10dp"
                         android:text="1"
                         android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -164,51 +149,35 @@
                     android:layout_width="130dp"
                     android:layout_height="200dp"
                     android:background="@drawable/normal_shape"
+                    android:backgroundTint="#EDEDED"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_marginTop="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="2"
+                        android:layout_marginTop="20dp"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
+                        android:lineSpacingExtra="10dp"
+                        android:text="2"
                         android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
-
             </LinearLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
         </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-
-        <ImageButton
-            android:id="@+id/btnSubmit"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            app:tint="@color/grey"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/after"
-            />
     </LinearLayout>
-</LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/quiz_box"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="#DFDFDF"
+        android:fontFamily="@font/jejugothic"
+        android:text="잘모르겠어요"
+        android:textColor="#787878"
+        android:textSize="14sp" />
+</RelativeLayout>

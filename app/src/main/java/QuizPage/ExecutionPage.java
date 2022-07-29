@@ -36,7 +36,8 @@ public class ExecutionPage extends AppCompatActivity {
     ExecutionOne executionOne;
     ExecutionTwo executionTwo;
     ExecutionThree executionThree;
-    TextView question, type, p_num;
+    TextView question, type;
+    //TextView p_num;
     EditText answer;
     String total;
     ImageButton sttBtn;
@@ -58,11 +59,11 @@ public class ExecutionPage extends AppCompatActivity {
 
         question = findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
-        p_num = (TextView) findViewById(R.id.process_num);
+        //p_num = (TextView) findViewById(R.id.process_num);
         answer = findViewById(R.id.result);
         sttBtn = findViewById(R.id.sttStart);
-        submit = findViewById(R.id.btnSubmit);
-        undo = (ImageButton) findViewById(R.id.before);
+        submit = findViewById(R.id.right);
+        undo = (ImageButton) findViewById(R.id.left);
         execution = new Execution();
         U_answers = new String[execution.num];
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
@@ -72,7 +73,7 @@ public class ExecutionPage extends AppCompatActivity {
         execution.scores = intent.getIntArrayExtra("scores");
 
         type.setText("집행기능");
-        p_num.setText("9/17");
+        //p_num.setText("9/17");
         pro_bar.setProgress(40);
 
         // Fragment 객체 선언
@@ -96,7 +97,7 @@ public class ExecutionPage extends AppCompatActivity {
             }
         });
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, answer, sttBtn,submit, execution.quiz);
+        QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, execution.quiz);
 
         sttBtn.setEnabled(false);
 
@@ -120,8 +121,11 @@ public class ExecutionPage extends AppCompatActivity {
                     answer.setText("");
                     tts.speakOut(question.getText().toString(),"default");
                     if(QP.current == 0){
+                        sttBtn.setVisibility(View.INVISIBLE);
+                        sttBtn.setEnabled(false);
+                        answer.setVisibility(View.INVISIBLE);
                         pro_bar.setProgress(40);
-                        p_num.setText("9/17");
+                        //p_num.setText("9/17");
                         tem.clear();
                         tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
                         tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
@@ -130,8 +134,11 @@ public class ExecutionPage extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionOne).commit();
                     }
                     else if(QP.current == 1){
+                        sttBtn.setVisibility(View.INVISIBLE);
+                        sttBtn.setEnabled(false);
+                        answer.setVisibility(View.INVISIBLE);
                         pro_bar.setProgress(45);
-                        p_num.setText("10/17");
+                        //p_num.setText("10/17");
                         tem.clear();
                         tem.add("별이 각자 다른 위치로 이동합니다.");
                         tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
@@ -141,7 +148,7 @@ public class ExecutionPage extends AppCompatActivity {
                     }
                     else if(QP.current == 2){
                         pro_bar.setProgress(50);
-                        p_num.setText("11/17");
+                        //p_num.setText("11/17");
                         tem.clear();
                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
                         tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
@@ -180,7 +187,6 @@ public class ExecutionPage extends AppCompatActivity {
                         break;
                 }
 
-
                 answer.setText("");
 
                 if(total.isEmpty()) {
@@ -197,7 +203,7 @@ public class ExecutionPage extends AppCompatActivity {
                         tts.isStopUtt = false;
                         QP.current++;
                         question.setText(execution.quiz.get(QP.current));
-                        p_num.setText("10/17");
+                        //p_num.setText("10/17");
                         tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("별이 각자 다른 위치로 이동합니다.");
@@ -208,11 +214,12 @@ public class ExecutionPage extends AppCompatActivity {
                     }
                     else if(QP.current == 1) {
                         pro_bar.setProgress(50);
+                        sttBtn.setVisibility(View.VISIBLE);
                         sttBtn.setEnabled(true);
                         answer.setVisibility(View.VISIBLE);
                         tts.isStopUtt = false;
                         QP.current++;
-                        p_num.setText("11/17");
+                        //p_num.setText("11/17");
                         question.setText(execution.quiz.get(QP.current));
                         tts.speakOut(question.getText().toString(), "default");
                         tem.clear();

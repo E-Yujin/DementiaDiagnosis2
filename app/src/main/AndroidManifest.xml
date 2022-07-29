@@ -36,17 +36,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuizHOME"></activity>
-        <activity android:name=".Map"></activity>
-        <activity android:name="QuizPage.orientation_Page"></activity>
-        <activity android:name="QuizPage.memoryInput_Page"></activity>
-        <activity android:name="QuizPage.attention_Page"></activity>
-        <activity android:name="QuizPage.ExecutionPage"></activity>
-        <activity android:name="QuizPage.memoryOutput_Page"></activity>
-        <activity android:name="QuizPage.fluency_Page"></activity>
-        <activity android:name="QuizPage.SpaceTimePage"></activity>
-        <activity android:name="QuizPage.ComprehensionPage"></activity>
-        <activity android:name="QuizPage.LanguagePage"></activity>
+        <activity android:name=".QuizHOME" />
+        <activity android:name=".Map" />
+        <activity android:name="QuizPage.orientation_Page" />
+        <activity android:name="QuizPage.memoryInput_Page" />
+        <activity android:name="QuizPage.attention_Page" />
+        <activity android:name="QuizPage.ExecutionPage" />
+        <activity android:name="QuizPage.memoryOutput_Page" />
+        <activity android:name="QuizPage.fluency_Page" />
+        <activity android:name="QuizPage.SpaceTimePage" />
+        <activity android:name="QuizPage.ComprehensionPage" />
+        <activity android:name="QuizPage.LanguagePage" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

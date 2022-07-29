@@ -36,7 +36,8 @@ public class LanguagePage extends AppCompatActivity {
     MainSTT stt;
     TTS tts;
     QuizPage QP;
-    TextView question, type, p_num;
+    TextView question, type;
+    //TextView p_num;
     ImageView image;
     EditText answer;
     ImageButton sttBtn;
@@ -53,22 +54,22 @@ public class LanguagePage extends AppCompatActivity {
 
         question = (TextView) findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
-        p_num = (TextView) findViewById(R.id.process_num);
+        //p_num = (TextView) findViewById(R.id.process_num);
         image = (ImageView) findViewById(R.id.question_image);
         answer = (EditText) findViewById(R.id.result);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
-        submit = (ImageButton) findViewById(R.id.btnSubmit);
+        submit = (ImageButton) findViewById(R.id.right);
         languageFunc = new LanguageFunc();
         U_answers = new String[languageFunc.num];
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
-        undo = (ImageButton) findViewById(R.id.before);
+        undo = (ImageButton) findViewById(R.id.left);
 
         Intent intent;
         intent = getIntent();
         languageFunc.scores = intent.getIntArrayExtra("scores");
 
         type.setText("언어기능");
-        p_num.setText("13/17");
+        //p_num.setText("13/17");
         pro_bar.setProgress(70);
 
         image.setImageResource(R.drawable.toothbrush);
@@ -103,7 +104,7 @@ public class LanguagePage extends AppCompatActivity {
                                 tts.speakOut(question.getText().toString());
                                 answer.setText("");
                                 pro_bar.setProgress(80);
-                                p_num.setText("15/17");
+                                //p_num.setText("15/17");
                                 image.setImageResource(R.drawable.dice);
                             }
                         }
@@ -142,17 +143,17 @@ public class LanguagePage extends AppCompatActivity {
                     tts.speakOut(question.getText().toString());
                     if(QP.current == 0){
                         pro_bar.setProgress(70);
-                        p_num.setText("13/17");
+                        //p_num.setText("13/17");
                         image.setImageResource(R.drawable.toothbrush);
                     }
                     else if(QP.current == 1){
                         pro_bar.setProgress(75);
-                        p_num.setText("14/17");
+                        //p_num.setText("14/17");
                         image.setImageResource(R.drawable.swing);
                     }
                     else if(QP.current == 2){
                         pro_bar.setProgress(80);
-                        p_num.setText("15/17");
+                        //p_num.setText("15/17");
                         image.setImageResource(R.drawable.dice);
                     }
                 }
@@ -180,21 +181,21 @@ public class LanguagePage extends AppCompatActivity {
                     U_answers[QP.current] = QP.user_ans;
 
                     if (QP.current == 0) {
-                        p_num.setText("14/17");
+                        //p_num.setText("14/17");
                         pro_bar.setProgress(75);
                         image.setImageResource(R.drawable.swing);
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
                     } else if (QP.current == 1) {
-                        p_num.setText("15/17");
+                        //p_num.setText("15/17");
                         pro_bar.setProgress(80);
                         image.setImageResource(R.drawable.dice);
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
                     } else if (QP.current == 2) {
-                        p_num.setText("16/17");
+                        //p_num.setText("16/17");
                         pro_bar.setProgress(80);
                         Intent intent = new Intent(LanguagePage.this, ComprehensionPage.class);
                         startActivityResult.launch(intent);

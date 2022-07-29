@@ -40,13 +40,13 @@ public class QuizPage {
         question.setText(title_quest.get(current));
     }
 
-    public QuizPage(TTS Tts, TextView quest, ImageButton sttB, ImageButton sub, int n, List<String> quiz) {
+    public QuizPage(TTS Tts, TextView quest, ImageButton sttB, ImageButton sub, List<String> quiz) {
         tts = Tts;
         question = quest;
         sttBtn = sttB;
         submit = sub;
         title_quest = quiz;
-        question.setText(title_quest.get(n));
+        question.setText(title_quest.get(0));
     }
 
     public void Submit(){

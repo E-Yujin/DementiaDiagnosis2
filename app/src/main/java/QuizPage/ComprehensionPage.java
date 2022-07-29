@@ -32,13 +32,13 @@ public class ComprehensionPage extends AppCompatActivity {
 
     private ImageView mImg, image2, image3, image4, image5;
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
-    private ImageButton submit, undo;
-    int resLeft, resRight; // 정답 체크
+    int resLeft = 0, resRight = 0; // 정답 체크
     LanguageFunc languageFunc;
     TTS tts;
-    TextView question, type, p_num;
+    TextView question, type;
     String Okey = "";
     ProgressBar pro_bar;
+    ImageButton leftBtn, rightBtn;
 
     private long backBtnTime = 0;
 
@@ -48,21 +48,19 @@ public class ComprehensionPage extends AppCompatActivity {
         setContentView(R.layout.comprehension);
 
         Log.d("languageFunc", "start");
+        languageFunc = new LanguageFunc();
         mImg = findViewById(R.id.image);
         image2 = findViewById(R.id.image2);
         image3 = findViewById(R.id.image3);
         image4 = findViewById(R.id.image4);
         image5 = findViewById(R.id.image5);
-        submit = findViewById(R.id.btnSubmit);
         question = findViewById(R.id.question);
-        languageFunc = new LanguageFunc();
         type = (TextView) findViewById(R.id.type);
-        p_num = (TextView) findViewById(R.id.process_num);
-        undo = (ImageButton) findViewById(R.id.before);
+        leftBtn = (ImageButton) findViewById(R.id.ic_left);
+        rightBtn = (ImageButton) findViewById(R.id.ic_right);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
 
         type.setText("언어기능");
-        p_num.setText("16/17");
         pro_bar.setProgress(85);
 
         mImg.setTag(IMAGEVIEW_TAG);
@@ -92,7 +90,7 @@ public class ComprehensionPage extends AppCompatActivity {
             }
         });
 
-        undo.setOnClickListener(new View.OnClickListener(){
+        leftBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 tts.Stop();
                 Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
@@ -103,7 +101,7 @@ public class ComprehensionPage extends AppCompatActivity {
                 finish();
             }
         });
-        submit.setOnClickListener(new View.OnClickListener() {
+        rightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pro_bar.setProgress(90);

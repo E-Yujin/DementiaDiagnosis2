@@ -15,8 +15,10 @@
             android:id="@+id/square_one"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/square"
-            android:scaleType="fitXY"/>
+            android:padding="24dp"
+            android:background="@drawable/shape_exe"
+            android:scaleType="fitXY"
+            android:src="@drawable/shape_rectangle"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -32,8 +34,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="5dp"
-            android:src="@drawable/circle"
-            android:scaleType="fitXY"/>
+            android:padding="23dp"
+            android:background="@drawable/shape_exe"
+            android:scaleType="fitXY"
+            android:src="@drawable/shape_oval" />
 
     </LinearLayout>
 
@@ -57,8 +61,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="5dp"
-            android:src="@drawable/triangle"
-            android:scaleType="fitXY"/>
+            android:padding="22dp"
+            android:background="@drawable/shape_exe"
+            android:scaleType="fitXY"
+            android:src="@drawable/shape_triangle"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -74,9 +80,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="5dp"
+            android:padding="24dp"
+            android:background="@drawable/shape_exe"
             android:scaleType="fitXY"
-            android:src="@drawable/square" />
-
+            android:src="@drawable/shape_rectangle"/>
     </LinearLayout>
 
     <LinearLayout
@@ -101,7 +108,7 @@
             android:layout_height="80dp"
             android:layout_marginStart="5dp"
             android:scaleType="fitXY"
-            android:src="@drawable/box" />
+            android:background="@drawable/shape_exe" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -117,8 +124,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="5dp"
+            android:padding="22dp"
             android:scaleType="fitXY"
-            android:src="@drawable/triangle" />
+            android:src="@drawable/shape_triangle"
+            android:background="@drawable/shape_exe"/>
     </LinearLayout>
 
     <LinearLayout
@@ -132,49 +141,39 @@
             android:id="@+id/btnSquare"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:padding="27dp"
+            android:background="@drawable/shape_exe"
             android:scaleType="fitXY"
-            android:padding="0dp"
+            android:src="@drawable/shape_rectangle"
             android:contentDescription="square"
-            android:src="@drawable/square"
             android:clickable="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:focusable="true" />
+            android:focusable="true"/>
 
         <ImageButton
             android:id="@+id/btnCircle"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:padding="26dp"
+            android:background="@drawable/shape_exe"
             android:scaleType="fitXY"
-            android:padding="0dp"
+            android:src="@drawable/shape_oval"
             android:contentDescription="circle"
-            android:src="@drawable/circle"
             android:clickable="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:focusable="true" />
+            android:focusable="true"/>
 
         <ImageButton
             android:id="@+id/btnTriangle"
             android:layout_width="90dp"
             android:layout_height="90dp"
+            android:padding="26dp"
+            android:background="@drawable/shape_exe"
             android:scaleType="fitXY"
-            android:padding="0dp"
-            android:elevation="50dp"
+            android:src="@drawable/shape_triangle"
             android:contentDescription="triangle"
-            android:src="@drawable/triangle"
             android:clickable="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:focusable="true" />
+            android:focusable="true"/>
 
     </LinearLayout>
-
-    <!--<Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#2196F3"
-        android:text="정답 제출" />-->
-
 </LinearLayout>
