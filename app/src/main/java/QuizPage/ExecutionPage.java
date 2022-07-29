@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class ExecutionPage extends AppCompatActivity {
     TTS tts;
     String[] U_answers;
     ProgressBar pro_bar;
+    TextInputLayout textInputLayout;
 
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
@@ -60,6 +62,7 @@ public class ExecutionPage extends AppCompatActivity {
         question = findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
         //p_num = (TextView) findViewById(R.id.process_num);
+        textInputLayout = findViewById(R.id.textInput);
         answer = findViewById(R.id.result);
         sttBtn = findViewById(R.id.sttStart);
         submit = findViewById(R.id.right);
@@ -123,7 +126,7 @@ public class ExecutionPage extends AppCompatActivity {
                     if(QP.current == 0){
                         sttBtn.setVisibility(View.INVISIBLE);
                         sttBtn.setEnabled(false);
-                        answer.setVisibility(View.INVISIBLE);
+                        textInputLayout.setVisibility(View.INVISIBLE);
                         pro_bar.setProgress(40);
                         //p_num.setText("9/17");
                         tem.clear();
@@ -136,7 +139,7 @@ public class ExecutionPage extends AppCompatActivity {
                     else if(QP.current == 1){
                         sttBtn.setVisibility(View.INVISIBLE);
                         sttBtn.setEnabled(false);
-                        answer.setVisibility(View.INVISIBLE);
+                        textInputLayout.setVisibility(View.INVISIBLE);
                         pro_bar.setProgress(45);
                         //p_num.setText("10/17");
                         tem.clear();
@@ -148,6 +151,9 @@ public class ExecutionPage extends AppCompatActivity {
                     }
                     else if(QP.current == 2){
                         pro_bar.setProgress(50);
+                        sttBtn.setVisibility(View.VISIBLE);
+                        sttBtn.setEnabled(true);
+                        textInputLayout.setVisibility(View.VISIBLE);
                         //p_num.setText("11/17");
                         tem.clear();
                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
@@ -216,7 +222,7 @@ public class ExecutionPage extends AppCompatActivity {
                         pro_bar.setProgress(50);
                         sttBtn.setVisibility(View.VISIBLE);
                         sttBtn.setEnabled(true);
-                        answer.setVisibility(View.VISIBLE);
+                        textInputLayout.setVisibility(View.VISIBLE);
                         tts.isStopUtt = false;
                         QP.current++;
                         //p_num.setText("11/17");

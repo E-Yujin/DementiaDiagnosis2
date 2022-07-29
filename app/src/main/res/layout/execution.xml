@@ -71,25 +71,64 @@
 
     </FrameLayout>
 
-    <EditText
-        android:id="@+id/result"
-        android:layout_width="250dp"
+    <FrameLayout
+        android:id="@+id/gray_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frame_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:hint="당신의 말이 나타납니다."
-        android:visibility="invisible" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_round_bar"
+        android:backgroundTint="#F4F4F4">
 
-    <ImageButton
-        android:id="@+id/sttStart"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/result"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ic_mic"
-        android:visibility="invisible" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/jejugothic"
+                    android:gravity="center"
+                    android:hint="답변이 여기에 나타납니다." />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/sttStart"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/textInput"
+                android:background="@drawable/ic_mic"
+                android:visibility="invisible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/sttStart"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_button"
+                android:backgroundTint="#DFDFDF"
+                android:fontFamily="@font/jejugothic"
+                android:gravity="center"
+                android:text="잘모르겠어요"
+                android:textColor="#787878"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </RelativeLayout>

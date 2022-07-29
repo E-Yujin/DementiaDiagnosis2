@@ -148,6 +148,7 @@ public class Result extends AppCompatActivity {
             }
             Intent intent = new Intent(Result.this, HomeActivity.class);
             startActivity(intent);
+            finish();
         });
 
         if(SharedPreference.getUserScore(getApplication()) < score_total) {

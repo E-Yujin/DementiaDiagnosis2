@@ -74,6 +74,7 @@ public class FragmentChart extends Fragment {
         YAxis yLAxis = chart.getAxisLeft();
         yLAxis.setDrawGridLines(false);
         yLAxis.setDrawAxisLine(false);
+        yLAxis.setAxisMaximum(30f);
 
         YAxis yRAxis = chart.getAxisRight();
         yRAxis.setDrawLabels(false);
@@ -107,6 +108,7 @@ public class FragmentChart extends Fragment {
         set1.setCircleColor(Color.BLACK);
 
         chart.setData(data);
+        chart.moveViewToX(data.getEntryCount());
 
         return view;
     }
