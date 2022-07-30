@@ -16,6 +16,12 @@
         android:theme="@style/Theme.DementiaDiagnosis"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="simpleTest.S_execution"
+            android:exported="false" />
+        <activity
+            android:name="simpleTest.S_comprehension"
+            android:exported="false" />
+        <activity
             android:name=".Result"
             android:exported="true" />
         <activity

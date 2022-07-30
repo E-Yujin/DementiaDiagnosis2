@@ -1,9 +1,7 @@
 package fragment;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.cbnu.dementiadiagnosis.AnimationListner;
 import com.cbnu.dementiadiagnosis.FirstActivity;
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
-import com.cbnu.dementiadiagnosis.SimpleTestActivity;
 
+import simpleTest.S_comprehension;
 import user.SharedPreference;
 
 public class FragmentHome extends Fragment {
@@ -52,7 +49,7 @@ public class FragmentHome extends Fragment {
         simple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SimpleTestActivity.class));
+                startActivity(new Intent(getActivity(), S_comprehension.class));
             }
         });
 

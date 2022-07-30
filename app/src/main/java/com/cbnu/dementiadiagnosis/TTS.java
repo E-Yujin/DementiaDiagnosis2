@@ -194,6 +194,45 @@ public class TTS {
             });
         }
     }
+
+    public void UtteranceProgress(List<String> say, String id, int[] times, ImageButton submit){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
+                                }
+                                else speakOut(say.get(i), id);
+                                i++;
+                            }
+                            else{
+                                submit.setEnabled(true);
+                            }
+                        }
+                    }, times[i]);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
+
     // 여러 문장을 말하는데 수동으로 텀을 조절하고 싶을 때
     public void UtteranceProgress(List<String> say, String id, TextView text, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
