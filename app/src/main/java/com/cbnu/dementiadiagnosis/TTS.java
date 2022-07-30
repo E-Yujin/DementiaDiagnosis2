@@ -439,6 +439,62 @@ public class TTS {
             });
         }
     }
+    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, EditText ans, MainSTT stt, int playTime){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    if(s.contains("Done")) return;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(i < say.size()){
+                                    text.setText(say.get(i));
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
+                                if(i == say.size()){
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            stt.start_STT();
+                                            i++;
+                                            handler.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    stt.start_STT();
+                                                    ans.setEnabled(true);
+                                                    text.setText("그만!");
+                                                    speakOut("그만!", "Done");
+                                                }
+                                            }, playTime);
+                                        }
+                                    }, 1000);
+                                }
+                            }
+                            else{
+                                return;
+                            }
+                        }
+                    }, times[i]);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
     // 여러 문장을 말하는데 텍스트뷰 변경이 필요하고 수동으로 텀을 조절하고 싶을 때
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
