@@ -23,9 +23,9 @@ public class fluency extends question{
         this.scores = new int[10];
         this.Tscore = new Integer(0);
 
-        this.quiz.add("지금부터 제가 그만이라고 말할 때까지 과일이나 채소를 최대한 많이 이야기해 주세요.");
+        this.quiz.add("지금부터 제가 그만이라고 말할 때까지 과일이나 채소를\n최대한 많이 이야기해 주세요.");
         this.quiz.add("준비되셨지요?");
-        this.quiz.add("자, 과일이나 채소 이름을 말씀해 주세요.");
+        this.quiz.add("자, 과일이나 채소 이름을\n말씀해 주세요.");
         this.quiz.add("시작!");
 
         this.crr_ans[0].add("체리");

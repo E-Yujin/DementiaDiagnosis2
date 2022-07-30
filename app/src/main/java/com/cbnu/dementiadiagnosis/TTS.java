@@ -155,6 +155,44 @@ public class TTS {
             });
         }
     }
+    public void UtteranceProgress(List<String> say, String id, ImageButton sttButt, ImageButton submit, EditText answer){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
+                                }
+                                else speakOut(say.get(i), id);
+                                i++;
+                            }
+                            else{
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
+                                answer.setEnabled(true);
+                            }
+                        }
+                    }, 500);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
     // 여러 문장을 말할 때
     public void UtteranceProgress(List<String> say, String id, int[] times, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
@@ -309,6 +347,40 @@ public class TTS {
             });
         }
     }
+    public void UtteranceProgress(List<String> say, String id, TextView text){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
+                                }
+                                else speakOut(say.get(i), id);
+                                text.setText(say.get(i));
+                                i++;
+                            }
+                        }
+                    }, 500);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
     // 여러 문장을 말하며 텍스트뷰 변경이 필요할 때
     public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){
@@ -388,6 +460,62 @@ public class TTS {
                                                     speakOut("그만!", "Done");
                                                 }
                                             }, 60000);
+                                        }
+                                    }, 1000);
+                                }
+                            }
+                            else{
+                                return;
+                            }
+                        }
+                    }, times[i]);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
+    public void UtteranceProgress(List<String> say, String id, int[] times, TextView text, EditText ans, MainSTT stt, int playTime){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    if(s.contains("Done")) return;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(i < say.size()){
+                                    text.setText(say.get(i));
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
+                                if(i == say.size()){
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            stt.start_STT();
+                                            i++;
+                                            handler.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    stt.start_STT();
+                                                    ans.setEnabled(true);
+                                                    text.setText("그만!");
+                                                    speakOut("그만!", "Done");
+                                                }
+                                            }, playTime);
                                         }
                                     }, 1000);
                                 }

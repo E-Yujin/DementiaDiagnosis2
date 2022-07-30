@@ -1,147 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="QuizPage.ExecutionPage"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="#FFFFFF">
+
+    <ImageButton
+        android:id="@+id/before"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_left_right"
+        android:rotation="-90" />
 
     <TextView
         android:id="@+id/type"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
         android:letterSpacing="0.04"
         android:lineSpacingExtra="10dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/grey"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal">
+        android:text="지남력"
+        android:textSize="18sp" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:max="100"
-            android:layout_weight="1" />
-        <TextView
-            android:id="@+id/process_num"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:fontFamily="@font/jejugothic"
-            android:gravity="center"
-            android:layout_gravity="right"
-            android:textColor="@color/main"
-            android:letterSpacing="0.04"
-            android:lineSpacingExtra="10dp"
-            android:text="0/17"
-            android:textSize="13sp" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/submit"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/ic_left_right"
+        android:rotation="90" />
 
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="5dp"
+        android:layout_below="@+id/type"
+        android:layout_marginTop="20dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/progressbar" />
+
+    <TextView
+        android:id="@+id/announce"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/jejugothic"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="10dp"
+        android:text="여기 점을 연결하여 그린\n그림이 있습니다."
+        android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/before"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:tint="@color/grey"
-            android:src="@drawable/before" />
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/announce"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="7dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/space_time" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
+    <QuizPage.SpaceTimeView
+        android:id="@+id/canvas"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_below="@id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center" />
+
+    <FrameLayout
+        android:id="@+id/gray_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/canvas"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_round_bar"
+        android:backgroundTint="#F4F4F4">
 
         <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/announce"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:gravity="center"
-                android:fontFamily="@font/jejugothic"
-                android:letterSpacing="0.04"
-                android:lineSpacingExtra="10dp"
-                android:text="여기 점을 연결하여 그린 그림이 있습니다."
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_below="@id/announce"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="7dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/space_time" />
-
-            <QuizPage.SpaceTimeView
-                android:id="@+id/canvas"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_below="@id/image"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:gravity="center" />
-
-            <Button
-                android:id="@+id/eraser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/canvas"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
-                android:text="지우기" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-
-        <ImageButton
-            android:id="@+id/submit"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            app:tint="@color/grey"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/eraser"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/after"
-            />
-    </LinearLayout>
-</LinearLayout>
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/main"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:text="지우개"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/donknow"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#DFDFDF"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:text="잘모르겠어요"
+            android:textColor="#787878"
+            android:textSize="14sp" />
+        </LinearLayout>
+
+    </FrameLayout>
+</RelativeLayout>

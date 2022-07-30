@@ -1,11 +1,9 @@
-package QuizPage;
+package simpleTest;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.cbnu.dementiadiagnosis.AnimationListner;
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
@@ -27,13 +24,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import QuizPage.QuizPage;
 import questions.orientation;
 
-public class orientation_Page extends AppCompatActivity {
+public class S_orientation extends AppCompatActivity {
     orientation ortt_main;
     MainSTT stt;
     TTS tts;
-    QuizPage QP;
+    simple_QuizPage QP;
     TextView question, type, announce;
     EditText answer;
     ImageButton sttBtn;
@@ -45,6 +43,9 @@ public class orientation_Page extends AppCompatActivity {
     boolean[] isWrong;
     String[] U_answers;
     AppCompatButton donKnow;
+    List<String> quiz;
+    List<String>[] crr_ans;
+    int q_num;
 
     private long backBtnTime = 0;
 
@@ -65,18 +66,33 @@ public class orientation_Page extends AppCompatActivity {
         helper_img = findViewById(R.id.img);
         ortt_main = new orientation();
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
+        quiz = new ArrayList<>();
+        crr_ans = new ArrayList[3];
+        for (int i = 0; i < 3; i++) {
+            crr_ans[i] = new ArrayList<>();
+        }
+        q_num = new Integer(2);
+
+        quiz.add("오늘은 몇월 며칠입니까?");
+        quiz.add("지금은 몇 월입니까?");
+        quiz.add("오늘은 며칠입니까?");
+
+        crr_ans[0].add(ortt_main.returnMONTH());
+        crr_ans[0].add(ortt_main.returnDATE());
+        crr_ans[1].add(ortt_main.returnMONTH());
+        crr_ans[2].add(ortt_main.returnDATE());
 
 
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, ortt_main.quiz);
+        QP = new simple_QuizPage(stt, tts, question, answer, sttBtn, submit, quiz);
         QP.isOrient = true;
-        isCorrect = new boolean[4];
+        isCorrect = new boolean[q_num];
         Arrays.fill(isCorrect, false);
-        isWrong = new boolean[4];
+        isWrong = new boolean[q_num];
         Arrays.fill(isWrong, false);
-        U_answers = new String[ortt_main.num];
+        U_answers = new String[q_num];
         Arrays.fill(U_answers, "");
-        announce.setText("년, 월, 일, 요일");
+        announce.setText("월, 일");
         answer.setHint("답변이 여기에 나타납니다.");
 
         type.setText("지남력");
@@ -119,24 +135,24 @@ public class orientation_Page extends AppCompatActivity {
                 answer.setText("");
 
                 if(QP.current == 0){
-                    QP.current = 4;
+                    QP.current = 3;
                     pro_bar.setProgress(10);
                 }
                 if(QP.current == 3) pro_bar.setProgress(10);
 
-                if(QP.current < 5){
+                if(QP.current < 3){
                     answer.setText("");
                     tts.isStopUtt = false;
                     QP.Submit();
                     tts.speakOut(question.getText().toString());
                 }
-                else if(QP.current == 5){
+                else if(QP.current == 3){
 
                     ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
 
                     ortt_main.scores[1] = ortt_main.Tscore;
 
-                    Intent intent = new Intent(getApplicationContext(),memoryInput_Page.class);
+                    Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
                     intent.putExtra("scores", ortt_main.scores);
                     startActivity(intent);
 
@@ -162,14 +178,11 @@ public class orientation_Page extends AppCompatActivity {
                         } // 모두 정답이면 첫 문제로 점프
                         else QP.current = 0;
                     }
-                    if(QP.current == 0) announce.setText("년, 월, 일, 요일");
+                    if(QP.current == 0) announce.setText("월, 일");
                     tts.isStopUtt = false;
                     question.setText(ortt_main.quiz.get(QP.current));
                     answer.setText("");
                     tts.speakOut(question.getText().toString());
-                    if(QP.current == 0){
-
-                    }
                 }
             }
         });
@@ -196,39 +209,9 @@ public class orientation_Page extends AppCompatActivity {
                         String[] answers = QP.user_ans.split(" ");
                         for(int i = 0; i < answers.length; i++){
                             String str = "";
-                            if(answers[i].contains("년도")){
-                                if(i-2 >= 0){
-                                    str = answers[i-2] + answers[i-1] + answers[i].replace("년", "");
-                                }
-                                else if(i-1 >= 0){
-                                    str = answers[i-1] + answers[i].replace("년", "");
-                                }
-                                else if(i >= 0){
-                                    str = answers[i].replace("년", "");
-                                }
+                            if(answers[i].contains("월")){
+                                U_answers[0] = dateFilter(answers[i]);
                                 isCorrect[0] = true;
-                                U_answers[0] = dateFilter(str);
-                            }
-                            else if(answers[i].contains("년")){
-                                if(i-2 >= 0){
-                                    str = answers[i-2] + answers[i-1] + answers[i].replace("년", "");
-                                }
-                                else if(i-1 >= 0){
-                                    str = answers[i-1] + answers[i].replace("년", "");
-                                }
-                                else if(i >= 0){
-                                    str = answers[i].replace("년", "");
-                                }
-                                isCorrect[0] = true;
-                                U_answers[0] = dateFilter(str);
-                            }
-                            else if(answers[i].contains("월")){
-                                U_answers[1] = dateFilter(answers[i]);
-                                isCorrect[1] = true;
-                            }
-                            else if(answers[i].contains("요일")){
-                                U_answers[3] = answers[i];
-                                isCorrect[3] = true;
                             }
                             else if(answers[i].contains("일")){
                                 if(!answers[i-1].contains("월") && !answers[i-1].contains("년")
@@ -236,19 +219,19 @@ public class orientation_Page extends AppCompatActivity {
                                     if(answers[i-1].contains("십")){
                                         str = answers[i-1] + answers[i];
                                         str = str.substring(0, str.length()-1);
-                                        isCorrect[2] = true;
-                                        U_answers[2] = dateFilter(str);
+                                        isCorrect[1] = true;
+                                        U_answers[1] = dateFilter(str);
                                     }
                                 }
                                 else {
-                                    isCorrect[2] = true;
-                                    U_answers[2] = dateFilter(answers[i]);
+                                    isCorrect[1] = true;
+                                    U_answers[1] = dateFilter(answers[i]);
                                 }
                             }
                         }
                         isWrong = isCorrect;
                     }
-                    else if(QP.current < 4 && !QP.user_ans.equals("")){ // 틀린 것이 있을 경우
+                    else if(QP.current < 3 && !QP.user_ans.equals("")){ // 틀린 것이 있을 경우
                         QP.user_ans = dateFilter(QP.user_ans);
                         U_answers[QP.current-1] = dateFilter(QP.user_ans);
                     }
@@ -258,30 +241,30 @@ public class orientation_Page extends AppCompatActivity {
                     }
 
                     //다음 문제 화면 전환
-                    if(QP.current < 4){
+                    if(QP.current < 3){
                         for(int i = 0; i < isCorrect.length; i++){
                             if(!isCorrect[i]){
                                 QP.current = i;
                                 isCorrect[i] = true;
                                 break;
-                            } // 모두 정답이면 공간지남력 문제로 점프
-                            else QP.current = 4;
+                            } // 모두 정답이면 종료
+                            else QP.current = 3;
                         }
                     }
 
-                    if(QP.current < 5){
+                    if(QP.current < 3){
                         answer.setText("");
                         tts.isStopUtt = false;
                         QP.Submit();
                         tts.speakOut(question.getText().toString());
                     }
-                    else if(QP.current == 5){
+                    else if(QP.current == 3){
 
-                        ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
+                        ortt_main.Tscore = cal_score(U_answers, crr_ans);
 
                         ortt_main.scores[1] = ortt_main.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(),memoryInput_Page.class);
+                        Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
                         intent.putExtra("scores", ortt_main.scores);
                         startActivity(intent);
 
@@ -358,7 +341,7 @@ public class orientation_Page extends AppCompatActivity {
         if(QP.current == 0){
             pro_bar.setProgress(0);
         }
-        if(QP.current == 1){
+        if(QP.current == 3){
             pro_bar.setProgress(5);
         }
     }

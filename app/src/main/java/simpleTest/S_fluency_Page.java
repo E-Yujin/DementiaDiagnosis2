@@ -1,11 +1,9 @@
-package QuizPage;
+package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,13 +22,12 @@ import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import QuizPage.QuizPage;
 import questions.fluency;
-import questions.orientation;
 
-public class fluency_Page extends AppCompatActivity {
+public class S_fluency_Page extends AppCompatActivity {
     fluency flu;
     MainSTT stt;
     TTS tts;
@@ -86,7 +83,7 @@ public class fluency_Page extends AppCompatActivity {
                 tem.add(flu.quiz.get(1));
                 tem.add(flu.quiz.get(2));
                 tem.add(flu.quiz.get(3));
-                tts.UtteranceProgress(tem, "continue", time, question, answer, stt);
+                tts.UtteranceProgress(tem, "continue", time, question, answer, stt, 20000);
             }
         });
 
@@ -160,10 +157,7 @@ public class fluency_Page extends AppCompatActivity {
                         correct ++;
                     }
                 }
-                if(correct >= 15){
-                    flu.Tscore = 2;
-                }
-                else if(correct >= 9){
+                if(correct >= 5){
                     flu.Tscore = 1;
                 }
                 else{

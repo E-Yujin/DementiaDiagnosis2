@@ -1,10 +1,9 @@
-package QuizPage;
+package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,13 +21,12 @@ import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
+import QuizPage.QuizPage;
 import questions.memoryOutput;
 
-public class memoryOutput_Page extends AppCompatActivity {
+public class S_memoryOutput extends AppCompatActivity {
     memoryOutput memo_out;
     MainSTT stt;
     TTS tts;
@@ -129,7 +127,7 @@ public class memoryOutput_Page extends AppCompatActivity {
                     pro_bar.setProgress(70);
                     memo_out.scores[6] = memo_out.Tscore;
 
-                    Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
+                    Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
                     intent.putExtra("scores", memo_out.scores);
                     startActivity(intent);
 
@@ -178,7 +176,7 @@ public class memoryOutput_Page extends AppCompatActivity {
                         if(memo_out.Tscore == 10){ // 점수가 만점이면 액티비티 종료.
                             memo_out.scores[6] = memo_out.Tscore;
 
-                            Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
+                            Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
                             intent.putExtra("scores", memo_out.scores);
                             startActivity(intent);
 
@@ -218,7 +216,7 @@ public class memoryOutput_Page extends AppCompatActivity {
                             pro_bar.setProgress(70);
                             memo_out.scores[6] = memo_out.Tscore;
 
-                            Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
+                            Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
                             intent.putExtra("scores", memo_out.scores);
                             startActivity(intent);
 

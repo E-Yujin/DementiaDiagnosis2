@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:gravity="center"
         android:fontFamily="@font/jejugothic"
         android:text="TextView"
@@ -19,8 +19,8 @@
 
     <TextView
         android:id="@+id/announce"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:gravity="center"
         android:lineSpacingExtra ="10dp"
         android:fontFamily="@font/jejugothic"
@@ -30,13 +30,12 @@
 
     <TextView
         android:id="@+id/intent"
-        android:layout_width="330dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:fontFamily="@font/jejugothic"
         android:lineSpacingExtra ="10dp"
-        android:text="total_score"
         android:textSize="15sp" />
 
     <ImageView

@@ -8,12 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentManager;
 
 import com.cbnu.dementiadiagnosis.MainSTT;
@@ -22,6 +24,7 @@ import com.cbnu.dementiadiagnosis.TTS;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fragment.ExecutionOne;
@@ -50,6 +53,9 @@ public class ExecutionPage extends AppCompatActivity {
     ProgressBar pro_bar;
     TextInputLayout textInputLayout;
 
+    AppCompatButton donKnow;
+    FrameLayout frame;
+
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
     int[] time = {1000, 1000, 1000, 1000};
@@ -70,6 +76,8 @@ public class ExecutionPage extends AppCompatActivity {
         execution = new Execution();
         U_answers = new String[execution.num];
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
+        frame = findViewById(R.id.frame_layout);
 
         Intent intent;
         intent = getIntent();
@@ -78,6 +86,7 @@ public class ExecutionPage extends AppCompatActivity {
         type.setText("집행기능");
         //p_num.setText("9/17");
         pro_bar.setProgress(40);
+        Arrays.fill(U_answers, "");
 
         // Fragment 객체 선언
         fragmentManager = (FragmentManager)getSupportFragmentManager();
@@ -104,6 +113,43 @@ public class ExecutionPage extends AppCompatActivity {
 
         sttBtn.setEnabled(false);
 
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                question.setText(execution.quiz.get(QP.current));
+                tts.speakOut(question.getText().toString(), "default");
+                if(QP.current == 0){
+                    tem.clear();
+                    tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
+                    tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
+                    tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
+                    tts.UtteranceProgress(tem, "continue", question, sttBtn, submit);
+                }
+                else if(QP.current == 1){
+                    tem.clear();
+                    tem.add("별이 각자 다른 위치로 이동합니다.");
+                    tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
+                    tem.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
+                    tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                }
+                else if(QP.current == 2){
+                    tts.speakOut(question.getText().toString(), "default");
+                    tem.clear();
+                    tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
+                    tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+                    tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                }
+            }
+        });
+
+        frame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!tts.IsTalking() && !answer.getText().toString().equals(""))
+                    tts.speakOut(answer.getText().toString());
+            }
+        });
+        //안되면 위 코드 주석처리
+
+
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tts.isStopUtt = true;
@@ -111,6 +157,57 @@ public class ExecutionPage extends AppCompatActivity {
                 stt.start_STT();
             }
         });
+
+        donKnow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                answer.setText("");
+                tts.Stop();
+                tts.isStopUtt = true;
+
+                if(QP.current == 0) {
+                    pro_bar.setProgress(45);
+                    tts.isStopUtt = false;
+                    QP.current++;
+                    question.setText(execution.quiz.get(QP.current));
+                    tts.speakOut(question.getText().toString(), "default");
+                    tem.clear();
+                    tem.add("별이 각자 다른 위치로 이동합니다.");
+                    tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
+                    tem.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
+                    tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                    fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
+                }
+                else if(QP.current == 1) {
+                    pro_bar.setProgress(50);
+                    sttBtn.setVisibility(View.VISIBLE);
+                    sttBtn.setEnabled(true);
+                    answer.setVisibility(View.VISIBLE);
+                    tts.isStopUtt = false;
+                    QP.current++;
+                    question.setText(execution.quiz.get(QP.current));
+                    tts.speakOut(question.getText().toString(), "default");
+                    tem.clear();
+                    tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
+                    tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+                    tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                    fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+                }
+                else if(QP.current == 2) {
+                    pro_bar.setProgress(55);
+                    execution.Tscore = cal_score(U_answers, execution.crr_ans);
+
+                    execution.scores[5] = execution.Tscore;
+
+                    Intent intent = new Intent(getApplicationContext(), memoryOutput_Page.class);
+                    intent.putExtra("scores", execution.scores);
+                    startActivity(intent);
+
+                    finish();
+                }
+            }
+        });
+
+
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 if(QP.current == 0){
@@ -287,6 +384,44 @@ public class ExecutionPage extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        tts.isStopUtt = false;
+        QP.Start();
+        tts.speakOut(question.getText().toString(),"default");
+        if(QP.current == 0){
+            question.setText(execution.quiz.get(QP.current));
+            tts.speakOut(question.getText().toString(), "default");
+            tem.clear();
+            tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
+            tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
+            tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
+            tts.UtteranceProgress(tem, "continue", question, sttBtn, submit);
+            fragmentManager.beginTransaction().replace(R.id.frame_layout, executionOne).commit();
+        }
+        else if(QP.current == 1){
+            question.setText(execution.quiz.get(QP.current));
+            tts.speakOut(question.getText().toString(), "default");
+            tem.clear();
+            tem.add("별이 각자 다른 위치로 이동합니다.");
+            tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
+            tem.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
+            tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+            fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
+        }
+        else if(QP.current == 2){
+            question.setText(execution.quiz.get(QP.current));
+            tts.speakOut(question.getText().toString(), "default");
+            tem.clear();
+            tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
+            tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+            tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+            fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+        }
+    }
+
 
     @Override
     protected void onDestroy() {

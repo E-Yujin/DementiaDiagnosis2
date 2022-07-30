@@ -16,9 +16,9 @@ public class Execution extends question{
         this.scores = new int[10];
         this.Tscore = new Integer(0);
 
-        this.quiz.add("여기 모양들이 정해진 순서로 나옵니다.\n");
-        this.quiz.add("여기 네 칸 중의 한 칸에\n별이 하나 있습니다.\n");
-        this.quiz.add("카드에 숫자와 계절이 하나씩 적혀 있습니다.\n");
+        this.quiz.add("여기 모양들이 정해진 순서로 나옵니다.");
+        this.quiz.add("여기 네 칸 중의 한 칸에\n별이 하나 있습니다.");
+        this.quiz.add("카드에 숫자와 계절이 \n하나씩 적혀 있습니다.");
 
         this.crr_ans[0].add("원");
         this.crr_ans[1].add("3");

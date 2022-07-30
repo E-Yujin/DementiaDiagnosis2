@@ -20,12 +20,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import questions.LanguageFunc;
@@ -46,6 +48,7 @@ public class LanguagePage extends AppCompatActivity {
     ActivityResultLauncher<Intent> startActivityResult;
     private long backBtnTime = 0;
     ProgressBar pro_bar;
+    AppCompatButton donKnow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,10 +66,13 @@ public class LanguagePage extends AppCompatActivity {
         U_answers = new String[languageFunc.num];
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         undo = (ImageButton) findViewById(R.id.left);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
         Intent intent;
         intent = getIntent();
         languageFunc.scores = intent.getIntArrayExtra("scores");
+
+        Arrays.fill(U_answers, "");
 
         type.setText("언어기능");
         //p_num.setText("13/17");
@@ -114,18 +120,60 @@ public class LanguagePage extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString(), "default");
+                tts.onInit(status, question.getText().toString(), "default", 1000);
                 //tts.UtteranceProgress(announce.getText().toString());
             }
         });
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, languageFunc.quiz);
 
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.speakOut(question.getText().toString());
+            }
+        });
+
+        image.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!tts.IsTalking() && !answer.getText().toString().equals(""))
+                    tts.speakOut(answer.getText().toString());
+            }
+        });
+
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tts.isStopUtt = true;
                 tts.Stop();
                 stt.start_STT();
+            }
+        });
+
+        donKnow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                question.setText(languageFunc.quiz.get(QP.current));
+                answer.setText("");
+                if (QP.current == 0) {
+                    pro_bar.setProgress(75);
+                    image.setImageResource(R.drawable.swing);
+                    tts.isStopUtt = false;
+                    QP.Submit();
+                    tts.speakOut(question.getText().toString());
+                } else if (QP.current == 1) {
+                    pro_bar.setProgress(80);
+                    image.setImageResource(R.drawable.dice);
+                    tts.isStopUtt = false;
+                    QP.Submit();
+                    tts.speakOut(question.getText().toString());
+                } else if (QP.current == 2) {
+                    pro_bar.setProgress(80);
+                    Intent intent = new Intent(LanguagePage.this, ComprehensionPage.class);
+                    startActivityResult.launch(intent);
+                    overridePendingTransition(0, 0);
+                    intent.putExtra("isDone", true);
+                    intent.putExtra("score", languageFunc.Tscore);
+                    setResult(1, intent);
+                    QP.Submit();
+                }
             }
         });
 

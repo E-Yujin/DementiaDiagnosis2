@@ -54,6 +54,13 @@
         <activity android:name="QuizPage.ComprehensionPage" />
         <activity android:name="QuizPage.LanguagePage" />
 
+        <activity android:name="simpleTest.S_orientation" />
+        <activity android:name="simpleTest.S_fluency_Page" />
+        <activity android:name="simpleTest.S_memoryInput" />
+        <activity android:name="simpleTest.S_attention" />
+        <activity android:name="simpleTest.S_memoryOutput" />
+        <activity android:name="simpleTest.S_SpaceTime" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="deeed953cb0bd5ce8fb32d971a0039d7" />

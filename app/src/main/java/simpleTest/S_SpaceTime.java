@@ -1,11 +1,10 @@
-package QuizPage;
+package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,19 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
-import QuizPage.QuizPage;
-import questions.orientation;
-import questions.spaceTime;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class SpaceTimePage extends AppCompatActivity {
+import QuizPage.SpaceTimeView;
+import questions.spaceTime;
+
+public class S_SpaceTime extends AppCompatActivity {
     spaceTime ST;
     SpaceTimeView STV;
     TTS tts;
@@ -95,7 +91,7 @@ public class SpaceTimePage extends AppCompatActivity {
 
                 pro_bar.setProgress(40);
 
-                Intent intent = new Intent(getApplicationContext(), ExecutionPage.class);
+                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
 
@@ -127,7 +123,7 @@ public class SpaceTimePage extends AppCompatActivity {
 
                 pro_bar.setProgress(40);
 
-                Intent intent = new Intent(getApplicationContext(), ExecutionPage.class);
+                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
 

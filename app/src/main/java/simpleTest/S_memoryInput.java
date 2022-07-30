@@ -1,11 +1,9 @@
-package QuizPage;
+package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -21,16 +19,14 @@ import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import QuizPage.QuizPage;
 import questions.memoryInput;
 
-public class memoryInput_Page extends AppCompatActivity {
+public class S_memoryInput extends AppCompatActivity {
     memoryInput memo_in;
     MainSTT stt;
     TTS tts;
@@ -55,19 +51,18 @@ public class memoryInput_Page extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orientation);
-        final TextInputLayout TIL = findViewById(R.id.goolelayout);
 
-        question = (TextView) findViewById(R.id.question);
-        type = (TextView) findViewById(R.id.type);
+        question = findViewById(R.id.question);
+        type = findViewById(R.id.type);
         answer = findViewById(R.id.result);
         answer.setEnabled(true);
-        sttBtn = (ImageButton) findViewById(R.id.sttStart);
-        submit = (ImageButton) findViewById(R.id.submit);
-        undo = (ImageButton) findViewById(R.id.before);
+        sttBtn = findViewById(R.id.sttStart);
+        submit = findViewById(R.id.submit);
+        undo = findViewById(R.id.before);
         helper_img = findViewById(R.id.img);
         memo_in = new memoryInput();
-        pro_bar = (ProgressBar) findViewById(R.id.progressBar);
-        donKnow = (AppCompatButton) findViewById(R.id.donknow);
+        pro_bar = findViewById(R.id.progressBar);
+        donKnow = findViewById(R.id.donknow);
 
         type.setText("기억등록");
         pro_bar.setProgress(10);
@@ -140,7 +135,7 @@ public class memoryInput_Page extends AppCompatActivity {
                 else{
                     memo_in.scores[2] = memo_in.Tscore;
 
-                    Intent intent = new Intent(getApplicationContext(), attention_Page.class);
+                    Intent intent = new Intent(getApplicationContext(), S_attention.class);
                     intent.putExtra("scores", memo_in.scores);
                     startActivity(intent);
 
@@ -205,7 +200,7 @@ public class memoryInput_Page extends AppCompatActivity {
                     else{
                         memo_in.scores[2] = memo_in.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(), attention_Page.class);
+                        Intent intent = new Intent(getApplicationContext(), S_attention.class);
                         intent.putExtra("scores", memo_in.scores);
                         startActivity(intent);
 

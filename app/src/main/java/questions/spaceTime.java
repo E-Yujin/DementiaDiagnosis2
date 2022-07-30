@@ -21,7 +21,7 @@ public class spaceTime extends question {
         this.scores = new int[10];
         this.Tscore = new Integer(0);
 
-        this.quiz.add("여기 점을 연결하여 그린 그림이 있습니다.");
+        this.quiz.add("여기 점을 연결하여 그린\n그림이 있습니다.");
         this.quiz.add("이 그림과 똑같이 되도록");
         this.quiz.add("같은 위치에 그려보세요.");
         this.quiz.add("점을 연결해서 그리시면 됩니다.");
