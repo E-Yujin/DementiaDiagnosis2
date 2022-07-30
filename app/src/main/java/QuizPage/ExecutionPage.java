@@ -24,6 +24,7 @@ import com.cbnu.dementiadiagnosis.TTS;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fragment.ExecutionOne;
@@ -85,6 +86,7 @@ public class ExecutionPage extends AppCompatActivity {
         type.setText("집행기능");
         //p_num.setText("9/17");
         pro_bar.setProgress(40);
+        Arrays.fill(U_answers, "");
 
         // Fragment 객체 선언
         fragmentManager = (FragmentManager)getSupportFragmentManager();

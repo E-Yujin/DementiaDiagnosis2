@@ -92,6 +92,12 @@
         android:background="@drawable/shape_round_bar"
         android:backgroundTint="#F4F4F4">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/eraser"
             android:layout_width="130dp"
@@ -104,6 +110,21 @@
             android:text="지우개"
             android:textColor="@color/white"
             android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/donknow"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#DFDFDF"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:text="잘모르겠어요"
+            android:textColor="#787878"
+            android:textSize="14sp" />
+        </LinearLayout>
 
     </FrameLayout>
 </RelativeLayout>
