@@ -127,7 +127,7 @@ public class S_memoryOutput extends AppCompatActivity {
                     pro_bar.setProgress(70);
                     memo_out.scores[6] = memo_out.Tscore;
 
-                    Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
+                    Intent intent = new Intent(getApplicationContext(), S_language.class);
                     intent.putExtra("scores", memo_out.scores);
                     startActivity(intent);
 
@@ -176,7 +176,7 @@ public class S_memoryOutput extends AppCompatActivity {
                         if(memo_out.Tscore == 10){ // 점수가 만점이면 액티비티 종료.
                             memo_out.scores[6] = memo_out.Tscore;
 
-                            Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
+                            Intent intent = new Intent(getApplicationContext(), S_language.class);
                             intent.putExtra("scores", memo_out.scores);
                             startActivity(intent);
 
@@ -216,7 +216,7 @@ public class S_memoryOutput extends AppCompatActivity {
                             pro_bar.setProgress(70);
                             memo_out.scores[6] = memo_out.Tscore;
 
-                            Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
+                            Intent intent = new Intent(getApplicationContext(), S_language.class);
                             intent.putExtra("scores", memo_out.scores);
                             startActivity(intent);
 

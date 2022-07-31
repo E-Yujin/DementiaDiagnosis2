@@ -17,7 +17,7 @@ import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
 
-import simpleTest.S_comprehension;
+import simpleTest.S_orientation;
 import user.SharedPreference;
 
 public class FragmentHome extends Fragment {
@@ -49,7 +49,7 @@ public class FragmentHome extends Fragment {
         simple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), S_comprehension.class));
+                startActivity(new Intent(getActivity(), S_orientation.class));
             }
         });
 

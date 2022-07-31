@@ -1,10 +1,12 @@
 package simpleTest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -24,7 +26,7 @@ import com.cbnu.dementiadiagnosis.TTS;
 
 import questions.LanguageFunc;
 
-public class S_comprehension extends AppCompatActivity {
+public class S_language extends AppCompatActivity {
 
     LanguageFunc languageFunc;
     TTS tts;
@@ -33,6 +35,7 @@ public class S_comprehension extends AppCompatActivity {
     ProgressBar pro_bar;
     ImageView mImg, image2, image3, image4, image5;
     ImageButton beforeBtn, nextBtn;
+    AppCompatButton donKnow;
 
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
     private int resLeft = 0, resRight = 0; // 정답 체크
@@ -41,7 +44,7 @@ public class S_comprehension extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.s_comprehension);
+        setContentView(R.layout.s_language);
 
         Log.d("languageFunc", "start");
         languageFunc = new LanguageFunc();
@@ -52,12 +55,13 @@ public class S_comprehension extends AppCompatActivity {
         image5 = (ImageView) findViewById(R.id.image5);
         question = (TextView) findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
-        beforeBtn = (ImageButton) findViewById(R.id.ic_left);
-        nextBtn = (ImageButton) findViewById(R.id.ic_right);
+        beforeBtn = (ImageButton) findViewById(R.id.before);
+        nextBtn = (ImageButton) findViewById(R.id.next);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
         type.setText("언어기능");
-        pro_bar.setProgress(85);
+        pro_bar.setProgress(80);
 
         mImg.setTag(IMAGEVIEW_TAG);
         image2.setTag(IMAGEVIEW_TAG);
@@ -65,56 +69,72 @@ public class S_comprehension extends AppCompatActivity {
         image4.setTag(IMAGEVIEW_TAG);
         image5.setTag(IMAGEVIEW_TAG);
 
-        mImg.setOnLongClickListener(new S_comprehension.LongClickListener());
-        image2.setOnLongClickListener(new S_comprehension.LongClickListener());
-        image3.setOnLongClickListener(new S_comprehension.LongClickListener());
-        image4.setOnLongClickListener(new S_comprehension.LongClickListener());
-        image5.setOnLongClickListener(new S_comprehension.LongClickListener());
+        mImg.setOnLongClickListener(new S_language.LongClickListener());
+        image2.setOnLongClickListener(new S_language.LongClickListener());
+        image3.setOnLongClickListener(new S_language.LongClickListener());
+        image4.setOnLongClickListener(new S_language.LongClickListener());
+        image5.setOnLongClickListener(new S_language.LongClickListener());
 
         findViewById(R.id.left).setOnDragListener(
-                new S_comprehension.DragListener());
+                new S_language.DragListener());
         findViewById(R.id.right).setOnDragListener(
-                new S_comprehension.DragListener());
+                new S_language.DragListener());
         findViewById(R.id.ball).setOnDragListener(
-                new S_comprehension.DragListener());
+                new S_language.DragListener());
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 tts.onInit(status, question.getText().toString());
-                //tts.UtteranceProgress(announce.getText().toString());
             }
         });
 
-        /*beforeBtn.setOnClickListener(new View.OnClickListener(){
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.speakOut(question.getText().toString());
+            }
+        });
+
+        donKnow.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 tts.Stop();
-                Intent intent = new Intent(S_comprehension.this, LanguagePage.class);
-                intent.putExtra("current" , 2);
-                intent.putExtra("comprehension" , "yet");
-                setResult(RESULT_OK, intent);
+                tts.isStopUtt = true;
 
+                languageFunc.Tscore = 0;
+
+                languageFunc.scores[7] = languageFunc.Tscore;
+
+                Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
+                intent.putExtra("scores", languageFunc.scores);
+                startActivity(intent);
                 finish();
             }
-        });*/
-        /*nextBtn.setOnClickListener(new View.OnClickListener() {
+        });
+
+        beforeBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pro_bar.setProgress(90);
+                tts.Stop();
                 if(resLeft == 2 && resRight == 3) {
-                    Okay = "OK";
+                    languageFunc.Tscore = 1;
                 } else {
-                    Okay = "notOk";
+                    languageFunc.Tscore = 0;
                 }
-                Intent intent = new Intent(S_comprehension.this, LanguagePage.class);
-                intent.putExtra("comprehension" , Okay);
-                intent.putExtra("current" , -1);
-                Log.d("comprehension", Okay);
-                setResult(RESULT_OK, intent);
+                languageFunc.scores[7] = languageFunc.Tscore;
 
+                Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
+                intent.putExtra("scores", languageFunc.scores);
+                startActivity(intent);
                 finish();
             }
-        });*/
+        });
     }
 
     private static final class LongClickListener implements

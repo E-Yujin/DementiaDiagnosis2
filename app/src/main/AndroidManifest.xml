@@ -19,7 +19,7 @@
             android:name="simpleTest.S_execution"
             android:exported="false" />
         <activity
-            android:name="simpleTest.S_comprehension"
+            android:name="simpleTest.S_language"
             android:exported="false" />
         <activity
             android:name=".Result"

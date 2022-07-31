@@ -1,9 +1,13 @@
 package simpleTest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,23 +18,26 @@ import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import QuizPage.QuizPage;
+import questions.Execution;
 
 public class S_execution extends AppCompatActivity {
 
+    Execution execution;
     ImageButton squareOne, squareTwo, squareThree, squareFour;
     ImageButton beforeBtn, nextBtn;
     ImageView star1, star2, star3, star4;
     TextView question, type;
+    AppCompatButton donKnow;
     TTS tts;
-    QuizPage QP;
     ProgressBar pro_bar;
     String check="";
 
     private long backBtnTime = 0;
-    List<String> tem = new ArrayList<>();
+    List<String> quiz = new ArrayList<>();
     int[] time = {1000, 1000, 1000, 1000};
 
     @Override
@@ -38,10 +45,13 @@ public class S_execution extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.s_execution);
 
+        execution = new Execution();
         question = findViewById(R.id.question);
         type = findViewById(R.id.type);
         beforeBtn = findViewById(R.id.before);
         nextBtn = findViewById(R.id.next);
+        pro_bar = findViewById(R.id.progressBar);
+        donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
         squareOne = findViewById(R.id.btnOne);
         squareTwo = findViewById(R.id.btnTwo);
@@ -53,10 +63,74 @@ public class S_execution extends AppCompatActivity {
         star3 = findViewById(R.id.starThree);
         star4 = findViewById(R.id.starFour);
 
+        Intent intent;
+        intent = getIntent();
+        execution.scores = intent.getIntArrayExtra("scores");
+
+        showStar();
+
+        tts = new TTS(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                tts.onInit(status, question.getText().toString(), "default");
+                quiz.clear();
+                quiz.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
+                quiz.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
+                quiz.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
+                tts.UtteranceProgress(quiz, "continue", question, nextBtn);
+            }
+        });
         type.setText("집행기능");
         pro_bar.setProgress(40);
 
-        showStar();
+        question.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.speakOut(question.getText().toString());
+            }
+        });
+
+        donKnow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.Stop();
+                tts.isStopUtt = true;
+
+                execution.Tscore = 0;
+
+                execution.scores[5] = execution.Tscore;
+
+                pro_bar.setProgress(50);
+
+                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
+                intent.putExtra("scores", execution.scores);
+                startActivity(intent);
+
+                finish();
+            }
+        });
+
+        beforeBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                tts.Stop();
+                if(check.equals("3")) {
+                    execution.Tscore = 1;
+                }else {
+                    execution.Tscore = 0;
+                }
+                execution.scores[5] = execution.Tscore;
+                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
+                intent.putExtra("scores", execution.scores);
+                startActivity(intent);
+
+                finish();
+            }
+        });
     }
 
     // 정답 영역 클릭 시, 별 모양 표시
@@ -102,16 +176,6 @@ public class S_execution extends AppCompatActivity {
             }
         });
     }
-    public String twoResult() {
-        return check;
-    }
-
-    @Override
-    protected void onStop(){
-        tts.isStopUtt = true;
-        super.onStop();
-        tts.Stop();
-    }
 
     @Override
     public void onBackPressed() {
@@ -128,8 +192,35 @@ public class S_execution extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop(){
+        tts.isStopUtt = true;
+        super.onStop();
+        if(tts != null){
+            tts.Stop();
+        }
+        quiz.clear();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        tts.isStopUtt = false;
+        if(!question.getText().toString().equals(execution.quiz.get(1))){
+            question.setText(execution.quiz.get(1));
+            tts.speakOut(execution.quiz.get(1), "default");
+            quiz.clear();
+            quiz.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
+            quiz.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
+            quiz.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
+            tts.UtteranceProgress(quiz, "continue", question, nextBtn);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        QP.Destroy();
+        if(tts != null) {
+            tts.Destroy();
+        }
     }
 }

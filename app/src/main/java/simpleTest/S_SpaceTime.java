@@ -91,7 +91,7 @@ public class S_SpaceTime extends AppCompatActivity {
 
                 pro_bar.setProgress(40);
 
-                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
+                Intent intent = new Intent(getApplicationContext(), S_execution.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
 
@@ -123,7 +123,7 @@ public class S_SpaceTime extends AppCompatActivity {
 
                 pro_bar.setProgress(40);
 
-                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
+                Intent intent = new Intent(getApplicationContext(), S_execution.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
 

@@ -105,19 +105,20 @@ public class Result extends AppCompatActivity {
         Intent resIntent = getIntent();
         int[] part_score = resIntent.getIntArrayExtra("part_score");
 
-        int score_orientation = part_score[1];
+        int score_orientation = part_score[1]; // 지남력
         Log.d("ori", part_score[1] + "");
-        int score_memory =  part_score[2];
-        Log.d("mem", part_score[2] + "");
-        int score_attention =  part_score[3];
+        int score_attention =  part_score[3]; // 주의력
         Log.d("att", part_score[3] + "");
-        int score_spacetime =  part_score[4];
+        int score_spacetime =  part_score[4]; // 시공간
         Log.d("spa", part_score[4] + "");
-        int score_execution =  part_score[5];
+        int score_execution =  part_score[5] + part_score[8]; // 집행
         Log.d("exe", part_score[5] + "");
-        int score_language =  part_score[6];
+        int score_language =  part_score[6]; // 언어기능
         Log.d("lan", part_score[6] + "");
-        int score_total = score_orientation + score_memory + score_attention + score_spacetime + score_execution + score_language;
+        int score_memory =  part_score[7]; // 기억력
+        Log.d("mem", part_score[7] + "");
+        int score_total = score_orientation + score_attention + score_spacetime + score_execution +
+                score_language + score_memory;
 
         ori_score.setText(score_orientation + "/5");
         mem_score.setText(score_memory + "/10");
