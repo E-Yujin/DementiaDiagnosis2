@@ -62,25 +62,26 @@
 
     <ImageView
         android:id="@+id/question_image"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
         android:layout_below="@+id/question"
         android:layout_centerHorizontal="true" />
 
     <FrameLayout
         android:id="@+id/gray_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/question_image"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
         android:background="@drawable/shape_round_bar"
-        android:layout_marginTop="10dp"
         android:backgroundTint="#F4F4F4">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp">
 
@@ -98,6 +99,7 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:background="@drawable/ic_mic" />
 
         <androidx.appcompat.widget.AppCompatButton

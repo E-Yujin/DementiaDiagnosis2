@@ -181,7 +181,7 @@ public class ExecutionPage extends AppCompatActivity {
                     pro_bar.setProgress(50);
                     sttBtn.setVisibility(View.VISIBLE);
                     sttBtn.setEnabled(true);
-                    answer.setVisibility(View.VISIBLE);
+                    textInputLayout.setVisibility(View.VISIBLE);
                     tts.isStopUtt = false;
                     QP.current++;
                     question.setText(execution.quiz.get(QP.current));

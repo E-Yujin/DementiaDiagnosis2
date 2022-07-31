@@ -91,8 +91,9 @@
     <FrameLayout
         android:id="@+id/gray_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/img"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/shape_round_bar"
         android:backgroundTint="#F4F4F4"
@@ -103,10 +104,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/goolelayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="330dp"
-            android:layout_height="80dp"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:letterSpacing="0.04"
             android:lineSpacingExtra="10dp">
@@ -134,7 +135,7 @@
             android:layout_width="130dp"
             android:layout_height="40dp"
             android:layout_gravity="center|bottom"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/round_button"
             android:backgroundTint="#DFDFDF"
             android:fontFamily="@font/jejugothic"
