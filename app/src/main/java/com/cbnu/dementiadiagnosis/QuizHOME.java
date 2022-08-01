@@ -3,6 +3,7 @@ package com.cbnu.dementiadiagnosis;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +46,7 @@ public class QuizHOME extends AppCompatActivity {
     boolean isDone = false;
     List<String> tem = new ArrayList<>();
     boolean isStart = false;
-
+    String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,13 @@ public class QuizHOME extends AppCompatActivity {
 
         announce = new ArrayList();
         part_score = new int[8];
+
+        Intent typeIntent = getIntent();
+        type = typeIntent.getStringExtra("type_regular");
+
+        if(type == null) {
+            type = "simple";
+        }
 
         sttBtn = findViewById(R.id.sttStart);
         Title = findViewById(R.id.title);
@@ -213,11 +222,13 @@ public class QuizHOME extends AppCompatActivity {
                 break;
             case 1:
                 intent = new Intent(view.getContext(), Result.class);
+                intent.putExtra("type", type);
                 intent.putExtra("part_score", part_score);
                 intent.putExtra("total_score", total_score);
                 startActivity(intent);
                 finish();
                 break;
+
         }
     }
     @Override

@@ -2,6 +2,7 @@ package fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.cbnu.dementiadiagnosis.FirstActivity;
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
+
+import java.util.Objects;
 
 import simpleTest.S_orientation;
 import user.SharedPreference;
@@ -49,7 +52,8 @@ public class FragmentHome extends Fragment {
         simple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), S_orientation.class));
+                Intent intent = new Intent(requireActivity().getApplication(), S_orientation.class);
+                startActivity(intent);
             }
         });
 
@@ -57,7 +61,11 @@ public class FragmentHome extends Fragment {
         formal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), QuizHOME.class));
+                String type = "regular";
+                Intent intent = new Intent(requireActivity().getApplication(), QuizHOME.class);
+                intent.putExtra("regular_type", type);
+                Log.d("this is regular_type", type);
+                startActivity(intent);
             }
         });
 

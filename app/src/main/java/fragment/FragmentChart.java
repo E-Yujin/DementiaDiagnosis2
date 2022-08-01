@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -28,7 +26,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +37,7 @@ public class FragmentChart extends Fragment {
 
     RecyclerAdapter adapter;
     ArrayList<Entry> values;
+    ArrayList<String> dates;
     View view;
 
     @Override
@@ -52,6 +50,7 @@ public class FragmentChart extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chart, container, false);
         values = new ArrayList<>();
+        dates = new ArrayList<>();
 
         LineChart chart = view.findViewById(R.id.linechart);
         chart.animateY(1000);
@@ -70,6 +69,11 @@ public class FragmentChart extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
+        xAxis.setGranularity(1f);
+        xAxis.setTextColor(Color.GRAY);
+        xAxis.setTextSize(12f);
+        xAxis.setDrawLabels(true);
+
 
         YAxis yLAxis = chart.getAxisLeft();
         yLAxis.setDrawGridLines(false);
@@ -84,6 +88,8 @@ public class FragmentChart extends Fragment {
         // 결과 목록 생성
         init();
         getData();
+
+        xAxis.setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(dates));
 
         LineDataSet set1;
         set1 = new LineDataSet(values, "진단 점수");
@@ -142,6 +148,9 @@ public class FragmentChart extends Fragment {
             score.setDate(scoreList.get(i).getDate());
             score.setTotal(scoreList.get(i).getTotal());
             values.add(new Entry(i, scoreList.get(i).getTotal()));
+            String tem = scoreList.get(i).getDate();
+            dates.add(tem.substring(5, 10));
+            Log.d("Date---", tem.substring(5, 10));
             adapter.addItem(score);
         }
         adapter.notifyDataSetChanged();

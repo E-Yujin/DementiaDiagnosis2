@@ -269,12 +269,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ScoreTable.COL_ORIENTATION, score[1]);
-        values.put(ScoreTable.COL_MEMORY, score[2]);
+        values.put(ScoreTable.COL_MEMORY, score[6]);
         values.put(ScoreTable.COL_ATTENTION, score[3]);
         values.put(ScoreTable.COL_SPACETIME, score[4]);
-        values.put(ScoreTable.COL_EXECUTION, score[5]);
-        values.put(ScoreTable.COL_LANGUAGE, score[6]);
-        values.put(ScoreTable.COL_TOTAL, score[1] + score[2] + score[3] + score[4] + score[5] + score[6]);
+        values.put(ScoreTable.COL_EXECUTION, score[5] + score[8]);
+        values.put(ScoreTable.COL_LANGUAGE, score[7]);
+        values.put(ScoreTable.COL_TOTAL, score[1] + score[3] + score[4] + score[5] + score[6] + score[7] + score[8]);
 
         long result = db.update(ScoreTable.TABLE_NAME, values, "serialCode=?" + " and " + "date=?", new String[]{ serial_code , date });
     }

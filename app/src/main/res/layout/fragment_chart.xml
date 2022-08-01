@@ -9,10 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="30dp"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:textColor="#777777"
         android:fontFamily="@font/jejugothic"
         android:text="기 록"/>
 
@@ -20,12 +19,14 @@
         android:id="@+id/linechart"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="5dp"/>
+        android:layout_margin="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="15dp"
         android:text="이전 결과 기록"
         android:fontFamily="@font/jejugothic"/>
 
