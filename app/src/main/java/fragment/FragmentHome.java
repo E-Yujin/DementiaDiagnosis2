@@ -28,12 +28,12 @@ public class FragmentHome extends Fragment {
     Button simple, formal, logout;
     ImageView helper_img;
     Helper helper;
+    String type = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Nullable
     @Override
@@ -61,10 +61,8 @@ public class FragmentHome extends Fragment {
         formal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String type = "regular";
                 Intent intent = new Intent(requireActivity().getApplication(), QuizHOME.class);
-                intent.putExtra("regular_type", type);
-                Log.d("this is regular_type", type);
+                intent.putExtra("regular_type", "regular");
                 startActivity(intent);
             }
         });
@@ -79,5 +77,9 @@ public class FragmentHome extends Fragment {
         });
 
         return view;
+    }
+
+    public String getTestType() {
+        return type;
     }
 }
