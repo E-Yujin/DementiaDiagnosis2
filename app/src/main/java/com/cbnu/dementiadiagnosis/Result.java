@@ -90,7 +90,6 @@ public class Result extends AppCompatActivity {
 
         Intent typeIntent = getIntent();
         type = typeIntent.getStringExtra("type");
-
         Log.d("type is", type);
 
         if(type.equals("simple")) {

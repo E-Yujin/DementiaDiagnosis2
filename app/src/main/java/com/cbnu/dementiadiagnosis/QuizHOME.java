@@ -25,6 +25,7 @@ import QuizPage.fluency_Page;
 import QuizPage.memoryInput_Page;
 import QuizPage.memoryOutput_Page;
 import QuizPage.orientation_Page;
+import fragment.FragmentHome;
 
 
 public class QuizHOME extends AppCompatActivity {
@@ -55,13 +56,6 @@ public class QuizHOME extends AppCompatActivity {
 
         announce = new ArrayList();
         part_score = new int[8];
-
-        Intent typeIntent = getIntent();
-        type = typeIntent.getStringExtra("regular_type");
-
-        if(type == null) {
-            type = "simple";
-        }
 
         sttBtn = findViewById(R.id.sttStart);
         Title = findViewById(R.id.title);
@@ -163,6 +157,12 @@ public class QuizHOME extends AppCompatActivity {
         intent = getIntent();
         part_score = intent.getIntArrayExtra("scores");
         isDone = intent.getBooleanExtra("isDone", false);
+        type = intent.getStringExtra("regular_type");
+
+        if(type == null) {
+            type = "simple";
+        }
+        Log.d("[QuizHome]type is ", type);
 
         if(isDone){
             current = 1;
