@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946236003322",
+    "project_id": "dementiadiagnosis-62295",
+    "storage_bucket": "dementiadiagnosis-62295.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946236003322:android:a928c32e740b5417a80a43",
+        "android_client_info": {
+          "package_name": "com.cbnu.dementiadiagnosis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946236003322-m58vbin7bq66jmm3m5tsnkppjqmj3afo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDloOVpn67DPxsMxc_bR35IzjF-QQgld-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946236003322-m58vbin7bq66jmm3m5tsnkppjqmj3afo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -57,7 +57,7 @@ public class QuizHOME extends AppCompatActivity {
         part_score = new int[8];
 
         Intent typeIntent = getIntent();
-        type = typeIntent.getStringExtra("type_regular");
+        type = typeIntent.getStringExtra("regular_type");
 
         if(type == null) {
             type = "simple";

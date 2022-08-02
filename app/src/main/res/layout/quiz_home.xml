@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".QuizHOME">
@@ -15,7 +16,16 @@
         android:fontFamily="@font/jejugothic"
         android:text="TextView"
         android:lineSpacingExtra ="10dp"
-        android:textSize="25sp"/>
+        android:textSize="30sp"/>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/helper_jump"
+        android:layout_marginTop="30dp"
+        app:tint="@color/main"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/announce"
@@ -37,14 +47,6 @@
         android:fontFamily="@font/jejugothic"
         android:lineSpacingExtra ="10dp"
         android:textSize="15sp" />
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/helper_jump"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/sttStart"

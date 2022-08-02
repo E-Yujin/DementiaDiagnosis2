@@ -100,6 +100,7 @@
                 android:layout_width="180dp"
                 android:layout_height="180dp"
                 android:layout_gravity="center"
+                app:tint="@color/main"
                 android:src="@drawable/helper_jump" />
 
             <com.google.android.material.textfield.TextInputLayout
