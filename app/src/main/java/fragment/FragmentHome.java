@@ -17,6 +17,7 @@ import com.cbnu.dementiadiagnosis.FirstActivity;
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
+import com.cbnu.dementiadiagnosis.Result;
 
 import java.util.Objects;
 
@@ -28,7 +29,6 @@ public class FragmentHome extends Fragment {
     Button simple, formal, logout;
     ImageView helper_img;
     Helper helper;
-    String type = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,8 @@ public class FragmentHome extends Fragment {
         simple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireActivity().getApplication(), S_orientation.class);
+                SharedPreference.setTypeInf(getActivity(), "simple");
+                Intent intent = new Intent(requireActivity(), S_orientation.class);
                 startActivity(intent);
             }
         });
@@ -61,8 +62,8 @@ public class FragmentHome extends Fragment {
         formal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireActivity().getApplication(), QuizHOME.class);
-                intent.putExtra("regular_type", "regular");
+                SharedPreference.setTypeInf(getActivity(), "regular");
+                Intent intent = new Intent(requireActivity(), QuizHOME.class);
                 startActivity(intent);
             }
         });
@@ -77,9 +78,5 @@ public class FragmentHome extends Fragment {
         });
 
         return view;
-    }
-
-    public String getTestType() {
-        return type;
     }
 }

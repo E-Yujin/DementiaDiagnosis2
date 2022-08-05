@@ -82,6 +82,10 @@ public class S_language extends AppCompatActivity {
         findViewById(R.id.ball).setOnDragListener(
                 new S_language.DragListener());
 
+        Intent intent;
+        intent = getIntent();
+        languageFunc.scores = intent.getIntArrayExtra("scores");
+
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {

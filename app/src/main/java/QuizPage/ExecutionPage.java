@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -135,8 +134,11 @@ public class ExecutionPage extends AppCompatActivity {
                     tts.speakOut(question.getText().toString(), "default");
                     tem.clear();
                     tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
-                    tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+                    tem.add("첫번째 빈칸에는 무엇이 들어갈 차례일까요?");
                     tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
+                }
+                else if(QP.current == 3){
+                    tts.speakOut("두번째 빈칸에는 무엇이 들어갈 차례일까요?");
                 }
             }
         });
@@ -148,7 +150,6 @@ public class ExecutionPage extends AppCompatActivity {
             }
         });
         //안되면 위 코드 주석처리
-
 
         sttBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -188,12 +189,23 @@ public class ExecutionPage extends AppCompatActivity {
                     tts.speakOut(question.getText().toString(), "default");
                     tem.clear();
                     tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
-                    tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+                    tem.add("첫번째 빈칸에는 무엇이 들어갈 차례일까요?");
                     tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
-                    fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+                    fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(1, 0)).commit();
                 }
                 else if(QP.current == 2) {
                     pro_bar.setProgress(55);
+                    sttBtn.setVisibility(View.VISIBLE);
+                    sttBtn.setEnabled(true);
+                    textInputLayout.setVisibility(View.VISIBLE);
+                    tts.isStopUtt = false;
+                    QP.current++;
+                    question.setText(execution.quiz.get(QP.current));
+                    tts.speakOut("두번째 빈칸에는 무엇이 들어갈 차례일까요?");
+                    fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(0, 1)).commit();
+                }
+                else if(QP.current == 3) {
+                    pro_bar.setProgress(60);
                     execution.Tscore = cal_score(U_answers, execution.crr_ans);
 
                     execution.scores[5] = execution.Tscore;
@@ -224,7 +236,7 @@ public class ExecutionPage extends AppCompatActivity {
                         sttBtn.setVisibility(View.INVISIBLE);
                         sttBtn.setEnabled(false);
                         textInputLayout.setVisibility(View.INVISIBLE);
-                        pro_bar.setProgress(40);
+                        pro_bar.setProgress(45);
                         //p_num.setText("9/17");
                         tem.clear();
                         tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
@@ -237,7 +249,7 @@ public class ExecutionPage extends AppCompatActivity {
                         sttBtn.setVisibility(View.INVISIBLE);
                         sttBtn.setEnabled(false);
                         textInputLayout.setVisibility(View.INVISIBLE);
-                        pro_bar.setProgress(45);
+                        pro_bar.setProgress(50);
                         //p_num.setText("10/17");
                         tem.clear();
                         tem.add("별이 각자 다른 위치로 이동합니다.");
@@ -247,16 +259,25 @@ public class ExecutionPage extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
                     }
                     else if(QP.current == 2){
-                        pro_bar.setProgress(50);
+                        pro_bar.setProgress(55);
                         sttBtn.setVisibility(View.VISIBLE);
                         sttBtn.setEnabled(true);
                         textInputLayout.setVisibility(View.VISIBLE);
                         //p_num.setText("11/17");
                         tem.clear();
                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
-                        tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+                        tem.add("첫번째 빈칸에는 무엇이 들어갈 차례일까요?");
                         tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
-                        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(1, 0)).commit();
+                    }
+                    else if(QP.current == 3) {
+                        pro_bar.setProgress(60);
+                        sttBtn.setVisibility(View.VISIBLE);
+                        sttBtn.setEnabled(true);
+                        textInputLayout.setVisibility(View.VISIBLE);
+                        tts.isStopUtt = false;
+                        tts.speakOut("두번째 빈칸에는 무엇이 들어갈 차례일까요?");
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(0, 1)).commit();
                     }
                 }
             }
@@ -283,7 +304,11 @@ public class ExecutionPage extends AppCompatActivity {
                         break;
                     case 2:
                         total = answer.getText().toString();
-                        Log.d("result", "threeResult " + total);
+                        Log.d("result", "threeResult_number " + total);
+                        break;
+                    case 3 :
+                        total = answer.getText().toString();
+                        Log.d("result", "threeResult_season " + total);
                         break;
                     default:
                         Log.d("case default!!", "넘어감");
@@ -327,12 +352,23 @@ public class ExecutionPage extends AppCompatActivity {
                         tts.speakOut(question.getText().toString(), "default");
                         tem.clear();
                         tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
-                        tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+                        tem.add("첫번째 빈칸에는 무엇이 들어갈 차례일까요?");
                         tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
-                        fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(1, 0)).commit();
                     }
                     else if(QP.current == 2) {
                         pro_bar.setProgress(55);
+                        sttBtn.setVisibility(View.VISIBLE);
+                        sttBtn.setEnabled(true);
+                        textInputLayout.setVisibility(View.VISIBLE);
+                        tts.isStopUtt = false;
+                        QP.current++;
+                        question.setText(execution.quiz.get(QP.current));
+                        tts.speakOut("두번째 빈칸에는 무엇이 들어갈 차례일까요?");
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(0, 1)).commit();
+                    }
+                    else if(QP.current == 3) {
+                        pro_bar.setProgress(60);
                         execution.Tscore = cal_score(U_answers, execution.crr_ans);
 
                         execution.scores[5] = execution.Tscore;
@@ -348,7 +384,7 @@ public class ExecutionPage extends AppCompatActivity {
         });
     }
 
-    int cal_score(String[] ans, List<String>[] crr){
+    public int cal_score(String[] ans, List<String>[] crr){
         int score = 0;
         if(ans.length == crr.length){
             for(int i = 0; i < ans.length; i++){
@@ -418,10 +454,14 @@ public class ExecutionPage extends AppCompatActivity {
             tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
             tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
             tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
-            fragmentManager.beginTransaction().replace(R.id.frame_layout, executionThree).commit();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(1, 0)).commit();
+        }
+        else if(QP.current == 3){
+            question.setText(execution.quiz.get(QP.current));
+            tts.speakOut(question.getText().toString(), "default");
+            fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(0, 1)).commit();
         }
     }
-
 
     @Override
     protected void onDestroy() {

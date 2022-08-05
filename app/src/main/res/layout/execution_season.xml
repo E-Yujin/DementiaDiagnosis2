@@ -87,7 +87,8 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:background="@color/black"/>
-        <TextView
+        <ImageView
+            android:id="@+id/result_one"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:gravity="center"
@@ -95,7 +96,7 @@
             android:text=""
             android:textColor="@color/purple_700"
             android:textSize="20sp"
-            android:background="@drawable/shape_exe"/>
+            android:background="@drawable/shape_exe" />
         <ImageView
             android:layout_width="20dp"
             android:layout_height="3dp"
@@ -175,7 +176,8 @@
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:background="@color/black"/>
-        <TextView
+        <ImageView
+            android:id="@+id/result_two"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:gravity="center"
