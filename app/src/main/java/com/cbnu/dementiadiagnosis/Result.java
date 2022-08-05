@@ -88,8 +88,7 @@ public class Result extends AppCompatActivity {
         scoreText = findViewById(R.id.score);
         resText = findViewById(R.id.result_text);
 
-        Intent typeIntent = getIntent();
-        type = typeIntent.getStringExtra("type");
+        type = SharedPreference.getSelectType(getApplication());
         Log.d("type is", type);
 
         if(type.equals("simple")) {
@@ -119,7 +118,7 @@ public class Result extends AppCompatActivity {
         Intent resIntent = getIntent();
         int[] part_score = resIntent.getIntArrayExtra("part_score");
 
-        text_total.setText("/ 16");
+        text_total.setText("/ 18");
         score_orientation = part_score[1]; // 지남력
         Log.d("ori", part_score[1] + "");
         score_attention =  part_score[3]; // 주의력
@@ -135,11 +134,11 @@ public class Result extends AppCompatActivity {
         score_total = score_orientation + score_attention + score_spacetime + score_execution +
                 score_memory + score_language;
 
-        ori_score.setText(score_orientation + "/1");
+        ori_score.setText(score_orientation + "/2");
         mem_score.setText(score_memory + "/10");
         att_score.setText(score_attention + "/1");
         spa_score.setText(score_spacetime + "/2");
-        exe_score.setText(score_execution + " /2");
+        exe_score.setText(score_execution + "/2");
         lan_score.setText(score_language + "/1");
         scoreText.setText(Integer.toString(score_total));
         setProgressWithAnimation(progressBar1, score_orientation * 100);
@@ -149,8 +148,6 @@ public class Result extends AppCompatActivity {
         setProgressWithAnimation(progressBar5, score_execution * 50);
         setProgressWithAnimation(progressBar6, score_language * 100);
 
-        String serial_code = SharedPreference.getSerialCode(getApplication());
-
         endBtn.setOnClickListener(v -> {
             Intent intent = new Intent(Result.this, HomeActivity.class);
             startActivity(intent);
@@ -158,7 +155,7 @@ public class Result extends AppCompatActivity {
         });
 
         // 몇점 이하로 할 지 정하기
-        if(SharedPreference.getUserScore(getApplication()) < score_total) {
+        if(12 < score_total) {
             resText.setText(SharedPreference.getUserName(getApplication()) + "님은 진단결과 상 정상 범주에 속하는 수준입니다." +
                     "앞으로도 치매에 관한 꾸준한 관리로 건강한 생활을 유지하시길 바랍니다.");
         }else {

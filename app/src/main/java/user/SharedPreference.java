@@ -14,6 +14,7 @@ public class SharedPreference {
     static String pref_user_sex = "sex";
     static String pref_user_edu = "edu";
     static String pref_user_score = "score";
+    static String pref_type = "type";
 
     static public SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -32,13 +33,19 @@ public class SharedPreference {
         editor.putInt(pref_user_score, score);
         editor.commit();
     }
-
     // 사용자 일련코드 정보 저장
     public static void setSerialCodeInf(Context ctx, String serial_code) {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(pref_user_serial_code, serial_code);
         editor.apply();
     }
+    // 검사 타입 정보 저장
+    public static void setTypeInf(Context ctx, String type) {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(pref_type, type);
+        editor.apply();
+    }
+
     // 저장된 사용자 일련코드 가져오기
     public static String getSerialCode(Context ctx) {
         return getSharedPreferences(ctx).getString(pref_user_serial_code, "");
@@ -66,6 +73,10 @@ public class SharedPreference {
     // 저장된 사용자 치매 기준 점수 가져오기
     public static int getUserScore(Context ctx) {
         return getSharedPreferences(ctx).getInt(pref_user_score, 0);
+    }
+    // 검사 타입 가져오기
+    public static String getSelectType(Context ctx) {
+        return getSharedPreferences(ctx).getString(pref_type, "");
     }
 
     //로그아웃 시 데이터 삭제

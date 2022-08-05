@@ -61,6 +61,7 @@ public class FragmentChart extends Fragment {
         chart.getDescription().setEnabled(false);
         chart.setDrawBorders(true);
         chart.setBorderColor(Color.LTGRAY);
+        chart.setDragXEnabled(true);
 
         Legend legend = chart.getLegend();
         legend.setEnabled(false);
@@ -73,7 +74,7 @@ public class FragmentChart extends Fragment {
         xAxis.setTextColor(Color.GRAY);
         xAxis.setTextSize(12f);
         xAxis.setDrawLabels(true);
-
+        xAxis.setLabelCount(3);
 
         YAxis yLAxis = chart.getAxisLeft();
         yLAxis.setDrawGridLines(false);
@@ -114,6 +115,7 @@ public class FragmentChart extends Fragment {
         set1.setCircleColor(Color.BLACK);
 
         chart.setData(data);
+        chart.setVisibleXRange(2, 2);
         chart.moveViewToX(data.getEntryCount());
 
         return view;

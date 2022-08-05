@@ -73,10 +73,11 @@ public class S_execution extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 tts.onInit(status, question.getText().toString(), "default");
+                question.setText(execution.quiz.get(1));
                 quiz.clear();
-                quiz.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
-                quiz.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
-                quiz.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
+                quiz.add("별이 각자 다른 위치로 이동합니다.");
+                quiz.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
+                quiz.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
                 tts.UtteranceProgress(quiz, "continue", question, nextBtn);
             }
         });
@@ -209,9 +210,9 @@ public class S_execution extends AppCompatActivity {
             question.setText(execution.quiz.get(1));
             tts.speakOut(execution.quiz.get(1), "default");
             quiz.clear();
-            quiz.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
-            quiz.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
-            quiz.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
+            quiz.add("별이 각자 다른 위치로 이동합니다.");
+            quiz.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
+            quiz.add("이 다음에는 네 칸중 별이 어디에 위치하게 될까요?");
             tts.UtteranceProgress(quiz, "continue", question, nextBtn);
         }
     }

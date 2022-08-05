@@ -47,7 +47,6 @@ public class QuizHOME extends AppCompatActivity {
     boolean isDone = false;
     List<String> tem = new ArrayList<>();
     boolean isStart = false;
-    String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,12 +156,6 @@ public class QuizHOME extends AppCompatActivity {
         intent = getIntent();
         part_score = intent.getIntArrayExtra("scores");
         isDone = intent.getBooleanExtra("isDone", false);
-        type = intent.getStringExtra("regular_type");
-
-        if(type == null) {
-            type = "simple";
-        }
-        Log.d("[QuizHome]type is ", type);
 
         if(isDone){
             current = 1;
@@ -222,7 +215,6 @@ public class QuizHOME extends AppCompatActivity {
                 break;
             case 1:
                 intent = new Intent(view.getContext(), Result.class);
-                intent.putExtra("type", type);
                 intent.putExtra("part_score", part_score);
                 intent.putExtra("total_score", total_score);
                 startActivity(intent);
