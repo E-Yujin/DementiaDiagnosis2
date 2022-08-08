@@ -124,6 +124,8 @@ public class QuizHOME extends AppCompatActivity {
         sttBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tts.Stop();
+                tts.isStopUtt = true;
                 Intent intent = null;
                 switchPage(intent, view);
             }
@@ -151,7 +153,7 @@ public class QuizHOME extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        tts.isStopUtt = false;
         Intent intent;
         intent = getIntent();
         part_score = intent.getIntArrayExtra("scores");

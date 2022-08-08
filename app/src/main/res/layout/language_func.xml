@@ -62,10 +62,11 @@
 
     <ImageView
         android:id="@+id/question_image"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_below="@+id/question"
         android:layout_centerHorizontal="true" />
+
 
     <FrameLayout
         android:id="@+id/gray_view"
@@ -90,8 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/jejugothic"
-                android:gravity="center"
-                android:hint="답변이 여기에 나타납니다." />
+                android:gravity="center" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton

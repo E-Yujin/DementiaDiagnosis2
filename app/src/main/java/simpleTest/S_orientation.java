@@ -64,7 +64,7 @@ public class S_orientation extends AppCompatActivity {
         undo = (ImageButton) findViewById(R.id.before);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         helper_img = findViewById(R.id.img);
-        ortt_main = new orientation();
+        ortt_main = new orientation(this);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
         quiz = new ArrayList<>();
         crr_ans = new ArrayList[3];

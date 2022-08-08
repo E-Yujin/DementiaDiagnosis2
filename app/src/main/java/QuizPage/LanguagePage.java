@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
@@ -68,6 +69,8 @@ public class LanguagePage extends AppCompatActivity {
         undo = (ImageButton) findViewById(R.id.left);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
+        answer.setHint("답변이 여기 나타납니다.");
+
         Intent intent;
         intent = getIntent();
         languageFunc.scores = intent.getIntArrayExtra("scores");
@@ -77,6 +80,16 @@ public class LanguagePage extends AppCompatActivity {
         type.setText("언어기능");
         //p_num.setText("13/17");
         pro_bar.setProgress(70);
+
+        tts = new TTS(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                tts.onInit(status, question.getText().toString(), "Done", 1000);
+            }
+        });
+
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, languageFunc.quiz);
 
         image.setImageResource(R.drawable.toothbrush);
 
@@ -117,16 +130,6 @@ public class LanguagePage extends AppCompatActivity {
                     }
                 });
 
-        tts = new TTS(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                tts.onInit(status, question.getText().toString(), "default", 1000);
-                //tts.UtteranceProgress(announce.getText().toString());
-            }
-        });
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
-        QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, languageFunc.quiz);
-
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 tts.speakOut(question.getText().toString());
@@ -152,6 +155,7 @@ public class LanguagePage extends AppCompatActivity {
             public void onClick(View v) {
                 question.setText(languageFunc.quiz.get(QP.current));
                 answer.setText("");
+                answer.setHint("답변이 여기 나타납니다.");
                 if (QP.current == 0) {
                     pro_bar.setProgress(75);
                     image.setImageResource(R.drawable.swing);
@@ -184,6 +188,7 @@ public class LanguagePage extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
                 if(QP.current > 0){
+                    answer.setHint("답변이 여기 나타납니다.");
                     QP.current --;
                     tts.isStopUtt = false;
                     question.setText(languageFunc.quiz.get(QP.current));
@@ -214,6 +219,7 @@ public class LanguagePage extends AppCompatActivity {
                 tts.Stop();
                 sttBtn.setEnabled(true);
                 tts.isStopUtt = true;
+                answer.setHint("답변이 여기 나타납니다.");
 
                 QP.user_ans = answer.getText().toString()
                         .replace(" ", "")
@@ -290,6 +296,28 @@ public class LanguagePage extends AppCompatActivity {
             backBtnTime = curTime;
             Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        question.setText(languageFunc.quiz.get(QP.current));
+        tts.isStopUtt = false;
+        answer.setHint("답변이 여기 나타납니다.");
+        answer.setText("");
+        tts.speakOut(question.getText().toString());
+        QP.Start();
+        if(QP.current == 0){
+            pro_bar.setProgress(70);
+            image.setImageResource(R.drawable.toothbrush);
+        }
+        else if (QP.current == 1) {
+            pro_bar.setProgress(75);
+            image.setImageResource(R.drawable.swing);
+        } else if (QP.current == 2) {
+            pro_bar.setProgress(80);
+            image.setImageResource(R.drawable.dice);
         }
     }
 

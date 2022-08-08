@@ -161,7 +161,7 @@ public class S_memoryInput extends AppCompatActivity {
 
                 QP.user_ans = answer.getText().toString();
 
-                if(QP.user_ans.isEmpty()){
+                if(QP.user_ans.isEmpty() && QP.current != 2){
                     tts.speakOut("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
                 }
                 else{

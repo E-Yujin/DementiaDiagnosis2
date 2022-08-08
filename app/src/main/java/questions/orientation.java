@@ -1,17 +1,103 @@
 package questions;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.cbnu.dementiadiagnosis.GeoVariable;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class orientation extends question {
     private String Date[];
     private String day;
+    double longitude, latitude;
+    final LocationManager lm;
+    final Geocoder geocoder;
 
-    public orientation() {
+    public orientation(AppCompatActivity context) {
+        GeoVariable geovariable = new GeoVariable();
+        geocoder = new Geocoder(context);
+        lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        List<Address> location = null;
+
+        int permissionCheck1 = ContextCompat.checkSelfPermission(context, Manifest.permission.INTERNET);
+        if(permissionCheck1 == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(context, new String[] {Manifest.permission.INTERNET},1);
+
+        int permissionCheck2 = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if(permissionCheck2 == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(context, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},1);
+
+        int permissionCheck3 = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+        if(permissionCheck3 == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(context, new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
+
+        final LocationListener mLocationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                //여기서 위치값이 갱신되면 이벤트가 발생한다.
+                //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
+
+                Log.d("geocoding", "onLocationChanged, location:" + location);
+                geovariable.setLatitude(location.getLatitude()); // 클래스 변수에 위도 대입
+                geovariable.setLongitube(location.getLongitude());  // 클래스 변수에 경도 대입
+                latitude = geovariable.getLatitude(); // 위도 경도 클래스변수에서 가져옴
+                longitude = geovariable.getLongitube();
+                reverseCoding();
+            }
+
+            public void onProviderDisabled(String provider) {
+                // Disabled시
+                Log.d("geocoding", "onProviderDisabled, provider:" + provider);
+            }
+
+            public void onProviderEnabled(String provider) {
+                // Enabled시
+                Log.d("geocoding", "onProviderEnabled, provider:" + provider);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                // 변경시
+                Log.d("geocoding", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+            }
+        };
+
+        try {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
+                    100, // 통지사이의 최소 시간간격 (miliSecond)
+                    1, // 통지사이의 최소 변경거리 (m)
+                    mLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
+                    100, // 통지사이의 최소 시간간격 (miliSecond)
+                    1, // 통지사이의 최소 변경거리 (m)
+                    mLocationListener);
+        } catch(SecurityException e){
+            e.printStackTrace();
+        }
+
+        latitude = geovariable.getLatitude(); // 위도 경도 클래스변수에서 가져옴
+        longitude = geovariable.getLongitube();
+
+        reverseCoding();
+
 
         this.num = 5;
         this.quiz = new ArrayList<>();
@@ -73,7 +159,6 @@ public class orientation extends question {
         this.crr_ans[2].add(returnMONTH());
         this.crr_ans[3].add(returnDATE());
         this.crr_ans[4].add(day);
-        this.crr_ans[5].add("미정");
 
     }
 
@@ -168,4 +253,46 @@ public class orientation extends question {
         }
         return String.valueOf(total);
     }
+
+    public void reverseCoding(){ // 위도 경도 넣어가지구 역지오코딩 주소값 뽑아낸다
+        List<Address> list = null;
+        try {
+            list = geocoder.getFromLocation(latitude, longitude, 10); // 위도, 경도, 얻어올 값의 개수
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("test_", "입출력 오류 - 서버에서 주소변환시 에러발생");
+        }
+        if (list != null) {
+            if (list.size()==0) {
+                Log.d("geocoding", "해당되는 주소 정보는 없습니다");
+            } else {
+                // onWhere.setText(list.get(0).toString()); 원래 통으로 나오는 주소값 문자열
+
+                // 문자열을 자르자!
+                String cut[] = list.get(0).toString().split(" ");
+                if(crr_ans[5].isEmpty()){ //아직 셋되지 않은 상태
+                    for(int i=1; i<4; i++){
+                        this.crr_ans[5].add(cut[i]);
+                    }
+                }
+                else if(!cut[3].equals(crr_ans[5].get(2))){ //장소가 변경된 경우 업데이트
+                    crr_ans[5].clear();
+                    for(int i=1; i<4; i++){
+                        this.crr_ans[5].add(cut[i]);
+                    }
+                }
+                // cut[0] : Address[addressLines=[0:"대한민국
+                // cut[1] : 서울특별시  cut[2] : 송파구  cut[3] : 오금동
+                // cut[4] : cut[4] : 41-26"],feature=41-26,admin=null ~~~~
+
+                String loca = "";
+                loca = "";
+                for(String crr : crr_ans[5]){
+                    loca = loca + " " + crr;
+                }
+                Log.d("geocoding", loca);
+            }
+        }
+    }
+
 }

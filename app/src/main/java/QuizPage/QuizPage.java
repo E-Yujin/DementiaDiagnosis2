@@ -74,7 +74,7 @@ public class QuizPage {
                 .replace("입니다", "")
                 .replace("이기에", "");
 
-        if(isOrient && current > 0 && current < 5){
+        if(isOrient && current > 0 && current < 4){
             tem = num.replace("년", "")
                     .replace("도", "")
                     .replace("일", "")
@@ -83,7 +83,7 @@ public class QuizPage {
                     .replace("월", "")
                     .replace("요일", "");
         }
-        else if (isOrient && current == 5){
+        else if (isOrient && current == 4){
             tem = num.replace("요일", "");
         }
 

@@ -2,10 +2,15 @@ package com.cbnu.dementiadiagnosis;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,6 +33,8 @@ public class HomeActivity extends AppCompatActivity {
     private FragmentHome fragmentHome = new FragmentHome();
     private FragmentChart fragmentChart = new FragmentChart();
     private FragmentSetting fragmentSetting = new FragmentSetting();
+    final int PERMISSION = 1;
+    private PermissionSupport permission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,29 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnItemSelectedListener(new ItemSelectedListener());
+
+        permissionCheck();
+    }
+
+    private void permissionCheck() {
+        // PermissionSupport.java 클래스 객체 생성
+        permission = new PermissionSupport(this, this);
+
+        // 권한 체크 후 리턴이 false로 들어오면
+        if (!permission.checkPermission()){
+            //권한 요청
+            permission.requestPermission();
+        }
+    }
+    // Request Permission에 대한 결과 값 받아와
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //여기서도 리턴이 false로 들어온다면 (사용자가 권한 허용 거부)
+        if (!permission.permissionResult(requestCode, permissions, grantResults)) {
+            // 다시 permission 요청
+            permission.requestPermission();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     class ItemSelectedListener implements NavigationBarView.OnItemSelectedListener {

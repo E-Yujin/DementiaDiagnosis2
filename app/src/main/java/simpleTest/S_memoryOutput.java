@@ -167,7 +167,7 @@ public class S_memoryOutput extends AppCompatActivity {
                                 memo_out.Tscore += 2;
                             }
                             else if(QP.correct == "11시"){
-                                if(QP.user_ans.contains("열 한시")){
+                                if(QP.user_ans.contains("열 한시") || QP.user_ans.contains("열한시")){
                                     first[i+1] = true;
                                     memo_out.Tscore += 2;
                                 }
@@ -199,7 +199,7 @@ public class S_memoryOutput extends AppCompatActivity {
                             memo_out.Tscore ++;
                         }
                         else if(QP.correct == "11시"){
-                            if(QP.user_ans.contains("열 한시")){
+                            if(QP.user_ans.contains("열 한시") || QP.user_ans.contains("열한시")){
                                 memo_out.Tscore ++;
                             }
                         }

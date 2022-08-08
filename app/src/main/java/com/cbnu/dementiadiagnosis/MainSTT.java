@@ -1,9 +1,6 @@
 package com.cbnu.dementiadiagnosis;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import android.Manifest;
-import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -13,10 +10,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.gson.Gson;
 
@@ -31,8 +30,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
-import questions.fluency;
 
 public class MainSTT{
 
@@ -134,6 +131,7 @@ public class MainSTT{
                 // 녹음이 시작되었음(버튼)
                 case 1:
                     result.setText("");
+                    result.setHint("녹음되고 있어요!");
                     //textView.setText(v);
                     isListening = true;
                     isRecognize = false;
@@ -144,6 +142,7 @@ public class MainSTT{
                 // 목소리가 인식되었음(버튼 또는 max time)
                 case 2:
                     //textView.setText(v);
+                    result.setHint("소리를 인식했어요!");
                     isListening = false;
                     isRecognize = true;
                     isAnalysing= false;
@@ -153,6 +152,7 @@ public class MainSTT{
                     break;
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
+                    result.setHint("녹음을 할 수 없어요.");
                     //textView.setText(v);
                     isListening = false;
                     isRecognize = false;
@@ -162,6 +162,7 @@ public class MainSTT{
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
+                    result.setHint("다시 말씀해주세요.");
                     //textView.setText(v);
                     isListening = false;
                     isRecognize = false;
@@ -173,6 +174,7 @@ public class MainSTT{
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
                     //textView.setText("인식 완료!");
+                    result.setHint("답변이 여기 나타납니다.");
                     if(isRecording) {
                         isListening = true;
                         isRecognize = false;
@@ -187,6 +189,7 @@ public class MainSTT{
                         }
                     }
                     else{ // STT가 종료되었는데도 인식은 종료되지 않은 경우
+                        result.setHint("답변이 여기 나타납니다.");
                         isListening = false;
                         isRecognize = false;
                         isAnalysing = false;
@@ -207,6 +210,7 @@ public class MainSTT{
                     }
                     break;
                 case 6: // 녹음을 정상적으로 마침
+                    result.setHint("답변이 여기 나타납니다.");
                     if(!result.getText().toString().equals("")){
                         String str = result.getText().toString().substring(0,
                                 result.getText().toString().length() - 1);
@@ -233,6 +237,7 @@ public class MainSTT{
                     break;
                 case 7: // 텍스트 변환이 진행 중임.
                     //textView.setText("인식 중...");
+                    result.setHint("무슨 말인지 파악하고 있어요!");
                     isListening = false;
                     isRecognize = false;
                     isAnalysing= true;
@@ -240,6 +245,7 @@ public class MainSTT{
                     break;
                 case 8: // 에러
                     //textView.setText("조금 더 천천히 말씀해주세요.");
+                    result.setHint("조금 더 천천히 말씀해주세요.");
                     isListening = false;
                     isRecognize = false;
                     isAnalysing= false;

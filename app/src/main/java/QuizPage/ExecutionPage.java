@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.FragmentManager;
 
+import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
@@ -51,6 +56,8 @@ public class ExecutionPage extends AppCompatActivity {
     String[] U_answers;
     ProgressBar pro_bar;
     TextInputLayout textInputLayout;
+    LinearLayout LL;
+    RelativeLayout.LayoutParams Param1, Param2;
 
     AppCompatButton donKnow;
     FrameLayout frame;
@@ -77,6 +84,17 @@ public class ExecutionPage extends AppCompatActivity {
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
         frame = findViewById(R.id.frame_layout);
+        answer.setHint("답변이 여기 나타납니다.");
+        LL = findViewById(R.id.LL);
+        Param1 = new RelativeLayout.LayoutParams(LL.getLayoutParams());
+        Param2 = new RelativeLayout.LayoutParams(LL.getLayoutParams());
+
+        Param1.height = 0;
+        Param1.width = 0;
+        Param2.topMargin = 50;
+        Param2.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        LL.setLayoutParams(Param1);
 
         Intent intent;
         intent = getIntent();
@@ -92,6 +110,7 @@ public class ExecutionPage extends AppCompatActivity {
         executionOne = new ExecutionOne();
         executionTwo = new ExecutionTwo();
         executionThree = new ExecutionThree();
+
 
         // 제일 처음 띄워줄 뷰 설정
         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionOne).commit();
@@ -180,6 +199,7 @@ public class ExecutionPage extends AppCompatActivity {
                 }
                 else if(QP.current == 1) {
                     pro_bar.setProgress(50);
+                    LL.setLayoutParams(Param2);
                     sttBtn.setVisibility(View.VISIBLE);
                     sttBtn.setEnabled(true);
                     textInputLayout.setVisibility(View.VISIBLE);
@@ -195,6 +215,7 @@ public class ExecutionPage extends AppCompatActivity {
                 }
                 else if(QP.current == 2) {
                     pro_bar.setProgress(55);
+                    LL.setLayoutParams(Param2);
                     sttBtn.setVisibility(View.VISIBLE);
                     sttBtn.setEnabled(true);
                     textInputLayout.setVisibility(View.VISIBLE);
@@ -233,6 +254,7 @@ public class ExecutionPage extends AppCompatActivity {
                     answer.setText("");
                     tts.speakOut(question.getText().toString(),"default");
                     if(QP.current == 0){
+                        LL.setLayoutParams(Param1);
                         sttBtn.setVisibility(View.INVISIBLE);
                         sttBtn.setEnabled(false);
                         textInputLayout.setVisibility(View.INVISIBLE);
@@ -246,6 +268,7 @@ public class ExecutionPage extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.frame_layout, executionOne).commit();
                     }
                     else if(QP.current == 1){
+                        LL.setLayoutParams(Param1);
                         sttBtn.setVisibility(View.INVISIBLE);
                         sttBtn.setEnabled(false);
                         textInputLayout.setVisibility(View.INVISIBLE);
@@ -260,6 +283,7 @@ public class ExecutionPage extends AppCompatActivity {
                     }
                     else if(QP.current == 2){
                         pro_bar.setProgress(55);
+                        LL.setLayoutParams(Param2);
                         sttBtn.setVisibility(View.VISIBLE);
                         sttBtn.setEnabled(true);
                         textInputLayout.setVisibility(View.VISIBLE);
@@ -272,6 +296,7 @@ public class ExecutionPage extends AppCompatActivity {
                     }
                     else if(QP.current == 3) {
                         pro_bar.setProgress(60);
+                        LL.setLayoutParams(Param2);
                         sttBtn.setVisibility(View.VISIBLE);
                         sttBtn.setEnabled(true);
                         textInputLayout.setVisibility(View.VISIBLE);
@@ -342,6 +367,7 @@ public class ExecutionPage extends AppCompatActivity {
                     }
                     else if(QP.current == 1) {
                         pro_bar.setProgress(50);
+                        LL.setLayoutParams(Param2);
                         sttBtn.setVisibility(View.VISIBLE);
                         sttBtn.setEnabled(true);
                         textInputLayout.setVisibility(View.VISIBLE);
@@ -358,6 +384,7 @@ public class ExecutionPage extends AppCompatActivity {
                     }
                     else if(QP.current == 2) {
                         pro_bar.setProgress(55);
+                        LL.setLayoutParams(Param2);
                         sttBtn.setVisibility(View.VISIBLE);
                         sttBtn.setEnabled(true);
                         textInputLayout.setVisibility(View.VISIBLE);
@@ -426,20 +453,29 @@ public class ExecutionPage extends AppCompatActivity {
         super.onStart();
         tts.isStopUtt = false;
         QP.Start();
+        answer.setHint("답변이 여기 나타납니다.");
         tts.speakOut(question.getText().toString(),"default");
         if(QP.current == 0){
-            question.setText(execution.quiz.get(QP.current));
-            tts.speakOut(question.getText().toString(), "default");
+            LL.setLayoutParams(Param1);
+            sttBtn.setVisibility(View.INVISIBLE);
+            sttBtn.setEnabled(false);
+            textInputLayout.setVisibility(View.INVISIBLE);
+            pro_bar.setProgress(45);
+            //p_num.setText("9/17");
             tem.clear();
             tem.add("모양들을 보면서 어떤 순서로 나오는지 생각해보세요.");
             tem.add("네모, 동그라미, 세모, 네모, 빈칸, 세모");
             tem.add("그렇다면 빈칸에는 무엇이 들어가야 할까요?");
-            tts.UtteranceProgress(tem, "continue", question, sttBtn, submit);
+            tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
             fragmentManager.beginTransaction().replace(R.id.frame_layout, executionOne).commit();
         }
         else if(QP.current == 1){
-            question.setText(execution.quiz.get(QP.current));
-            tts.speakOut(question.getText().toString(), "default");
+            LL.setLayoutParams(Param1);
+            sttBtn.setVisibility(View.INVISIBLE);
+            sttBtn.setEnabled(false);
+            textInputLayout.setVisibility(View.INVISIBLE);
+            pro_bar.setProgress(50);
+            //p_num.setText("10/17");
             tem.clear();
             tem.add("별이 각자 다른 위치로 이동합니다.");
             tem.add("어떤 식으로 이동하는지 잘 생각해 보십시오.");
@@ -448,17 +484,26 @@ public class ExecutionPage extends AppCompatActivity {
             fragmentManager.beginTransaction().replace(R.id.frame_layout, executionTwo).commit();
         }
         else if(QP.current == 2){
-            question.setText(execution.quiz.get(QP.current));
-            tts.speakOut(question.getText().toString(), "default");
+            pro_bar.setProgress(55);
+            LL.setLayoutParams(Param2);
+            sttBtn.setVisibility(View.VISIBLE);
+            sttBtn.setEnabled(true);
+            textInputLayout.setVisibility(View.VISIBLE);
+            //p_num.setText("11/17");
             tem.clear();
             tem.add("'1 봄 2 여름 ~' 이런 형태로 연결되어 나갑니다.");
-            tem.add("빈칸에는 무엇이 들어갈 차례일까요?");
+            tem.add("첫번째 빈칸에는 무엇이 들어갈 차례일까요?");
             tts.UtteranceProgress(tem, "continue", time, question, sttBtn, submit);
             fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(1, 0)).commit();
         }
-        else if(QP.current == 3){
-            question.setText(execution.quiz.get(QP.current));
-            tts.speakOut(question.getText().toString(), "default");
+        else if(QP.current == 3) {
+            pro_bar.setProgress(60);
+            LL.setLayoutParams(Param2);
+            sttBtn.setVisibility(View.VISIBLE);
+            sttBtn.setEnabled(true);
+            textInputLayout.setVisibility(View.VISIBLE);
+            tts.isStopUtt = false;
+            tts.speakOut("두번째 빈칸에는 무엇이 들어갈 차례일까요?");
             fragmentManager.beginTransaction().replace(R.id.frame_layout, ExecutionThree.newInstance(0, 1)).commit();
         }
     }

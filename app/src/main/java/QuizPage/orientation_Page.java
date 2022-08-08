@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -22,6 +24,7 @@ import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +48,7 @@ public class orientation_Page extends AppCompatActivity {
     boolean[] isWrong;
     String[] U_answers;
     AppCompatButton donKnow;
+    boolean isDK_inFirst = false;
 
     private long backBtnTime = 0;
 
@@ -63,7 +67,7 @@ public class orientation_Page extends AppCompatActivity {
         undo = (ImageButton) findViewById(R.id.before);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         helper_img = findViewById(R.id.img);
-        ortt_main = new orientation();
+        ortt_main = new orientation(this);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
 
@@ -115,15 +119,29 @@ public class orientation_Page extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                announce.setText("");
-                answer.setText("");
+                if(QP.current == 0 || QP.current == 4)
+                    announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
+                else announce.setText("");
 
                 if(QP.current == 0){
                     QP.current = 4;
+                    isDK_inFirst = true;
                     pro_bar.setProgress(10);
                 }
                 if(QP.current == 3) pro_bar.setProgress(10);
 
+                //다음 문제 화면 전환
+                if(QP.current < 4){
+                    int j = 0;
+                    for(int i = 0; i < isCorrect.length; i++){
+                        if(!isCorrect[i] && QP.current <= i){
+                            QP.current = i;
+                            break;
+                        }
+                        if(isCorrect[i]) j++;
+                    }// 모두 정답이면 공간지남력 문제로 점프
+                    if(j == 4) QP.current = 4;
+                }
                 if(QP.current < 5){
                     answer.setText("");
                     tts.isStopUtt = false;
@@ -131,6 +149,7 @@ public class orientation_Page extends AppCompatActivity {
                     tts.speakOut(question.getText().toString());
                 }
                 else if(QP.current == 5){
+                    announce.setText("");
 
                     ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
 
@@ -149,34 +168,54 @@ public class orientation_Page extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                int min = -1;
+                for(int i = 3; i >= 0; i--) {
+                    if(!isWrong[i]) min = i;
+                }
+                if(min == -1)QP.current = 0;
+
                 if(QP.current == 0){
                     Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                             Toast.LENGTH_SHORT).show();
                 }
                 if(QP.current > 0){
                     pro_bar.setProgress(5);
-                    for(int i = isWrong.length - 1; i > 0; i--){
-                        if(!isWrong[i]){
-                            QP.current = i;
-                            break;
-                        } // 모두 정답이면 첫 문제로 점프
-                        else QP.current = 0;
+                    boolean isChange = false;
+                    if(QP.current > 1){
+                        for(int i = 3; i >= 0; i--){
+                            if(!isWrong[i]){
+                                if(QP.current-1 > i){
+                                    QP.current = i + 1;
+                                    isChange = true;
+                                    break;
+                                }
+                                else isChange = false;
+                            } // 모두 정답이면 첫 문제로 점프
+                        }
+                        if(!isChange) QP.current--;
+                        if(QP.current == min)QP.current = 0;
+                    }
+                    else QP.current --;
+
+                    if(isDK_inFirst) {
+                        QP.current = 0;
+                        isDK_inFirst = false;
                     }
                     if(QP.current == 0) announce.setText("년, 월, 일, 요일");
+                    else announce.setText("");
+
                     tts.isStopUtt = false;
                     question.setText(ortt_main.quiz.get(QP.current));
                     answer.setText("");
                     tts.speakOut(question.getText().toString());
-                    if(QP.current == 0){
-
-                    }
                 }
             }
         });
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                announce.setText("");
+                if(QP.current == 4) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
+                else announce.setText("");
                 stt.Stop();
                 tts.Stop();
                 tts.isStopUtt = true;
@@ -190,8 +229,10 @@ public class orientation_Page extends AppCompatActivity {
                 else
                 {
                     //날짜 숫자로 변환
-                    if(QP.current == 0 && !QP.user_ans.equals("")){ // 첫 물음의 경우
+                    if(QP.current == 0){ // 첫 물음의 경우
                         Arrays.fill(isCorrect, false);
+                        Arrays.fill(isWrong, false);
+                        Arrays.fill(U_answers, "");
                         pro_bar.setProgress(5);
                         String[] answers = QP.user_ans.split(" ");
                         for(int i = 0; i < answers.length; i++){
@@ -222,7 +263,7 @@ public class orientation_Page extends AppCompatActivity {
                                 isCorrect[0] = true;
                                 U_answers[0] = dateFilter(str);
                             }
-                            else if(answers[i].contains("월")){
+                            else if(answers[i].contains("월") && !answers[i].contains("요일")){
                                 U_answers[1] = dateFilter(answers[i]);
                                 isCorrect[1] = true;
                             }
@@ -231,7 +272,7 @@ public class orientation_Page extends AppCompatActivity {
                                 isCorrect[3] = true;
                             }
                             else if(answers[i].contains("일")){
-                                if(!answers[i-1].contains("월") && !answers[i-1].contains("년")
+                                if(i != 0 && !answers[i-1].contains("월") && !answers[i-1].contains("년")
                                         && !answers[i-1].contains("년도") && !answers[i-1].contains("요일")){
                                     if(answers[i-1].contains("십")){
                                         str = answers[i-1] + answers[i];
@@ -246,9 +287,11 @@ public class orientation_Page extends AppCompatActivity {
                                 }
                             }
                         }
-                        isWrong = isCorrect;
+                        for(int i = 0; i<isCorrect.length; i++){
+                            if(isCorrect[i]) isWrong[i] = true;
+                        }
                     }
-                    else if(QP.current < 4 && !QP.user_ans.equals("")){ // 틀린 것이 있을 경우
+                    else if(QP.current < 4){ // 틀린 것이 있을 경우
                         QP.user_ans = dateFilter(QP.user_ans);
                         U_answers[QP.current-1] = dateFilter(QP.user_ans);
                     }
@@ -259,14 +302,15 @@ public class orientation_Page extends AppCompatActivity {
 
                     //다음 문제 화면 전환
                     if(QP.current < 4){
+                        int j = 0;
                         for(int i = 0; i < isCorrect.length; i++){
-                            if(!isCorrect[i]){
+                            if(!isCorrect[i] && QP.current <= i){
                                 QP.current = i;
-                                isCorrect[i] = true;
                                 break;
-                            } // 모두 정답이면 공간지남력 문제로 점프
-                            else QP.current = 4;
-                        }
+                            }
+                            if(isCorrect[i]) j++;
+                        }// 모두 정답이면 공간지남력 문제로 점프
+                        if(j == 4) QP.current = 4;
                     }
 
                     if(QP.current < 5){
@@ -276,6 +320,7 @@ public class orientation_Page extends AppCompatActivity {
                         tts.speakOut(question.getText().toString());
                     }
                     else if(QP.current == 5){
+                        announce.setText("");
 
                         ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
 
@@ -295,7 +340,7 @@ public class orientation_Page extends AppCompatActivity {
         });
     }
 
-    String dateFilter(String userAns){
+    String dateFilter(@NonNull String userAns){
         String[] ansArray = userAns.split("");
         String toDigit = "";
         for(String s : ansArray){
@@ -320,7 +365,17 @@ public class orientation_Page extends AppCompatActivity {
         int score = 0;
         if(ans.length == crr.length-1){
             for(int i = 0; i < ans.length; i++){
-                if(ans[i].contains(crr[i + 1].get(0))) score ++;
+                if(crr[i+1].size() > 1){
+                    for(String s : crr[i+1]){
+                        if(ans[i].contains(s)) {
+                            score ++;
+                            break;
+                        }
+                    }
+                }
+                else{
+                    if(ans[i].contains(crr[i + 1].get(0))) score ++;
+                }
             }
         }
         return score;
