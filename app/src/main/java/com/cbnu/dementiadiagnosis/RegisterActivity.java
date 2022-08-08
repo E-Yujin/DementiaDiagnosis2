@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,10 +20,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import database.DBHelper;
 import user.EducationAge;
@@ -65,6 +65,19 @@ public class RegisterActivity extends AppCompatActivity {
         sexError = findViewById(R.id.sexError);
         eduError = findViewById(R.id.eduError);
         checkBox = findViewById(R.id.checkBox);
+
+        // 사용자 이름 한글, 영문만 가능
+        userName.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                Pattern ps = Pattern.compile("^[a-zA-Zㄱ-ㅣ가-힣\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]*$");
+                if (!ps.matcher(source).matches()) {
+                    Toast.makeText(RegisterActivity.this, "한글, 영문만 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                    return "";
+                }
+                return null;
+            }
+        },new InputFilter.LengthFilter(10)});
 
         // 생년월일 datePicker
         birthFun();
@@ -133,58 +146,55 @@ public class RegisterActivity extends AppCompatActivity {
 
     // 등록버튼 처리 함수
     public void btnInsertFun() {
-        btnInsert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RadioButton sexRb = findViewById(userSex.getCheckedRadioButtonId());
-                boolean checked = checkAllValue();
+        btnInsert.setOnClickListener(v -> {
+            RadioButton sexRb = findViewById(userSex.getCheckedRadioButtonId());
+            boolean checked = checkAllValue();
 
-                // 모든 정보를 다 입력했을 경우
-                if(checked) {
-                    user.setName(userName.getText().toString().trim());
-                    user.setBirth(userBirth.getText().toString().trim());
-                    user.setAge(getAge(user.getBirth()));
-                    user.setSex(sexRb.getText().toString());
-                    user.setEdu(userEdu.getEduValue());
-                    user.setScore(getRefScore(user.getAge(), user.getEdu()));
+            // 모든 정보를 다 입력했을 경우
+            if(checked) {
+                user.setName(userName.getText().toString().trim());
+                user.setBirth(userBirth.getText().toString().trim());
+                user.setAge(getAge(user.getBirth()));
+                user.setSex(sexRb.getText().toString());
+                user.setEdu(userEdu.getEduValue());
+                user.setScore(getRefScore(user.getAge(), user.getEdu()));
 
-                    boolean check = db.checkUser(user.getName(), user.getBirth(), user.getSex(), user.getEdu());
-                    boolean autoCheck = checkBox.isChecked();
+                boolean check = db.checkUser(user.getName(), user.getBirth(), user.getSex(), user.getEdu());
+                boolean autoCheck = checkBox.isChecked();
 
-                    // 이미 등록한 사용자
-                    if(check) {
+                // 이미 등록한 사용자
+                if(check) {
+                    if(autoCheck) {// 자동 사용자 등록 체크한 경우
+                        user.setSerial_code(db.saveSerialCode(user.getName(), user.getBirth(), user.getSex(), user.getEdu()));
+                        SharedPreference.setUserInf(RegisterActivity.this, user.getSerial_code(), user.getName(), user.getBirth(),
+                                user.getAge(), user.getSex(), user.getEdu(), user.getScore());
+                    }else {
+                        user.setSerial_code(db.saveSerialCode(user.getName(), user.getBirth(), user.getSex(), user.getEdu()));
+                        SharedPreference.setSerialCodeInf(RegisterActivity.this, user.getSerial_code());
+                    }
+                    Toast.makeText(RegisterActivity.this, "로그인", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                    finish();
+                }
+                // 새로운 사용자
+                else {
+                    user.setSerial_code(getRandomString(5));
+                    long val = db.registerUser(user.getSerial_code(), user.getName(), user.getBirth(),
+                            user.getAge(), user.getSex(), user.getEdu(), user.getScore());
+
+                    if(val > 0) {
                         if(autoCheck) {// 자동 사용자 등록 체크한 경우
-                            user.setSerial_code(db.saveSerialCode(user.getName(), user.getBirth(), user.getSex(), user.getEdu()));
                             SharedPreference.setUserInf(RegisterActivity.this, user.getSerial_code(), user.getName(), user.getBirth(),
                                     user.getAge(), user.getSex(), user.getEdu(), user.getScore());
                         }else {
-                            user.setSerial_code(db.saveSerialCode(user.getName(), user.getBirth(), user.getSex(), user.getEdu()));
                             SharedPreference.setSerialCodeInf(RegisterActivity.this, user.getSerial_code());
                         }
-                        Toast.makeText(RegisterActivity.this, "로그인", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "회원등록 완료", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                         finish();
                     }
-                    // 새로운 사용자
                     else {
-                        user.setSerial_code(getRandomString(5));
-                        long val = db.registerUser(user.getSerial_code(), user.getName(), user.getBirth(),
-                                user.getAge(), user.getSex(), user.getEdu(), user.getScore());
-
-                        if(val > 0) {
-                            if(autoCheck) {// 자동 사용자 등록 체크한 경우
-                                SharedPreference.setUserInf(RegisterActivity.this, user.getSerial_code(), user.getName(), user.getBirth(),
-                                        user.getAge(), user.getSex(), user.getEdu(), user.getScore());
-                            }else {
-                                SharedPreference.setSerialCodeInf(RegisterActivity.this, user.getSerial_code());
-                            }
-                            Toast.makeText(RegisterActivity.this, "회원등록 완료", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                            finish();
-                        }
-                        else {
-                            Toast.makeText(RegisterActivity.this, "회원등록 실패", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(RegisterActivity.this, "회원등록 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -193,39 +203,35 @@ public class RegisterActivity extends AppCompatActivity {
 
     // 생년월일 datePicker
     public void birthFun() {
-        userBirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+        userBirth.setOnClickListener(v -> {
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(
-                        RegisterActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListener,
-                        year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
+            DatePickerDialog dialog = new DatePickerDialog(
+                    RegisterActivity.this,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    mDateSetListener,
+                    year, month, day);
+
+            dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
         });
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String date = null;
-                String s_month = Integer.toString(month), s_day = Integer.toString(day);
+        mDateSetListener = (datePicker, year, month, day) -> {
+            month = month + 1;
+            String date = null;
+            String s_month = Integer.toString(month), s_day = Integer.toString(day);
 
-                if(month < 10) {
-                    s_month = "0" + month;
-                }
-                if(day < 10) {
-                    s_day = "0" + day;
-                }
-                date = year + "/" + s_month + "/" + s_day;
-                userBirth.setText(date);
+            if(month < 10) {
+                s_month = "0" + month;
             }
+            if(day < 10) {
+                s_day = "0" + day;
+            }
+            date = year + "/" + s_month + "/" + s_day;
+            userBirth.setText(date);
         };
     }
 
@@ -315,5 +321,4 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return ref_score;
     }
-
 }

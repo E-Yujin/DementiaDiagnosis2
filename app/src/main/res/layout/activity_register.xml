@@ -15,7 +15,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="330dp"
-        android:layout_height="660dp"
+        android:layout_height="wrap_content"
         card_view:cardElevation="10sp"
         app:cardCornerRadius="26dp">
 
@@ -80,14 +80,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="3dp"
                 android:text="성별"
-                android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
-                android:letterSpacing="0.04"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:fontFamily="@font/jejugothic"
+                android:lineSpacingExtra ="10dp"
+                android:letterSpacing="0.04" />
 
             <RadioGroup
                 android:id="@+id/radioGroupSex"
@@ -102,8 +103,6 @@
                     android:layout_height="wrap_content"
                     android:text="남"
                     android:fontFamily="@font/jejugothic"
-                    android:lineSpacingExtra ="10dp"
-                    android:letterSpacing="0.04"
                     android:textSize="18sp"/>
 
                 <RadioButton
@@ -113,8 +112,6 @@
                     android:layout_marginStart="10dp"
                     android:text="여"
                     android:fontFamily="@font/jejugothic"
-                    android:lineSpacingExtra ="10dp"
-                    android:letterSpacing="0.04"
                     android:textSize="18sp"/>
             </RadioGroup>
 
@@ -124,24 +121,23 @@
                 android:layout_height="wrap_content"
                 android:text="성별을 선택해주세요"
                 android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
                 android:letterSpacing="0.04"
                 android:textColor="#FF0000"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="15sp"
+                android:paddingBottom="7dp"
                 android:visibility="invisible" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
-                android:text="무학여부"
                 android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
                 android:letterSpacing="0.04"
+                android:lineSpacingExtra="10dp"
+                android:text="무학여부"
+                android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textStyle="bold" />
 
 
             <user.RadioButtonTable
@@ -156,7 +152,6 @@
                         android:layout_height="wrap_content"
                         android:text="문맹"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
                         android:textSize="18sp"/>
                     <RadioButton
@@ -166,7 +161,6 @@
                         android:layout_marginStart="5dp"
                         android:text="무학"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
                         android:textSize="18sp"/>
                 </TableRow>
@@ -178,7 +172,6 @@
                         android:layout_height="wrap_content"
                         android:text="초등졸업"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
                         android:textSize="18sp" />
                     <RadioButton
@@ -188,7 +181,6 @@
                         android:layout_marginStart="5dp"
                         android:text="중등졸업"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
                         android:textSize="18sp" />
                 </TableRow>
@@ -200,7 +192,6 @@
                         android:layout_height="wrap_content"
                         android:text="고등졸업"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
                         android:textSize="18sp" />
                     <RadioButton
@@ -210,7 +201,6 @@
                         android:layout_marginStart="5dp"
                         android:text="대학졸업이상"
                         android:fontFamily="@font/jejugothic"
-                        android:lineSpacingExtra ="10dp"
                         android:letterSpacing="0.04"
                         android:textSize="18sp" />
                 </TableRow>
@@ -223,11 +213,9 @@
                 android:layout_height="wrap_content"
                 android:text="무학여부를 선택해주세요"
                 android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
                 android:letterSpacing="0.04"
                 android:textColor="#FF0000"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="15sp"
                 android:visibility="invisible" />
 
             <CheckBox
@@ -236,8 +224,8 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="사용자 정보 기억하기"
+                android:textSize="15sp"
                 android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
                 android:letterSpacing="0.04"/>
 
             <Button
@@ -245,12 +233,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FF6168FF"
+                android:background="@drawable/round_button"
                 android:text="시작하기"
+                android:textSize="20sp"
                 android:fontFamily="@font/jejugothic"
-                android:lineSpacingExtra ="10dp"
-                android:letterSpacing="0.04"
-                android:textSize="20sp" />
+                android:letterSpacing="0.04" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
