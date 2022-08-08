@@ -46,6 +46,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_mic.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/ic_star.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/progressbar.xml" value="0.1259259259259259" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/radio_padding.xml" value="0.2175925925925926" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_circle.xml" value="0.10277777777777777" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_square.xml" value="0.10277777777777777" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/drawable/res_triangle.xml" value="0.265625" />
@@ -65,7 +66,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_comprehension_page.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_first.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_home.xml" value="0.2" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_result.xml" value="0.536" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_scomprehension.xml" value="0.2484375" />
         <entry key="..\:/Users/user/AndroidStudioProjects/DementiaDiagnosis2/app/src/main/res/layout/activity_sexecution.xml" value="0.264" />
