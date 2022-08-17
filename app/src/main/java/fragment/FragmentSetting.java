@@ -2,29 +2,42 @@ package fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.cbnu.dementiadiagnosis.FirstActivity;
 import com.cbnu.dementiadiagnosis.R;
-import com.cbnu.dementiadiagnosis.RegisterActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import database.DBHelper;
 import user.EducationAge;
@@ -38,6 +51,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
     DBHelper db;
     String serial_code;
     List<EducationAge> eduAgeList = new ArrayList<>();
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,15 +98,22 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_retrieve, null);
         EditText nameEditText = (EditText) dialogView.findViewById(R.id.edit_name);
         EditText birthEditText = (EditText) dialogView.findViewById(R.id.edit_birth);
-        EditText sexEditText = (EditText) dialogView.findViewById(R.id.edit_sex);
-        EditText eduEditText = (EditText) dialogView.findViewById(R.id.edit_edu);
+        Spinner spinnerSex = (Spinner) dialogView.findViewById(R.id.spinner_sex);
+        Spinner spinnerEdu = (Spinner) dialogView.findViewById(R.id.spinner_edu);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setView(dialogView);
 
         AlertDialog alertDialog = builder.create();
+        alertDialog.setContentView(R.layout.dialog_retrieve);
         alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.round_button);
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        params.copyFrom(alertDialog.getWindow().getAttributes());
+        params.width = 900;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setAttributes(params);
 
         // 수정 전, 기존 사용자 정보 출력
         User user = db.getUserInf(serial_code);
@@ -103,8 +124,85 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
 
         nameEditText.setText(name);
         birthEditText.setText(birth);
-        sexEditText.setText(sex);
-        eduEditText.setText(edu);
+
+        // 생년월일 dialog picker
+        birthFun(birthEditText);
+
+        String[] sexList = new String[2];
+        sexList[0] = "남";
+        sexList[1] = "여";
+
+        ArrayAdapter spinnerAdapterSex;
+        spinnerAdapterSex = new ArrayAdapter(requireActivity(), R.layout.spinner, sexList);
+        spinnerSex.setAdapter(spinnerAdapterSex);
+
+        spinnerSex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if(sex.equals("남")) {
+            spinnerSex.setSelection(0);
+        } else {
+            spinnerSex.setSelection(1);
+        }
+
+        int eduNum = 0;
+        switch(edu) {
+            case "문맹":
+                eduNum = 0;
+                break;
+            case "무학":
+                eduNum = 1;
+                break;
+            case "초등졸업":
+                eduNum = 2;
+                break;
+            case "중등졸업":
+                eduNum = 3;
+                break;
+            case "고등졸업":
+                eduNum = 4;
+                break;
+            case "대학졸업이상":
+                eduNum = 5;
+                break;
+            default:
+                break;
+
+        }
+
+        ArrayList<String> eduList = new ArrayList<>();
+        eduList.add("문맹");
+        eduList.add("무학");
+        eduList.add("초등졸업");
+        eduList.add("중등졸업");
+        eduList.add("고등졸업");
+        eduList.add("대학졸업이상");
+
+        ArrayAdapter spinnerAdapterEdu;
+        spinnerAdapterEdu = new ArrayAdapter(requireActivity(),R.layout.spinner, eduList);
+        spinnerEdu.setAdapter(spinnerAdapterEdu);
+
+        spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerEdu.setSelection(eduNum);
 
         Button cancelBtn = (Button) dialogView.findViewById(R.id.cancelBtn);
         Button retrieveBtn = (Button) dialogView.findViewById(R.id.retrieveBtn);
@@ -122,18 +220,18 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 String cname = nameEditText.getText().toString();
                 String cbirth = birthEditText.getText().toString();
-                String csex = sexEditText.getText().toString();
-                String cedu = eduEditText.getText().toString();
+                String csex = spinnerSex.getSelectedItem().toString();
+                String cedu = spinnerEdu.getSelectedItem().toString();
                 int cage = getAge(cbirth);
                 int cscore = getRefScore(cage, cedu);
 
                 long result = db.updateData(serial_code, cname, cbirth, cage, csex, cedu, cscore);
 
                 if(result > -1) {
-                    Toast.makeText(requireActivity(), "사용자 정보 수정 성공!!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireActivity(), "수정되었습니다", Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 } else {
-                    Toast.makeText(requireActivity(), "사용자 정보 수정 실패ㅜㅜㅜ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireActivity(), "수정에 실패하셨습니다", Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 }
             }
@@ -174,7 +272,54 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
                         }
                     }
                 });
-        builder.show();
+        Typeface face = ResourcesCompat.getFont(requireContext(),R.font.jejugothic);
+        TextView title_of_dialog = new TextView(requireActivity().getApplicationContext());
+        title_of_dialog.setText("사용자 정보 삭제");
+        title_of_dialog.setTypeface(face);
+        title_of_dialog.setTextSize(18f);
+        title_of_dialog.setTextColor(Color.BLACK);
+        title_of_dialog.setPadding(50, 50, 0, 30);
+        builder.setCustomTitle(title_of_dialog);
+
+        AlertDialog dialog = builder.show();
+        TextView msg = (TextView) dialog.findViewById(android.R.id.message);
+        msg.setTypeface(face);
+        Button btnPositive = dialog.getButton(Dialog.BUTTON_POSITIVE);
+        btnPositive.setTypeface(face);
+        Button btnNegative = dialog.getButton(Dialog.BUTTON_NEGATIVE);
+        btnNegative.setTypeface(face);
+    }
+
+    // 생년월일 datePicker
+    public void birthFun(EditText birth) {
+        birth.setOnClickListener(v -> {
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog dialog = new DatePickerDialog(
+                    requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    mDateSetListener, year, month, day);
+
+            dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+        });
+        mDateSetListener = (datePicker, year, month, day) -> {
+            month = month + 1;
+            String date = null;
+            String s_month = Integer.toString(month), s_day = Integer.toString(day);
+
+            if(month < 10) {
+                s_month = "0" + month;
+            }
+            if(day < 10) {
+                s_day = "0" + day;
+            }
+            date = year + "/" + s_month + "/" + s_day;
+            birth.setText(date);
+        };
     }
 
     // 사용자 만나이 계산
