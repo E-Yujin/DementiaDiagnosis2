@@ -2,7 +2,6 @@ package fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +10,21 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import com.cbnu.dementiadiagnosis.FirstActivity;
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
-import com.cbnu.dementiadiagnosis.Result;
-
-import java.util.Objects;
 
 import simpleTest.S_orientation;
 import user.SharedPreference;
 
 public class FragmentHome extends Fragment {
 
-    Button simple, formal, logout;
+    Button simple, formal;
+    AppCompatButton logout;
     ImageView helper_img;
     Helper helper;
 
@@ -53,8 +51,7 @@ public class FragmentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreference.setTypeInf(getActivity(), "simple");
-                Intent intent = new Intent(requireActivity(), S_orientation.class);
-                startActivity(intent);
+                startActivity(new Intent(requireActivity(), S_orientation.class));
             }
         });
 
@@ -63,8 +60,7 @@ public class FragmentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreference.setTypeInf(getActivity(), "regular");
-                Intent intent = new Intent(requireActivity(), QuizHOME.class);
-                startActivity(intent);
+                startActivity(new Intent(requireActivity(), QuizHOME.class));
             }
         });
 
@@ -73,7 +69,8 @@ public class FragmentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreference.clear_user(getActivity());
-                startActivity(new Intent(getActivity(), FirstActivity.class));
+                startActivity(new Intent(requireActivity(), FirstActivity.class));
+                requireActivity().finish();
             }
         });
 
