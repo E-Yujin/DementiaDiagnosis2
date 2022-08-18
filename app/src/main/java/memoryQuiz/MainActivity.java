@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
+    @Override
     protected void onStart(){
         super.onStart();
         String newRandom = "";
@@ -316,33 +316,33 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 pro_bar.setProgress(40);
                 QP.Submit();
-                tts.speakOut(question.getText().toString(), "default");
+                tts.speakOut(question.getText().toString());
                 newRandom = generateString();
                 randomText.setText(newRandom);
                 break;
             case 1:
                 pro_bar.setProgress(60);
                 QP.Submit();
-                tts.speakOut(question.getText().toString(), "default");
+                tts.speakOut(question.getText().toString());
                 newRandom = generateString();
                 randomText.setText(newRandom);
                 break;
             case 2:
                 pro_bar.setProgress(80);
                 QP.Submit();
-                tts.speakOut(question.getText().toString(), "default");
+                tts.speakOut(question.getText().toString());
                 newRandom = generateString();
                 randomText.setText(newRandom);
                 break;
             case 3:
                 pro_bar.setProgress(100);
                 QP.Submit();
-                tts.speakOut(question.getText().toString(), "default");
+                tts.speakOut(question.getText().toString());
                 newRandom = generateString();
                 randomText.setText(newRandom);
                 break;
         }
-    }*/
+    }
 
     @Override
     protected void onStop(){
