@@ -18,12 +18,13 @@ import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
 
+import memoryQuiz.MainActivity;
 import simpleTest.S_orientation;
 import user.SharedPreference;
 
 public class FragmentHome extends Fragment {
 
-    Button simple, formal;
+    Button simple, formal, quiz;
     AppCompatButton logout;
     ImageView helper_img;
     Helper helper;
@@ -41,37 +42,32 @@ public class FragmentHome extends Fragment {
         helper_img = view.findViewById(R.id.img);
         simple = view.findViewById(R.id.simpleTest);
         formal = view.findViewById(R.id.formalTest);
+        quiz = view.findViewById(R.id.rememberQuiz);
         logout = view.findViewById(R.id.btnLogout);
         helper = new Helper(helper_img, this);
 
         helper.setNomal();
 
         // 간이검사 시작
-        simple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreference.setTypeInf(getActivity(), "simple");
-                startActivity(new Intent(requireActivity(), S_orientation.class));
-            }
+        simple.setOnClickListener(v -> {
+            SharedPreference.setTypeInf(getActivity(), "simple");
+            startActivity(new Intent(requireActivity(), S_orientation.class));
         });
 
         // 정규검사 시작
-        formal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreference.setTypeInf(getActivity(), "regular");
-                startActivity(new Intent(requireActivity(), QuizHOME.class));
-            }
+        formal.setOnClickListener(v -> {
+            SharedPreference.setTypeInf(getActivity(), "regular");
+            startActivity(new Intent(requireActivity(), QuizHOME.class));
         });
 
+        // 기억력 향상 테스트
+        quiz.setOnClickListener(v -> startActivity(new Intent(requireActivity(), MainActivity.class)));
+
         // 로그아웃
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreference.clear_user(getActivity());
-                startActivity(new Intent(requireActivity(), FirstActivity.class));
-                requireActivity().finish();
-            }
+        logout.setOnClickListener(v -> {
+            SharedPreference.clear_user(getActivity());
+            startActivity(new Intent(requireActivity(), FirstActivity.class));
+            requireActivity().finish();
         });
 
         return view;

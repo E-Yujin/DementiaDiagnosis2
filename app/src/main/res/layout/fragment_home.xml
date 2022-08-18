@@ -20,34 +20,64 @@
         android:layout_height="200dp"
         android:layout_below="@+id/btnLogout"
         android:layout_centerInParent="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         android:src="@drawable/helper_jump"
         app:tint="@color/main" />
 
-    <Button
-        android:id="@+id/simpleTest"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+    <LinearLayout
+        android:id="@+id/testLinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/img"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/jejugothic"
-        android:lineSpacingExtra="10dp"
-        android:text="간이검사"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
 
-    <Button
-        android:id="@+id/formalTest"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/simpleTest"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/simpleTest"
+            android:layout_width="110dp"
+            android:layout_height="130dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/jejugothic"
+            android:lineSpacingExtra="15dp"
+            android:letterSpacing="0.6"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/main"
+            android:text="간이\n검사"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/formalTest"
+            android:layout_width="110dp"
+            android:layout_height="130dp"
+            android:fontFamily="@font/jejugothic"
+            android:lineSpacingExtra="15dp"
+            android:letterSpacing="0.6"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/main"
+            android:text="정규\n검사"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/rememberQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:layout_below="@+id/testLinear"
+        android:layout_alignStart="@+id/testLinear"
+        android:layout_alignEnd="@+id/testLinear"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/lite_main"
         android:fontFamily="@font/jejugothic"
+        android:letterSpacing="0.2"
         android:lineSpacingExtra="10dp"
-        android:text="정규검사"
+        android:text="기억력 향상 퀴즈"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
 
