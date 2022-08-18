@@ -42,9 +42,9 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    String keyword = "";
     int count = 0;
-    int resCount = 0;
+    int num = 0;
+    boolean check = false;
     TextView randomText;
     TextView question;
     TextView time;
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         submit.setOnClickListener(v -> {
+            count = 0;
             stt.Stop();
             tts.Stop();
 
@@ -107,22 +108,7 @@ public class MainActivity extends AppCompatActivity {
             QP.user_ans = answer.getText().toString().replace(",", "");
             String[] ans = QP.user_ans.split(" ");
             Log.e("ans", Arrays.toString(ans));
-
-            for (String an : ans) {
-                keyword = an;
-                String result = getInitialSound(keyword);
-                Log.e("result", result);
-
-                if (result.equals(random)) {
-                    getResultSearch(keyword);
-                    Log.e("what", Integer.toString(count));
-                }
-            }
-            if(count >= 3) {
-                Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
-            }
+            getResultSearch(ans, random, ans.length);
         });
 
 
@@ -196,48 +182,74 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 백과사전에서 단어 검색
-    public void getResultSearch(String keyword) {
+    public void getResultSearch(String[] keyword, String random, int size) {
+
         ApiInterface apiInterface = ApiClient.getInstance().create(ApiInterface.class);
         String clientID = "EeyUFnx4V2vBUCESZorN";
         String clientSecret = "voTm1j9DwE";
-        Call<String> call = apiInterface.getSearchResult(clientID, clientSecret, "encyc.json", keyword);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    String result = response.body();
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        JSONArray dkf = (JSONArray) jsonObject.get("items");
-                        JSONObject obb = new JSONObject();
-                        String[] titleArr = new String[5];
 
-                        for(int i = 0; i < 5; i++) {
-                            obb =  (JSONObject) dkf.get(i);
-                            String temp = (String) obb.get("title");
-                            String titleFilter = temp.replaceAll("<b>", "");
-                            String title = titleFilter.replaceAll("</b>", "");
-                            titleArr[i] = title;
+        for(int a = 0; a < size; a++) {
+            String result = getInitialSound(keyword[a]);
+            Log.e("result", result);
+            num = a;
+            if (result.equals(random)) {
+                Call<String> call = apiInterface.getSearchResult(clientID, clientSecret, "encyc.json", keyword[a]);
+                String keywordNum = keyword[a];
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            String result = response.body();
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                JSONArray dkf = (JSONArray) jsonObject.get("items");
+                                JSONObject obb = new JSONObject();
+                                String[] titleArr = new String[5];
+
+                                for (int i = 0; i < 5; i++) {
+                                    obb = (JSONObject) dkf.get(i);
+                                    String temp = (String) obb.get("title");
+                                    String titleFilter = temp.replaceAll("<b>", "");
+                                    String title = titleFilter.replaceAll("</b>", "");
+                                    titleArr[i] = title;
+                                }
+                                Log.e("titleList", Arrays.toString(titleArr));
+                                if (Arrays.asList(titleArr).contains(keywordNum)) {
+                                    count++;
+                                    Log.e("cnt", Integer.toString(count));
+                                }
+                                if(num == size - 1){
+                                    check = true;
+                                }
+                                if (count >= 3 && check) {
+                                    Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
+                                } else if(count < 3 && check) {
+                                    Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Log.e(TAG, "실패 : " + response.body());
                         }
-                        Log.e("titleList", Arrays.toString(titleArr));
-                        if(Arrays.asList(titleArr).contains(keyword)) {
-                            count++;
-                            Log.e("cnt", Integer.toString(count));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                } else {
-                    Log.e(TAG, "실패 : " + response.body());
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Log.e(TAG, "에러 : " + t.getMessage());
+                    }
+                });
+            }
+            else {
+                Log.e("num", Integer.toString(num));
+                if(num == size - 1){
+                    check = true;
+                }
+                if(count < 3 && check) {
+                    Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
                 }
             }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e(TAG, "에러 : " + t.getMessage());
-            }
-        });
-        Log.e("end_cnt", Integer.toString(count));
+        }
     }
 
     // 랜덤 초성 생성
