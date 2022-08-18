@@ -9,12 +9,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cbnu.dementiadiagnosis.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity2 extends AppCompatActivity {
 
+    // 해당 액티비티 추후에 삭제할 예정(참고용으로 남겨둠)
     private final String TAG = this.getClass().getSimpleName();
     String keyword = "";
     TextView resultView;
@@ -44,8 +51,24 @@ public class MainActivity2 extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String result = response.body();
-                    resultBody.setText(result);
-                    Log.e(TAG, "성공 : " + result);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        JSONArray dkf = (JSONArray) jsonObject.get("items");
+                        JSONObject obb = new JSONObject();
+                        String[] titleArr = new String[5];
+
+                        for(int i = 0; i < 5; i++) {
+                            obb =  (JSONObject) dkf.get(i);
+                            String temp = (String) obb.get("title");
+                            String titleFilter = temp.replaceAll("<b>", "");
+                            String title = titleFilter.replaceAll("</b>", "");
+                            titleArr[i] = title;
+                        }
+                        resultBody.setText(Arrays.toString(titleArr));
+                        Log.e(TAG, "성공 : " + result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     resultBody.setText(response.body());
                     Log.e(TAG, "실패 : " + response.body());

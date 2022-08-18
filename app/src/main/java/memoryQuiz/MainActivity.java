@@ -1,5 +1,7 @@
 package memoryQuiz;
 
+import static android.content.ContentValues.TAG;
+
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,16 +25,26 @@ import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import QuizPage.QuizPage;
 import questions.MemoryQuiz;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     String keyword = "";
+    int count = 0;
+    int resCount = 0;
     TextView randomText;
     TextView question;
     TextView time;
@@ -88,18 +100,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
         submit.setOnClickListener(v -> {
-            keyword = answer.getText().toString();
-            String result = getInitialSound(keyword);
-            Log.e("result : ", result);
+            stt.Stop();
+            tts.Stop();
 
-            if(result.equals(random)) {
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                intent.putExtra("keyword", keyword);
-                startActivity(intent);
+            QP.user_ans = answer.getText().toString().replace(".", "");
+            QP.user_ans = answer.getText().toString().replace(",", "");
+            String[] ans = QP.user_ans.split(" ");
+            Log.e("ans", Arrays.toString(ans));
+
+            for (String an : ans) {
+                keyword = an;
+                String result = getInitialSound(keyword);
+                Log.e("result", result);
+
+                if (result.equals(random)) {
+                    getResultSearch(keyword);
+                    Log.e("what", Integer.toString(count));
+                }
+            }
+            if(count >= 3) {
+                Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(MainActivity.this, "틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         /*// 타이머 설정
         long duration = TimeUnit.SECONDS.toMillis(30);
@@ -168,6 +193,51 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.start();*/
+    }
+
+    // 백과사전에서 단어 검색
+    public void getResultSearch(String keyword) {
+        ApiInterface apiInterface = ApiClient.getInstance().create(ApiInterface.class);
+        String clientID = "EeyUFnx4V2vBUCESZorN";
+        String clientSecret = "voTm1j9DwE";
+        Call<String> call = apiInterface.getSearchResult(clientID, clientSecret, "encyc.json", keyword);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String result = response.body();
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        JSONArray dkf = (JSONArray) jsonObject.get("items");
+                        JSONObject obb = new JSONObject();
+                        String[] titleArr = new String[5];
+
+                        for(int i = 0; i < 5; i++) {
+                            obb =  (JSONObject) dkf.get(i);
+                            String temp = (String) obb.get("title");
+                            String titleFilter = temp.replaceAll("<b>", "");
+                            String title = titleFilter.replaceAll("</b>", "");
+                            titleArr[i] = title;
+                        }
+                        Log.e("titleList", Arrays.toString(titleArr));
+                        if(Arrays.asList(titleArr).contains(keyword)) {
+                            count++;
+                            Log.e("cnt", Integer.toString(count));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e(TAG, "실패 : " + response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e(TAG, "에러 : " + t.getMessage());
+            }
+        });
+        Log.e("end_cnt", Integer.toString(count));
     }
 
     // 랜덤 초성 생성
