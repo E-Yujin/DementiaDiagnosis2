@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <!--
+    <Button
+        android:id="@+id/searchBtn"
+        android:text="검색"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getNaverSearch"/>
+
+    <TextView
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:hint="초성 오답인지 1차체크"/>-->
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/jejugothic"
+        android:text="00:30"
+        android:textColor="@color/main"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/submit"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_left_right"
+        android:rotation="90" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/time"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/progressbar" />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:fontFamily="@font/jejugothic"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="10dp"
+        android:text="초성에 해당하는\n단어 3개를 말씀해주세요"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_below="@+id/question"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/default_0"
+        android:backgroundTint="@color/main"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="230dp"
+        android:layout_height="130dp"
+        android:layout_below="@+id/img"
+        android:layout_centerInParent="true"
+        android:backgroundTint="#F2F7FF"
+        android:elevation="20dp" >
+
+        <TextView
+            android:id="@+id/random_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jejugothic"
+            android:letterSpacing="0.45"
+            android:layout_gravity="center"
+            android:text="ㅇㅅ"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            android:textStyle="bold"/>
+    </androidx.cardview.widget.CardView>
+
+
+    <FrameLayout
+        android:id="@+id/gray_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_round_bar"
+        android:backgroundTint="#F4F4F4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="330dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/jejugothic"
+                    android:gravity="center"
+                    android:hint="답변이 여기에 나타납니다." />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/sttStart"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/ic_mic" />
+        </LinearLayout>
+
+    </FrameLayout>
+</RelativeLayout>
