@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     int count = 0;
     int num = 0;
-    boolean check = false;
     TextView randomText;
     TextView question;
     TextView time;
@@ -219,12 +218,11 @@ public class MainActivity extends AppCompatActivity {
                                     Log.e("cnt", Integer.toString(count));
                                 }
                                 if(num == size - 1){
-                                    check = true;
-                                }
-                                if (count >= 3 && check) {
-                                    Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
-                                } else if(count < 3 && check) {
-                                    Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                    if (count >= 3) {
+                                        Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -243,10 +241,9 @@ public class MainActivity extends AppCompatActivity {
             else {
                 Log.e("num", Integer.toString(num));
                 if(num == size - 1){
-                    check = true;
-                }
-                if(count < 3 && check) {
-                    Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                    if(count < 3) {
+                        Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
