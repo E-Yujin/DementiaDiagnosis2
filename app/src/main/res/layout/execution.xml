@@ -48,7 +48,7 @@
     <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:layout_below="@id/progressBar"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
@@ -70,7 +70,7 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"></FrameLayout>
+        android:layout_marginEnd="30dp"/>
 
     <FrameLayout
         android:id="@+id/gray_view"
@@ -113,9 +113,7 @@
                     android:id="@+id/sttStart"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@+id/textInput"
                     android:background="@drawable/ic_mic"
                     android:visibility="invisible" />
 
