@@ -16,6 +16,9 @@
         android:theme="@style/Theme.DementiaDiagnosis"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="memoryQuiz.MainActivity"
+            android:exported="true" />
+        <activity
             android:name="simpleTest.S_execution"
             android:exported="false" />
         <activity
@@ -31,15 +34,13 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name="memoryQuiz.MainActivity"
-            android:exported="false"/>
-
+            android:name=".FirstActivity"
+            android:exported="false" />
         <activity
             android:name="memoryQuiz.MainActivity2"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
-            android:name=".FirstActivity"
+            android:name=".VoiceBot"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +59,6 @@
         <activity android:name="QuizPage.SpaceTimePage" />
         <activity android:name="QuizPage.ComprehensionPage" />
         <activity android:name="QuizPage.LanguagePage" />
-
         <activity android:name="simpleTest.S_orientation" />
         <activity android:name="simpleTest.S_fluency_Page" />
         <activity android:name="simpleTest.S_memoryInput" />

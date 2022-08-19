@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.cbnu.dementiadiagnosis.Helper;
+import com.cbnu.dementiadiagnosis.HomeActivity;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
@@ -291,7 +292,13 @@ public class LanguagePage extends AppCompatActivity {
         long gapTime = curTime - backBtnTime;
 
         if (0 <= gapTime && 2000 >= gapTime) {
-            super.onBackPressed();
+            tts.Destroy();
+            stt.Destroy();
+
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+
+            finish();
         } else {
             backBtnTime = curTime;
             Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",

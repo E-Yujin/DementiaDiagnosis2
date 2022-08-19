@@ -133,8 +133,7 @@
             android:id="@+id/sttStart"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_above="@+id/donknow"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:background="@drawable/ic_mic" />
 
         <androidx.appcompat.widget.AppCompatButton

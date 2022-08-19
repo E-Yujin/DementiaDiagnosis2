@@ -206,8 +206,14 @@ public class Helper{
                 }
                 else{
                     this.stop();
-                    img.setImageDrawable(listn_f);
-                    listn_f.start();
+                    if(tts.IsTalking()){
+                        img.setImageDrawable(speak);
+                        speak.start();
+                    }
+                    else{
+                        img.setImageDrawable(listn_f);
+                        listn_f.start();
+                    }
                 }
             }
         };
