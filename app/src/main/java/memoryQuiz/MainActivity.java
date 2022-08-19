@@ -43,7 +43,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     int count = 0;
-    int num = 0;
+    int checkCnt = 0;
+    int arrCnt = 0;
+    boolean checkFalse = false;
     TextView randomText;
     TextView question;
     TextView time;
@@ -99,7 +101,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         submit.setOnClickListener(v -> {
+            checkFalse = false;
+            checkCnt = 0;
             count = 0;
+            arrCnt = 0;
             stt.Stop();
             tts.Stop();
 
@@ -188,12 +193,14 @@ public class MainActivity extends AppCompatActivity {
         String clientSecret = "voTm1j9DwE";
 
         for(int a = 0; a < size; a++) {
+            checkCnt++;
+            Log.e("checkCnt", Integer.toString(checkCnt));
             String result = getInitialSound(keyword[a]);
             Log.e("result", result);
-            num = a;
             if (result.equals(random)) {
                 Call<String> call = apiInterface.getSearchResult(clientID, clientSecret, "encyc.json", keyword[a]);
                 String keywordNum = keyword[a];
+
                 call.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -202,27 +209,39 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = new JSONObject(result);
                                 JSONArray dkf = (JSONArray) jsonObject.get("items");
-                                JSONObject obb = new JSONObject();
-                                String[] titleArr = new String[5];
+                                if(!dkf.isNull(0)) {
+                                    JSONObject obb = new JSONObject();
+                                    String[] titleArr = new String[5];
 
-                                for (int i = 0; i < 5; i++) {
-                                    obb = (JSONObject) dkf.get(i);
-                                    String temp = (String) obb.get("title");
-                                    String titleFilter = temp.replaceAll("<b>", "");
-                                    String title = titleFilter.replaceAll("</b>", "");
-                                    titleArr[i] = title;
-                                }
-                                Log.e("titleList", Arrays.toString(titleArr));
-                                if (Arrays.asList(titleArr).contains(keywordNum)) {
-                                    count++;
-                                    Log.e("cnt", Integer.toString(count));
-                                }
-                                if(num == size - 1){
-                                    Log.e("end_cnt", Integer.toString(count));
-                                    if (count >= 3) {
+                                    for (int i = 0; i < 5; i++) {
+                                        obb = (JSONObject) dkf.get(i);
+                                        String temp = (String) obb.get("title");
+                                        String titleFilter = temp.replaceAll("<b>", "");
+                                        String title = titleFilter.replaceAll("</b>", "");
+                                        titleArr[i] = title;
+                                    }
+                                    Log.e("titleList", Arrays.toString(titleArr));
+                                    if (Arrays.asList(titleArr).contains(keywordNum)) {
+                                        count++;
+                                        Log.e("cnt", Integer.toString(count));
+                                    }
+                                    arrCnt++;
+
+                                    if (count >= 3 && arrCnt >= 3 && !checkFalse) {
+                                        Log.e("one", "true!");
                                         Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                    } else if (count < 3 && arrCnt >= 3 && !checkFalse) {
+                                        Log.e("two", "true!");
+                                        Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                    } else if (count < 3 && arrCnt >= 3) {
+                                        Log.e("three", "true!");
+                                        Toast.makeText(MainActivity.this, "2x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    arrCnt++;
+                                    if (count < 3 && arrCnt >= 3 && !checkFalse) {
+                                        Log.e("two", "true!");
+                                        Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } catch (JSONException e) {
@@ -232,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.e(TAG, "실패 : " + response.body());
                         }
                     }
-
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
                         Log.e(TAG, "에러 : " + t.getMessage());
@@ -240,12 +258,9 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
             else {
-                Log.e("num", Integer.toString(num));
-                if(num == size - 1){
-                    if(count < 3) {
-                        Toast.makeText(MainActivity.this, "틀렸습니다!!", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                checkFalse = true;
+                arrCnt++;
+                Log.e("checkFalse", "true");
             }
         }
     }
@@ -300,16 +315,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+   /* @Override
     protected void onStart(){
         super.onStart();
+        String newRandom = "";
         question.setText(memoryQuiz.quiz.get(QP.current));
         tts.isStopUtt = false;
         answer.setText("");
         tts.speakOut(question.getText().toString());
         QP.Start();
 
-    }
+        switch (QP.current) {
+            case 0:
+                pro_bar.setProgress(40);
+                QP.Submit();
+                tts.speakOut(question.getText().toString());
+                newRandom = generateString();
+                randomText.setText(newRandom);
+                break;
+            case 1:
+                pro_bar.setProgress(60);
+                QP.Submit();
+                tts.speakOut(question.getText().toString());
+                newRandom = generateString();
+                randomText.setText(newRandom);
+                break;
+            case 2:
+                pro_bar.setProgress(80);
+                QP.Submit();
+                tts.speakOut(question.getText().toString());
+                newRandom = generateString();
+                randomText.setText(newRandom);
+                break;
+            case 3:
+                pro_bar.setProgress(100);
+                QP.Submit();
+                tts.speakOut(question.getText().toString());
+                newRandom = generateString();
+                randomText.setText(newRandom);
+                break;
+        }
+    }*/
 
     @Override
     protected void onStop(){
