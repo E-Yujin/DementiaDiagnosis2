@@ -4,23 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <!--
-    <Button
-        android:id="@+id/searchBtn"
-        android:text="검색"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="getNaverSearch"/>
-
-    <TextView
-        android:id="@+id/check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:hint="초성 오답인지 1차체크"/>-->
-
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
@@ -29,7 +12,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/jejugothic"
-        android:text="00:30"
+        android:text="00 : 30"
         android:textColor="@color/main"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -68,38 +51,72 @@
         android:text="초성에 해당하는\n단어 3개를 말씀해주세요"
         android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_gravity="center"
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/question"
-        android:layout_centerHorizontal="true"
-        app:tint="@color/main"
-        android:src="@drawable/helper_jump" />
+        android:layout_above="@+id/gray_view"
+        android:layout_centerInParent="true">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        android:layout_width="230dp"
-        android:layout_height="130dp"
-        android:layout_below="@+id/img"
-        android:layout_centerInParent="true"
-        android:backgroundTint="#F2F7FF"
-        android:elevation="20dp" >
-
-        <TextView
-            android:id="@+id/random_text"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/jejugothic"
-            android:letterSpacing="0.45"
-            android:layout_gravity="center"
-            android:text="ㅇㅅ"
-            android:textColor="@color/black"
-            android:textSize="50sp"
-            android:textStyle="bold"/>
-    </androidx.cardview.widget.CardView>
+            android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                app:tint="@color/main"
+                android:src="@drawable/helper_jump" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card"
+                android:layout_width="230dp"
+                android:layout_height="130dp"
+                android:backgroundTint="#F2F7FF"
+                android:elevation="20dp" >
+
+                <TextView
+                    android:id="@+id/random_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/jejugothic"
+                    android:letterSpacing="0.45"
+                    android:layout_gravity="center"
+                    android:text="ㅇㅅ"
+                    android:textColor="@color/black"
+                    android:textSize="50sp"
+                    android:textStyle="bold"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/shapeRes"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="55dp"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            android:background="@drawable/shape_ring"
+            android:backgroundTint="#03F4B0"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/shapeX"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="55dp"
+            android:backgroundTint="#03F4B0"
+            android:scaleX="1.8"
+            android:scaleY="1.8"
+            android:layout_gravity="center"
+            android:rotation="45"
+            android:background="@drawable/shape_x"
+            android:visibility="gone"/>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/gray_view"

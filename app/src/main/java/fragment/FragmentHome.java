@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -18,7 +17,7 @@ import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
 
-import memoryQuiz.MainActivity;
+import memoryQuiz.StartActivity;
 import simpleTest.S_orientation;
 import user.SharedPreference;
 
@@ -61,7 +60,7 @@ public class FragmentHome extends Fragment {
         });
 
         // 기억력 향상 테스트
-        quiz.setOnClickListener(v -> startActivity(new Intent(requireActivity(), MainActivity.class)));
+        quiz.setOnClickListener(v -> startActivity(new Intent(requireActivity(), StartActivity.class)));
 
         // 로그아웃
         logout.setOnClickListener(v -> {

@@ -117,6 +117,35 @@ public class TTS {
             });
         }
     }
+    // 한 문장만 말할 때, onInit함수랑 함께쓸 때
+    public void UtteranceProgress(String say, int time, EditText answer, ImageButton sttButt, ImageButton submit){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            answer.setEnabled(true);
+                            sttButt.setEnabled(true);
+                            submit.setEnabled(true);
+                        }
+                    }, time);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
     // 한 문장을 말하는데 수동으로 텀을 조절하고 싶을 때
     public void UtteranceProgress(List<String> say, String id, ImageButton sttButt, ImageButton submit){
         if(!isStopUtt){

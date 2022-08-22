@@ -35,10 +35,6 @@
             android:exported="false"/>
 
         <activity
-            android:name="memoryQuiz.MainActivity2"
-            android:exported="false"/>
-
-        <activity
             android:name=".FirstActivity"
             android:exported="true">
             <intent-filter>
@@ -58,6 +54,7 @@
         <activity android:name="QuizPage.SpaceTimePage" />
         <activity android:name="QuizPage.ComprehensionPage" />
         <activity android:name="QuizPage.LanguagePage" />
+        <activity android:name="memoryQuiz.StartActivity"/>
 
         <activity android:name="simpleTest.S_orientation" />
         <activity android:name="simpleTest.S_fluency_Page" />

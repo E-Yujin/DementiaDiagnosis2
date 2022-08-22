@@ -2,14 +2,14 @@ package memoryQuiz;
 
 import static android.content.ContentValues.TAG;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.speech.tts.TextToSpeech;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cbnu.dementiadiagnosis.Helper;
@@ -30,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -46,20 +48,25 @@ public class MainActivity extends AppCompatActivity {
     int checkCnt = 0;
     int arrCnt = 0;
     boolean checkFalse = false;
+    CountDownTimer countDownTimer;
+    String[] ans = {};
     TextView randomText;
     TextView question;
     TextView time;
     EditText answer;
     ImageButton sttBtn, submit;
     ImageView helper_img;
+    ImageView shapeRes, shapeX;
     Helper helper;
     QuizPage QP;
     MainSTT stt;
     TTS tts;
     ProgressBar pro_bar;
     MemoryQuiz memoryQuiz;
-
     private long backBtnTime = 0;
+    HashSet<String> hashSet;
+    Handler hand;
+    Handler handTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,26 +79,32 @@ public class MainActivity extends AppCompatActivity {
         submit = (ImageButton) findViewById(R.id.submit);
         sttBtn = (ImageButton) findViewById(R.id.sttStart);
         time = (TextView) findViewById(R.id.time);
-        helper_img = findViewById(R.id.img);
+        helper_img = (ImageView) findViewById(R.id.img);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+        shapeRes = (ImageView) findViewById(R.id.shapeRes);
+        shapeX = (ImageView) findViewById(R.id.shapeX);
+        hand = new Handler();
+        handTimer = new Handler();
         memoryQuiz = new MemoryQuiz();
+        hashSet = new HashSet<>();
 
         tts = new TTS(this, status -> {
             tts.onInit(status, question.getText().toString(), "Done", 1000);
-            sttBtn.setEnabled(true);
-            answer.setEnabled(true);
+            answer.setEnabled(false);
+            sttBtn.setEnabled(false);
+            submit.setEnabled(false);
+            tts.UtteranceProgress(question.getText().toString(), 1000, answer, sttBtn, submit);
         });
         stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, memoryQuiz.quiz);
 
         helper = new Helper(tts, stt, helper_img, this);
         helper.setTest();
-
         pro_bar.setProgress(20);
 
-        String random = generateString();
-        Log.e("random : ", random);
-        randomText.setText(random);
+        final String[] random = {generateString()};
+        Log.e("random", random[0]);
+        randomText.setText(random[0]);
 
         // stt 시작
         sttBtn.setOnClickListener(v -> {
@@ -101,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         submit.setOnClickListener(v -> {
+            if(countDownTimer != null)
+                countDownTimer.cancel();
+            answer.setEnabled(false);
+            sttBtn.setEnabled(false);
+            submit.setEnabled(false);
             checkFalse = false;
             checkCnt = 0;
             count = 0;
@@ -108,24 +126,60 @@ public class MainActivity extends AppCompatActivity {
             stt.Stop();
             tts.Stop();
 
-            QP.user_ans = answer.getText().toString().replace(".", "");
-            QP.user_ans = answer.getText().toString().replace(",", "");
-            String[] ans = QP.user_ans.split(" ");
-            Log.e("ans", Arrays.toString(ans));
-            getResultSearch(ans, random, ans.length);
+            if (answer.getText().toString().equals("")) {
+                shapeX.setVisibility(View.VISIBLE);
+            } else {
+                String temp = answer.getText().toString().replace(".", "");
+                temp = temp.replace(",", "");
+                temp = temp.trim().replaceAll("\\s+", " ");
+                Log.e("temp", temp);
+                ans = temp.split(" ");
+                Log.e("ans", Arrays.toString(ans));
+                if (Arrays.asList(ans).contains("")) {
+                    shapeX.setVisibility(View.VISIBLE);
+                } else {
+                    hashSet.addAll(Arrays.asList(ans));
+                    ans = hashSet.toArray(new String[0]);
+                    if (ans.length < 3) {
+                        shapeX.setVisibility(View.VISIBLE);
+                    } else {
+                        getResultSearch(ans, random[0], ans.length);
+                    }
+                }
+            }
+            hand.postDelayed(() -> {
+                countDownTimer.cancel();
+                switch (QP.current) {
+                    case 0:
+                        changeQuiz(40);
+                        break;
+                    case 1:
+                        changeQuiz(60);
+                        break;
+                    case 2:
+                        changeQuiz(80);
+                        break;
+                    case 3:
+                        changeQuiz(100);
+                        break;
+                    case 4:
+                        countDownTimer.cancel();
+                        resultDialog();
+                    default:
+                        break;
+                }
+            }, 3000);
         });
 
-
-        /*// 타이머 설정
-        long duration = TimeUnit.SECONDS.toMillis(30);
-
-        new CountDownTimer(duration, 1000) {
+        // 타이머 설정
+        handTimer.postDelayed(() -> countDownTimer = new CountDownTimer(30000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 String sDuration = String.format(Locale.ENGLISH, "%02d : %02d"
-                        ,TimeUnit.MILLISECONDS.toMinutes(1)
-                        ,TimeUnit.MILLISECONDS.toMinutes(1) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(1)));
+                        , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                        , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                Log.e("sDuration", sDuration);
                 time.setText(sDuration);
             }
 
@@ -133,56 +187,75 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 stt.Stop();
                 tts.Stop();
-                sttBtn.setEnabled(true);
+                answer.setEnabled(false);
+                sttBtn.setEnabled(false);
                 tts.isStopUtt = true;
-                String newRandom = "";
 
-                keyword = answer.getText().toString();
-                String result = getInitialSound(keyword);
-                Log.e("result : ", result);
-
-                if(result.equals(random)) {
-                    Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                    intent.putExtra("keyword", keyword);
-                    startActivity(intent);
+                if (answer.getText().toString().equals("")) {
+                    shapeX.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(MainActivity.this, "틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                    String temp = answer.getText().toString().replace(".", "");
+                    temp = temp.replace(",", "");
+                    temp = temp.trim().replaceAll("\\s+", " ");
+                    Log.e("temp", temp);
+                    ans = temp.split(" ");
+                    Log.e("ans", Arrays.toString(ans));
+                    if (Arrays.asList(ans).contains("")) {
+                        shapeX.setVisibility(View.VISIBLE);
+                    } else {
+                        hashSet.addAll(Arrays.asList(ans));
+                        ans = hashSet.toArray(new String[0]);
+                        if (ans.length < 3) {
+                            shapeX.setVisibility(View.VISIBLE);
+                        } else {
+                            getResultSearch(ans, random[0], ans.length);
+                        }
+                    }
                 }
-
-                switch (QP.current) {
-                    case 0:
-                        pro_bar.setProgress(40);
-                        QP.Submit();
-                        tts.speakOut(question.getText().toString(), "default");
-                        newRandom = generateString();
-                        randomText.setText(newRandom);
-                        break;
-                    case 1:
-                        pro_bar.setProgress(60);
-                        QP.Submit();
-                        tts.speakOut(question.getText().toString(), "default");
-                        newRandom = generateString();
-                        randomText.setText(newRandom);
-                        break;
-                    case 2:
-                        pro_bar.setProgress(80);
-                        QP.Submit();
-                        tts.speakOut(question.getText().toString(), "default");
-                        newRandom = generateString();
-                        randomText.setText(newRandom);
-                        break;
-                    case 3:
-                        pro_bar.setProgress(100);
-                        QP.Submit();
-                        tts.speakOut(question.getText().toString(), "default");
-                        newRandom = generateString();
-                        randomText.setText(newRandom);
-                        break;
-                    default:
-                        finish();
-                }
+                hand.postDelayed(() -> {
+                    switch (QP.current) {
+                        case 0:
+                            changeQuiz(40);
+                            break;
+                        case 1:
+                            changeQuiz(60);
+                            break;
+                        case 2:
+                            changeQuiz(80);
+                            break;
+                        case 3:
+                            changeQuiz(100);
+                            break;
+                        case 4:
+                            countDownTimer.cancel();
+                            resultDialog();
+                        default:
+                            break;
+                    }
+                }, 3000);
             }
-        }.start();*/
+        }.start(), 5000);
+    }
+
+    // 바뀔 문제 세팅
+    public void changeQuiz(int pro) {
+        pro_bar.setProgress(pro);
+        tts.isStopUtt = false;
+        QP.Submit();
+        question.setText(memoryQuiz.quiz.get(QP.current));
+        tts.speakOut(question.getText().toString());
+        tts.UtteranceProgress(question.getText().toString(), 1000, answer, sttBtn, submit);
+        String newRandom = generateString();
+        Log.e("newRandom", newRandom);
+        randomText.setText(newRandom);
+        answer.setText("");
+        shapeRes.setVisibility(View.INVISIBLE);
+        shapeX.setVisibility(View.INVISIBLE);
+        count = 0;
+        checkCnt = 0;
+        arrCnt = 0;
+        time.setText("00 : 30");
+        handTimer.postDelayed(() -> countDownTimer.start(), 5000);
     }
 
     // 백과사전에서 단어 검색
@@ -226,21 +299,26 @@ public class MainActivity extends AppCompatActivity {
                                         Log.e("cnt", Integer.toString(count));
                                     }
                                     arrCnt++;
+                                    Log.e("arrCnt", Integer.toString(arrCnt));
 
-                                    if (count >= 3 && arrCnt >= 3 && !checkFalse) {
+                                    if (count >= 3 && arrCnt >= size && !checkFalse) {
                                         Log.e("one", "true!");
+                                        shapeRes.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
-                                    } else if (count < 3 && arrCnt >= 3 && !checkFalse) {
+                                    } else if (count < 3 && arrCnt >= size && !checkFalse) {
                                         Log.e("two", "true!");
+                                        shapeX.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
-                                    } else if (count < 3 && arrCnt >= 3) {
+                                    } else if (count < 3 && arrCnt >= size) {
                                         Log.e("three", "true!");
+                                        shapeX.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "2x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     arrCnt++;
-                                    if (count < 3 && arrCnt >= 3 && !checkFalse) {
+                                    if (count < 3 && arrCnt >= size && !checkFalse) {
                                         Log.e("two", "true!");
+                                        shapeX.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -301,6 +379,38 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    public void resultDialog() {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_quiz_end, null);
+        Button restart = (Button) dialogView.findViewById(R.id.restartBtn);
+        Button end = (Button) dialogView.findViewById(R.id.endBtn);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setView(dialogView);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setContentView(R.layout.dialog_quiz_end);
+        alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.round_button);
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        params.copyFrom(alertDialog.getWindow().getAttributes());
+        params.width = 900;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setAttributes(params);
+
+        // 다시하기
+        restart.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            startActivity(new Intent(MainActivity.this, StartActivity.class));
+            finish();
+        });
+        // 끝내기
+        end.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            finish();
+        });
+    }
+
     @Override
     public void onBackPressed() {
         long curTime = System.currentTimeMillis();
@@ -308,6 +418,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (0 <= gapTime && 2000 >= gapTime) {
             super.onBackPressed();
+            countDownTimer.cancel();
         } else {
             backBtnTime = curTime;
             Toast.makeText(this, "퀴즈를 종료하시겠습니까?",
@@ -368,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        countDownTimer.cancel();
         QP.Destroy();
     }
-
 }
