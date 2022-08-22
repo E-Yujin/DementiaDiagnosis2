@@ -21,6 +21,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.cbnu.dementiadiagnosis.AnimationListner;
 import com.cbnu.dementiadiagnosis.Helper;
+import com.cbnu.dementiadiagnosis.HomeActivity;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
@@ -324,15 +325,17 @@ public class orientation_Page extends AppCompatActivity {
 
                         ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
 
-                        ortt_main.scores[1] = ortt_main.Tscore;
+                        if(ortt_main.Tscore != -1){
+                            ortt_main.scores[1] = ortt_main.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(),memoryInput_Page.class);
-                        intent.putExtra("scores", ortt_main.scores);
-                        startActivity(intent);
+                            Intent intent = new Intent(getApplicationContext(),memoryInput_Page.class);
+                            intent.putExtra("scores", ortt_main.scores);
+                            startActivity(intent);
 
-                        QP.isOrient = false;
+                            QP.isOrient = false;
 
-                        finish();
+                            finish();
+                        }
                     }
 
                 }
@@ -371,6 +374,12 @@ public class orientation_Page extends AppCompatActivity {
                             score ++;
                             break;
                         }
+                        else if(s.contains("ERROR")){
+                            Toast.makeText(this, "GPS를 다시 확인해주세요.",
+                                    Toast.LENGTH_SHORT).show();
+                            ortt_main.reverseCoding();
+                            return -1;
+                        }
                     }
                 }
                 else{
@@ -387,7 +396,15 @@ public class orientation_Page extends AppCompatActivity {
         long gapTime = curTime - backBtnTime;
 
         if (0 <= gapTime && 2000 >= gapTime) {
-            super.onBackPressed();
+            tts.Destroy();
+            stt.Destroy();
+
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+
+            QP.isOrient = false;
+
+            finish();
         } else {
             backBtnTime = curTime;
             Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",

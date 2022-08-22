@@ -580,6 +580,20 @@ public class TTS {
 
     }
 
+    public void speakOut(String say, int time) {
+        CharSequence text = say;
+        tts.setPitch((float) 1.2);
+        tts.setSpeechRate((float) 1);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tts.speak(text,TextToSpeech.QUEUE_FLUSH,null, "Done");
+            }
+        }, time);
+        UtteranceProgress();
+    }
+
     public void speakOut(String say, String id) {
         CharSequence text = say;
         tts.setPitch((float) 1.2);

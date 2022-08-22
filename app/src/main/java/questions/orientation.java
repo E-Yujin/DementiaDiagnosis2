@@ -34,6 +34,16 @@ public class orientation extends question {
     final Geocoder geocoder;
 
     public orientation(AppCompatActivity context) {
+        this.num = 5;
+        this.quiz = new ArrayList<>();
+        this.crr_ans = new ArrayList[6];
+        for (int i = 0; i < 6; i++) {
+            this.crr_ans[i] = new ArrayList<>();
+        }
+        this.user_ans = new String[6];
+        this.scores = new int[10];
+        this.Tscore = new Integer(0);
+
         GeoVariable geovariable = new GeoVariable();
         geocoder = new Geocoder(context);
         lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -96,18 +106,18 @@ public class orientation extends question {
         latitude = geovariable.getLatitude(); // 위도 경도 클래스변수에서 가져옴
         longitude = geovariable.getLongitube();
 
-        reverseCoding();
 
-
-        this.num = 5;
-        this.quiz = new ArrayList<>();
-        this.crr_ans = new ArrayList[6];
-        for (int i = 0; i < 6; i++) {
-            this.crr_ans[i] = new ArrayList<>();
+        if (permissionCheck2 == PackageManager.PERMISSION_GRANTED
+                || permissionCheck3 == PackageManager.PERMISSION_GRANTED){
+            if(!reverseCoding()){
+                crr_ans[5].add("ERROR");
+                crr_ans[5].add("ERROR");
+            }
         }
-        this.user_ans = new String[6];
-        this.scores = new int[10];
-        this.Tscore = new Integer(0);
+        else {
+            crr_ans[5].add("ERROR");
+            crr_ans[5].add("ERROR");
+        }
 
         long getDate = System.currentTimeMillis();
         Date DateData = new Date(getDate);
@@ -254,17 +264,19 @@ public class orientation extends question {
         return String.valueOf(total);
     }
 
-    public void reverseCoding(){ // 위도 경도 넣어가지구 역지오코딩 주소값 뽑아낸다
+    public boolean reverseCoding(){ // 위도 경도 넣어가지구 역지오코딩 주소값 뽑아낸다
         List<Address> list = null;
         try {
             list = geocoder.getFromLocation(latitude, longitude, 10); // 위도, 경도, 얻어올 값의 개수
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("test_", "입출력 오류 - 서버에서 주소변환시 에러발생");
+            return false;
         }
         if (list != null) {
             if (list.size()==0) {
                 Log.d("geocoding", "해당되는 주소 정보는 없습니다");
+                return false;
             } else {
                 // onWhere.setText(list.get(0).toString()); 원래 통으로 나오는 주소값 문자열
 
@@ -291,8 +303,9 @@ public class orientation extends question {
                     loca = loca + " " + crr;
                 }
                 Log.d("geocoding", loca);
+                return true;
             }
         }
+        else return false;
     }
-
 }
