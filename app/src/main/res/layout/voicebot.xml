@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogout"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/logout"
+        android:backgroundTint="#B3B3B3" />
+    <RelativeLayout
+        android:id="@+id/textLayout"
+        android:layout_below="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bubble"
+            android:backgroundTint="#836799FF"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="10dp"
+            android:text="dddddddddddddddd"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/textLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/helper_jump"
+        app:tint="@color/main" />
+
+    <RelativeLayout
+        android:id="@+id/gray_view"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@+id/img"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_round_bar"
+        android:backgroundTint="#F4F4F4"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="10dp">
+
+        <RelativeLayout
+            android:id="@+id/micView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/sendView"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/sttStart"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_mic" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sendView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/submit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/send"
+                android:backgroundTint="#80ABFF"
+                android:rotation="270" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/goolelayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:letterSpacing="0.04"
+                android:lineSpacingExtra="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/jejugothic"
+                    android:gravity="center"
+                    android:letterSpacing="0.04"
+                    android:lineSpacingExtra="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

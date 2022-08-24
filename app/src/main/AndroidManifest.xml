@@ -16,6 +16,9 @@
         android:theme="@style/Theme.DementiaDiagnosis"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".FirstActivity"
+            android:exported="true" />
+        <activity
             android:name="simpleTest.S_execution"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".FirstActivity"
+            android:name=".VoiceBot"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

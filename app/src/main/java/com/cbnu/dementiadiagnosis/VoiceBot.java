@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.google.gson.Gson;
+
+import memoryQuiz.StartActivity;
 
 public class VoiceBot extends AppCompatActivity {
 
@@ -44,11 +47,12 @@ public class VoiceBot extends AppCompatActivity {
     ImageView helper_img;
     Helper helper;
     List<String> tem = new ArrayList<>();
+    AppCompatButton exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.orientation);
+        setContentView(R.layout.voicebot);
 
         // 위젯에 대한 참조.
         tv_outPut = (TextView) findViewById(R.id.question);
@@ -57,8 +61,9 @@ public class VoiceBot extends AppCompatActivity {
         edit =(EditText)findViewById(R.id.result);
         stt = new MainSTT(this, edit, tv_outPut, sttBtn, submit, tts);
         helper_img = findViewById(R.id.img);
+        exit = findViewById(R.id.btnLogout);
 
-        tv_outPut.setText("안녕하세요!");
+        tv_outPut.setText("안녕하세요!\n같이 대화해요!");
         edit.setHint("답변이 여기에 나타납니다.");
 
 
@@ -71,6 +76,14 @@ public class VoiceBot extends AppCompatActivity {
 
         helper = new Helper(tts, stt, helper_img, this);
         helper.setTest();
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         tv_outPut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -103,6 +116,9 @@ public class VoiceBot extends AppCompatActivity {
     }
 
     public void getAnswer(){
+        sttBtn.setEnabled(false);
+        submit.setEnabled(false);
+        edit.setEnabled(false);
         request = edit.getText().toString();
         Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -116,23 +132,21 @@ public class VoiceBot extends AppCompatActivity {
             if(!img.equals("")){
                 Log.d("확인", "img : "+img);
                 tv_outPut.setText(answer + "\n\n" + img);
-                tts.speakOut(answer);
+                readResponse();
             }
             else if(!extra_ans.equals("")){
-                tem.clear();
                 Log.d("확인", "extra : "+extra_ans);
-                tv_outPut.setText(answer);
-                tts.speakOut(answer, "default");
-                tem.add(extra_ans);
-                tts.UtteranceProgress(tem, "continue", tv_outPut);
+                readResponse();
             }
-            else if(answer.equals("")){
+            else if(edit.getText().toString().equals("")){
                 tv_outPut.setText("말을 걸어주세요!");
-                tts.speakOut(answer);
+                tts.speakOut(tv_outPut.getText().toString());
+                sttBtn.setEnabled(true);
+                submit.setEnabled(true);
+                edit.setEnabled(true);
             }
             else {
-                tv_outPut.setText(answer);
-                tts.speakOut(answer);
+                readResponse();
             }
 
         }catch (InterruptedException e){
@@ -164,7 +178,7 @@ public class VoiceBot extends AppCompatActivity {
         if(input.contains("토픽")){
             int count = 0;
             for(int i= 0; i<splited.length; i++){
-                if(splited[i].contains("text")) {
+                if(splited[i].contains("text") && !splited[i+1].contains("핑퐁")) {
                     s = splited[i+1];
                     String splited2[] = s.split("\"");
                     if(splited2[1].contains("u")){
@@ -194,7 +208,7 @@ public class VoiceBot extends AppCompatActivity {
         }
         else{
             for(int i= 0; i<splited.length; i++){
-                if(splited[i].contains("text")) {
+                if(splited[i].contains("text") && !splited[i+1].contains("핑퐁")) {
                     s = splited[i+1];
                     String splited2[] = s.split("\"");
                     if(splited2[1].contains("u")){
@@ -211,9 +225,66 @@ public class VoiceBot extends AppCompatActivity {
         }
     }
 
+    public void filter2(){
+
+    }
+
+    public void readResponse(){
+        tem.clear();
+        if(answer.contains("사용자")){
+            answer = answer.replace("사용자", "유진");
+        }
+        if(extra_ans.contains("사용자")){
+            extra_ans = extra_ans.replace("사용자", "유진");
+        }
+        if(extra_ans.equals("")){
+            if(answer.contains("@")){
+                String[] split = answer.split("@");
+                tv_outPut.setText(split[0]);
+                tts.speakOut(split[0], "default");
+                for(String s : split){
+                    tem.add(s);
+                }
+                tem.remove(0);
+                tts.UtteranceProgress(tem, "continue", tv_outPut, sttBtn, submit, edit);
+            }
+            else{
+                tv_outPut.setText(answer);
+                tts.speakOut(answer, "Done");
+                tts.UtteranceProgress(sttBtn, submit, edit, answer, this);
+            }
+        }
+        else{
+            if(answer.contains("@")){
+                String[] split = answer.split("@");
+                tv_outPut.setText(split[0]);
+                tts.speakOut(split[0], "default");
+                for(String s : split){
+                    tem.add(s);
+                }
+                tem.remove(0);
+            }
+            else{
+                tv_outPut.setText(answer);
+                tts.speakOut(answer, "default");
+            }
+
+            if(extra_ans.contains("@")){
+                String[] split = extra_ans.split("@");
+                for(String s : split){
+                    tem.add(s);
+                }
+            }
+            else{
+                tem.add(extra_ans);
+            }
+            tts.UtteranceProgress(tem, "continue", tv_outPut, sttBtn, submit, edit);
+        }
+    }
+
     public String sendDataAndGetResult (String answer) {
-        String openApiURL = "https://builder.pingpong.us/api/builder/5e2dbb18e4b010b663d4a038/integration/v0.2/custom/{sessionId}";
-        String accessKey = "Basic a2V5OmQzNTQ1YmI0NzNhOWRmZTlkNGUwNGRkYzY4YThmN2Y4";
+        String openApiURL = "https://builder.pingpong.us/api/builder/6303553ce4b069adbd03156f/integration/v0.2/custom/{sessionId}";
+        String accessKey = "Basic a2V5OmM3ODRlOTMwZGY1ZTlmYjMxZjFhMWMyYmFmYTNmYTMz";
 
         Gson gson = new Gson();
 
@@ -292,7 +363,7 @@ public class VoiceBot extends AppCompatActivity {
         tts.isStopUtt = false;
         edit.setHint("답변이 여기에 나타납니다.");
         edit.setText("");
-        tv_outPut.setText("안녕하세요!");
+        tv_outPut.setText("안녕하세요!\n같이 대화해요!");
         sttBtn.setEnabled(true);
         submit.setEnabled(true);
         edit.setEnabled(true);

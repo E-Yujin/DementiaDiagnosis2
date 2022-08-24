@@ -3,6 +3,7 @@ package com.cbnu.dementiadiagnosis;
 import static android.speech.tts.Voice.QUALITY_HIGH;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,11 +17,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 import java.util.Locale;
 
 import QuizPage.fluency_Page;
+import memoryQuiz.StartActivity;
+import simpleTest.S_orientation;
 
 public class TTS {
     private TextToSpeech tts;
@@ -45,6 +49,95 @@ public class TTS {
                 @Override
                 public void onDone(String s) {
                     isSpeaking = false;
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
+    public void UtteranceProgress(ImageButton sttButt, ImageButton submit, EditText edit, String str, AppCompatActivity content){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(str.contains("정규 검사로 바로 이동할게요!")){
+                                Log.d("확인", "된다");
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(content, QuizHOME.class);
+                                        content.startActivity(intent);
+                                        content.finish();
+                                    }
+                                }, 500);
+                            }
+                            else if(str.contains("간이 검사로 바로 이동할게요!")){
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(content, S_orientation.class);
+                                        content.startActivity(intent);
+                                        content.finish();
+                                    }
+                                }, 500);
+                            }
+                            else if(str.contains("기억력 테스트로 바로 이동할게요!")){
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(content, StartActivity.class);
+                                        content.startActivity(intent);
+                                        content.finish();
+                                    }
+                                }, 500);
+                            }
+                            else{
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
+                                edit.setEnabled(true);
+                            }
+                        }
+                    }, 500);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
+    public void UtteranceProgress(ImageButton sttButt, ImageButton submit, EditText edit){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            sttButt.setEnabled(true);
+                            submit.setEnabled(true);
+                            edit.setEnabled(true);
+                        }
+                    }, 500);
                 }
 
                 @Override
@@ -398,6 +491,46 @@ public class TTS {
                                 else speakOut(say.get(i), id);
                                 text.setText(say.get(i));
                                 i++;
+                            }
+                        }
+                    }, 500);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
+
+    public void UtteranceProgress(List<String> say, String id, TextView text, ImageButton sttButt, ImageButton submit, EditText edit){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!s.contains("Done")){
+                                if(i >= say.size()-1){
+                                    speakOut(say.get(i), "Done");
+                                }
+                                else speakOut(say.get(i), id);
+                                text.setText(say.get(i));
+                                i++;
+                            }
+                            else{
+                                sttButt.setEnabled(true);
+                                submit.setEnabled(true);
+                                edit.setEnabled(true);
                             }
                         }
                     }, 500);
