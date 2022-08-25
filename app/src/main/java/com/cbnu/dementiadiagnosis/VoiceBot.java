@@ -30,6 +30,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import memoryQuiz.StartActivity;
+import user.SharedPreference;
 
 public class VoiceBot extends AppCompatActivity {
 
@@ -232,10 +233,10 @@ public class VoiceBot extends AppCompatActivity {
     public void readResponse(){
         tem.clear();
         if(answer.contains("사용자")){
-            answer = answer.replace("사용자", "유진");
+            answer = answer.replace("사용자", SharedPreference.getUserName(VoiceBot.this));
         }
         if(extra_ans.contains("사용자")){
-            extra_ans = extra_ans.replace("사용자", "유진");
+            extra_ans = extra_ans.replace("사용자", SharedPreference.getUserName(VoiceBot.this));
         }
         if(extra_ans.equals("")){
             if(answer.contains("@")){

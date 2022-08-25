@@ -4,9 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import fragment.FragmentChart;
 import fragment.FragmentHome;
@@ -14,10 +19,10 @@ import fragment.FragmentSetting;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private FragmentManager fragmentManager = getSupportFragmentManager();
-    private FragmentHome fragmentHome = new FragmentHome();
-    private FragmentChart fragmentChart = new FragmentChart();
-    private FragmentSetting fragmentSetting = new FragmentSetting();
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private final FragmentHome fragmentHome = new FragmentHome();
+    private final FragmentChart fragmentChart = new FragmentChart();
+    private final FragmentSetting fragmentSetting = new FragmentSetting();
     final int PERMISSION = 1;
     private PermissionSupport permission;
 
@@ -28,6 +33,9 @@ public class HomeActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss();
+
+        FloatingActionButton fb = findViewById(R.id.voiceBot);
+        fb.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, VoiceBot.class)));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnItemSelectedListener(new ItemSelectedListener());

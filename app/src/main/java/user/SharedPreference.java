@@ -31,7 +31,7 @@ public class SharedPreference {
         editor.putString(pref_user_sex, sex);
         editor.putString(pref_user_edu, edu);
         editor.putInt(pref_user_score, score);
-        editor.commit();
+        editor.apply();
     }
     // 사용자 일련코드 정보 저장
     public static void setSerialCodeInf(Context ctx, String serial_code) {
@@ -83,6 +83,6 @@ public class SharedPreference {
     public static void clear_user(Context ctx) {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 }

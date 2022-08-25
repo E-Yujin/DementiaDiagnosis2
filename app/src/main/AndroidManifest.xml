@@ -17,7 +17,13 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".FirstActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+         </activity>
         <activity
             android:name="simpleTest.S_execution"
             android:exported="false" />
@@ -37,15 +43,6 @@
             android:name="memoryQuiz.MainActivity"
             android:exported="false"/>
 
-        <activity
-            android:name=".VoiceBot"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".QuizHOME" />
         <activity android:name=".Map" />
         <activity android:name="QuizPage.orientation_Page" />
@@ -58,6 +55,7 @@
         <activity android:name="QuizPage.ComprehensionPage" />
         <activity android:name="QuizPage.LanguagePage" />
         <activity android:name="memoryQuiz.StartActivity"/>
+        <activity android:name=".VoiceBot"/>
 
         <activity android:name="simpleTest.S_orientation" />
         <activity android:name="simpleTest.S_fluency_Page" />
