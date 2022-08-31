@@ -3,7 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:padding="10dp"
     android:elevation="10dp"
     android:clipChildren="false"
     android:clipToPadding="false">
@@ -28,7 +27,7 @@
         android:fontFamily="@font/jejugothic"
         android:letterSpacing="0.04"
         android:lineSpacingExtra="15dp"
-        android:text="퀴즈가 끝났습니다\n\n초성게임은 단어 연상 게임으로 기억을 \n회상함으로써 기억력 향상에 도움을 줍니다.\n간단한 게임이지만 하루 중 잠깐 시간을 내어\n기억력을 향상해보세요. "
+        android:text="퀴즈가 끝났습니다\n\n초성게임은 단어 연상 게임으로 \n기억을 회상함으로써 기억력 향상에\n도움을 줍니다. 간단한 게임이지만\n하루 중 잠깐 시간을 내어\n기억력을 향상해보세요. "
         android:textSize="17sp"/>
 
     <androidx.appcompat.widget.AppCompatButton

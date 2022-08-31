@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
     TTS tts;
     ProgressBar pro_bar;
     MemoryQuiz memoryQuiz;
-    private long backBtnTime = 0;
-    HashSet<String> hashSet;
     Handler hand;
     Handler handTimer;
+    String random;
+    private long backBtnTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         hand = new Handler();
         handTimer = new Handler();
         memoryQuiz = new MemoryQuiz();
-        hashSet = new HashSet<>();
+
+        answer.setHint("답변이 여기에 나타납니다.");
 
         tts = new TTS(this, status -> {
             tts.onInit(status, question.getText().toString(), "Done", 1000);
@@ -102,10 +103,6 @@ public class MainActivity extends AppCompatActivity {
         helper.setTest();
         pro_bar.setProgress(20);
 
-        final String[] random = {generateString()};
-        Log.e("random", random[0]);
-        randomText.setText(random[0]);
-
         // stt 시작
         sttBtn.setOnClickListener(v -> {
             tts.isStopUtt = true;
@@ -113,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             stt.start_STT();
         });
 
+        // 제출버튼
         submit.setOnClickListener(v -> {
             if(countDownTimer != null)
                 countDownTimer.cancel();
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             stt.Stop();
             tts.Stop();
 
-            if (answer.getText().toString().equals("")) {
+            if (answer.getText().toString().equals("")) { // 공백 답변 시
                 shapeX.setVisibility(View.VISIBLE);
             } else {
                 String temp = answer.getText().toString().replace(".", "");
@@ -138,17 +136,19 @@ public class MainActivity extends AppCompatActivity {
                 if (Arrays.asList(ans).contains("")) {
                     shapeX.setVisibility(View.VISIBLE);
                 } else {
-                    hashSet.addAll(Arrays.asList(ans));
+                    HashSet<String> hashSet = new HashSet<>(Arrays.asList(ans)); // 중복 항목 체크
+                    Log.e("hashSet", hashSet.toString());
                     ans = hashSet.toArray(new String[0]);
                     if (ans.length < 3) {
+                        Log.e("ans_length", Integer.toString(ans.length));
                         shapeX.setVisibility(View.VISIBLE);
                     } else {
-                        getResultSearch(ans, random[0], ans.length);
+                        getResultSearch(ans, random, ans.length);
                     }
                 }
             }
             hand.postDelayed(() -> {
-                countDownTimer.cancel();
+                //countDownTimer.cancel();
                 switch (QP.current) {
                     case 0:
                         changeQuiz(40);
@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                         changeQuiz(100);
                         break;
                     case 4:
-                        countDownTimer.cancel();
                         resultDialog();
                     default:
                         break;
@@ -203,12 +202,13 @@ public class MainActivity extends AppCompatActivity {
                     if (Arrays.asList(ans).contains("")) {
                         shapeX.setVisibility(View.VISIBLE);
                     } else {
-                        hashSet.addAll(Arrays.asList(ans));
+                        HashSet<String> hashSet = new HashSet<>(Arrays.asList(ans)); // 중복 항목 체크
+                        Log.e("hashSet", hashSet.toString());
                         ans = hashSet.toArray(new String[0]);
                         if (ans.length < 3) {
                             shapeX.setVisibility(View.VISIBLE);
                         } else {
-                            getResultSearch(ans, random[0], ans.length);
+                            getResultSearch(ans, random, ans.length);
                         }
                     }
                 }
@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                         case 4:
                             countDownTimer.cancel();
                             resultDialog();
+                            break;
                         default:
                             break;
                     }
@@ -245,9 +246,9 @@ public class MainActivity extends AppCompatActivity {
         question.setText(memoryQuiz.quiz.get(QP.current));
         tts.speakOut(question.getText().toString());
         tts.UtteranceProgress(question.getText().toString(), 1000, answer, sttBtn, submit);
-        String newRandom = generateString();
-        Log.e("newRandom", newRandom);
-        randomText.setText(newRandom);
+        random = generateString();
+        Log.e("random", random);
+        randomText.setText(random);
         answer.setText("");
         shapeRes.setVisibility(View.INVISIBLE);
         shapeX.setVisibility(View.INVISIBLE);
@@ -270,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("checkCnt", Integer.toString(checkCnt));
             String result = getInitialSound(keyword[a]);
             Log.e("result", result);
+            Log.e("search_random", random);
             if (result.equals(random)) {
                 Call<String> call = apiInterface.getSearchResult(clientID, clientSecret, "encyc.json", keyword[a]);
                 String keywordNum = keyword[a];
@@ -418,7 +420,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (0 <= gapTime && 2000 >= gapTime) {
             super.onBackPressed();
+            tts.Destroy();
             countDownTimer.cancel();
+            finish();
         } else {
             backBtnTime = curTime;
             Toast.makeText(this, "퀴즈를 종료하시겠습니까?",
@@ -426,52 +430,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   /* @Override
+    @Override
     protected void onStart(){
         super.onStart();
-        String newRandom = "";
-        question.setText(memoryQuiz.quiz.get(QP.current));
         tts.isStopUtt = false;
-        answer.setText("");
+        question.setText(memoryQuiz.quiz.get(QP.current));
+        answer.setHint("답변이 여기에 나타납니다.");
+        sttBtn.setEnabled(false);
+        submit.setEnabled(false);
         tts.speakOut(question.getText().toString());
-        QP.Start();
+        tts.UtteranceProgress(question.getText().toString(), 1000, answer, sttBtn, submit);
 
         switch (QP.current) {
             case 0:
-                pro_bar.setProgress(40);
-                QP.Submit();
-                tts.speakOut(question.getText().toString());
-                newRandom = generateString();
-                randomText.setText(newRandom);
+                changeQuiz(40);
                 break;
             case 1:
-                pro_bar.setProgress(60);
-                QP.Submit();
-                tts.speakOut(question.getText().toString());
-                newRandom = generateString();
-                randomText.setText(newRandom);
+                changeQuiz(60);
                 break;
             case 2:
-                pro_bar.setProgress(80);
-                QP.Submit();
-                tts.speakOut(question.getText().toString());
-                newRandom = generateString();
-                randomText.setText(newRandom);
+                changeQuiz(80);
                 break;
             case 3:
-                pro_bar.setProgress(100);
-                QP.Submit();
-                tts.speakOut(question.getText().toString());
-                newRandom = generateString();
-                randomText.setText(newRandom);
+                changeQuiz(100);
+                break;
+            case 4:
+                countDownTimer.cancel();
+                resultDialog();
+            default:
                 break;
         }
-    }*/
+    }
 
     @Override
     protected void onStop(){
         tts.isStopUtt = true;
         super.onStop();
+        countDownTimer.cancel();
         tts.Stop();
         stt.Stop();
     }
