@@ -213,7 +213,7 @@ public class orientation_Page extends AppCompatActivity {
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(QP.current == 4) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
+                if(QP.current == 4 || QP.current == 5) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
                 else if(QP.current == 0) announce.setText("년, 월, 일, 요일");
                 else announce.setText("");
                 stt.Stop();

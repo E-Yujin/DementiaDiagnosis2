@@ -280,8 +280,12 @@ public class orientation extends question {
                 // 문자열을 자르자!
                 String cut[] = list.get(0).toString().split(" ");
                 if(crr_ans[5].isEmpty()){ //아직 셋되지 않은 상태
-                    for(int i=1; i<4; i++){
-                        this.crr_ans[5].add(cut[i]);
+                    for(String s : cut){
+                        char end_str = s.charAt(s.length()-1);
+                        if(end_str == '시' || end_str == '동' ||end_str == '구'
+                                ||end_str == '읍' ||end_str == '도' || end_str == '면'){
+                            this.crr_ans[5].add(s);
+                        }
                     }
                 }
                 else if(!cut[3].equals(crr_ans[5].get(2))){ //장소가 변경된 경우 업데이트
