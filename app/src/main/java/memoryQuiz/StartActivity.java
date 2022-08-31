@@ -39,7 +39,7 @@ public class StartActivity extends AppCompatActivity {
 
         tts = new TTS(this, status -> {
             tem.clear();
-            tts.onInit(status, speakMsg.getText().toString(), "default", 1000);
+            tts.onInit(status, speakMsg.getText().toString(), "default");
             tem.add("아래 예시를 보면\n각 문제마다 다른 초성이 주어집니다.");
             tem.add("초성을 보고 생각나는\n단어 3개를 말씀해주시면 됩니다.");
             tem.add("답변 시 아래 마이크를\n누르신 후 말씀해주시면 됩니다.");
@@ -75,6 +75,8 @@ public class StartActivity extends AppCompatActivity {
 
         if (0 <= gapTime && 2000 >= gapTime) {
             super.onBackPressed();
+            tts.Destroy();
+            finish();
         } else {
             backBtnTime = curTime;
             Toast.makeText(this, "한번 더 누르시면 퀴즈가 종료됩니다.",
