@@ -1,12 +1,11 @@
 package QuizPage;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,15 +18,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.cbnu.dementiadiagnosis.AnimationListner;
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.HomeActivity;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
-import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,6 +46,8 @@ public class orientation_Page extends AppCompatActivity {
     String[] U_answers;
     AppCompatButton donKnow;
     boolean isDK_inFirst = false;
+    float D_x = 0;
+    float D_y = 0;
 
     private long backBtnTime = 0;
 
@@ -216,6 +214,7 @@ public class orientation_Page extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(QP.current == 4) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
+                else if(QP.current == 0) announce.setText("년, 월, 일, 요일");
                 else announce.setText("");
                 stt.Stop();
                 tts.Stop();
@@ -389,6 +388,40 @@ public class orientation_Page extends AppCompatActivity {
         }
         return score;
     }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d( "Touch_", "onTouch Down ACTION_DOWN : (" + x +", " + y + ")" );
+                D_x = x;
+                D_y = y;
+                return true;
+
+            case MotionEvent.ACTION_MOVE:
+                Log.d( "Touch_", "onTouch Down ACTION_MOVE: (" + x +", " + y + ")" );
+
+                return true;
+
+            case MotionEvent.ACTION_UP:
+                Log.d( "Touch_", "onTouch Down ACTION_UP: (" + x +", " + y + ")" );
+                Log.d( "Touch_", "onTouch Down ACTION_UP2: (" + D_x +", " + D_y + ")" );
+                if(D_x > x + 300){
+                    Log.d( "Touch_1", "다음 문제!" );
+                    submit.callOnClick();
+                }
+                else if(D_x + 300 < x){
+                    Log.d( "Touch_1", "이전 문제!" );
+                    undo.callOnClick();
+                }
+                return false;
+        }
+        return false;
+    }
+
 
     @Override
     public void onBackPressed() {

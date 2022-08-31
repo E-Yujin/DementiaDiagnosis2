@@ -345,7 +345,7 @@ public class VoiceBot extends AppCompatActivity {
             finish();
         } else {
             backBtnTime = curTime;
-            Toast.makeText(this, "지금 나가시면 진행된 검사가 저장되지 않습니다.",
+            Toast.makeText(this, "한 번 더 누르시면 홈화면으로 이동합니다.",
                     Toast.LENGTH_SHORT).show();
         }
     }
