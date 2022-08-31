@@ -71,7 +71,17 @@ public class orientation extends question {
                 geovariable.setLongitube(location.getLongitude());  // 클래스 변수에 경도 대입
                 latitude = geovariable.getLatitude(); // 위도 경도 클래스변수에서 가져옴
                 longitude = geovariable.getLongitube();
-                reverseCoding();
+                if (permissionCheck2 == PackageManager.PERMISSION_GRANTED
+                        || permissionCheck3 == PackageManager.PERMISSION_GRANTED){
+                    if(!reverseCoding()){
+                        crr_ans[5].add("ERROR");
+                        crr_ans[5].add("ERROR");
+                    }
+                }
+                else {
+                    crr_ans[5].add("ERROR");
+                    crr_ans[5].add("ERROR");
+                }
             }
 
             public void onProviderDisabled(String provider) {
@@ -105,19 +115,6 @@ public class orientation extends question {
 
         latitude = geovariable.getLatitude(); // 위도 경도 클래스변수에서 가져옴
         longitude = geovariable.getLongitube();
-
-
-        if (permissionCheck2 == PackageManager.PERMISSION_GRANTED
-                || permissionCheck3 == PackageManager.PERMISSION_GRANTED){
-            if(!reverseCoding()){
-                crr_ans[5].add("ERROR");
-                crr_ans[5].add("ERROR");
-            }
-        }
-        else {
-            crr_ans[5].add("ERROR");
-            crr_ans[5].add("ERROR");
-        }
 
         long getDate = System.currentTimeMillis();
         Date DateData = new Date(getDate);
@@ -270,7 +267,7 @@ public class orientation extends question {
             list = geocoder.getFromLocation(latitude, longitude, 10); // 위도, 경도, 얻어올 값의 개수
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("test_", "입출력 오류 - 서버에서 주소변환시 에러발생");
+            Log.e("geocoding", "입출력 오류 - 서버에서 주소변환시 에러발생");
             return false;
         }
         if (list != null) {

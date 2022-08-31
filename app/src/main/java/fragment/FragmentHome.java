@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cbnu.dementiadiagnosis.FirstActivity;
 import com.cbnu.dementiadiagnosis.Helper;
+import com.cbnu.dementiadiagnosis.PermissionSupport;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
 
@@ -26,7 +27,6 @@ public class FragmentHome extends Fragment {
     Button simple, formal, quiz;
     AppCompatButton logout;
     ImageView helper_img;
-    Helper helper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,9 +43,6 @@ public class FragmentHome extends Fragment {
         formal = view.findViewById(R.id.formalTest);
         quiz = view.findViewById(R.id.rememberQuiz);
         logout = view.findViewById(R.id.btnLogout);
-        helper = new Helper(helper_img, this);
-
-        helper.setNomal();
 
         // 간이검사 시작
         simple.setOnClickListener(v -> {
