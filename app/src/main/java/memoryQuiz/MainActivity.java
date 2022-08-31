@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                         case 4:
                             countDownTimer.cancel();
                             resultDialog();
+                            break;
                         default:
                             break;
                     }
