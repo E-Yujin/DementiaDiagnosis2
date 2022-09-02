@@ -144,6 +144,7 @@ public class S_attention extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), S_SpaceTime.class);
                     intent.putExtra("scores", att.scores);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
 
                     finish();
                 }
@@ -187,6 +188,7 @@ public class S_attention extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), S_SpaceTime.class);
                         intent.putExtra("scores", att.scores);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
 
                         finish();
                     }

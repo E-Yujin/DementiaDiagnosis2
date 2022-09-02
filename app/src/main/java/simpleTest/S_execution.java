@@ -108,6 +108,7 @@ public class S_execution extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
                 intent.putExtra("scores", execution.scores);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
 
                 finish();
             }
@@ -132,6 +133,7 @@ public class S_execution extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
                 intent.putExtra("scores", execution.scores);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
 
                 finish();
             }

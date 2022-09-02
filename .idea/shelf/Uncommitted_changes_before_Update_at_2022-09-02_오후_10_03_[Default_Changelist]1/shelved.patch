@@ -1,0 +1,661 @@
+Index: app/src/main/java/QuizPage/ComprehensionPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package QuizPage;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.AppCompatButton;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.ClipData;\r\nimport android.content.ClipDescription;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.graphics.drawable.Drawable;\r\nimport android.os.Bundle;\r\nimport android.speech.tts.TextToSpeech;\r\nimport android.util.Log;\r\nimport android.view.DragEvent;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.ProgressBar;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.cbnu.dementiadiagnosis.HomeActivity;\r\nimport com.cbnu.dementiadiagnosis.MainSTT;\r\nimport com.cbnu.dementiadiagnosis.R;\r\nimport com.cbnu.dementiadiagnosis.TTS;\r\n\r\nimport questions.LanguageFunc;\r\n\r\npublic class ComprehensionPage extends AppCompatActivity {\r\n\r\n    private ImageView mImg, image2, image3, image4, image5;\r\n    private static final String IMAGEVIEW_TAG = \"드래그 이미지\";\r\n    int resLeft = 0, resRight = 0; // 정답 체크\r\n    LanguageFunc languageFunc;\r\n    TTS tts;\r\n    TextView question, type;\r\n    String Okey = \"\";\r\n    ProgressBar pro_bar;\r\n    ImageButton leftBtn, rightBtn;\r\n    AppCompatButton donKnow;\r\n\r\n    private long backBtnTime = 0;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.comprehension);\r\n\r\n        Log.d(\"languageFunc\", \"start\");\r\n        languageFunc = new LanguageFunc();\r\n        mImg = findViewById(R.id.image);\r\n        image2 = findViewById(R.id.image2);\r\n        image3 = findViewById(R.id.image3);\r\n        image4 = findViewById(R.id.image4);\r\n        image5 = findViewById(R.id.image5);\r\n        question = findViewById(R.id.question);\r\n        type = (TextView) findViewById(R.id.type);\r\n        leftBtn = (ImageButton) findViewById(R.id.ic_left);\r\n        rightBtn = (ImageButton) findViewById(R.id.ic_right);\r\n        pro_bar = (ProgressBar) findViewById(R.id.progressBar);\r\n        donKnow = (AppCompatButton) findViewById(R.id.donknow);\r\n\r\n        type.setText(\"언어기능\");\r\n        pro_bar.setProgress(85);\r\n\r\n        mImg.setTag(IMAGEVIEW_TAG);\r\n        image2.setTag(IMAGEVIEW_TAG);\r\n        image3.setTag(IMAGEVIEW_TAG);\r\n        image4.setTag(IMAGEVIEW_TAG);\r\n        image5.setTag(IMAGEVIEW_TAG);\r\n\r\n        mImg.setOnLongClickListener(new LongClickListener());\r\n        image2.setOnLongClickListener(new LongClickListener());\r\n        image3.setOnLongClickListener(new LongClickListener());\r\n        image4.setOnLongClickListener(new LongClickListener());\r\n        image5.setOnLongClickListener(new LongClickListener());\r\n\r\n        findViewById(R.id.left).setOnDragListener(\r\n                new DragListener());\r\n        findViewById(R.id.right).setOnDragListener(\r\n                new DragListener());\r\n        findViewById(R.id.ball).setOnDragListener(\r\n                new DragListener());\r\n\r\n        tts = new TTS(this, new TextToSpeech.OnInitListener() {\r\n            @Override\r\n            public void onInit(int status) {\r\n                tts.onInit(status, question.getText().toString());\r\n                //tts.UtteranceProgress(announce.getText().toString());\r\n            }\r\n        });\r\n\r\n        question.setOnClickListener(new View.OnClickListener() {\r\n            public void onClick(View v) {\r\n                tts.speakOut(question.getText().toString());\r\n            }\r\n        });\r\n\r\n        donKnow.setOnClickListener(new View.OnClickListener(){\r\n            public void onClick(View v){\r\n                pro_bar.setProgress(90);\r\n\r\n                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);\r\n                intent.putExtra(\"comprehension\" , \"\");\r\n                intent.putExtra(\"current\" , -1);\r\n                Log.d(\"comprehension\", Okey);\r\n                setResult(RESULT_OK, intent);\r\n\r\n                finish();\r\n            }\r\n        });\r\n\r\n        leftBtn.setOnClickListener(new View.OnClickListener(){\r\n            public void onClick(View v){\r\n                tts.Stop();\r\n                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);\r\n                intent.putExtra(\"current\" , 2);\r\n                intent.putExtra(\"comprehension\" , \"yet\");\r\n                setResult(RESULT_OK, intent);\r\n\r\n                finish();\r\n            }\r\n        });\r\n        rightBtn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                pro_bar.setProgress(90);\r\n                if(resLeft == 2 && resRight == 3) {\r\n                    Okey = \"OK\";\r\n                } else {\r\n                    Okey = \"notOk\";\r\n                }\r\n                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);\r\n                intent.putExtra(\"comprehension\" , Okey);\r\n                intent.putExtra(\"current\" , -1);\r\n                Log.d(\"comprehension\", Okey);\r\n                setResult(RESULT_OK, intent);\r\n\r\n                finish();\r\n            }\r\n        });\r\n    }\r\n\r\n    private static final class LongClickListener implements\r\n            View.OnLongClickListener {\r\n\r\n        public boolean onLongClick(View view) {\r\n\r\n            // 태그 생성\r\n            ClipData.Item item = new ClipData.Item(\r\n                    (CharSequence) view.getTag());\r\n\r\n            String[] mimeTypes = { ClipDescription.MIMETYPE_TEXT_PLAIN };\r\n            ClipData data = new ClipData(view.getTag().toString(),\r\n                    mimeTypes, item);\r\n            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(\r\n                    view);\r\n\r\n            view.startDrag(data, // data to be dragged\r\n                    shadowBuilder, // drag shadow\r\n                    view, // 드래그 드랍할  Vew\r\n                    0 // 필요없은 플래그\r\n            );\r\n\r\n            view.setVisibility(View.VISIBLE);\r\n            return true;\r\n        }\r\n    }\r\n\r\n    class DragListener implements View.OnDragListener {\r\n        @SuppressLint(\"UseCompatLoadingForDrawables\")\r\n        Drawable normalShape = getResources().getDrawable(\r\n                R.drawable.normal_shape);\r\n        @SuppressLint(\"UseCompatLoadingForDrawables\")\r\n        Drawable targetShape = getResources().getDrawable(\r\n                R.drawable.target_shape);\r\n\r\n        public boolean onDrag(View v, DragEvent event) {\r\n            // 이벤트 시작\r\n            switch (event.getAction()) {\r\n                // 이미지를 드래그 시작될때\r\n                case DragEvent.ACTION_DRAG_STARTED:\r\n                    Log.d(\"DragClickListener\", \"ACTION_DRAG_STARTED\");\r\n                    break;\r\n\r\n                // 드래그한 이미지를 옮길려는 지역으로 들어왔을때\r\n                case DragEvent.ACTION_DRAG_ENTERED:\r\n                    Log.d(\"DragClickListener\", \"ACTION_DRAG_ENTERED\");\r\n                    // 이미지가 들어왔다는 것을 알려주기 위해 배경이미지 변경\r\n                    v.setBackground(targetShape);\r\n                    break;\r\n\r\n                // 드래그한 이미지가 영역을 빠져 나갈때\r\n                case DragEvent.ACTION_DRAG_EXITED:\r\n                    if(v == findViewById(R.id.left))\r\n                        resLeft--;\r\n                    else if(v == findViewById(R.id.right))\r\n                        resRight--;\r\n                    Log.d(\"DragClickListener\", \"ACTION_DRAG_EXITED\");\r\n                    v.setBackground(normalShape);\r\n                    break;\r\n\r\n                // 이미지를 드래그해서 드랍시켰을때\r\n                case DragEvent.ACTION_DROP:\r\n                    Log.d(\"DragClickListener\", \"ACTION_DROP\");\r\n\r\n                    if (v == findViewById(R.id.left)) {\r\n                        resLeft++;\r\n                        View view = (View) event.getLocalState();\r\n                        ViewGroup viewgroup = (ViewGroup) view\r\n                                .getParent();\r\n                        viewgroup.removeView(view);\r\n\r\n                        LinearLayout containView = (LinearLayout) v;\r\n                        containView.addView(view);\r\n                        view.setVisibility(View.VISIBLE);\r\n\r\n                    } else if (v == findViewById(R.id.right)) {\r\n                        resRight++;\r\n                        View view = (View) event.getLocalState();\r\n                        ViewGroup viewgroup = (ViewGroup) view\r\n                                .getParent();\r\n                        viewgroup.removeView(view);\r\n\r\n                        LinearLayout containView = (LinearLayout) v;\r\n                        containView.addView(view);\r\n                        view.setVisibility(View.VISIBLE);\r\n\r\n                    } else if (v == findViewById(R.id.ball)) {\r\n                        View view = (View) event.getLocalState();\r\n                        ViewGroup viewgroup = (ViewGroup) view\r\n                                .getParent();\r\n                        viewgroup.removeView(view);\r\n\r\n                        LinearLayout containView = (LinearLayout) v;\r\n                        containView.addView(view);\r\n                        view.setVisibility(View.VISIBLE);\r\n\r\n                    } else {\r\n                        View view = (View) event.getLocalState();\r\n                        view.setVisibility(View.VISIBLE);\r\n                        break;\r\n                    }\r\n\r\n                case DragEvent.ACTION_DRAG_ENDED:\r\n                    Log.d(\"DragClickListener\", \"ACTION_DRAG_ENDED\");\r\n                    v.setBackground(normalShape); // go back to normal shape\r\n\r\n                default:\r\n                    break;\r\n            }\r\n            return true;\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void onBackPressed() {\r\n        long curTime = System.currentTimeMillis();\r\n        long gapTime = curTime - backBtnTime;\r\n\r\n        if (0 <= gapTime && 2000 >= gapTime) {\r\n            tts.Destroy();\r\n\r\n            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);\r\n            startActivity(intent);\r\n\r\n            finish();\r\n        } else {\r\n            backBtnTime = curTime;\r\n            Toast.makeText(this, \"지금 나가시면 진행된 검사가 저장되지 않습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }\r\n\r\n    @Override\r\n    protected void onStop(){\r\n        tts.isStopUtt = true;\r\n        super.onStop();\r\n        tts.Stop();\r\n    }\r\n\r\n    @Override\r\n    protected void onStart(){\r\n        super.onStart();\r\n        tts.isStopUtt = false;\r\n        question.setText(languageFunc.quiz.get(3));\r\n        tts.speakOut(question.getText().toString());\r\n\r\n    }\r\n\r\n    @Override\r\n    protected void onDestroy() {\r\n        super.onDestroy();\r\n        tts.Destroy();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/QuizPage/ComprehensionPage.java b/app/src/main/java/QuizPage/ComprehensionPage.java
+--- a/app/src/main/java/QuizPage/ComprehensionPage.java	
++++ b/app/src/main/java/QuizPage/ComprehensionPage.java	
+@@ -35,12 +35,13 @@
+     private ImageView mImg, image2, image3, image4, image5;
+     private static final String IMAGEVIEW_TAG = "드래그 이미지";
+     int resLeft = 0, resRight = 0; // 정답 체크
++    String check = "type";
+     LanguageFunc languageFunc;
+     TTS tts;
+     TextView question, type;
+     String Okey = "";
+     ProgressBar pro_bar;
+-    ImageButton leftBtn, rightBtn;
++    ImageButton beforeBtn, nextBtn;
+     AppCompatButton donKnow;
+ 
+     private long backBtnTime = 0;
+@@ -59,8 +60,8 @@
+         image5 = findViewById(R.id.image5);
+         question = findViewById(R.id.question);
+         type = (TextView) findViewById(R.id.type);
+-        leftBtn = (ImageButton) findViewById(R.id.ic_left);
+-        rightBtn = (ImageButton) findViewById(R.id.ic_right);
++        beforeBtn = (ImageButton) findViewById(R.id.before);
++        nextBtn = (ImageButton) findViewById(R.id.next);
+         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
+         donKnow = (AppCompatButton) findViewById(R.id.donknow);
+ 
+@@ -86,62 +87,45 @@
+         findViewById(R.id.ball).setOnDragListener(
+                 new DragListener());
+ 
+-        tts = new TTS(this, new TextToSpeech.OnInitListener() {
+-            @Override
+-            public void onInit(int status) {
+-                tts.onInit(status, question.getText().toString());
+-                //tts.UtteranceProgress(announce.getText().toString());
+-            }
+-        });
++        tts = new TTS(this, status -> tts.onInit(status, question.getText().toString()));
+ 
+-        question.setOnClickListener(new View.OnClickListener() {
+-            public void onClick(View v) {
+-                tts.speakOut(question.getText().toString());
+-            }
+-        });
++        question.setOnClickListener(v -> tts.speakOut(question.getText().toString()));
+ 
+-        donKnow.setOnClickListener(new View.OnClickListener(){
+-            public void onClick(View v){
+-                pro_bar.setProgress(90);
++        donKnow.setOnClickListener(v -> {
++            pro_bar.setProgress(90);
+ 
+-                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
+-                intent.putExtra("comprehension" , "");
+-                intent.putExtra("current" , -1);
+-                Log.d("comprehension", Okey);
+-                setResult(RESULT_OK, intent);
++            Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
++            intent.putExtra("comprehension" , "");
++            intent.putExtra("current" , -1);
++            Log.d("comprehension", Okey);
++            setResult(RESULT_OK, intent);
+ 
+-                finish();
+-            }
++            finish();
+         });
+ 
+-        leftBtn.setOnClickListener(new View.OnClickListener(){
+-            public void onClick(View v){
+-                tts.Stop();
+-                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
+-                intent.putExtra("current" , 2);
+-                intent.putExtra("comprehension" , "yet");
+-                setResult(RESULT_OK, intent);
++        beforeBtn.setOnClickListener(v -> {
++            tts.Stop();
++            Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
++            intent.putExtra("current" , 2);
++            intent.putExtra("comprehension" , "yet");
++            setResult(RESULT_OK, intent);
+ 
+-                finish();
+-            }
++            finish();
+         });
+-        rightBtn.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                pro_bar.setProgress(90);
+-                if(resLeft == 2 && resRight == 3) {
+-                    Okey = "OK";
+-                } else {
+-                    Okey = "notOk";
+-                }
+-                Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
+-                intent.putExtra("comprehension" , Okey);
+-                intent.putExtra("current" , -1);
+-                Log.d("comprehension", Okey);
+-                setResult(RESULT_OK, intent);
++        nextBtn.setOnClickListener(v -> {
++            pro_bar.setProgress(90);
++            if(resLeft == 2 && resRight == 3) {
++                Okey = "OK";
++            } else {
++                Okey = "notOk";
++            }
++            Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
++            intent.putExtra("comprehension" , Okey);
++            intent.putExtra("current" , -1);
++            Log.d("comprehension", Okey);
++            setResult(RESULT_OK, intent);
+ 
+-                finish();
+-            }
++            finish();
+         });
+     }
+ 
+@@ -174,12 +158,19 @@
+     class DragListener implements View.OnDragListener {
+         @SuppressLint("UseCompatLoadingForDrawables")
+         Drawable normalShape = getResources().getDrawable(
+-                R.drawable.normal_shape);
++                R.drawable.shape_exe);
+         @SuppressLint("UseCompatLoadingForDrawables")
+         Drawable targetShape = getResources().getDrawable(
+                 R.drawable.target_shape);
++        @SuppressLint("UseCompatLoadingForDrawables")
++        Drawable roundNShape = getResources().getDrawable(
++                R.drawable.round_button);
++        @SuppressLint("UseCompatLoadingForDrawables")
++        Drawable roundTShape = getResources().getDrawable(
++                R.drawable.round_gray);
+ 
+         public boolean onDrag(View v, DragEvent event) {
++
+             // 이벤트 시작
+             switch (event.getAction()) {
+                 // 이미지를 드래그 시작될때
+@@ -189,19 +180,29 @@
+ 
+                 // 드래그한 이미지를 옮길려는 지역으로 들어왔을때
+                 case DragEvent.ACTION_DRAG_ENTERED:
+-                    Log.d("DragClickListener", "ACTION_DRAG_ENTERED");
+                     // 이미지가 들어왔다는 것을 알려주기 위해 배경이미지 변경
+-                    v.setBackground(targetShape);
++                    if(v == findViewById(R.id.left)) {
++                        v.setBackground(targetShape);
++                    } else if(v == findViewById(R.id.right)) {
++                        v.setBackground(targetShape);
++                    } else {
++                        v.setBackground(roundTShape);
++                    }
++                    Log.d("DragClickListener", "ACTION_DRAG_ENTERED");
+                     break;
+ 
+                 // 드래그한 이미지가 영역을 빠져 나갈때
+                 case DragEvent.ACTION_DRAG_EXITED:
+-                    if(v == findViewById(R.id.left))
+-                        resLeft--;
+-                    else if(v == findViewById(R.id.right))
+-                        resRight--;
+-                    Log.d("DragClickListener", "ACTION_DRAG_EXITED");
+-                    v.setBackground(normalShape);
++                    if(v == findViewById(R.id.left)) {
++                        v.setBackground(normalShape);
++                        check = "left";
++                    } else if(v == findViewById(R.id.right)) {
++                        v.setBackground(normalShape);
++                        check = "right";
++                    } else {
++                        v.setBackground(roundTShape);
++                    }
++                    Log.d("DragClickListener", "ACTION_DRAG_EXITED");
+                     break;
+ 
+                 // 이미지를 드래그해서 드랍시켰을때
+@@ -210,24 +211,56 @@
+ 
+                     if (v == findViewById(R.id.left)) {
+                         resLeft++;
++                        Log.e("in_left", Integer.toString(resLeft));
+                         View view = (View) event.getLocalState();
+                         ViewGroup viewgroup = (ViewGroup) view
+                                 .getParent();
+                         viewgroup.removeView(view);
+ 
+-                        LinearLayout containView = (LinearLayout) v;
+-                        containView.addView(view);
++                        LinearLayout containViewOne;
++                        LinearLayout containViewTwo;
++                        LinearLayout containViewThree;
++
++                        if(resLeft < 3) {
++                            Log.e("resLeft", "< 3");
++                            containViewOne = findViewById(R.id.leftResOne);
++                            containViewOne.addView(view);
++                        } else if(resLeft < 5) {
++                            Log.e("resLeft", "< 5");
++                            containViewTwo = findViewById(R.id.leftResTwo);
++                            containViewTwo.addView(view);
++                        } else {
++                            Log.e("resLeft", "5-6");
++                            containViewThree = findViewById(R.id.leftResThree);
++                            containViewThree.addView(view);
++                        }
+                         view.setVisibility(View.VISIBLE);
+ 
+                     } else if (v == findViewById(R.id.right)) {
+                         resRight++;
++                        Log.e("in_right", Integer.toString(resRight));
+                         View view = (View) event.getLocalState();
+                         ViewGroup viewgroup = (ViewGroup) view
+                                 .getParent();
+                         viewgroup.removeView(view);
+ 
+-                        LinearLayout containView = (LinearLayout) v;
+-                        containView.addView(view);
++                        LinearLayout containViewOne;
++                        LinearLayout containViewTwo;
++                        LinearLayout containViewThree;
++
++                        if(resRight < 3) {
++                            Log.e("resRight", "< 3");
++                            containViewOne = findViewById(R.id.rightResOne);
++                            containViewOne.addView(view);
++                        } else if(resRight < 5) {
++                            Log.e("resRight", "< 5");
++                            containViewTwo = findViewById(R.id.rightResTwo);
++                            containViewTwo.addView(view);
++                        } else {
++                            Log.e("resRight", "5-6");
++                            containViewThree = findViewById(R.id.rightResThree);
++                            containViewThree.addView(view);
++                        }
+                         view.setVisibility(View.VISIBLE);
+ 
+                     } else if (v == findViewById(R.id.ball)) {
+@@ -247,8 +280,34 @@
+                     }
+ 
+                 case DragEvent.ACTION_DRAG_ENDED:
++                    if(v == findViewById(R.id.left)) {
++                        v.setBackground(normalShape);
++                        if(check.equals("right")) {
++                            check = "type";
++                            resRight--;
++                            Log.e("out_right", Integer.toString(resRight));
++                        }
++                    } else if(v == findViewById(R.id.right)) {
++                        v.setBackground(normalShape);
++                        if(check.equals("left")) {
++                            check = "type";
++                            resLeft--;
++                            Log.e("out_left", Integer.toString(resLeft));
++                        }
++                    } else {
++                        if(check.equals("left")) {
++                            check = "type";
++                            resLeft--;
++                            Log.e("out_left", Integer.toString(resLeft));
++                        } else if(check.equals("right")) {
++                            check = "type";
++                            resRight--;
++                            Log.e("out_right", Integer.toString(resRight));
++                        }
++                        v.setBackground(roundNShape);
++                    }
+                     Log.d("DragClickListener", "ACTION_DRAG_ENDED");
+-                    v.setBackground(normalShape); // go back to normal shape
++                    break;
+ 
+                 default:
+                     break;
+Index: app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cbnu.dementiadiagnosis;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.speech.tts.TextToSpeech;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport java.nio.channels.InterruptedByTimeoutException;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\n\r\nimport QuizPage.ExecutionPage;\r\nimport QuizPage.LanguagePage;\r\nimport QuizPage.SpaceTimePage;\r\nimport QuizPage.attention_Page;\r\nimport QuizPage.fluency_Page;\r\nimport QuizPage.memoryInput_Page;\r\nimport QuizPage.memoryOutput_Page;\r\nimport QuizPage.orientation_Page;\r\nimport fragment.FragmentHome;\r\n\r\n\r\npublic class QuizHOME extends AppCompatActivity {\r\n\r\n    TextView Title;\r\n    TextView Announce;\r\n    TextView Intend_value;\r\n    Button sttBtn;\r\n    ImageView helper_img;\r\n    Helper helper;\r\n    TTS tts;\r\n\r\n    private int current = 0;\r\n    private ArrayList<String> first, second;\r\n    public List<String> announce;\r\n    private long backBtnTime = 0;\r\n    private int part_score[];\r\n    private int total_score = 0;\r\n    boolean isDone = false;\r\n    List<String> tem = new ArrayList<>();\r\n    boolean isStart = false;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.quiz_home);\r\n\r\n        announce = new ArrayList();\r\n        part_score = new int[8];\r\n\r\n        sttBtn = findViewById(R.id.sttStart);\r\n        Title = findViewById(R.id.title);\r\n        Announce = findViewById(R.id.announce);\r\n        Intend_value = findViewById(R.id.intent);\r\n        helper_img = findViewById(R.id.img);\r\n        tts = new TTS(this, new TextToSpeech.OnInitListener() {\r\n            @Override\r\n            public void onInit(int status) {\r\n                if(!isDone){\r\n                    tem.clear();\r\n                    tts.onInit(status, Announce.getText().toString(), \"default\", 1000);\r\n                    tem.add(\"지금부터 기억력과 사고능력을 살펴보기 위한\\n질문들을 드리겠습니다.\");\r\n                    tem.add(\"생각나는 대로 최선을 다해 답변해 주시면 됩니다.\");\r\n                    tem.add(\"준비되셨다면 아래 상자를 눌러주세요.\");\r\n                    tts.UtteranceProgress(tem, \"continue\", Announce);\r\n                }\r\n                else\r\n                    tts.onInit(status, Announce.getText().toString(), \"default\", 1000);\r\n            }\r\n        });\r\n\r\n        first = new ArrayList<>();\r\n        second = new ArrayList<>();\r\n\r\n        init_Announce();\r\n\r\n        Title.setText(announce.get(current));\r\n        helper = new Helper(tts, helper_img, this);\r\n        helper.setStart();\r\n\r\n        Announce.setOnClickListener(new View.OnClickListener() {\r\n            public void onClick(View v) {\r\n                if(current == 0){\r\n                    Announce.setText(\"안녕하세요.\");\r\n                    tts.speakOut(Announce.getText().toString(),\"default\");\r\n                    tem.clear();\r\n                    tem.add(\"지금부터 기억력과 사고능력을 살펴보기 위한\\n질문들을 드리겠습니다.\");\r\n                    tem.add(\"생각나는 대로 최선을 다해 답변해 주시면 됩니다.\");\r\n                    tem.add(\"준비되셨다면 아래 상자를 눌러주세요.\");\r\n                    tts.UtteranceProgress(tem, \"continue\", Announce);\r\n                }\r\n                else if(current == 1){\r\n                    tts.speakOut(Announce.getText().toString(),\"default\");\r\n                    tts.UtteranceProgress();\r\n                }\r\n            }\r\n        });\r\n        Title.setOnClickListener(new View.OnClickListener() {\r\n            public void onClick(View v) {\r\n                if(current == 0){\r\n                    Announce.setText(\"안녕하세요.\");\r\n                    tts.speakOut(Announce.getText().toString(),\"default\");\r\n                    tem.clear();\r\n                    tem.add(\"지금부터 기억력과 사고능력을 살펴보기 위한\\n질문들을 드리겠습니다.\");\r\n                    tem.add(\"생각나는 대로 최선을 다해 답변해 주시면 됩니다.\");\r\n                    tem.add(\"준비되셨다면 아래 상자를 눌러주세요.\");\r\n                    tts.UtteranceProgress(tem, \"continue\", Announce);\r\n                }\r\n                else if(current == 1){\r\n                    tts.speakOut(Announce.getText().toString(),\"default\");\r\n                    tts.UtteranceProgress();\r\n                }\r\n            }\r\n        });\r\n\r\n        sttBtn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                tts.Stop();\r\n                tts.isStopUtt = true;\r\n                Intent intent = null;\r\n                switchPage(intent, view);\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n    /*@Override\r\n    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {\r\n        super.onActivityResult(requestCode, resultCode, resultIntent);\r\n        if (requestCode == 100 && resultCode == 1) {\r\n            current = 1;\r\n            part_score = resultIntent.getIntArrayExtra(\"part_score\");\r\n\r\n            for(int i = 0; i < part_score.length; i++){\r\n                total_score += part_score[i];\r\n            }\r\n\r\n            Toast.makeText(this, \"결과가 저장되었습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }*/\r\n    //혹시나 안되면 주석 풀어보기\r\n\r\n    @Override\r\n    protected void onStart() {\r\n        super.onStart();\r\n        tts.isStopUtt = false;\r\n        Intent intent;\r\n        intent = getIntent();\r\n        part_score = intent.getIntArrayExtra(\"scores\");\r\n        isDone = intent.getBooleanExtra(\"isDone\", false);\r\n\r\n        if(isDone){\r\n            current = 1;\r\n            tem.clear();\r\n            Announce.setText(\"결과를 출력하기 위해 아래 상자를 눌러주세요.\");\r\n            tts.speakOut(Announce.getText().toString());\r\n            sttBtn.setText(\"결과 보기\");\r\n            for(int i = 0; i < part_score.length; i++){\r\n                total_score += part_score[i];\r\n            }\r\n            Intend_value.setText(Integer.toString(total_score));\r\n\r\n            Toast.makeText(this, \"결과가 저장되었습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n\r\n        }\r\n        else {\r\n            if(!isStart){\r\n                Announce.setText(\"안녕하세요.\");\r\n                tts.speakOut(Announce.getText().toString(),\"default\");\r\n                tem.clear();\r\n                tem.add(\"지금부터 기억력과 사고능력을 살펴보기 위한\\n질문들을 드리겠습니다.\");\r\n                tem.add(\"생각나는 대로 최선을 다해 답변해 주시면 됩니다.\");\r\n                tem.add(\"준비되셨다면 아래 상자를 눌러주세요.\");\r\n                tts.UtteranceProgress(tem, \"continue\", Announce);\r\n            }\r\n            else finish();\r\n        }\r\n        Title.setText(announce.get(current));\r\n    }\r\n\r\n    private void init_Announce(){\r\n        announce.add(\"정규검사\");\r\n        announce.add(\"결과 출력\");\r\n    }\r\n\r\n    @Override\r\n    public void onBackPressed() {\r\n        long curTime = System.currentTimeMillis();\r\n        long gapTime = curTime - backBtnTime;\r\n\r\n        if (0 <= gapTime && 2000 >= gapTime) {\r\n            tts.Destroy();\r\n\r\n            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);\r\n            startActivity(intent);\r\n\r\n            finish();\r\n        } else {\r\n            backBtnTime = curTime;\r\n            Toast.makeText(this, \"지금 나가시면 진행된 검사가 저장되지 않습니다.\",\r\n                    Toast.LENGTH_SHORT).show();\r\n        }\r\n    }\r\n\r\n    private void switchPage(Intent intent, View view){\r\n        switch (current){\r\n            case 0:\r\n                isStart = true;\r\n                intent = new Intent(view.getContext(), orientation_Page.class);\r\n                startActivityForResult(intent, 100);\r\n                break;\r\n            case 1:\r\n                intent = new Intent(view.getContext(), Result.class);\r\n                intent.putExtra(\"part_score\", part_score);\r\n                intent.putExtra(\"total_score\", total_score);\r\n                startActivity(intent);\r\n                finish();\r\n                break;\r\n\r\n        }\r\n    }\r\n    @Override\r\n    protected void onStop(){\r\n        tts.isStopUtt = true;\r\n        super.onStop();\r\n        tts.Stop();\r\n    }\r\n\r\n    @Override\r\n    protected void onDestroy() {\r\n        super.onDestroy();\r\n        tts.Stop();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java b/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java
+--- a/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java	
++++ b/app/src/main/java/com/cbnu/dementiadiagnosis/QuizHOME.java	
+@@ -17,6 +17,7 @@
+ import java.util.Arrays;
+ import java.util.List;
+ 
++import QuizPage.ComprehensionPage;
+ import QuizPage.ExecutionPage;
+ import QuizPage.LanguagePage;
+ import QuizPage.SpaceTimePage;
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25_오후_4_34_[Default_Changelist]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25_오후_4_34_[Default_Changelist]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25_오후_4_34_[Default_Changelist]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25_오후_4_34_[Default_Changelist]/shelved.patch	
++++ /dev/null	
+@@ -1,18 +0,0 @@
+-Index: app/src/main/AndroidManifest.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.cbnu.dementiadiagnosis\">\r\n\r\n    <uses-permission android:name=\"android.permission.RECORD_AUDIO\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.DementiaDiagnosis\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity\r\n            android:name=\"simpleTest.S_execution\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\"simpleTest.S_language\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".Result\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".RegisterActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".HomeActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\"memoryQuiz.MainActivity\"\r\n            android:exported=\"false\"/>\r\n\r\n        <activity\r\n            android:name=\".FirstActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity android:name=\".QuizHOME\" />\r\n        <activity android:name=\".Map\" />\r\n        <activity android:name=\"QuizPage.orientation_Page\" />\r\n        <activity android:name=\"QuizPage.memoryInput_Page\" />\r\n        <activity android:name=\"QuizPage.attention_Page\" />\r\n        <activity android:name=\"QuizPage.ExecutionPage\" />\r\n        <activity android:name=\"QuizPage.memoryOutput_Page\" />\r\n        <activity android:name=\"QuizPage.fluency_Page\" />\r\n        <activity android:name=\"QuizPage.SpaceTimePage\" />\r\n        <activity android:name=\"QuizPage.ComprehensionPage\" />\r\n        <activity android:name=\"QuizPage.LanguagePage\" />\r\n        <activity android:name=\"memoryQuiz.StartActivity\"/>\r\n\r\n        <activity android:name=\"simpleTest.S_orientation\" />\r\n        <activity android:name=\"simpleTest.S_fluency_Page\" />\r\n        <activity android:name=\"simpleTest.S_memoryInput\" />\r\n        <activity android:name=\"simpleTest.S_attention\" />\r\n        <activity android:name=\"simpleTest.S_memoryOutput\" />\r\n        <activity android:name=\"simpleTest.S_SpaceTime\" />\r\n\r\n        <meta-data\r\n            android:name=\"com.kakao.sdk.AppKey\"\r\n            android:value=\"deeed953cb0bd5ce8fb32d971a0039d7\" />\r\n    </application>\r\n\r\n</manifest>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+---- a/app/src/main/AndroidManifest.xml	(revision 87a310eeb0ca5680269e0d11c6befcb486dc4d1a)
+-+++ b/app/src/main/AndroidManifest.xml	(date 1661165022588)
+-@@ -55,6 +55,7 @@
+-         <activity android:name="QuizPage.ComprehensionPage" />
+-         <activity android:name="QuizPage.LanguagePage" />
+-         <activity android:name="memoryQuiz.StartActivity"/>
+-+        <activity android:name=".VoiceBot"/>
+- 
+-         <activity android:name="simpleTest.S_orientation" />
+-         <activity android:name="simpleTest.S_fluency_Page" />
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25__4_34__Default_Changelist_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25__4_34__Default_Changelist_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25__4_34__Default_Changelist_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25__4_34__Default_Changelist_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_2022-08-25_오후_4_34_[Default_Changelist]" date="1661412869356" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2022-08-25_오후_4_34_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2022-08-25 오후 4:34 [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: app/src/main/res/drawable/target_shape.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<shape xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:shape=\"rectangle\">\r\n    <stroke\r\n        android:color=\"#000000\"\r\n        android:width=\"2dp\"/>\r\n    <solid android:color=\"#ECECEC\" />\r\n    <size\r\n        android:width=\"50dp\"\r\n        android:height=\"50dp\"/>\r\n    <corners android:radius=\"5dp\"/>\r\n</shape>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/target_shape.xml b/app/src/main/res/drawable/target_shape.xml
+--- a/app/src/main/res/drawable/target_shape.xml	
++++ b/app/src/main/res/drawable/target_shape.xml	
+@@ -4,7 +4,7 @@
+     <stroke
+         android:color="#000000"
+         android:width="2dp"/>
+-    <solid android:color="#ECECEC" />
++    <solid android:color="#A1E2FF" />
+     <size
+         android:width="50dp"
+         android:height="50dp"/>
+Index: app/src/main/res/layout/comprehension.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\"QuizPage.ComprehensionPage\">\r\n\r\n    <ImageButton\r\n        android:id=\"@+id/ic_left\"\r\n        android:layout_width=\"40dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_marginStart=\"15dp\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:background=\"@drawable/ic_left_right\"\r\n        android:rotation=\"-90\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/type\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:fontFamily=\"@font/jejugothic\"\r\n        android:text=\"지남력\"\r\n        android:textSize=\"18sp\" />\r\n\r\n    <ImageButton\r\n        android:id=\"@+id/ic_right\"\r\n        android:layout_width=\"40dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:layout_marginEnd=\"15dp\"\r\n        android:background=\"@drawable/ic_left_right\"\r\n        android:rotation=\"90\" />\r\n\r\n    <ProgressBar\r\n        android:id=\"@+id/progressBar\"\r\n        style=\"@style/Widget.AppCompat.ProgressBar.Horizontal\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"5dp\"\r\n        android:layout_below=\"@+id/type\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:progress=\"20\"\r\n        android:progressDrawable=\"@drawable/progressbar\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/question\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/progressBar\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:fontFamily=\"@font/jejugothic\"\r\n        android:gravity=\"center\"\r\n        android:letterSpacing=\"0.04\"\r\n        android:lineSpacingExtra=\"10dp\"\r\n        android:text=\"아래 5개의 동그라미를\\n\\n1이라고 쓰여있는 공간에\\n2개를 옮기고,\\n\\n2이라고 쓰여있는 공간에\\n3개를 옮기세요.\"\r\n        android:textSize=\"18sp\" />\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/quiz_box\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/question\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:gravity=\"center\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <LinearLayout\r\n                android:id=\"@+id/ball\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"80dp\"\r\n                android:gravity=\"center\"\r\n                android:orientation=\"horizontal\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/image\"\r\n                    android:layout_width=\"60dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:src=\"@drawable/shape_oval\"\r\n                    app:tint=\"#00BCD4\" />\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/image2\"\r\n                    android:layout_width=\"60dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:src=\"@drawable/shape_oval\"\r\n                    app:tint=\"#00BCD4\" />\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/image3\"\r\n                    android:layout_width=\"60dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:src=\"@drawable/shape_oval\"\r\n                    app:tint=\"#00BCD4\" />\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/image4\"\r\n                    android:layout_width=\"60dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:src=\"@drawable/shape_oval\"\r\n                    app:tint=\"#00BCD4\" />\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/image5\"\r\n                    android:layout_width=\"60dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:src=\"@drawable/shape_oval\"\r\n                    app:tint=\"#00BCD4\" />\r\n            </LinearLayout>\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:orientation=\"horizontal\">\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/left\"\r\n                    android:layout_width=\"130dp\"\r\n                    android:layout_height=\"200dp\"\r\n                    android:layout_marginEnd=\"20dp\"\r\n                    android:background=\"@drawable/normal_shape\"\r\n                    android:backgroundTint=\"#EDEDED\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_gravity=\"center\"\r\n                        android:layout_marginTop=\"20dp\"\r\n                        android:fontFamily=\"@font/jejugothic\"\r\n                        android:letterSpacing=\"0.04\"\r\n                        android:lineSpacingExtra=\"10dp\"\r\n                        android:text=\"1\"\r\n                        android:textSize=\"25sp\"\r\n                        android:textStyle=\"bold\" />\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/right\"\r\n                    android:layout_width=\"130dp\"\r\n                    android:layout_height=\"200dp\"\r\n                    android:background=\"@drawable/normal_shape\"\r\n                    android:backgroundTint=\"#EDEDED\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_gravity=\"center\"\r\n                        android:layout_marginTop=\"20dp\"\r\n                        android:fontFamily=\"@font/jejugothic\"\r\n                        android:letterSpacing=\"0.04\"\r\n                        android:lineSpacingExtra=\"10dp\"\r\n                        android:text=\"2\"\r\n                        android:textSize=\"25sp\"\r\n                        android:textStyle=\"bold\" />\r\n                </LinearLayout>\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n    </LinearLayout>\r\n\r\n    <FrameLayout\r\n        android:id=\"@+id/gray_view\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_below=\"@+id/quiz_box\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:background=\"@drawable/shape_round_bar\"\r\n        android:backgroundTint=\"#F4F4F4\">\r\n\r\n        <androidx.appcompat.widget.AppCompatButton\r\n            android:id=\"@+id/donknow\"\r\n            android:layout_width=\"130dp\"\r\n            android:layout_height=\"40dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:background=\"@drawable/round_button\"\r\n            android:backgroundTint=\"#DFDFDF\"\r\n            android:fontFamily=\"@font/jejugothic\"\r\n            android:text=\"잘모르겠어요\"\r\n            android:textColor=\"#787878\"\r\n            android:textSize=\"14sp\" />\r\n    </FrameLayout>\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/comprehension.xml b/app/src/main/res/layout/comprehension.xml
+--- a/app/src/main/res/layout/comprehension.xml	
++++ b/app/src/main/res/layout/comprehension.xml	
+@@ -7,7 +7,7 @@
+     tools:context="QuizPage.ComprehensionPage">
+ 
+     <ImageButton
+-        android:id="@+id/ic_left"
++        android:id="@+id/before"
+         android:layout_width="40dp"
+         android:layout_height="50dp"
+         android:layout_marginStart="15dp"
+@@ -26,7 +26,7 @@
+         android:textSize="18sp" />
+ 
+     <ImageButton
+-        android:id="@+id/ic_right"
++        android:id="@+id/next"
+         android:layout_width="40dp"
+         android:layout_height="50dp"
+         android:layout_alignParentEnd="true"
+@@ -59,121 +59,154 @@
+         android:textSize="18sp" />
+ 
+     <LinearLayout
+-        android:id="@+id/quiz_box"
++        android:id="@+id/ball"
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
++        android:layout_height="80dp"
+         android:layout_below="@+id/question"
++        android:layout_centerHorizontal="true"
++        android:layout_marginStart="45dp"
+         android:layout_marginTop="20dp"
++        android:layout_marginEnd="45dp"
++        android:background="@drawable/round_button"
+         android:gravity="center"
+         android:orientation="horizontal">
+ 
+-        <LinearLayout
+-            android:layout_width="300dp"
+-            android:layout_height="wrap_content"
+-            android:gravity="center"
+-            android:orientation="vertical">
+-
+-            <LinearLayout
+-                android:id="@+id/ball"
+-                android:layout_width="wrap_content"
+-                android:layout_height="80dp"
+-                android:gravity="center"
+-                android:orientation="horizontal">
+-
+-                <ImageView
+-                    android:id="@+id/image"
+-                    android:layout_width="60dp"
+-                    android:layout_height="wrap_content"
+-                    android:src="@drawable/shape_oval"
+-                    app:tint="#00BCD4" />
++        <ImageView
++            android:id="@+id/image"
++            android:layout_width="60dp"
++            android:layout_height="wrap_content"
++            android:src="@drawable/shape_oval"
++            app:tint="#00BCD4" />
+ 
+-                <ImageView
+-                    android:id="@+id/image2"
+-                    android:layout_width="60dp"
+-                    android:layout_height="wrap_content"
+-                    android:src="@drawable/shape_oval"
+-                    app:tint="#00BCD4" />
++        <ImageView
++            android:id="@+id/image2"
++            android:layout_width="60dp"
++            android:layout_height="wrap_content"
++            android:src="@drawable/shape_oval"
++            app:tint="#00BCD4" />
+ 
+-                <ImageView
+-                    android:id="@+id/image3"
+-                    android:layout_width="60dp"
+-                    android:layout_height="wrap_content"
+-                    android:src="@drawable/shape_oval"
+-                    app:tint="#00BCD4" />
++        <ImageView
++            android:id="@+id/image3"
++            android:layout_width="60dp"
++            android:layout_height="wrap_content"
++            android:src="@drawable/shape_oval"
++            app:tint="#00BCD4" />
+ 
+-                <ImageView
+-                    android:id="@+id/image4"
+-                    android:layout_width="60dp"
+-                    android:layout_height="wrap_content"
+-                    android:src="@drawable/shape_oval"
+-                    app:tint="#00BCD4" />
++        <ImageView
++            android:id="@+id/image4"
++            android:layout_width="60dp"
++            android:layout_height="wrap_content"
++            android:src="@drawable/shape_oval"
++            app:tint="#00BCD4" />
+ 
+-                <ImageView
+-                    android:id="@+id/image5"
+-                    android:layout_width="60dp"
+-                    android:layout_height="wrap_content"
+-                    android:src="@drawable/shape_oval"
+-                    app:tint="#00BCD4" />
+-            </LinearLayout>
++        <ImageView
++            android:id="@+id/image5"
++            android:layout_width="60dp"
++            android:layout_height="wrap_content"
++            android:src="@drawable/shape_oval"
++            app:tint="#00BCD4" />
++    </LinearLayout>
+ 
+-            <LinearLayout
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="20dp"
+-                android:orientation="horizontal">
+-
+-                <LinearLayout
+-                    android:id="@+id/left"
+-                    android:layout_width="130dp"
+-                    android:layout_height="200dp"
+-                    android:layout_marginEnd="20dp"
+-                    android:background="@drawable/normal_shape"
+-                    android:backgroundTint="#EDEDED"
+-                    android:orientation="vertical">
++    <LinearLayout
++        android:id="@+id/left"
++        android:layout_width="140dp"
++        android:layout_height="200dp"
++        android:layout_below="@+id/ball"
++        android:layout_alignStart="@+id/ball"
++        android:layout_marginStart="10dp"
++        android:layout_marginTop="20dp"
++        android:layout_marginEnd="20dp"
++        android:background="@drawable/shape_exe"
++        android:orientation="vertical">
+ 
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:layout_gravity="center"
+-                        android:layout_marginTop="20dp"
+-                        android:fontFamily="@font/jejugothic"
+-                        android:letterSpacing="0.04"
+-                        android:lineSpacingExtra="10dp"
+-                        android:text="1"
+-                        android:textSize="25sp"
+-                        android:textStyle="bold" />
+-                </LinearLayout>
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:fontFamily="@font/jejugothic"
++            android:gravity="center"
++            android:letterSpacing="0.04"
++            android:lineSpacingExtra="10dp"
++            android:paddingTop="15dp"
++            android:text="1"
++            android:textSize="25sp"
++            android:textStyle="bold" />
++
++        <LinearLayout
++            android:id="@+id/leftResOne"
++            android:layout_width="140dp"
++            android:layout_height="wrap_content"
++            android:gravity="center_horizontal"
++            android:orientation="horizontal" />
++
++        <LinearLayout
++            android:id="@+id/leftResTwo"
++            android:layout_width="140dp"
++            android:layout_height="wrap_content"
++            android:gravity="center_horizontal"
++            android:orientation="horizontal" />
++
++        <LinearLayout
++            android:id="@+id/leftResThree"
++            android:layout_width="140dp"
++            android:layout_height="wrap_content"
++            android:gravity="center_horizontal"
++            android:orientation="horizontal" />
++
++    </LinearLayout>
+ 
+-                <LinearLayout
+-                    android:id="@+id/right"
+-                    android:layout_width="130dp"
+-                    android:layout_height="200dp"
+-                    android:background="@drawable/normal_shape"
+-                    android:backgroundTint="#EDEDED"
+-                    android:orientation="vertical">
++    <LinearLayout
++        android:id="@+id/right"
++        android:layout_width="140dp"
++        android:layout_height="200dp"
++        android:layout_below="@+id/ball"
++        android:layout_alignEnd="@+id/ball"
++        android:layout_marginEnd="10dp"
++        android:layout_marginTop="20dp"
++        android:background="@drawable/shape_exe"
++        android:orientation="vertical">
+ 
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:layout_gravity="center"
+-                        android:layout_marginTop="20dp"
+-                        android:fontFamily="@font/jejugothic"
+-                        android:letterSpacing="0.04"
+-                        android:lineSpacingExtra="10dp"
+-                        android:text="2"
+-                        android:textSize="25sp"
+-                        android:textStyle="bold" />
+-                </LinearLayout>
+-            </LinearLayout>
+-        </LinearLayout>
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_gravity="center"
++            android:layout_marginTop="20dp"
++            android:fontFamily="@font/jejugothic"
++            android:letterSpacing="0.04"
++            android:lineSpacingExtra="10dp"
++            android:gravity="center"
++            android:text="2"
++            android:textSize="25sp"
++            android:textStyle="bold" />
++
++        <LinearLayout
++            android:id="@+id/rightResOne"
++            android:layout_width="140dp"
++            android:layout_height="wrap_content"
++            android:gravity="center_horizontal"
++            android:orientation="horizontal" />
++
++        <LinearLayout
++            android:id="@+id/rightResTwo"
++            android:layout_width="140dp"
++            android:layout_height="wrap_content"
++            android:gravity="center_horizontal"
++            android:orientation="horizontal" />
++
++        <LinearLayout
++            android:id="@+id/rightResThree"
++            android:layout_width="140dp"
++            android:layout_height="wrap_content"
++            android:gravity="center_horizontal"
++            android:orientation="horizontal" />
++
+     </LinearLayout>
+ 
+     <FrameLayout
+         android:id="@+id/gray_view"
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:layout_below="@+id/quiz_box"
+-        android:layout_marginTop="20dp"
++        android:layout_height="100dp"
++        android:layout_alignParentBottom="true"
++        android:layout_marginTop="0dp"
+         android:background="@drawable/shape_round_bar"
+         android:backgroundTint="#F4F4F4">
+ 
+Index: app/src/main/res/drawable/round_gray.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n<shape xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <solid\r\n        android:color=\"#DDDDDD\" />\r\n    <stroke\r\n        android:width=\"1px\"\r\n        android:color=\"#FFFFFF\" />\r\n    <corners android:radius=\"20dp\" />\r\n</shape>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/round_gray.xml b/app/src/main/res/drawable/round_gray.xml
+--- a/app/src/main/res/drawable/round_gray.xml	
++++ b/app/src/main/res/drawable/round_gray.xml	
+@@ -1,9 +1,9 @@
+ <?xml version="1.0" encoding="utf-8" ?>
+ <shape xmlns:android="http://schemas.android.com/apk/res/android">
+     <solid
+-        android:color="#DDDDDD" />
++        android:color="#FAFAFA" />
+     <stroke
+         android:width="1px"
+-        android:color="#FFFFFF" />
++        android:color="#D1D1D1" />
+     <corners android:radius="20dp" />
+ </shape>
+\ No newline at end of file

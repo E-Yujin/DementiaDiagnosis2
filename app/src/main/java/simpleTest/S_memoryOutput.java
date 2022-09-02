@@ -132,6 +132,7 @@ public class S_memoryOutput extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), S_language.class);
                     intent.putExtra("scores", memo_out.scores);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
 
                     finish();
                 }
@@ -181,6 +182,7 @@ public class S_memoryOutput extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), S_language.class);
                             intent.putExtra("scores", memo_out.scores);
                             startActivity(intent);
+                            overridePendingTransition(0, 0);
 
                             finish();
                         }
@@ -221,6 +223,7 @@ public class S_memoryOutput extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), S_language.class);
                             intent.putExtra("scores", memo_out.scores);
                             startActivity(intent);
+                            overridePendingTransition(0, 0);
 
                             finish();
                         }

@@ -52,8 +52,6 @@ public class Result extends AppCompatActivity {
     TextView ori_score, mem_score, att_score, spa_score, exe_score, lan_score;
     TextView text_total;
     Button endBtn;
-    ImageView helpImage;
-    CardView helpMsg;
     DBHelper db;
     TextView scoreText, resText;
     FragmentHome fragmentHome;
@@ -83,8 +81,6 @@ public class Result extends AppCompatActivity {
         progressBar5 = findViewById(R.id.barChart5);
         progressBar6 = findViewById(R.id.barChart6);
         endBtn = findViewById(R.id.endBtn);
-        helpImage = findViewById(R.id.help);
-        helpMsg = findViewById(R.id.helpMessage);
         scoreText = findViewById(R.id.score);
         resText = findViewById(R.id.result_text);
 
@@ -96,20 +92,6 @@ public class Result extends AppCompatActivity {
         } else if(type.equals("regular"))  {
             showResultChart();
         }
-
-        // 도움말 클릭 시
-        helpImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(helpMsg.getVisibility() == View.INVISIBLE) {
-                    helpMsg.setVisibility(View.VISIBLE);
-                    helpImage.setColorFilter(Color.parseColor("#F8DA8D"), PorterDuff.Mode.SRC_IN);
-                } else {
-                    helpMsg.setVisibility(View.INVISIBLE);
-                    helpImage.setColorFilter(Color.parseColor("#7D7D7D"), PorterDuff.Mode.SRC_IN);
-                }
-            }
-        });
     }
 
     // 간이검사 결과 출력
@@ -156,11 +138,11 @@ public class Result extends AppCompatActivity {
 
         // 몇점 이하로 할 지 정하기
         if(12 < score_total) {
-            resText.setText(SharedPreference.getUserName(getApplication()) + "님은 진단결과 상 정상 범주에 속하는 수준입니다." +
+            resText.setText(SharedPreference.getUserName(getApplication()) + "님은 진단결과 상 정상 범주에 속하는 수준입니다. " +
                     "앞으로도 치매에 관한 꾸준한 관리로 건강한 생활을 유지하시길 바랍니다.");
         }else {
-            resText.setText(SharedPreference.getUserName(getApplication()) + "님은 진단결과 상 구체적인 진단이 필요한 수준입니다." +
-                    "해당 진단기는 비교적 간단한 자가진단이기에 해당 결과로 치매를 확정하지 않으니" +
+            resText.setText(SharedPreference.getUserName(getApplication()) + "님은 진단결과 상 구체적인 진단이 필요한 수준입니다. " +
+                    "해당 진단기는 비교적 간단한 자가진단이기에 해당 결과로 치매를 확정하지 않으니 " +
                     "정확한 진단을 위해 가까운 병원이나 치매센터에 방문하셔서 보다 정밀한 검사를 받아보시길 바랍니다.");
         }
     }

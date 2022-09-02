@@ -140,6 +140,7 @@ public class S_memoryInput extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), S_attention.class);
                     intent.putExtra("scores", memo_in.scores);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
 
                     finish();
                 }
@@ -205,6 +206,7 @@ public class S_memoryInput extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), S_attention.class);
                         intent.putExtra("scores", memo_in.scores);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
 
                         finish();
                     }

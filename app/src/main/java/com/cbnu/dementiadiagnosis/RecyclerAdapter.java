@@ -89,21 +89,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
                 setProgressWithAnimation(barchart_pg6,language * 25);
 
                 if(SharedPreference.getUserScore(view.getContext()) < total) {
-                    result_tv.setText(SharedPreference.getUserName(view.getContext()) + "님은 진단결과 상 정상 범주에 속하는 수준입니다." +
+                    result_tv.setText(SharedPreference.getUserName(view.getContext()) + "님은 진단결과 상 정상 범주에 속하는 수준입니다. " +
                             "앞으로도 치매에 관한 꾸준한 관리로 건강한 생활을 유지하시길 바랍니다.");
                 }else {
-                    result_tv.setText(SharedPreference.getUserName(view.getContext()) + "님은 진단결과 상 구체적인 진단이 필요한 수준입니다." +
-                            "해당 진단기는 비교적 간단한 자가진단이기에 해당 결과로 치매를 확정하지 않으니" +
+                    result_tv.setText(SharedPreference.getUserName(view.getContext()) + "님은 진단결과 상 구체적인 진단이 필요한 수준입니다. " +
+                            "해당 진단기는 비교적 간단한 자가진단이기에 해당 결과로 치매를 확정하지 않으니 " +
                             "정확한 진단을 위해 가까운 병원이나 치매센터에 방문하셔서 보다 정밀한 검사를 받아보시길 바랍니다.");
                 }
                 dialog.show();
 
-                btn_end.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                btn_end.setOnClickListener(v1 -> dialog.dismiss());
             }
         });
         return itemViewHolder;

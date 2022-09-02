@@ -102,21 +102,21 @@ public class HomeActivity extends AppCompatActivity {
             {
                 case R.id.homeItem:
                     transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss();
-                    fb.setVisibility(View.VISIBLE);
+                    fb.show();
                     bubble.setVisibility(View.VISIBLE);
                     bubble.startAnimation(animScale);
                     isHome = true;
                     break;
                 case R.id.resultItem:
                     transaction.replace(R.id.frameLayout, fragmentChart).commitAllowingStateLoss();
+                    fb.hide();
                     bubble.setVisibility(View.INVISIBLE);
-                    fb.setVisibility(View.INVISIBLE);
                     isHome = false;
                     break;
                 case R.id.setItem:
                     transaction.replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
+                    fb.show();
                     bubble.setVisibility(View.INVISIBLE);
-                    fb.setVisibility(View.INVISIBLE);
                     isHome = false;
                     break;
             }

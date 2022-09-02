@@ -115,6 +115,7 @@ public class S_language extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
                 intent.putExtra("scores", languageFunc.scores);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -140,6 +141,7 @@ public class S_language extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
                 intent.putExtra("scores", languageFunc.scores);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 finish();
             }
         });

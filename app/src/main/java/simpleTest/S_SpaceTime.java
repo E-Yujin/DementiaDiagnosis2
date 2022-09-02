@@ -98,6 +98,7 @@ public class S_SpaceTime extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), S_execution.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
 
                 finish();
             }
@@ -130,6 +131,7 @@ public class S_SpaceTime extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), S_execution.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
 
                 finish();
             }

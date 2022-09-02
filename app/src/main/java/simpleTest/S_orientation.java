@@ -157,6 +157,7 @@ public class S_orientation extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
                     intent.putExtra("scores", ortt_main.scores);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
 
                     QP.isOrient = false;
 
@@ -270,6 +271,7 @@ public class S_orientation extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
                         intent.putExtra("scores", ortt_main.scores);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
 
                         QP.isOrient = false;
 
@@ -327,6 +329,7 @@ public class S_orientation extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
 
             finish();
         } else {

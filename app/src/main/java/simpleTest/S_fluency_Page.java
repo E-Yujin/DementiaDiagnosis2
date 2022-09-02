@@ -46,8 +46,6 @@ public class S_fluency_Page extends AppCompatActivity {
 
     private long backBtnTime = 0;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +128,7 @@ public class S_fluency_Page extends AppCompatActivity {
                 intent.putExtra("scores", flu.scores);
                 intent.putExtra("isDone", true);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
 
                 stt.isFluency = false;
 
@@ -175,6 +174,7 @@ public class S_fluency_Page extends AppCompatActivity {
                     intent.putExtra("scores", flu.scores);
                     intent.putExtra("isDone", true);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
 
                     stt.isFluency = false;
 
