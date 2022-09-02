@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import QuizPage.QuizPage;
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     int checkCnt = 0;
     int arrCnt = 0;
     boolean checkFalse = false;
-    CountDownTimer countDownTimer;
     String[] ans = {};
     TextView randomText;
     TextView question;
@@ -66,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
     Handler hand;
     Handler handTimer;
     String random;
+    CoresTimerTask coresTimerTask;
     private long backBtnTime = 0;
+    private static final long START_TIME_IN_MILLIS = 30000;
+    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+    private CountDownTimer countDownTimer;
+    private boolean mTimerRunning;
+    private boolean stopCheck = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         hand = new Handler();
         handTimer = new Handler();
         memoryQuiz = new MemoryQuiz();
+        coresTimerTask = new CoresTimerTask();
 
         answer.setHint("답변이 여기에 나타납니다.");
 
@@ -110,19 +117,32 @@ public class MainActivity extends AppCompatActivity {
             stt.start_STT();
         });
 
+        // 타이머 설정
+        handTimer.postDelayed(() -> {
+            if(!mTimerRunning) {
+                boolean checkTimerRun = coresTimerTask.hasRunStarted();
+                if (!checkTimerRun)
+                    startTimer();
+            }
+        }, 5000);
+        updateCountDownText();
+
         // 제출버튼
         submit.setOnClickListener(v -> {
-            if(countDownTimer != null)
-                countDownTimer.cancel();
             answer.setEnabled(false);
             sttBtn.setEnabled(false);
             submit.setEnabled(false);
             checkFalse = false;
+            mTimerRunning = false;
             checkCnt = 0;
             count = 0;
             arrCnt = 0;
             stt.Stop();
             tts.Stop();
+
+            if(countDownTimer != null) {
+                countDownTimer.cancel();
+            }
 
             if (answer.getText().toString().equals("")) { // 공백 답변 시
                 shapeX.setVisibility(View.VISIBLE);
@@ -148,98 +168,32 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             hand.postDelayed(() -> {
-                //countDownTimer.cancel();
+                Log.e("current_submit", Integer.toString(QP.current));
                 switch (QP.current) {
-                    case 0:
+                    case 1:
                         changeQuiz(40);
                         break;
-                    case 1:
+                    case 2:
                         changeQuiz(60);
                         break;
-                    case 2:
+                    case 3:
                         changeQuiz(80);
                         break;
-                    case 3:
+                    case 4:
                         changeQuiz(100);
                         break;
-                    case 4:
+                    case 5:
                         resultDialog();
                     default:
                         break;
                 }
             }, 3000);
         });
-
-        // 타이머 설정
-        handTimer.postDelayed(() -> countDownTimer = new CountDownTimer(30000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String sDuration = String.format(Locale.ENGLISH, "%02d : %02d"
-                        , TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
-                        , TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-                Log.e("sDuration", sDuration);
-                time.setText(sDuration);
-            }
-
-            @Override
-            public void onFinish() {
-                stt.Stop();
-                tts.Stop();
-                answer.setEnabled(false);
-                sttBtn.setEnabled(false);
-                tts.isStopUtt = true;
-
-                if (answer.getText().toString().equals("")) {
-                    shapeX.setVisibility(View.VISIBLE);
-                } else {
-                    String temp = answer.getText().toString().replace(".", "");
-                    temp = temp.replace(",", "");
-                    temp = temp.trim().replaceAll("\\s+", " ");
-                    Log.e("temp", temp);
-                    ans = temp.split(" ");
-                    Log.e("ans", Arrays.toString(ans));
-                    if (Arrays.asList(ans).contains("")) {
-                        shapeX.setVisibility(View.VISIBLE);
-                    } else {
-                        HashSet<String> hashSet = new HashSet<>(Arrays.asList(ans)); // 중복 항목 체크
-                        Log.e("hashSet", hashSet.toString());
-                        ans = hashSet.toArray(new String[0]);
-                        if (ans.length < 3) {
-                            shapeX.setVisibility(View.VISIBLE);
-                        } else {
-                            getResultSearch(ans, random, ans.length);
-                        }
-                    }
-                }
-                hand.postDelayed(() -> {
-                    switch (QP.current) {
-                        case 0:
-                            changeQuiz(40);
-                            break;
-                        case 1:
-                            changeQuiz(60);
-                            break;
-                        case 2:
-                            changeQuiz(80);
-                            break;
-                        case 3:
-                            changeQuiz(100);
-                            break;
-                        case 4:
-                            countDownTimer.cancel();
-                            resultDialog();
-                            break;
-                        default:
-                            break;
-                    }
-                }, 3000);
-            }
-        }.start(), 5000);
     }
 
     // 바뀔 문제 세팅
     public void changeQuiz(int pro) {
+        Log.e("progress", Integer.toString(pro));
         pro_bar.setProgress(pro);
         tts.isStopUtt = false;
         QP.Submit();
@@ -256,7 +210,14 @@ public class MainActivity extends AppCompatActivity {
         checkCnt = 0;
         arrCnt = 0;
         time.setText("00 : 30");
-        handTimer.postDelayed(() -> countDownTimer.start(), 5000);
+        resetTimer();
+        handTimer.postDelayed(() -> {
+            if(!mTimerRunning) {
+                boolean checkTimerRun = coresTimerTask.hasRunStarted();
+                if (!checkTimerRun)
+                    startTimer();
+            }
+        }, 5000);
     }
 
     // 백과사전에서 단어 검색
@@ -286,9 +247,9 @@ public class MainActivity extends AppCompatActivity {
                                 JSONArray dkf = (JSONArray) jsonObject.get("items");
                                 if(!dkf.isNull(0)) {
                                     JSONObject obb = new JSONObject();
-                                    String[] titleArr = new String[5];
+                                    String[] titleArr = new String[10];
 
-                                    for (int i = 0; i < 5; i++) {
+                                    for (int i = 0; i < 10; i++) {
                                         obb = (JSONObject) dkf.get(i);
                                         String temp = (String) obb.get("title");
                                         String titleFilter = temp.replaceAll("<b>", "");
@@ -343,6 +304,92 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("checkFalse", "true");
             }
         }
+    }
+
+    // 타이머 시작
+    public void startTimer() {
+        countDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                stt.Stop();
+                tts.Stop();
+                answer.setEnabled(false);
+                sttBtn.setEnabled(false);
+                tts.isStopUtt = true;
+                mTimerRunning = false;
+
+                if (answer.getText().toString().equals("")) {
+                    shapeX.setVisibility(View.VISIBLE);
+                } else {
+                    String temp = answer.getText().toString().replace(".", "");
+                    temp = temp.replace(",", "");
+                    temp = temp.trim().replaceAll("\\s+", " ");
+                    Log.e("temp", temp);
+                    ans = temp.split(" ");
+                    Log.e("ans", Arrays.toString(ans));
+                    if (Arrays.asList(ans).contains("")) {
+                        shapeX.setVisibility(View.VISIBLE);
+                    } else {
+                        HashSet<String> hashSet = new HashSet<>(Arrays.asList(ans)); // 중복 항목 체크
+                        Log.e("hashSet", hashSet.toString());
+                        ans = hashSet.toArray(new String[0]);
+                        if (ans.length < 3) {
+                            Log.e("ans_length", Integer.toString(ans.length));
+                            shapeX.setVisibility(View.VISIBLE);
+                        } else {
+                            getResultSearch(ans, random, ans.length);
+                        }
+                    }
+                }
+                hand.postDelayed(() -> {
+                    Log.e("current_timer", Integer.toString(QP.current));
+                    switch (QP.current) {
+                        case 1:
+                            changeQuiz(40);
+                            break;
+                        case 2:
+                            changeQuiz(60);
+                            break;
+                        case 3:
+                            changeQuiz(80);
+                            break;
+                        case 4:
+                            changeQuiz(100);
+                            break;
+                        case 5:
+                            countDownTimer.cancel();
+                            resultDialog();
+                            break;
+                        default:
+                            break;
+                    }
+                }, 3000);
+            }
+        }.start();
+
+        mTimerRunning = true;
+    }
+
+    // 타이머 업데이트
+    public void updateCountDownText() {
+        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d : %02d", minutes, seconds);
+        Log.e("time", timeLeftFormatted);
+        time.setText(timeLeftFormatted);
+    }
+
+    // 타이머 리셋
+    public void resetTimer() {
+        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+        updateCountDownText();
     }
 
     // 랜덤 초성 생성
@@ -413,6 +460,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public static class CoresTimerTask extends TimerTask {
+
+        private boolean hasStarted = false;
+
+        @Override
+        public void run() {
+            this.hasStarted = true;
+        }
+
+        public boolean hasRunStarted() {
+            return this.hasStarted;
+        }
+    }
+
     @Override
     public void onBackPressed() {
         long curTime = System.currentTimeMillis();
@@ -440,21 +501,29 @@ public class MainActivity extends AppCompatActivity {
         submit.setEnabled(false);
         tts.speakOut(question.getText().toString());
         tts.UtteranceProgress(question.getText().toString(), 1000, answer, sttBtn, submit);
+        Log.e("start_QP.current", Integer.toString(QP.current));
+
+        if(stopCheck) {
+            QP.current--;
+        }
 
         switch (QP.current) {
             case 0:
-                changeQuiz(40);
+                changeQuiz(20);
                 break;
             case 1:
-                changeQuiz(60);
+                changeQuiz(40);
                 break;
             case 2:
-                changeQuiz(80);
+                changeQuiz(60);
                 break;
             case 3:
-                changeQuiz(100);
+                changeQuiz(80);
                 break;
             case 4:
+                changeQuiz(100);
+                break;
+            case 5:
                 countDownTimer.cancel();
                 resultDialog();
             default:
@@ -464,11 +533,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop(){
-        tts.isStopUtt = true;
         super.onStop();
-        countDownTimer.cancel();
+        tts.isStopUtt = true;
+        stopCheck = true;
+        mTimerRunning = false;
         tts.Stop();
         stt.Stop();
+
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 
     @Override
