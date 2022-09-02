@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -36,6 +37,7 @@ public class S_execution extends AppCompatActivity {
     TTS tts;
     ProgressBar pro_bar;
     String check="";
+    simple_QuizPage QP;
 
     private long backBtnTime = 0;
     List<String> quiz = new ArrayList<>();
@@ -53,6 +55,7 @@ public class S_execution extends AppCompatActivity {
         nextBtn = findViewById(R.id.next);
         pro_bar = findViewById(R.id.progressBar);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
+        QP = new simple_QuizPage();
 
         squareOne = findViewById(R.id.btnOne);
         squareTwo = findViewById(R.id.btnTwo);
@@ -177,6 +180,10 @@ public class S_execution extends AppCompatActivity {
                 star3.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        return QP.onTouchEvent(event, beforeBtn, nextBtn);
     }
 
     @Override

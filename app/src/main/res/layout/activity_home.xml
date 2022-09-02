@@ -12,19 +12,35 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/navigationView" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/voiceBot"
+    <TextView
+        android:id="@+id/bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="105dp"
+        android:layout_toLeftOf="@+id/voiceBot"
+        android:background="@drawable/bubble2"
+        android:backgroundTint="#4D9E9E9E"
+        android:fontFamily="@font/jejugothic"
+        android:gravity="center"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="10dp"
+        android:text="돔이와 대화해보세요!"
+        android:textSize="15sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/voiceBot"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="80dp"
-        android:contentDescription="voiceBot"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="105dp"
         android:backgroundTint="@color/white"
+        android:contentDescription="voiceBot"
         android:src="@drawable/helper_default"
         app:maxImageSize="50dp"
-        app:borderWidth="0dp"
         app:tint="@color/main"
         tools:ignore="RelativeOverlap" />
 
@@ -32,8 +48,8 @@
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation"/>
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_navigation" />
 
 </RelativeLayout>

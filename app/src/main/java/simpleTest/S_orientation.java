@@ -3,6 +3,7 @@ package simpleTest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -190,7 +191,8 @@ public class S_orientation extends AppCompatActivity {
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                announce.setText("");
+                if(QP.current == 0) announce.setText("월, 일");
+                else announce.setText("");
                 stt.Stop();
                 tts.Stop();
                 tts.isStopUtt = true;
@@ -308,6 +310,10 @@ public class S_orientation extends AppCompatActivity {
             }
         }
         return score;
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        return QP.onTouchEvent(event, undo, submit);
     }
 
     @Override

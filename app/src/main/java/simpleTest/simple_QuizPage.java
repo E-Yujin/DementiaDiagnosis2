@@ -1,5 +1,7 @@
 package simpleTest;
 
+import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ public class simple_QuizPage {
     EditText answer;
     ImageButton sttBtn;
     ImageButton submit;
+    float D_x = 0;
+    float D_y = 0;
 
     public int current = 0;
     protected List<String> title_quest;
@@ -37,12 +41,7 @@ public class simple_QuizPage {
         question.setText(title_quest.get(current));
     }
 
-    public simple_QuizPage(TTS Tts, TextView quest, ImageButton sub, List<String> quiz) {
-        tts = Tts;
-        question = quest;
-        submit = sub;
-        title_quest = quiz;
-        question.setText(title_quest.get(current));
+    public simple_QuizPage() {
     }
 
     public void Submit(){
@@ -92,6 +91,39 @@ public class simple_QuizPage {
             tts.Stop();
             stt.Stop();
         }
+    }
+
+    public boolean onTouchEvent(MotionEvent event, ImageButton undo, ImageButton submit) {
+        float x = event.getX();
+        float y = event.getY();
+
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d( "Touch_", "onTouch Down ACTION_DOWN : (" + x +", " + y + ")" );
+                D_x = x;
+                D_y = y;
+                return true;
+
+            case MotionEvent.ACTION_MOVE:
+                Log.d( "Touch_", "onTouch Down ACTION_MOVE: (" + x +", " + y + ")" );
+
+                return true;
+
+            case MotionEvent.ACTION_UP:
+                Log.d( "Touch_", "onTouch Down ACTION_UP: (" + x +", " + y + ")" );
+                Log.d( "Touch_", "onTouch Down ACTION_UP2: (" + D_x +", " + D_y + ")" );
+                if(D_x > x + 300){
+                    Log.d( "Touch_1", "다음 문제!" );
+                    submit.callOnClick();
+                }
+                else if(D_x + 300 < x){
+                    Log.d( "Touch_1", "이전 문제!" );
+                    undo.callOnClick();
+                }
+                return false;
+        }
+        return false;
     }
 
     public void Start(){

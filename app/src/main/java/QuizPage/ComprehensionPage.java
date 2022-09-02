@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,6 +43,7 @@ public class ComprehensionPage extends AppCompatActivity {
     ProgressBar pro_bar;
     ImageButton leftBtn, rightBtn;
     AppCompatButton donKnow;
+    QuizPage QP;
 
     private long backBtnTime = 0;
 
@@ -63,6 +65,7 @@ public class ComprehensionPage extends AppCompatActivity {
         rightBtn = (ImageButton) findViewById(R.id.ic_right);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
+        QP = new QuizPage();
 
         type.setText("언어기능");
         pro_bar.setProgress(85);
@@ -255,6 +258,10 @@ public class ComprehensionPage extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        return QP.onTouchEvent(event, leftBtn, rightBtn);
     }
 
     @Override

@@ -53,4 +53,16 @@
         android:fontFamily="@font/jejugothic"
         android:textSize="16sp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/userIf_delete"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:text="개발자 정보\n충북대학교 소프트웨어학과 신이숙 이유진\ndldbwls6763@chungbuk.co.kr\n\nSTT서비스   ETRI\nAI대화봇     (주)스캐터랩\n검색 엔진     NAVER"
+        android:textColor="#A4636363"
+        android:lineSpacingExtra ="10dp"
+        android:fontFamily="@font/jejugothic"
+        android:textSize="13sp" />
+
 </RelativeLayout>

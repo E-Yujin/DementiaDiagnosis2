@@ -11,13 +11,19 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.util.List;
 import java.util.Locale;
@@ -697,6 +703,136 @@ public class TTS {
         }
     }
     // 여러 문장을 말하는데 텍스트뷰 변경이 필요하고 수동으로 텀을 조절하고 싶을 때
+
+    public void UtteranceProgress(List<String> say, String id, TextView text, TextView title_text, TextView textView, ImageView mic, ImageView arrow, ImageView finger, AppCompatButton donknow){
+        if(!isStopUtt){
+            tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                int i = 0;
+                @Override
+                public void onStart(String s) {
+                    isSpeaking = true;
+                }
+
+                @Override
+                public void onDone(String s) {
+                    isSpeaking = false;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlphaAnimation alpha = new AlphaAnimation(0,1);
+                            alpha.setDuration(400);
+                            alpha.setRepeatCount(Animation.INFINITE);
+                            alpha.setRepeatMode(Animation.REVERSE);
+
+                            TranslateAnimation animLeft = new TranslateAnimation(
+                                    Animation.RELATIVE_TO_PARENT,0.1f,
+                                    Animation.RELATIVE_TO_PARENT, -0.1f,
+                                    Animation.RELATIVE_TO_PARENT, 0,
+                                    Animation.RELATIVE_TO_PARENT, 0);
+                            animLeft.setDuration(600);
+                            animLeft.setRepeatCount(Animation.INFINITE);
+                            animLeft.setRepeatMode(Animation.START_ON_FIRST_FRAME);
+
+                            TranslateAnimation animRight = new TranslateAnimation(
+                                    Animation.RELATIVE_TO_PARENT,-0.1f,
+                                    Animation.RELATIVE_TO_PARENT, 0.1f,
+                                    Animation.RELATIVE_TO_PARENT, 0,
+                                    Animation.RELATIVE_TO_PARENT, 0);
+                            animRight.setDuration(600);
+                            animRight.setRepeatCount(Animation.INFINITE);
+                            animRight.setRepeatMode(Animation.START_ON_FIRST_FRAME);
+
+                            if(!s.contains("Done")){
+                                if(i == say.size()-1){
+                                    speakOut(say.get(i), "Done");
+                                }
+                                else speakOut(say.get(i), id);
+                                text.setText(say.get(i));
+                                if(say.get(i).contains("질문")){
+                                    title_text.startAnimation(alpha);
+
+                                    finger.setVisibility(View.INVISIBLE);
+                                    arrow.setVisibility(View.INVISIBLE);
+                                    mic.clearAnimation();
+                                    arrow.clearAnimation();
+                                    finger.clearAnimation();
+                                    textView.clearAnimation();
+                                    donknow.clearAnimation();
+                                }
+                                else if(say.get(i).contains("마이크")) {
+                                    mic.startAnimation(alpha);
+
+                                    finger.setVisibility(View.INVISIBLE);
+                                    arrow.setVisibility(View.INVISIBLE);
+                                    title_text.clearAnimation();
+                                    arrow.clearAnimation();
+                                    finger.clearAnimation();
+                                    textView.clearAnimation();
+                                    donknow.clearAnimation();
+                                }
+                                else if(say.get(i).contains("네모난 상자")) {
+                                    textView.startAnimation(alpha);
+
+                                    finger.setVisibility(View.INVISIBLE);
+                                    arrow.setVisibility(View.INVISIBLE);
+                                    title_text.clearAnimation();
+                                    mic.clearAnimation();
+                                    arrow.clearAnimation();
+                                    finger.clearAnimation();
+                                    donknow.clearAnimation();
+                                }
+                                else if(say.get(i).contains("잘모르겠어요")) {
+                                    donknow.startAnimation(alpha);
+
+                                    finger.setVisibility(View.INVISIBLE);
+                                    arrow.setVisibility(View.INVISIBLE);
+                                    title_text.clearAnimation();
+                                    mic.clearAnimation();
+                                    arrow.clearAnimation();
+                                    finger.clearAnimation();
+                                    textView.clearAnimation();
+                                }
+                                else if(say.get(i).contains("화면을 밀면")) {
+                                    finger.bringToFront();
+                                    finger.setVisibility(View.VISIBLE);
+                                    arrow.setVisibility(View.VISIBLE);
+
+                                    arrow.startAnimation(alpha);
+                                    title_text.clearAnimation();
+                                    mic.clearAnimation();
+                                    textView.clearAnimation();
+                                    donknow.clearAnimation();
+                                    if(say.get(i).contains("왼쪽")){
+                                        arrow.setRotation(0);
+                                        finger.startAnimation(animLeft);
+                                    }
+                                    else if(say.get(i).contains("오른쪽")){
+                                        arrow.setRotation(180);
+                                        finger.startAnimation(animRight);
+                                    }
+                                }
+                                else {
+                                    title_text.clearAnimation();
+                                    finger.setVisibility(View.INVISIBLE);
+                                    arrow.setVisibility(View.INVISIBLE);
+                                    textView.clearAnimation();
+                                    mic.clearAnimation();
+                                    arrow.clearAnimation();
+                                    finger.clearAnimation();
+                                }
+                                i++;
+                            }
+                        }
+                    }, 500);
+                }
+
+                @Override
+                public void onError(String s) {
+
+                }
+            });
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void speakOut(String say, String id, int time) {
