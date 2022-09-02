@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -155,34 +156,40 @@ public class fluency_Page extends AppCompatActivity {
                 QP.user_ans = answer.getText().toString().replace(",", "");
                 String ans[] = QP.user_ans.split(" ");
                 int correct = 0;
-
-                for(int i = 0; i < ans.length; i++){
-                    if(flu.crr_ans[0].contains(ans[i])){
-                        correct ++;
+                if(QP.user_ans.isEmpty()){
+                    tts.speakOut("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
+                }
+                else {
+                    for (int i = 0; i < ans.length; i++) {
+                        if (flu.crr_ans[0].contains(ans[i])) {
+                            correct++;
+                        }
                     }
-                }
-                if(correct >= 15){
-                    flu.Tscore = 2;
-                }
-                else if(correct >= 9){
-                    flu.Tscore = 1;
-                }
-                else{
-                    flu.Tscore = 0;
-                }
+                    if (correct >= 15) {
+                        flu.Tscore = 2;
+                    } else if (correct >= 9) {
+                        flu.Tscore = 1;
+                    } else {
+                        flu.Tscore = 0;
+                    }
 
-                flu.scores[8] = flu.Tscore;
+                    flu.scores[8] = flu.Tscore;
 
-                Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
-                intent.putExtra("scores", flu.scores);
-                intent.putExtra("isDone", true);
-                startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
+                    intent.putExtra("scores", flu.scores);
+                    intent.putExtra("isDone", true);
+                    startActivity(intent);
 
-                stt.isFluency = false;
+                    stt.isFluency = false;
 
-                finish();
+                    finish();
+                }
             }
         });
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        return QP.onTouchEvent(event, undo, submit);
     }
 
     @Override

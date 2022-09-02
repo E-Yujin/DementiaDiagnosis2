@@ -50,6 +50,8 @@ public class VoiceBot extends AppCompatActivity {
     List<String> tem = new ArrayList<>();
     AppCompatButton exit;
 
+    long backBtnTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -331,7 +333,6 @@ public class VoiceBot extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        long backBtnTime = 0;
         long curTime = System.currentTimeMillis();
         long gapTime = curTime - backBtnTime;
 

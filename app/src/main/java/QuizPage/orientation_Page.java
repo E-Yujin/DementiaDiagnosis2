@@ -390,36 +390,7 @@ public class orientation_Page extends AppCompatActivity {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                Log.d( "Touch_", "onTouch Down ACTION_DOWN : (" + x +", " + y + ")" );
-                D_x = x;
-                D_y = y;
-                return true;
-
-            case MotionEvent.ACTION_MOVE:
-                Log.d( "Touch_", "onTouch Down ACTION_MOVE: (" + x +", " + y + ")" );
-
-                return true;
-
-            case MotionEvent.ACTION_UP:
-                Log.d( "Touch_", "onTouch Down ACTION_UP: (" + x +", " + y + ")" );
-                Log.d( "Touch_", "onTouch Down ACTION_UP2: (" + D_x +", " + D_y + ")" );
-                if(D_x > x + 300){
-                    Log.d( "Touch_1", "다음 문제!" );
-                    submit.callOnClick();
-                }
-                else if(D_x + 300 < x){
-                    Log.d( "Touch_1", "이전 문제!" );
-                    undo.callOnClick();
-                }
-                return false;
-        }
-        return false;
+        return QP.onTouchEvent(event, undo, submit);
     }
 
 

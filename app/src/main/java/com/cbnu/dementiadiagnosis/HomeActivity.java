@@ -8,6 +8,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +31,13 @@ public class HomeActivity extends AppCompatActivity {
     private final FragmentSetting fragmentSetting = new FragmentSetting();
     final int PERMISSION = 1;
     private PermissionSupport permission;
+    TranslateAnimation animUpDown;
+    ScaleAnimation animScale;
+    TextView bubble;
+    FloatingActionButton fb;
+    boolean isHome = true;
+
+    private long backBtnTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +46,23 @@ public class HomeActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss();
+        animUpDown = new TranslateAnimation(
+                Animation.RELATIVE_TO_PARENT,0f,
+                Animation.RELATIVE_TO_PARENT, 0f,
+                Animation.RELATIVE_TO_PARENT, -0.005f,
+                Animation.RELATIVE_TO_PARENT, 0.005f);
+        animUpDown.setDuration(400);
+        animUpDown.setRepeatCount(Animation.INFINITE);
+        animUpDown.setRepeatMode(Animation.REVERSE);
 
-        FloatingActionButton fb = findViewById(R.id.voiceBot);
+        animScale = new ScaleAnimation(0,1,1,1,600,0);
+        animScale.setDuration(400);
+
+        bubble = findViewById(R.id.bubble);
+        bubble.startAnimation(animScale);
+
+        fb = findViewById(R.id.voiceBot);
+        fb.startAnimation(animUpDown);
         fb.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, VoiceBot.class)));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
@@ -73,15 +102,50 @@ public class HomeActivity extends AppCompatActivity {
             {
                 case R.id.homeItem:
                     transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss();
+                    fb.setVisibility(View.VISIBLE);
+                    bubble.setVisibility(View.VISIBLE);
+                    bubble.startAnimation(animScale);
+                    isHome = true;
                     break;
                 case R.id.resultItem:
                     transaction.replace(R.id.frameLayout, fragmentChart).commitAllowingStateLoss();
+                    bubble.setVisibility(View.INVISIBLE);
+                    fb.setVisibility(View.INVISIBLE);
+                    isHome = false;
                     break;
                 case R.id.setItem:
                     transaction.replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
+                    bubble.setVisibility(View.INVISIBLE);
+                    fb.setVisibility(View.INVISIBLE);
+                    isHome = false;
                     break;
             }
             return true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if (0 <= gapTime && 2000 >= gapTime) {
+            finish();
+        } else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "한 번 더 누르면 종료됩니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(isHome) bubble.startAnimation(animScale);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

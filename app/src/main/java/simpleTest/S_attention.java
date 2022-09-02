@@ -3,6 +3,7 @@ package simpleTest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -207,6 +208,10 @@ public class S_attention extends AppCompatActivity {
             }
         }
         return score;
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        return QP.onTouchEvent(event, undo, submit);
     }
 
     @Override

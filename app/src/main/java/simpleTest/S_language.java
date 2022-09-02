@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -37,6 +38,7 @@ public class S_language extends AppCompatActivity {
     ImageView mImg, image2, image3, image4, image5;
     ImageButton beforeBtn, nextBtn;
     AppCompatButton donKnow;
+    simple_QuizPage QP;
 
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
     private int resLeft = 0, resRight = 0; // 정답 체크
@@ -60,6 +62,7 @@ public class S_language extends AppCompatActivity {
         nextBtn = (ImageButton) findViewById(R.id.next);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
+        QP = new simple_QuizPage();
 
         type.setText("언어기능");
         pro_bar.setProgress(80);
@@ -275,6 +278,10 @@ public class S_language extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        return QP.onTouchEvent(event, beforeBtn, nextBtn);
     }
 
     @Override

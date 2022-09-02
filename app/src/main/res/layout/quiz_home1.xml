@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/jejugothic"
+        android:text="진단결과 출력 중입니다."
+        android:layout_marginBottom="30dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/loading"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/loading"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/jejugothic"
+        android:src="@drawable/helper_jump"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@color/main" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/jejugothic"
+        android:src="@drawable/helper_jump"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/main" />
+
+    <TextView
+        android:id="@+id/announce"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="72dp"
+        android:fontFamily="@font/jejugothic"
+        android:gravity="center"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="15dp"
+        android:text="안녕하세요."
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/exam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/jejugothic"
+        android:letterSpacing="0.45"
+        android:text="*예시"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <FrameLayout
+        android:id="@+id/view"
+        android:layout_width="280dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/round_button"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/jejugothic"
+            android:text="질문이 나타납니다."
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_exe_two"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:letterSpacing="0.2"
+            android:text="여기에 답변이 나타납니다."
+            android:textColor="@color/grey"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/mic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/ic_mic" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/donknow"
+            android:layout_width="62dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#DFDFDF"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:text="잘모르겠어요"
+            android:textColor="#787878"
+            android:textSize="8sp" />
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/arrow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="220dp"
+            android:layout_gravity="center|bottom"
+            android:background="@drawable/arrow"
+            android:backgroundTint="@color/main"/>
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/finger"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="120dp"
+            android:layout_gravity="center|bottom"
+            android:background="@drawable/finger"
+            android:backgroundTint="@color/main"/>
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/sttStart"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/jejugothic"
+        android:letterSpacing="0.2"
+        android:text="시작하기"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

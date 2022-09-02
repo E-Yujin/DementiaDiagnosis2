@@ -3,6 +3,7 @@ package simpleTest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -33,6 +34,7 @@ public class S_SpaceTime extends AppCompatActivity {
     ImageButton submit, undo;
     ProgressBar pro_bar;
     AppCompatButton donKnow;
+    simple_QuizPage QP;
 
     private long backBtnTime = 0;
     List<String> tem = new ArrayList<>();
@@ -51,6 +53,7 @@ public class S_SpaceTime extends AppCompatActivity {
         STV = (SpaceTimeView) findViewById(R.id.canvas);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
+        QP = new simple_QuizPage();
 
         Intent intent;
         intent = getIntent();
@@ -131,6 +134,10 @@ public class S_SpaceTime extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        return QP.onTouchEvent(event, undo, submit);
     }
 
     @Override
