@@ -3,6 +3,9 @@ package com.cbnu.dementiadiagnosis;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +111,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     public void onBindViewHolder(@NonNull RecyclerAdapter.ItemViewHolder holder, int position) {
         holder.textView1.setText(String.valueOf(listScore.get(position).getTotal()));
         holder.textView2.setText(String.valueOf(listScore.get(position).getDate()));
+        if(SharedPreference.getUserScore(holder.itemView.getContext()) < listScore.get(position).getTotal()) {
+            holder.imageView.setColorFilter(Color.parseColor("#BBE0FD"));
+        } else {
+            holder.imageView.setColorFilter(Color.parseColor("#FFCFCF"));
+        }
     }
 
     @Override
