@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 String temp = answer.getText().toString().replace(".", "");
                 temp = temp.replace(",", "");
+                temp = temp.replace("?", "");
                 temp = temp.trim().replaceAll("\\s+", " ");
                 Log.e("temp", temp);
                 ans = temp.split(" ");
@@ -231,8 +232,10 @@ public class MainActivity extends AppCompatActivity {
             checkCnt++;
             Log.e("checkCnt", Integer.toString(checkCnt));
             String result = getInitialSound(keyword[a]);
-            Log.e("result", result);
+            if(result != null)
+                Log.e("result", result);
             Log.e("search_random", random);
+            assert result != null;
             if (result.equals(random)) {
                 Call<String> call = apiInterface.getSearchResult(clientID, clientSecret, "encyc.json", keyword[a]);
                 String keywordNum = keyword[a];
@@ -247,39 +250,46 @@ public class MainActivity extends AppCompatActivity {
                                 JSONArray dkf = (JSONArray) jsonObject.get("items");
                                 if(!dkf.isNull(0)) {
                                     JSONObject obb = new JSONObject();
-                                    String[] titleArr = new String[10];
+                                    String[] titleArr = new String[5];
 
-                                    for (int i = 0; i < 10; i++) {
+                                    for (int i = 0; i < 5; i++) {
                                         obb = (JSONObject) dkf.get(i);
                                         String temp = (String) obb.get("title");
                                         String titleFilter = temp.replaceAll("<b>", "");
                                         String title = titleFilter.replaceAll("</b>", "");
                                         titleArr[i] = title;
+                                        if(titleArr[i].contains(keywordNum))
+                                            break;
                                     }
                                     Log.e("titleList", Arrays.toString(titleArr));
-                                    if (Arrays.asList(titleArr).contains(keywordNum)) {
-                                        count++;
-                                        Log.e("cnt", Integer.toString(count));
+
+                                    for (String s : titleArr) {
+                                        if (s.contains(keywordNum)) {
+                                            count++;
+                                            Log.e("cnt", Integer.toString(count));
+                                            break;
+                                        }
                                     }
                                     arrCnt++;
                                     Log.e("arrCnt", Integer.toString(arrCnt));
 
-                                    if (count >= 3 && arrCnt >= size && !checkFalse) {
+                                    //  count == 3, arrCnt == 4
+                                    if (count >= 3 && arrCnt >= size) {
                                         Log.e("one", "true!");
                                         shapeRes.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
-                                    } else if (count < 3 && arrCnt >= size && !checkFalse) {
+                                    } else if (count < 3 && arrCnt >= size) {
                                         Log.e("two", "true!");
                                         shapeX.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
-                                    } else if (count < 3 && arrCnt >= size) {
+                                    } /*else if (count < 3 && arrCnt >= size) {
                                         Log.e("three", "true!");
                                         shapeX.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "2x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
-                                    }
+                                    }*/
                                 } else {
                                     arrCnt++;
-                                    if (count < 3 && arrCnt >= size && !checkFalse) {
+                                    if (count < 3 && arrCnt >= size) {
                                         Log.e("two", "true!");
                                         shapeX.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
@@ -297,11 +307,19 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "에러 : " + t.getMessage());
                     }
                 });
-            }
-            else {
-                checkFalse = true;
+            } else {
+                //checkFalse = true;
                 arrCnt++;
-                Log.e("checkFalse", "true");
+                if (count >= 3 && arrCnt >= size) {
+                    Log.e("one", "true!");
+                    shapeRes.setVisibility(View.VISIBLE);
+                    Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
+                } else if (count < 3 && arrCnt >= size) {
+                    Log.e("two", "true!");
+                    shapeX.setVisibility(View.VISIBLE);
+                    Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                }
+                //Log.e("checkFalse", "true");
             }
         }
     }
@@ -329,6 +347,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     String temp = answer.getText().toString().replace(".", "");
                     temp = temp.replace(",", "");
+                    temp = temp.replace("?", "");
                     temp = temp.trim().replaceAll("\\s+", " ");
                     Log.e("temp", temp);
                     ans = temp.split(" ");
