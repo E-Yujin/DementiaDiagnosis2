@@ -444,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return stringBuilder.toString();
         }
-        return null;
+        return "ㄲㄲ";
     }
 
     public void resultDialog() {
