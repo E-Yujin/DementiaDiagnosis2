@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:backgroundTint="?attr/colorOnPrimary"
     android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:background="@drawable/round_button"
+        android:backgroundTint="?attr/colorOnPrimary"
         android:elevation="5dp"
         android:layout_marginTop="7dp"
         android:layout_marginStart="18dp"
@@ -40,7 +42,7 @@
                 android:fontFamily="@font/jejugothic"
                 android:includeFontPadding="false"
                 android:text="80점"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -54,7 +56,7 @@
                 android:layout_toEndOf="@+id/color_img"
                 android:fontFamily="@font/jejugothic"
                 android:text="2022/07/16"
-                android:textColor="#A6A6A6"
+                android:textColor="?attr/colorOnTertiary"
                 android:textSize="15sp" />
 
             <ImageButton

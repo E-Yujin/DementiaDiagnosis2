@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:textSize="18sp"
-        android:textColor="#777777"
+        android:textColor="?attr/colorOnTertiary"
         android:fontFamily="@font/jejugothic"
         android:text="기 록"/>
 

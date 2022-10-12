@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageButton
         android:id="@+id/before"
@@ -84,7 +83,7 @@
             android:letterSpacing="0.04"
             android:lineSpacingExtra="10dp"
             android:text=""
-            android:textColor="@color/grey"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="15sp" />
     </RelativeLayout>
 
@@ -96,7 +95,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
         android:src="@drawable/helper_jump"
-        app:tint="@color/main" />
+        app:tint="?attr/colorPrimary" />
 
     <RelativeLayout
         android:id="@+id/gray_view"
@@ -106,7 +105,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/shape_round_bar"
-        android:backgroundTint="#F4F4F4"
+        android:backgroundTint="?attr/colorSecondary"
         android:gravity="center"
         android:letterSpacing="0.04"
         android:lineSpacingExtra="10dp">
@@ -148,11 +147,11 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/round_button"
-            android:backgroundTint="#DFDFDF"
+            android:backgroundTint="?attr/colorTertiary"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:text="잘모르겠어요"
-            android:textColor="#787878"
+            android:textColor="?attr/colorOnTertiary"
             android:textSize="14sp" />
 
     </RelativeLayout>

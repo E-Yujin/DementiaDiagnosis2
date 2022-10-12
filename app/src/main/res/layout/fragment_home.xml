@@ -21,8 +21,7 @@
         android:layout_below="@+id/btnLogout"
         android:layout_centerInParent="true"
         android:layout_marginTop="35dp"
-        android:background="@drawable/logo"
-        app:tint="@color/main" />
+        android:background="@drawable/logo_letter" />
 
     <LinearLayout
         android:id="@+id/testLinear"
@@ -38,14 +37,14 @@
             android:layout_width="110dp"
             android:layout_height="130dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/jejugothic"
-            android:lineSpacingExtra="15dp"
-            android:letterSpacing="0.6"
             android:background="@drawable/round_button"
-            android:backgroundTint="@color/main"
+            android:backgroundTint="?attr/colorPrimary"
+            android:fontFamily="@font/jejugothic"
+            android:letterSpacing="0.6"
+            android:lineSpacingExtra="15dp"
             android:text="간이\n검사"
-            android:textSize="18sp"
             android:textColor="@color/white"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -56,7 +55,7 @@
             android:lineSpacingExtra="15dp"
             android:letterSpacing="0.6"
             android:background="@drawable/round_button"
-            android:backgroundTint="@color/main"
+            android:backgroundTint="?attr/colorPrimary"
             android:text="정규\n검사"
             android:textSize="18sp"
             android:textColor="@color/white"
@@ -72,7 +71,7 @@
         android:layout_alignEnd="@+id/testLinear"
         android:layout_marginTop="15dp"
         android:background="@drawable/round_button"
-        android:backgroundTint="@color/lite_main"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:fontFamily="@font/jejugothic"
         android:letterSpacing="0.2"
         android:lineSpacingExtra="10dp"

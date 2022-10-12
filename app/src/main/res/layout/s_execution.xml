@@ -247,7 +247,7 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/shape_round_bar"
-        android:backgroundTint="#F4F4F4">
+        android:backgroundTint="?attr/colorSecondary">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/donknow"
@@ -255,10 +255,10 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/round_button"
-            android:backgroundTint="#DFDFDF"
+            android:backgroundTint="?attr/colorTertiary"
             android:fontFamily="@font/jejugothic"
             android:text="잘모르겠어요"
-            android:textColor="#787878"
+            android:textColor="?attr/colorOnTertiary"
             android:textSize="14sp" />
     </FrameLayout>
 </RelativeLayout>

@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/main" />
+        app:tint="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/textView3"
@@ -42,7 +42,7 @@
         android:fontFamily="@font/jejugothic"
         android:letterSpacing="0.45"
         android:text="*예시"
-        android:textColor="@color/grey"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/view"
@@ -56,7 +56,10 @@
         android:layout_height="350dp"
         android:layout_marginTop="56dp"
         android:background="@drawable/round_button"
+        android:backgroundTint="?attr/colorOnPrimary"
         android:elevation="10dp"
+        android:outlineAmbientShadowColor="?attr/colorSecondaryVariant"
+        android:outlineSpotShadowColor="?attr/colorOnTertiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +71,7 @@
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:backgroundTint="#F2F7FF"
+            android:backgroundTint="#41C4DAFF"
             android:elevation="20dp">
 
             <TextView
@@ -79,7 +82,7 @@
                 android:fontFamily="@font/jejugothic"
                 android:letterSpacing="0.45"
                 android:text="ㅇㅅ"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="40sp"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
@@ -91,11 +94,12 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:background="@drawable/shape_exe_two"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:letterSpacing="0.2"
             android:text="여기에 답변이 나타납니다."
-            android:textColor="@color/grey"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <ImageView

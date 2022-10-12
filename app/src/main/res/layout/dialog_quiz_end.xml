@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:background="@drawable/ic_check"
-        android:backgroundTint="@color/main" />
+        android:backgroundTint="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/textMsg"
@@ -40,11 +40,11 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/round_button"
-        android:backgroundTint="@color/lite_main"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
         android:text="다시하기"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -52,18 +52,18 @@
         android:id="@+id/endBtn"
         android:layout_width="95dp"
         android:layout_height="35dp"
+        android:layout_below="@+id/textMsg"
         android:layout_alignEnd="@+id/textMsg"
-        android:layout_marginEnd="50dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/round_button"
-        android:backgroundTint="@color/main"
+        android:backgroundTint="?attr/colorPrimary"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
-        android:layout_below="@+id/textMsg"
         android:text="끝내기"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="15sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 </RelativeLayout>

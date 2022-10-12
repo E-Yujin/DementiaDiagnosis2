@@ -128,7 +128,7 @@
                     android:layout_height="200dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/normal_shape"
-                    android:backgroundTint="#EDEDED"
+                    android:backgroundTint="?attr/colorSecondary"
                     android:orientation="vertical">
 
                     <TextView
@@ -149,7 +149,7 @@
                     android:layout_width="130dp"
                     android:layout_height="200dp"
                     android:background="@drawable/normal_shape"
-                    android:backgroundTint="#EDEDED"
+                    android:backgroundTint="?attr/colorSecondary"
                     android:orientation="vertical">
 
                     <TextView
@@ -175,7 +175,7 @@
         android:layout_below="@+id/quiz_box"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_round_bar"
-        android:backgroundTint="#F4F4F4">
+        android:backgroundTint="?attr/colorSecondary">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/donknow"
@@ -183,10 +183,10 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/round_button"
-            android:backgroundTint="#DFDFDF"
+            android:backgroundTint="?attr/colorTertiary"
             android:fontFamily="@font/jejugothic"
             android:text="잘모르겠어요"
-            android:textColor="#787878"
+            android:textColor="?attr/colorOnTertiary"
             android:textSize="14sp" />
     </FrameLayout>
 </RelativeLayout>

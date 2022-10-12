@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:tint="@color/main" />
+        app:tint="?attr/colorPrimary" />
 
     <ImageView
         android:id="@+id/img"
@@ -48,7 +48,7 @@
         app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/main" />
+        app:tint="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/announce"
@@ -89,7 +89,10 @@
         android:layout_height="350dp"
         android:layout_marginTop="56dp"
         android:background="@drawable/round_button"
+        android:backgroundTint="?attr/colorOnPrimary"
         android:elevation="10dp"
+        android:outlineAmbientShadowColor="?attr/colorSecondaryVariant"
+        android:outlineSpotShadowColor="?attr/colorOnTertiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,11 +116,12 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_exe_two"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:letterSpacing="0.2"
             android:text="여기에 답변이 나타납니다."
-            android:textColor="@color/grey"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <ImageView
@@ -138,11 +142,11 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/round_button"
-            android:backgroundTint="#DFDFDF"
+            android:backgroundTint="?attr/colorTertiary"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:text="잘모르겠어요"
-            android:textColor="#787878"
+            android:textColor="?attr/colorOnTertiary"
             android:textSize="8sp" />
 
         <ImageView

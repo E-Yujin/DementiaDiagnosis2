@@ -9,7 +9,7 @@
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#DCDCDC">
+        android:background="?attr/colorTertiary">
 
         <ImageView
             android:layout_width="80dp"
@@ -37,7 +37,7 @@
         android:gravity="center_vertical"
         android:paddingStart="30dp"
         android:text="사용자 정보 수정"
-        android:textColor="#636363"
+        android:textColor="?attr/colorOnTertiary"
         android:fontFamily="@font/jejugothic"
         android:textSize="16sp" />
 
@@ -46,11 +46,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/userIf_retrieve"
+        android:fontFamily="@font/jejugothic"
         android:gravity="center_vertical"
         android:paddingStart="30dp"
         android:text="사용자 정보 삭제"
-        android:textColor="#636363"
-        android:fontFamily="@font/jejugothic"
+        android:textColor="?attr/colorOnTertiary"
         android:textSize="16sp" />
 
     <TextView
@@ -60,7 +60,7 @@
         android:gravity="center_vertical"
         android:paddingStart="30dp"
         android:text="개발자 정보\n충북대학교 소프트웨어학과 신이숙 이유진\ndldbwls6763@chungbuk.co.kr\n\nSTT서비스   ETRI\nAI대화봇     (주)스캐터랩\n검색 엔진     NAVER"
-        android:textColor="#A4636363"
+        android:textColor="?attr/colorSecondaryVariant"
         android:lineSpacingExtra ="10dp"
         android:fontFamily="@font/jejugothic"
         android:textSize="13sp" />

@@ -13,7 +13,7 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/jejugothic"
         android:text="00 : 30"
-        android:textColor="@color/main"
+        android:textColor="?attr/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -68,14 +68,14 @@
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
-                app:tint="@color/main"
+                app:tint="?attr/colorPrimary"
                 android:src="@drawable/helper_jump" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card"
                 android:layout_width="230dp"
                 android:layout_height="130dp"
-                android:backgroundTint="#F2F7FF"
+                android:backgroundTint="#41C4DAFF"
                 android:elevation="20dp" >
 
                 <TextView
@@ -86,7 +86,7 @@
                     android:letterSpacing="0.45"
                     android:layout_gravity="center"
                     android:text="ㅇㅅ"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSecondary"
                     android:textSize="50sp"
                     android:textStyle="bold"/>
             </androidx.cardview.widget.CardView>
@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/shape_round_bar"
-        android:backgroundTint="#F4F4F4">
+        android:backgroundTint="?attr/colorSecondary">
 
         <LinearLayout
             android:layout_width="match_parent"

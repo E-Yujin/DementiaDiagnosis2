@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/white"
     tools:context=".Result">
 
     <RelativeLayout
@@ -20,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
             android:background="@drawable/shape_oval"
-            android:backgroundTint="#DDDDDD"
+            android:backgroundTint="?attr/colorSecondary"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:letterSpacing="0.04"
@@ -50,7 +49,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:textSize="12sp"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:text="지남력" />
 
         <ProgressBar
@@ -76,7 +75,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="5/5"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <TextView
@@ -90,7 +89,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="기억력"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <ProgressBar
@@ -115,7 +114,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="10/10"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <TextView
@@ -129,7 +128,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="주의력"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <ProgressBar
@@ -154,7 +153,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="3/3"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <TextView
@@ -168,7 +167,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:textSize="12sp"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:text="시공간" />
 
         <ProgressBar
@@ -193,7 +192,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="2/2"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <TextView
@@ -207,7 +206,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="집행기능"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <ProgressBar
@@ -232,7 +231,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="6/6"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <TextView
@@ -246,7 +245,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="언어기능"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <ProgressBar
@@ -271,7 +270,7 @@
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
             android:text="4/4"
-            android:textColor="#BABABA"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -282,13 +281,13 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="50dp"
             android:background="@drawable/round_button"
-            android:backgroundTint="#6799FF"
+            android:backgroundTint="?attr/colorPrimary"
             android:elevation="10dp"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:letterSpacing="0.5"
             android:text="확 인"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="18dp" />
 
         <androidx.cardview.widget.CardView

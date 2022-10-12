@@ -181,7 +181,8 @@ public class fluency_Page extends AppCompatActivity {
                     startActivity(intent);
 
                     stt.isFluency = false;
-
+                    tts.Destroy();
+                    stt.Destroy();
                     finish();
                 }
             }

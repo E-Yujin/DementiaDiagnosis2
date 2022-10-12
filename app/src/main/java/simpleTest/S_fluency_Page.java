@@ -177,7 +177,8 @@ public class S_fluency_Page extends AppCompatActivity {
                     overridePendingTransition(0, 0);
 
                     stt.isFluency = false;
-
+                    tts.Destroy();
+                    stt.Destroy();
                     finish();
                 }
             }

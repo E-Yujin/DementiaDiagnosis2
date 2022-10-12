@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:gravity="center"
+    android:background="?attr/colorOnPrimary"
     android:layout_gravity="center"
     android:clipChildren="false"
     android:clipToPadding="false">
@@ -16,7 +17,7 @@
         android:layout_marginBottom="25dp"
         android:fontFamily="@font/jejugothic"
         android:text="사용자 정보 수정"
-        android:textColor="#757575"
+        android:textColor="?attr/colorOnTertiary"
         android:textSize="16sp" />
 
     <TextView
@@ -30,7 +31,7 @@
         android:gravity="center"
         android:padding="11dp"
         android:text="이 름 :"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp" />
 
     <EditText
@@ -58,7 +59,7 @@
         android:gravity="center"
         android:padding="11dp"
         android:text="생 년 월 일 :"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp" />
 
     <EditText
@@ -88,7 +89,7 @@
         android:gravity="center"
         android:padding="11dp"
         android:text="성 별 :"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp" />
 
     <Spinner
@@ -114,7 +115,7 @@
         android:gravity="center"
         android:padding="11dp"
         android:text="학 력 :"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp" />
 
     <Spinner
@@ -137,11 +138,11 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/round_button"
-        android:backgroundTint="@color/main"
+        android:backgroundTint="?attr/colorPrimary"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
         android:text="취 소"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="15sp"
         android:textStyle="bold"/>
 
@@ -155,11 +156,11 @@
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/cancelBtn"
         android:background="@drawable/round_button"
-        android:backgroundTint="@color/main"
+        android:backgroundTint="?attr/colorPrimary"
         android:fontFamily="@font/jejugothic"
         android:gravity="center"
         android:text="수 정"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="15sp"
         android:textStyle="bold"/>
 

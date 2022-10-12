@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/before"
@@ -91,7 +90,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_round_bar"
-        android:backgroundTint="#F4F4F4">
+        android:backgroundTint="?attr/colorSecondary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,11 +104,11 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/round_button"
-            android:backgroundTint="@color/main"
+            android:backgroundTint="?attr/colorPrimary"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:text="지우개"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             android:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -119,11 +118,11 @@
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
             android:background="@drawable/round_button"
-            android:backgroundTint="#DFDFDF"
+            android:backgroundTint="?attr/colorTertiary"
             android:fontFamily="@font/jejugothic"
             android:gravity="center"
             android:text="잘모르겠어요"
-            android:textColor="#787878"
+            android:textColor="?attr/colorOnTertiary"
             android:textSize="14sp" />
         </LinearLayout>
 
