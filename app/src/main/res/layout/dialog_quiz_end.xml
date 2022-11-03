@@ -17,18 +17,46 @@
         android:backgroundTint="@color/main" />
 
     <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/jejugothic"
+        android:letterSpacing="0.05"
+        android:textColor="@color/teal_200"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="3/5"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/score"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/jejugothic"
+        android:letterSpacing="0.05"
+        android:textColor="@color/teal_200"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:text="(조금 더 연습이 필요합니다!)"/>
+
+    <TextView
         android:id="@+id/textMsg"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/img"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/text"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/jejugothic"
+        android:gravity="center"
         android:letterSpacing="0.04"
         android:lineSpacingExtra="15dp"
         android:text="퀴즈가 끝났습니다\n\n초성게임은 단어 연상 게임으로 \n기억을 회상함으로써 기억력 향상에\n도움을 줍니다. 간단한 게임이지만\n하루 중 잠깐 시간을 내어\n기억력을 향상해보세요. "
-        android:textSize="17sp"/>
+        android:textSize="17sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/restartBtn"
