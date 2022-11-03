@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
@@ -21,12 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import fragment.FragmentChart;
 import fragment.FragmentHome;
+import fragment.FragmentInf;
 import fragment.FragmentSetting;
 
 public class HomeActivity extends AppCompatActivity {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
     private final FragmentHome fragmentHome = new FragmentHome();
+    private final FragmentInf fragmentInf = new FragmentInf();
     private final FragmentChart fragmentChart = new FragmentChart();
     private final FragmentSetting fragmentSetting = new FragmentSetting();
     final int PERMISSION = 1;
@@ -106,6 +107,12 @@ public class HomeActivity extends AppCompatActivity {
                     bubble.setVisibility(View.VISIBLE);
                     bubble.startAnimation(animScale);
                     isHome = true;
+                    break;
+                case R.id.informationItem:
+                    transaction.replace(R.id.frameLayout, fragmentInf).commitAllowingStateLoss();
+                    fb.hide();
+                    bubble.setVisibility(View.INVISIBLE);
+                    isHome = false;
                     break;
                 case R.id.resultItem:
                     transaction.replace(R.id.frameLayout, fragmentChart).commitAllowingStateLoss();
