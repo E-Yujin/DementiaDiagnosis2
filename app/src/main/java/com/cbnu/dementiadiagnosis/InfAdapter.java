@@ -100,22 +100,15 @@ public class InfAdapter extends RecyclerView.Adapter<InfAdapter.ItemViewHolder> 
         }
 
         private void changeVisibility(final boolean isExpanded) {
-            // height 값을 dp로 지정해서 넣고싶으면 아래 소스를 이용
-            int dpValue = 150;
-            float d = context.getResources().getDisplayMetrics().density;
-            int height = (int) (dpValue * d);
-
             // ValueAnimator.ofInt(int... values)는 View가 변할 값을 지정, 인자는 int 배열
-            ValueAnimator va = isExpanded ? ValueAnimator.ofInt(0, height) : ValueAnimator.ofInt(height, 0);
+            ValueAnimator va = isExpanded ? ValueAnimator.ofInt(0, ViewGroup.LayoutParams.WRAP_CONTENT) : ValueAnimator.ofInt(ViewGroup.LayoutParams.WRAP_CONTENT, 0);
             // Animation이 실행되는 시간, n/1000초
-            va.setDuration(600);
+            va.setDuration(100);
             va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    // value는 height 값
-                    int value = (int) animation.getAnimatedValue();
                     // imageView의 높이 변경
-                    descriptionView.getLayoutParams().height = value;
+                    descriptionView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     descriptionView.requestLayout();
                     // imageView가 실제로 사라지게하는 부분
                     descriptionView.setVisibility(isExpanded ? View.VISIBLE : View.GONE);

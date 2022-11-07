@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -95,6 +96,7 @@ public class HomeActivity extends AppCompatActivity {
 
     class ItemSelectedListener implements NavigationBarView.OnItemSelectedListener {
 
+        @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -102,8 +104,8 @@ public class HomeActivity extends AppCompatActivity {
             switch(item.getItemId())
             {
                 case R.id.homeItem:
-                    transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss();
                     fb.show();
+                    transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss();
                     bubble.setVisibility(View.VISIBLE);
                     bubble.startAnimation(animScale);
                     isHome = true;
@@ -111,18 +113,20 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.informationItem:
                     transaction.replace(R.id.frameLayout, fragmentInf).commitAllowingStateLoss();
                     fb.hide();
+                    fb.setEnabled(false);
                     bubble.setVisibility(View.INVISIBLE);
                     isHome = false;
                     break;
                 case R.id.resultItem:
                     transaction.replace(R.id.frameLayout, fragmentChart).commitAllowingStateLoss();
                     fb.hide();
+                    fb.setEnabled(false);
                     bubble.setVisibility(View.INVISIBLE);
                     isHome = false;
                     break;
                 case R.id.setItem:
-                    transaction.replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
                     fb.show();
+                    transaction.replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
                     bubble.setVisibility(View.INVISIBLE);
                     isHome = false;
                     break;
