@@ -2,7 +2,9 @@ package memoryQuiz;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private boolean mTimerRunning;
     private boolean stopCheck = false;
+    private int resultCnt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,12 +279,13 @@ public class MainActivity extends AppCompatActivity {
                                     //  count == 3, arrCnt == 4
                                     if (count >= 3 && arrCnt >= size) {
                                         Log.e("one", "true!");
+                                        resultCnt++;
                                         shapeRes.setVisibility(View.VISIBLE);
                                         Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
                                     } else if (count < 3 && arrCnt >= size) {
                                         Log.e("two", "true!");
                                         shapeX.setVisibility(View.VISIBLE);
-                                        Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
                                     } /*else if (count < 3 && arrCnt >= size) {
                                         Log.e("three", "true!");
                                         shapeX.setVisibility(View.VISIBLE);
@@ -292,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (count < 3 && arrCnt >= size) {
                                         Log.e("two", "true!");
                                         shapeX.setVisibility(View.VISIBLE);
-                                        Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } catch (JSONException e) {
@@ -312,14 +316,14 @@ public class MainActivity extends AppCompatActivity {
                 arrCnt++;
                 if (count >= 3 && arrCnt >= size) {
                     Log.e("one", "true!");
+                    resultCnt++;
                     shapeRes.setVisibility(View.VISIBLE);
                     Toast.makeText(MainActivity.this, "o 정답입니다!!", Toast.LENGTH_SHORT).show();
                 } else if (count < 3 && arrCnt >= size) {
                     Log.e("two", "true!");
                     shapeX.setVisibility(View.VISIBLE);
-                    Toast.makeText(MainActivity.this, "1x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "x 틀렸습니다!!", Toast.LENGTH_SHORT).show();
                 }
-                //Log.e("checkFalse", "true");
             }
         }
     }
@@ -447,10 +451,13 @@ public class MainActivity extends AppCompatActivity {
         return "ㄲㄲ";
     }
 
+    @SuppressLint("SetTextI18n")
     public void resultDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_quiz_end, null);
         Button restart = (Button) dialogView.findViewById(R.id.restartBtn);
         Button end = (Button) dialogView.findViewById(R.id.endBtn);
+        TextView score = (TextView) dialogView.findViewById(R.id.score);
+        TextView text = (TextView) dialogView.findViewById(R.id.text);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setView(dialogView);
@@ -465,6 +472,21 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
         Window window = alertDialog.getWindow();
         window.setAttributes(params);
+
+        score.setText(Integer.toString(resultCnt) + "/5");
+        if(resultCnt < 3) {
+           score.setTextColor(Color.parseColor("#FF0000"));
+            text.setTextColor(Color.parseColor("#FF0000"));
+            text.setText("(많은 연습이 필요합니다!)");
+        } else if (resultCnt == 3) {
+            score.setTextColor(Color.parseColor("#FF6799FF"));
+            text.setTextColor(Color.parseColor("#FF6799FF"));
+            text.setText("(조금 더 연습이 필요합니다!)");
+        } else {
+            score.setTextColor(Color.parseColor("#FF03DAC5"));
+            text.setTextColor(Color.parseColor("#FF03DAC5"));
+            text.setText("(훌륭합니다!)");
+        }
 
         // 다시하기
         restart.setOnClickListener(v -> {
