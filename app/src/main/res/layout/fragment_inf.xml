@@ -5,17 +5,25 @@
     android:id="@+id/layout_main"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toStartOf="@+id/title"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_sunny_green"/>
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/jejugothic"
         android:letterSpacing="0.2"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:text="Title"/>
+        android:text="치매 정보 확인하세요!"
+        android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

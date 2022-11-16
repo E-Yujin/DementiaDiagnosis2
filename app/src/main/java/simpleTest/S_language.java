@@ -278,13 +278,13 @@ public class S_language extends AppCompatActivity {
                         Log.e("resRight", Integer.toString(resRight));
 
                         if (resRight < 3) {
-                            left1.addView(view);
+                            right1.addView(view);
                             view.setVisibility(View.VISIBLE);
                         } else if (resRight < 5) {
-                            left2.addView(view);
+                            right2.addView(view);
                             view.setVisibility(View.VISIBLE);
                         } else {
-                            left3.addView(view);
+                            right3.addView(view);
                             view.setVisibility(View.VISIBLE);
                         }
                     } else if (v == findViewById(R.id.ball)) {

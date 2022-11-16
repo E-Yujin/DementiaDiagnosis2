@@ -37,6 +37,7 @@ import fragment.ExecutionOne;
 import fragment.ExecutionThree;
 import fragment.ExecutionTwo;
 import questions.Execution;
+import questions.orientation;
 import user.SharedPreference;
 
 
@@ -319,6 +320,8 @@ public class ExecutionPage extends AppCompatActivity {
                 }
             }
         });
+        orientation ortt_main = new orientation(this);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -341,6 +344,22 @@ public class ExecutionPage extends AppCompatActivity {
                         break;
                     case 2:
                         total = answer.getText().toString();
+
+                        String[] ansArray = answer.getText().toString().split("");
+                        String toDigit = "";
+                        for(String s : ansArray){
+                            if(!s.equals("")) {
+                                if(Character.isDigit(s.charAt(0))) {
+                                    toDigit += s;
+                                }
+                            }
+                        }
+                        if(toDigit.equals("")){
+                            total = ortt_main.KorTran(answer.getText().toString());
+                        }
+                        else{
+                            total = toDigit;
+                        }
                         Log.d("result", "threeResult_number " + total);
                         break;
                     case 3 :

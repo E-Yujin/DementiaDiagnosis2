@@ -12,6 +12,9 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -64,6 +67,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cbnu.dementiadiagnosis.InfAdapter;
 import com.cbnu.dementiadiagnosis.R;
 import java.util.Arrays;
+import java.util.Objects;
+
 import user.Data;
 
 import noman.googleplaces.NRPlaces;
@@ -236,8 +241,9 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
                         "치매조기발견을 위해 보건소에서 무료로 진행하는 치매선별검사(대상: 만 60세 이상 누구나)를 이용하거나 돈 계산과 같은 추상적인 사고능력에 문제가 생기거나 자발성의 감소, 직업이나 일상생활에 영향을 줄 정도의 최근 기억력 상실 등과 같은 치매 의심증상에 대해 알아두는 것도 도움이 됩니다." +
                         "\n\n" +
                         "출처 : 중앙치매센터 치매대백과, 치매사전(https://www.nid.or.kr/info/diction_list1.aspx?gubun=0101)");
-        List<Integer> listResId = Arrays.asList(R.drawable.ic_check, R.drawable.ic_account, R.drawable.ic_help, R.drawable.ic_forward, R.drawable.ic_home,
-                R.drawable.ic_check, R.drawable.ic_account, R.drawable.ic_help);
+
+        List<Integer> listResId = Arrays.asList(R.drawable.shape_oval_one, R.drawable.shape_oval_one, R.drawable.shape_oval_two,
+                R.drawable.shape_oval_two, R.drawable.shape_oval_three, R.drawable.shape_oval_three, R.drawable.shape_oval_three, R.drawable.shape_oval_three);
 
         Log.e("title:", Integer.toString(listTitle.size()));
         Log.e("content:", Integer.toString(listContent.size()));
