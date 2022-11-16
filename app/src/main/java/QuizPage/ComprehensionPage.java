@@ -41,16 +41,18 @@ public class ComprehensionPage extends AppCompatActivity {
     TextView question, type;
     String Okey = "";
     ProgressBar pro_bar;
-    ImageButton leftBtn, rightBtn;
+    ImageButton beforeBtn, nextBtn;
     AppCompatButton donKnow;
     QuizPage QP;
+    LinearLayout left, left1, left2, left3;
+    LinearLayout right, right1, right2, right3;
 
     private long backBtnTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.comprehension);
+        setContentView(R.layout.s_language);
 
         Log.d("languageFunc", "start");
         languageFunc = new LanguageFunc();
@@ -61,14 +63,24 @@ public class ComprehensionPage extends AppCompatActivity {
         image5 = findViewById(R.id.image5);
         question = findViewById(R.id.question);
         type = (TextView) findViewById(R.id.type);
-        leftBtn = (ImageButton) findViewById(R.id.ic_left);
-        rightBtn = (ImageButton) findViewById(R.id.ic_right);
+        beforeBtn = (ImageButton) findViewById(R.id.before);
+        nextBtn = (ImageButton) findViewById(R.id.next);
         pro_bar = (ProgressBar) findViewById(R.id.progressBar);
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
         QP = new QuizPage();
 
         type.setText("언어기능");
         pro_bar.setProgress(85);
+
+        left = findViewById(R.id.left);
+        left1 = findViewById(R.id.left1);
+        left2 = findViewById(R.id.left2);
+        left3 = findViewById(R.id.left3);
+
+        right = findViewById(R.id.right);
+        right1 = findViewById(R.id.right1);
+        right2 = findViewById(R.id.right2);
+        right3 = findViewById(R.id.right3);
 
         mImg.setTag(IMAGEVIEW_TAG);
         image2.setTag(IMAGEVIEW_TAG);
@@ -117,7 +129,7 @@ public class ComprehensionPage extends AppCompatActivity {
             }
         });
 
-        leftBtn.setOnClickListener(new View.OnClickListener(){
+        beforeBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 tts.Stop();
                 Intent intent = new Intent(ComprehensionPage.this, LanguagePage.class);
@@ -128,7 +140,7 @@ public class ComprehensionPage extends AppCompatActivity {
                 finish();
             }
         });
-        rightBtn.setOnClickListener(new View.OnClickListener() {
+        nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pro_bar.setProgress(90);
@@ -177,10 +189,17 @@ public class ComprehensionPage extends AppCompatActivity {
     class DragListener implements View.OnDragListener {
         @SuppressLint("UseCompatLoadingForDrawables")
         Drawable normalShape = getResources().getDrawable(
-                R.drawable.normal_shape);
+                R.drawable.shape_exe);
         @SuppressLint("UseCompatLoadingForDrawables")
         Drawable targetShape = getResources().getDrawable(
                 R.drawable.target_shape);
+        @SuppressLint("UseCompatLoadingForDrawables")
+        Drawable roundNShape = getResources().getDrawable(
+                R.drawable.round_button);
+        @SuppressLint("UseCompatLoadingForDrawables")
+        Drawable roundTShape = getResources().getDrawable(
+                R.drawable.round_gray);
+
 
         public boolean onDrag(View v, DragEvent event) {
             // 이벤트 시작
@@ -192,9 +211,15 @@ public class ComprehensionPage extends AppCompatActivity {
 
                 // 드래그한 이미지를 옮길려는 지역으로 들어왔을때
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    Log.d("DragClickListener", "ACTION_DRAG_ENTERED");
                     // 이미지가 들어왔다는 것을 알려주기 위해 배경이미지 변경
-                    v.setBackground(targetShape);
+                    if(v == findViewById(R.id.left)) {
+                        v.setBackground(targetShape);
+                    } else if(v == findViewById(R.id.right)) {
+                        v.setBackground(targetShape);
+                    } else {
+                        v.setBackground(roundTShape);
+                    }
+                    Log.d("DragClickListener", "ACTION_DRAG_ENTERED");
                     break;
 
                 // 드래그한 이미지가 영역을 빠져 나갈때
@@ -212,27 +237,43 @@ public class ComprehensionPage extends AppCompatActivity {
                     Log.d("DragClickListener", "ACTION_DROP");
 
                     if (v == findViewById(R.id.left)) {
+                        View view = (View) event.getLocalState();
+                        ViewGroup viewgroup = (ViewGroup) view
+                                .getParent();
+                        viewgroup.removeView(view);
+
                         resLeft++;
-                        View view = (View) event.getLocalState();
-                        ViewGroup viewgroup = (ViewGroup) view
-                                .getParent();
-                        viewgroup.removeView(view);
+                        Log.e("resLeft", Integer.toString(resLeft));
 
-                        LinearLayout containView = (LinearLayout) v;
-                        containView.addView(view);
-                        view.setVisibility(View.VISIBLE);
-
+                        if (resLeft < 3) {
+                            left1.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else if (resLeft < 5) {
+                            left2.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else {
+                            left3.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        }
                     } else if (v == findViewById(R.id.right)) {
-                        resRight++;
                         View view = (View) event.getLocalState();
                         ViewGroup viewgroup = (ViewGroup) view
                                 .getParent();
                         viewgroup.removeView(view);
 
-                        LinearLayout containView = (LinearLayout) v;
-                        containView.addView(view);
-                        view.setVisibility(View.VISIBLE);
+                        resRight++;
+                        Log.e("resRight", Integer.toString(resRight));
 
+                        if (resRight < 3) {
+                            right1.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else if (resRight < 5) {
+                            right2.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else {
+                            right3.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        }
                     } else if (v == findViewById(R.id.ball)) {
                         View view = (View) event.getLocalState();
                         ViewGroup viewgroup = (ViewGroup) view
@@ -250,8 +291,15 @@ public class ComprehensionPage extends AppCompatActivity {
                     }
 
                 case DragEvent.ACTION_DRAG_ENDED:
+                    if(v == findViewById(R.id.left)) {
+                        v.setBackground(normalShape);
+                    } else if(v == findViewById(R.id.right)) {
+                        v.setBackground(normalShape);
+                    } else {
+                        v.setBackground(roundNShape);
+                    }
                     Log.d("DragClickListener", "ACTION_DRAG_ENDED");
-                    v.setBackground(normalShape); // go back to normal shape
+                    break;
 
                 default:
                     break;
@@ -261,7 +309,7 @@ public class ComprehensionPage extends AppCompatActivity {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        return QP.onTouchEvent(event, leftBtn, rightBtn);
+        return QP.onTouchEvent(event, beforeBtn, nextBtn);
     }
 
     @Override
