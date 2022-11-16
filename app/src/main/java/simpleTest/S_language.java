@@ -35,13 +35,14 @@ public class S_language extends AppCompatActivity {
     LanguageFunc languageFunc;
     TTS tts;
     TextView question, type;
-    String Okay = "";
     ProgressBar pro_bar;
     ImageView mImg, image2, image3, image4, image5;
     ImageButton beforeBtn, nextBtn;
     AppCompatButton donKnow;
     simple_QuizPage QP;
-
+    LinearLayout left, left1, left2, left3;
+    LinearLayout right, right1, right2, right3;
+    private int cnt = 0;
     private static final String IMAGEVIEW_TAG = "드래그 이미지";
     private int resLeft = 0, resRight = 0; // 정답 체크
     private long backBtnTime = 0;
@@ -68,6 +69,16 @@ public class S_language extends AppCompatActivity {
 
         type.setText("언어기능");
         pro_bar.setProgress(80);
+
+        left = findViewById(R.id.left);
+        left1 = findViewById(R.id.left1);
+        left2 = findViewById(R.id.left2);
+        left3 = findViewById(R.id.left3);
+
+        right = findViewById(R.id.right);
+        right1 = findViewById(R.id.right1);
+        right2 = findViewById(R.id.right2);
+        right3 = findViewById(R.id.right3);
 
         mImg.setTag(IMAGEVIEW_TAG);
         image2.setTag(IMAGEVIEW_TAG);
@@ -194,6 +205,13 @@ public class S_language extends AppCompatActivity {
             switch (event.getAction()) {
                 // 이미지를 드래그 시작될때
                 case DragEvent.ACTION_DRAG_STARTED:
+                    /*if(v == findViewById(R.id.right)) {
+                        cnt = 1;
+                    } else if(v == findViewById(R.id.left)) {
+                        cnt = 2;
+                    } else if(v == findViewById(R.id.ball)){
+                        cnt = 0;
+                    }*/
                     Log.d("DragClickListener", "ACTION_DRAG_STARTED");
                     break;
 
@@ -229,27 +247,43 @@ public class S_language extends AppCompatActivity {
                     Log.d("DragClickListener", "ACTION_DROP");
 
                     if (v == findViewById(R.id.left)) {
+                        View view = (View) event.getLocalState();
+                        ViewGroup viewgroup = (ViewGroup) view
+                                .getParent();
+                        viewgroup.removeView(view);
+
                         resLeft++;
-                        View view = (View) event.getLocalState();
-                        ViewGroup viewgroup = (ViewGroup) view
-                                .getParent();
-                        viewgroup.removeView(view);
+                        Log.e("resLeft", Integer.toString(resLeft));
 
-                        LinearLayout containView = (LinearLayout) v;
-                        containView.addView(view);
-                        view.setVisibility(View.VISIBLE);
-
+                        if (resLeft < 3) {
+                            left1.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else if (resLeft < 5) {
+                            left2.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else {
+                            left3.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        }
                     } else if (v == findViewById(R.id.right)) {
-                        resRight++;
                         View view = (View) event.getLocalState();
                         ViewGroup viewgroup = (ViewGroup) view
                                 .getParent();
                         viewgroup.removeView(view);
 
-                        LinearLayout containView = (LinearLayout) v;
-                        containView.addView(view);
-                        view.setVisibility(View.VISIBLE);
+                        resRight++;
+                        Log.e("resRight", Integer.toString(resRight));
 
+                        if (resRight < 3) {
+                            left1.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else if (resRight < 5) {
+                            left2.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        } else {
+                            left3.addView(view);
+                            view.setVisibility(View.VISIBLE);
+                        }
                     } else if (v == findViewById(R.id.ball)) {
                         View view = (View) event.getLocalState();
                         ViewGroup viewgroup = (ViewGroup) view
