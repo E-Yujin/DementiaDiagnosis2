@@ -155,40 +155,20 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
         previous_marker = new ArrayList<Marker>();
 
         button = view.findViewById(R.id.button);
+        Log.d("욕", "1");
         button.setEnabled(false);
+        ((HomeActivity)getActivity()).EnableTab(false);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyThread thread = new MyThread();
-                mMap.clear();//지도 클리어
-                thread.start();
                 button.setEnabled(false);
                 Log.d("상태", "start");
-                try {
-                    thread.join();
-                    button.setEnabled(true);
-                    Log.d("상태", "everything is done");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                showPlaceInformation(currentPosition);
             }
         });
 
         return view;
-    }
-
-    public class MyThread extends Thread {
-
-        public MyThread() {
-        }
-
-        @Override
-        public void run() {
-            Log.d("상태", "doing something");
-            SendMessage("버튼 비활성화", 1);
-            showPlaceInformation(currentPosition);
-            Log.d("상태", "finish");
-        }
     }
 
     public void init() {
@@ -519,18 +499,9 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
         if(lat > 0.7
                 && lon > 0.3){
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,14));
-            MyThread thread = new MyThread();
-            mMap.clear();//지도 클리어
-            thread.start();
             button.setEnabled(false);
             Log.d("상태", "start");
-            try {
-                thread.join();
-                Log.d("상태", "everything is done");
-                SendMessage("버튼 활성화", 2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            showPlaceInformation(currentPosition);
         }
 
     }
@@ -714,7 +685,6 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
 
     @Override
     public void onPlacesSuccess(final List<Place> places) {
-
         final Runnable notifyDataSetChangedRunnalbe = new Runnable() {
             @Override
             public void run() {
@@ -742,6 +712,9 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
                 previous_marker.addAll(hashSet);
                 synchronized (this) {
                     this.notify();
+                    button.setEnabled(true);
+                    Log.d("욕", "3");
+                    ((HomeActivity)getActivity()).EnableTab(true);
                 }
             }
         };
@@ -750,11 +723,13 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
             requireActivity().runOnUiThread(notifyDataSetChangedRunnalbe);
             try {
                 notifyDataSetChangedRunnalbe.wait();
+                button.setEnabled(true);
+                Log.d("욕", "2");
+                ((HomeActivity)getActivity()).EnableTab(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
         /*requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -792,7 +767,7 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
     }
     public void showPlaceInformation(LatLng location)
     {
-        //mMap.clear();//지도 클리어
+        mMap.clear();//지도 클리어
 
         if (previous_marker != null)
             previous_marker.clear();//지역정보 마커 클리어
@@ -806,7 +781,7 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
                 .build()
                 .execute();
     }
-    private final Handler handler = new Handler() {
+    /*private final Handler handler = new Handler() {
         @Override
         public synchronized void handleMessage(Message msg) {
             Bundle bd = msg.getData();
@@ -831,5 +806,5 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
         msg.what = id;
         msg.setData(bd);
         handler.sendMessage(msg);
-    }
+    }*/
 }

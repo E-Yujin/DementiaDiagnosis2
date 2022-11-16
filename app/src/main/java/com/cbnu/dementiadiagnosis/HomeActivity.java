@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         info = findViewById(R.id.informationItem);
         setting = findViewById(R.id.setItem);
 
+
         fb = findViewById(R.id.voiceBot);
         fb.startAnimation(animUpDown);
         fb.setOnClickListener(v -> {
