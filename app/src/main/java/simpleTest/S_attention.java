@@ -139,6 +139,8 @@ public class S_attention extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 answer.setText("");
                 if(QP.current == 0){
                     pro_bar.setProgress(35);
@@ -159,6 +161,8 @@ public class S_attention extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 if(QP.current == 0){
                     Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                             Toast.LENGTH_SHORT).show();

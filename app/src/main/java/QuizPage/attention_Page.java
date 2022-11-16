@@ -99,6 +99,8 @@ public class attention_Page extends AppCompatActivity {
 
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 question.setText(att.quiz.get(QP.current));
                 tts.speakOut(question.getText().toString(),"default");
                 if(QP.current == 0){
@@ -137,6 +139,8 @@ public class attention_Page extends AppCompatActivity {
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 answer.setText("");
+                tts.isStopUtt = true;
+                tts.Stop();
                 if(QP.current == 0){
                     pro_bar.setProgress(25);
                     sttBtn.setEnabled(false);
@@ -179,6 +183,8 @@ public class attention_Page extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 if(QP.current == 0){
                     Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                             Toast.LENGTH_SHORT).show();

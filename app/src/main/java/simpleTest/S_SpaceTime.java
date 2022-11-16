@@ -65,8 +65,8 @@ public class S_SpaceTime extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                question.setText(ST.quiz.get(0));
-                tts.onInit(status, ST.quiz.get(0), "default", 1000);
+                tem.clear();
+                tts.onInit(status, question.getText().toString(), "default");
                 tem.add(ST.quiz.get(1));
                 tem.add(ST.quiz.get(2));
                 tem.add(ST.quiz.get(3));
@@ -76,6 +76,8 @@ public class S_SpaceTime extends AppCompatActivity {
 
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 tts.speakOut(question.getText().toString());
                 tem.add(ST.quiz.get(1));
                 tem.add(ST.quiz.get(2));
@@ -112,6 +114,8 @@ public class S_SpaceTime extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                         Toast.LENGTH_SHORT).show();
             }
@@ -132,6 +136,7 @@ public class S_SpaceTime extends AppCompatActivity {
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
+
 
                 finish();
             }

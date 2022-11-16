@@ -139,6 +139,8 @@ public class ExecutionPage extends AppCompatActivity {
 
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 question.setText(execution.quiz.get(QP.current));
                 tts.speakOut(question.getText().toString(), "default");
                 if(QP.current == 0){
@@ -170,6 +172,8 @@ public class ExecutionPage extends AppCompatActivity {
 
         frame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 if(!tts.IsTalking() && !answer.getText().toString().equals(""))
                     tts.speakOut(answer.getText().toString());
             }
@@ -249,6 +253,8 @@ public class ExecutionPage extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 if(QP.current == 0){
                     Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                             Toast.LENGTH_SHORT).show();

@@ -139,6 +139,8 @@ public class LanguagePage extends AppCompatActivity {
 
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 tts.speakOut(question.getText().toString());
             }
         });
@@ -160,6 +162,8 @@ public class LanguagePage extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 question.setText(languageFunc.quiz.get(QP.current));
                 answer.setText("");
                 answer.setHint("답변이 여기 나타납니다.");
@@ -190,6 +194,8 @@ public class LanguagePage extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 if(QP.current == 0){
                     Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                             Toast.LENGTH_SHORT).show();

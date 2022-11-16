@@ -101,6 +101,8 @@ public class orientation_Page extends AppCompatActivity {
 
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 tts.speakOut(question.getText().toString());
             }
         });
@@ -122,6 +124,8 @@ public class orientation_Page extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 announce.setText("");
 
                 if(QP.current == 0){
@@ -177,6 +181,8 @@ public class orientation_Page extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 int min = -1;
                 for(int i = 3; i >= 0; i--) {
                     if(!isWrong[i]) min = i;

@@ -99,6 +99,7 @@ public class VoiceBot extends AppCompatActivity {
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                sttBtn.callOnClick();
                 getAnswer();
             }
         });
@@ -237,6 +238,7 @@ public class VoiceBot extends AppCompatActivity {
 
     public void readResponse(){
         tem.clear();
+        stt.isRecording = false;
         if(answer.contains("사용자")){
             answer = answer.replace("사용자", SharedPreference.getUserName(VoiceBot.this));
         }
@@ -253,6 +255,7 @@ public class VoiceBot extends AppCompatActivity {
                 }
                 tem.remove(0);
                 tts.UtteranceProgress(tem, "continue", tv_outPut, sttBtn, submit, edit);
+
             }
             else{
                 tv_outPut.setText(answer);

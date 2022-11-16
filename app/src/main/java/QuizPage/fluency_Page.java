@@ -105,6 +105,8 @@ public class fluency_Page extends AppCompatActivity {
 
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 tts.speakOut(question.getText().toString());
             }
         });
@@ -126,6 +128,7 @@ public class fluency_Page extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
                 pro_bar.setProgress(100);
                 stt.Stop();
                 tts.Stop();
@@ -147,6 +150,8 @@ public class fluency_Page extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                         Toast.LENGTH_SHORT).show();
             }
@@ -156,6 +161,7 @@ public class fluency_Page extends AppCompatActivity {
             public void onClick(View v) {
                 pro_bar.setProgress(100);
                 stt.Stop();
+                tts.isStopUtt = true;
                 tts.Stop();
                 QP.user_ans = answer.getText().toString().replace(".", "");
                 QP.user_ans = answer.getText().toString().replace(",", "");
@@ -186,8 +192,7 @@ public class fluency_Page extends AppCompatActivity {
                     startActivity(intent);
 
                     stt.isFluency = false;
-                    tts.Destroy();
-                    stt.Destroy();
+
                     finish();
                 }
             }

@@ -135,6 +135,8 @@ public class S_language extends AppCompatActivity {
 
         beforeBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                         Toast.LENGTH_SHORT).show();
             }
@@ -143,6 +145,7 @@ public class S_language extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tts.isStopUtt = true;
                 tts.Stop();
                 if(resLeft == 2 && resRight == 3) {
                     languageFunc.Tscore = 1;

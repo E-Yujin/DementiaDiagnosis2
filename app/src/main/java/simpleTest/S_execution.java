@@ -115,6 +115,8 @@ public class S_execution extends AppCompatActivity {
 
         beforeBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
                         Toast.LENGTH_SHORT).show();
             }
@@ -122,6 +124,7 @@ public class S_execution extends AppCompatActivity {
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
                 tts.Stop();
                 if(check.equals("3")) {
                     execution.Tscore = 1;

@@ -500,7 +500,6 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
                 && lon > 0.3){
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,14));
             button.setEnabled(false);
-            Log.d("상태", "start");
             showPlaceInformation(currentPosition);
         }
 

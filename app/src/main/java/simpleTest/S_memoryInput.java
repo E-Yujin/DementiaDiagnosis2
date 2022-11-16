@@ -121,6 +121,8 @@ public class S_memoryInput extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 answer.setText("");
                 if(QP.current == 0){
                     pro_bar.setProgress(15);
@@ -156,6 +158,8 @@ public class S_memoryInput extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 Toast.makeText(getApplicationContext(), "기억력 항목에서는 뒤로가기를 할 수 없습니다.",
                         Toast.LENGTH_SHORT).show();
             }

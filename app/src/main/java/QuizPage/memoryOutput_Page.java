@@ -99,6 +99,8 @@ public class memoryOutput_Page extends AppCompatActivity {
 
         question.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 tts.speakOut(question.getText().toString());
             }
         });
@@ -120,6 +122,8 @@ public class memoryOutput_Page extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 answer.setText("");
                 QP.current ++;
                 if(QP.current == 0) QP.current = 6;
@@ -148,6 +152,8 @@ public class memoryOutput_Page extends AppCompatActivity {
 
         undo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                tts.isStopUtt = true;
+                tts.Stop();
                 Toast.makeText(getApplicationContext(), "기억력 항목에서는 뒤로가기를 할 수 없습니다.",
                         Toast.LENGTH_SHORT).show();
             }

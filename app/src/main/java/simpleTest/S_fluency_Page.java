@@ -122,9 +122,10 @@ public class S_fluency_Page extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tts.isStopUtt = true;
+                tts.Stop();
                 pro_bar.setProgress(100);
                 stt.Stop();
-                tts.Stop();
 
                 flu.Tscore = 0;
 
@@ -153,6 +154,7 @@ public class S_fluency_Page extends AppCompatActivity {
             public void onClick(View v) {
                 pro_bar.setProgress(100);
                 stt.Stop();
+                tts.isStopUtt = true;
                 tts.Stop();
                 QP.user_ans = answer.getText().toString().replace(".", "");
                 QP.user_ans = answer.getText().toString().replace(",", "");
@@ -183,8 +185,7 @@ public class S_fluency_Page extends AppCompatActivity {
                     overridePendingTransition(0, 0);
 
                     stt.isFluency = false;
-                    tts.Destroy();
-                    stt.Destroy();
+
                     finish();
                 }
             }

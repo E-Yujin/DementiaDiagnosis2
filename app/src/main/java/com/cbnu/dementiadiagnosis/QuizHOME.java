@@ -100,8 +100,6 @@ public class QuizHOME extends AppCompatActivity {
                     tem.add("준비되셨다면 아래 '시작하기'를 눌러주세요.");
                     tts.UtteranceProgress(tem, "continue", Announce, title_text, textView, mic, arrow, finger, donknow);
                 }
-                else
-                    tts.onInit(status, Announce.getText().toString(), "default", 1000);
             }
         });
 
@@ -110,34 +108,6 @@ public class QuizHOME extends AppCompatActivity {
         helper = new Helper(tts, helper_img, this);
         helper.setStart();
 
-        Announce.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(current == 0){
-                    Announce.setText("안녕하세요.");
-                    tts.speakOut(Announce.getText().toString(),"default");
-                    tem.clear();
-                    tem.add("진단을 시작하기 전 사용방법을 간단히 안내해드리겠습니다.");
-                    tem.add("맨 위에 나타나는 질문을 듣고");
-                    tem.add("아래 마이크 버튼을 눌러 음성으로 답변하거나");
-                    tem.add("네모난 상자를 눌러 타자로 답변할 수 있습니다.");
-                    tem.add("문제의 정답을 모를 땐 '잘모르겠어요'를 눌러주세요.");
-                    tem.add("질문이 기억나지 않는다면 질문 문장을 눌러주세요.");
-                    tem.add("왼쪽으로 화면을 밀면 다음 문제로 넘어갑니다.");
-                    tem.add("오른쪽으로 화면을 밀면 이전 문제로 넘어갑니다.");
-                    tem.add("진단은 최대한 조용한 공간에서 혼자 진행해주세요.");
-                    tem.add("또한, 정확한 진단을 위해 진단 중엔 이동하지 말아주세요.");
-                    tem.add("모두 숙지하셨나요?");
-                    tem.add("그렇다면 지금부터 치매 정규 진단을 시작하겠습니다.");
-                    tem.add("생각나는 대로 최선을 다해 답변해 주시면 됩니다.");
-                    tem.add("준비되셨다면 아래 '시작하기'를 눌러주세요.");
-                    tts.UtteranceProgress(tem, "continue", Announce, title_text, textView, mic, arrow, finger, donknow);
-                }
-                else if(current == 1){
-                    tts.speakOut(Announce.getText().toString(),"default");
-                    tts.UtteranceProgress();
-                }
-            }
-        });
         Announce.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(current == 0){
@@ -206,7 +176,7 @@ public class QuizHOME extends AppCompatActivity {
         isDone = intent.getBooleanExtra("isDone", false);
 
         if(isDone){
-            tts.Stop();
+            tts.Destroy();
             current = 1;
             view.setVisibility(View.GONE);
             exam.setVisibility(View.GONE);
