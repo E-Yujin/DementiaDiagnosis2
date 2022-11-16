@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,8 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.tomergoldst.tooltips.ToolTip;
+import com.tomergoldst.tooltips.ToolTipsManager;
 
 import org.w3c.dom.Text;
 
@@ -173,7 +176,7 @@ public class Result extends AppCompatActivity {
         mem_score.setText(score_memory + "/10");
         att_score.setText(score_attention + "/3");
         spa_score.setText(score_spacetime + "/2");
-        exe_score.setText(score_execution + " /6");
+        exe_score.setText(score_execution + "/6");
         lan_score.setText(score_language + "/4");
         scoreText.setText(Integer.toString(score_total));
         setProgressWithAnimation(progressBar1, score_orientation * 20);

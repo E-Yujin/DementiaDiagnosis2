@@ -120,9 +120,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/jejugothic"
             android:letterSpacing="0.04"
@@ -130,6 +131,27 @@
             android:text="1"
             android:textSize="25sp"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/left1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/left2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/left3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"/>
     </LinearLayout>
 
     <LinearLayout
@@ -138,8 +160,8 @@
         android:layout_height="200dp"
         android:layout_below="@+id/ball"
         android:layout_alignEnd="@+id/ball"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/shape_exe"
         android:orientation="vertical">
 
@@ -154,6 +176,27 @@
             android:text="2"
             android:textSize="25sp"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/right1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/right2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/right3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal" />
     </LinearLayout>
 
     <FrameLayout
