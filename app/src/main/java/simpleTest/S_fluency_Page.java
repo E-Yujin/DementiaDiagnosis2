@@ -3,6 +3,7 @@ package simpleTest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import QuizPage.QuizPage;
 import questions.fluency;
+import user.SharedPreference;
 
 public class S_fluency_Page extends AppCompatActivity {
     fluency flu;
@@ -67,7 +69,11 @@ public class S_fluency_Page extends AppCompatActivity {
         intent = getIntent();
         flu.scores = intent.getIntArrayExtra("scores");
 
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
+
         stt.isFluency = true;
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, flu.quiz);
         helper_img = findViewById(R.id.img);

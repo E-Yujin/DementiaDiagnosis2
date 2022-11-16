@@ -24,6 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cbnu.dementiadiagnosis.Helper;
+import com.cbnu.dementiadiagnosis.HomeActivity;
 import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
@@ -32,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
@@ -44,6 +46,7 @@ import questions.MemoryQuiz;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import user.SharedPreference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -106,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
             submit.setEnabled(false);
             tts.UtteranceProgress(question.getText().toString(), 1000, answer, sttBtn, submit);
         });
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, memoryQuiz.quiz);
 
         helper = new Helper(tts, stt, helper_img, this);
@@ -522,6 +528,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (0 <= gapTime && 2000 >= gapTime) {
             super.onBackPressed();
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
             tts.Destroy();
             countDownTimer.cancel();
             finish();

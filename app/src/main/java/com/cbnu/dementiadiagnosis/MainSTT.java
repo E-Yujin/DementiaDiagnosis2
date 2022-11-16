@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.gson.Gson;
 
@@ -41,6 +43,11 @@ public class MainSTT{
     TextView textView;
     TextView question;
 
+    int start = 350;
+    int end = 200;
+    int speed = 0;
+
+
     String result_text;
 
     final int PERMISSION = 1;
@@ -64,6 +71,7 @@ public class MainSTT{
     boolean isAnalysing = false;
     boolean isTooFast = false;
     public boolean isFluency = false;
+    MainSTT stt;
 
     private short[] buffer = null;
 
@@ -80,6 +88,7 @@ public class MainSTT{
         sttBtn = Btn;
         submit = sub;
         tts = talk;
+
     }
 
     public MainSTT (AppCompatActivity context, EditText editText,
@@ -96,8 +105,71 @@ public class MainSTT{
         tts = talk;
     }
 
+    public MainSTT (FragmentActivity context,EditText editText,
+                    ImageButton Btn, int s, int e, int sp){
+        if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
+            ActivityCompat.requestPermissions(
+                    context, new String[]{Manifest.permission.INTERNET,
+                            Manifest.permission.RECORD_AUDIO},PERMISSION);
+        }
+        result = editText;
+        sttBtn = Btn;
+        start = s;
+        end = e;
+        speed = sp;
+    }
+
+    public MainSTT (AppCompatActivity context, EditText editText, TextView announce,
+                    TextView quiz, ImageButton Btn, ImageButton sub, TTS talk, int s, int e, int v){
+        if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
+            ActivityCompat.requestPermissions(
+                    context, new String[]{Manifest.permission.INTERNET,
+                            Manifest.permission.RECORD_AUDIO},PERMISSION);
+        }
+        result = editText;
+        textView = announce;
+        question = quiz;
+        sttBtn = Btn;
+        submit = sub;
+        tts = talk;
+        start = s;
+        end = e;
+        speed = v;
+    }
+
+    public MainSTT (AppCompatActivity context, EditText editText,
+                    TextView quiz, ImageButton Btn, ImageButton sub, TTS talk, int s, int e, int v){
+        if ( Build.VERSION.SDK_INT >= 23 ){ // 퍼미션 체크
+            ActivityCompat.requestPermissions(
+                    context, new String[]{Manifest.permission.INTERNET,
+                            Manifest.permission.RECORD_AUDIO},PERMISSION);
+        }
+        result = editText;
+        question = quiz;
+        sttBtn = Btn;
+        submit = sub;
+        tts = talk;
+        start = s;
+        end = e;
+        speed = v;
+    }
+
+    public void setStart(int s){
+        start = s;
+    }
+    public void setEnd(int e){
+        end = e;
+    }
+    public void setSpeed(int sp){
+        speed = sp;
+    }
+    public int getStart(){return start;}
+    public int getEnd(){return end;}
+    public int getSpeed(){return speed;}
+
     public void start_STT() {
         if (isRecording) {
+            sttBtn.setSelected(false);
             Log.d("record_확인", "오디오 릴리즈!");
             forceStop = true;
         } else {
@@ -105,6 +177,7 @@ public class MainSTT{
                 new Thread(new Runnable() {
                     public void run() {
                         Log.d("record_확인", "녹음 시작!");
+                        sttBtn.setSelected(true);
                         SendMessage("듣는 중...", 1);
                         try {
                             recordSpeech();
@@ -137,7 +210,7 @@ public class MainSTT{
                     isRecognize = false;
                     isAnalysing= false;
                     isTooFast = false;
-                    submit.setEnabled(false);
+                    if(submit != null) submit.setEnabled(false);
                     break;
                 // 목소리가 인식되었음(버튼 또는 max time)
                 case 2:
@@ -148,7 +221,7 @@ public class MainSTT{
                     isAnalysing= false;
                     isTooFast = false;
                     sttBtn.setEnabled(false);
-                    submit.setEnabled(false);
+                    if(submit != null) submit.setEnabled(false);
                     break;
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
@@ -158,7 +231,7 @@ public class MainSTT{
                     isRecognize = false;
                     isAnalysing= false;
                     isTooFast = true;
-                    submit.setEnabled(true);
+                    if(submit != null) submit.setEnabled(true);
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
@@ -169,7 +242,7 @@ public class MainSTT{
                     isAnalysing= false;
                     isTooFast = true;
                     sttBtn.setEnabled(true);
-                    submit.setEnabled(true);
+                    if(submit != null) submit.setEnabled(true);
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
@@ -182,10 +255,10 @@ public class MainSTT{
                         isTooFast = false;
                         if (isFluency) {
                             sttBtn.setEnabled(false);
-                            submit.setEnabled(false);
+                            if(submit != null) submit.setEnabled(false);
                         } else {
                             sttBtn.setEnabled(true);
-                            submit.setEnabled(true);
+                            if(submit != null) submit.setEnabled(true);
                         }
                     }
                     else{ // STT가 종료되었는데도 인식은 종료되지 않은 경우
@@ -196,10 +269,10 @@ public class MainSTT{
                         isTooFast = false;
                         if (isFluency) {
                             sttBtn.setEnabled(false);
-                            submit.setEnabled(true);
+                            if(submit != null) submit.setEnabled(true);
                         } else {
                             sttBtn.setEnabled(true);
-                            submit.setEnabled(true);
+                            if(submit != null) submit.setEnabled(true);
                         }
                     }
 
@@ -228,11 +301,11 @@ public class MainSTT{
                     isTooFast = false;
                     if(isFluency){
                         sttBtn.setEnabled(false);
-                        submit.setEnabled(true);
+                        if(submit != null) submit.setEnabled(true);
                     }
                     else{
                         sttBtn.setEnabled(true);
-                        submit.setEnabled(true);
+                        if(submit != null) submit.setEnabled(true);
                     }
                     break;
                 case 7: // 텍스트 변환이 진행 중임.
@@ -306,6 +379,7 @@ public class MainSTT{
                 Thread threadRecog = new Thread(new Runnable() {
                     public void run() {
                         Recordingloop(audio, bufferSize);
+                        sttBtn.setSelected(false);
                         isRecording = false;
                         isListening = false;
                         SendMessage("말하기 완료.", 6);
@@ -322,6 +396,7 @@ public class MainSTT{
                         SendMessage("2분 동안 말씀하지 않아 인식을 종료합니다.\n" +
                                 "'말하기'를 다시 누르고 말씀해주세요.", 4);
                         forceStop = true;
+                        sttBtn.setSelected(false);
                     }
                 } catch (InterruptedException e) {
                     SendMessage("Interrupted", 4);
@@ -346,13 +421,13 @@ public class MainSTT{
             recData.add(inBuffer);
             level = (int) (total / ret);
             if (voiceReconize == false) {
-                if (level > 350) {
+                if (level > start) {
                     if (cnt == 0)
                         startingIndex = recData.size();
                     cnt++;
                 }
 
-                if (cnt > 0) {
+                if (cnt > speed) {
                     SendMessage("목소리 감지!", 2);
                     Log.d("record_n", "목소리 감지!");
                     cnt = 0;
@@ -368,15 +443,15 @@ public class MainSTT{
             if (voiceReconize == true) {
                 // 목소리가 끝나고 500이하로 떨어진 상태가 40이상 지속된 경우
                 // 더이상 말하지 않는것으로 간주.. 레벨 체킹 끝냄
-                if (level < 200) {
+                if (level < end) {
                     cnt++;
                 }
                 // 도중에 다시 소리가 커지는 경우 잠시 쉬었다가 계속 말하는 경우이므로 cnt 값은 0
-                if (level > 350) {
+                if (level > start) {
                     cnt = 0;
                 }
                 // endIndex 를 저장하고 레벨체킹을 끝냄
-                if (cnt > 0) {
+                if (cnt > speed) {
                     voiceReconize = false;
                     cnt = 0;
                     endIndex = recData.size();

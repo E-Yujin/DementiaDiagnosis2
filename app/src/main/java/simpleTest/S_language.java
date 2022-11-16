@@ -26,6 +26,8 @@ import com.cbnu.dementiadiagnosis.HomeActivity;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
+import java.util.ArrayList;
+
 import questions.LanguageFunc;
 
 public class S_language extends AppCompatActivity {

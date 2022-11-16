@@ -2,6 +2,7 @@ package memoryQuiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +13,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cbnu.dementiadiagnosis.Helper;
+import com.cbnu.dementiadiagnosis.HomeActivity;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import QuizPage.SpaceTimePage;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -63,7 +67,8 @@ public class StartActivity extends AppCompatActivity {
 
         startBtn.setOnClickListener(v -> {
             tts.Destroy();
-            startActivity(new Intent(StartActivity.this, MainActivity.class));
+            Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent1);
             finish();
         });
     }
@@ -75,7 +80,10 @@ public class StartActivity extends AppCompatActivity {
 
         if (0 <= gapTime && 2000 >= gapTime) {
             super.onBackPressed();
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
             tts.Destroy();
+
             finish();
         } else {
             backBtnTime = curTime;

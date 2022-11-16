@@ -70,7 +70,6 @@ public class S_execution extends AppCompatActivity {
         Intent intent;
         intent = getIntent();
         execution.scores = intent.getIntArrayExtra("scores");
-
         showStar();
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {

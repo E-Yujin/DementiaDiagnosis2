@@ -35,6 +35,7 @@ import java.util.List;
 
 import questions.LanguageFunc;
 import questions.attention;
+import user.SharedPreference;
 
 public class LanguagePage extends AppCompatActivity {
     LanguageFunc languageFunc;
@@ -90,7 +91,11 @@ public class LanguagePage extends AppCompatActivity {
             }
         });
 
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
+
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, languageFunc.quiz);
 
         image.setImageResource(R.drawable.toothbrush);

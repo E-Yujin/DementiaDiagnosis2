@@ -100,7 +100,7 @@
             android:layout_height="65dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_mic" />
+            android:background="@drawable/mic_selector" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/donknow"

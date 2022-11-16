@@ -54,6 +54,18 @@
         android:textSize="16sp" />
 
     <TextView
+        android:id="@+id/setting_stt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/userIf_delete"
+        android:fontFamily="@font/jejugothic"
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:text="음성인식 옵션"
+        android:textColor="?attr/colorOnTertiary"
+        android:textSize="16sp" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/userIf_delete"

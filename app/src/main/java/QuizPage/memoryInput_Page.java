@@ -3,6 +3,7 @@ package QuizPage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import QuizPage.QuizPage;
 import questions.memoryInput;
+import user.SharedPreference;
 
 public class memoryInput_Page extends AppCompatActivity {
     memoryInput memo_in;
@@ -89,7 +91,11 @@ public class memoryInput_Page extends AppCompatActivity {
         });
 
 
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
+
         QP = new QuizPage(stt, tts, question, answer, sttBtn,submit, memo_in.quiz);
         first = new ArrayList<>();
         second = new ArrayList<>();

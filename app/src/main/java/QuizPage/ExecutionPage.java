@@ -37,6 +37,7 @@ import fragment.ExecutionOne;
 import fragment.ExecutionThree;
 import fragment.ExecutionTwo;
 import questions.Execution;
+import user.SharedPreference;
 
 
 public class ExecutionPage extends AppCompatActivity {
@@ -128,7 +129,10 @@ public class ExecutionPage extends AppCompatActivity {
                 tts.UtteranceProgress(tem, "continue", question, sttBtn, submit);
             }
         });
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, execution.quiz);
 
         sttBtn.setEnabled(false);

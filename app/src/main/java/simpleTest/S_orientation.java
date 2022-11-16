@@ -3,6 +3,7 @@ package simpleTest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import QuizPage.QuizPage;
 import questions.orientation;
+import user.SharedPreference;
 
 public class S_orientation extends AppCompatActivity {
     orientation ortt_main;
@@ -85,7 +87,11 @@ public class S_orientation extends AppCompatActivity {
         crr_ans[2].add(ortt_main.returnDATE());
 
 
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
+
         QP = new simple_QuizPage(stt, tts, question, answer, sttBtn, submit, quiz);
         QP.isOrient = true;
         isCorrect = new boolean[q_num];

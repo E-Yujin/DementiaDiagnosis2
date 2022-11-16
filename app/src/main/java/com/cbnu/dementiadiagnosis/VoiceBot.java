@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import com.google.gson.Gson;
 
-import memoryQuiz.StartActivity;
 import user.SharedPreference;
 
 public class VoiceBot extends AppCompatActivity {
@@ -62,7 +61,11 @@ public class VoiceBot extends AppCompatActivity {
         sttBtn = findViewById(R.id.sttStart);
         submit = (ImageButton) findViewById(R.id.submit);
         edit =(EditText)findViewById(R.id.result);
-        stt = new MainSTT(this, edit, tv_outPut, sttBtn, submit, tts);
+        stt = new MainSTT(this, edit, tv_outPut, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
+
         helper_img = findViewById(R.id.img);
         exit = findViewById(R.id.btnLogout);
 

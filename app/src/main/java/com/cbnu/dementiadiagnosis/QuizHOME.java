@@ -5,7 +5,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -16,20 +15,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import QuizPage.ExecutionPage;
-import QuizPage.LanguagePage;
-import QuizPage.SpaceTimePage;
-import QuizPage.attention_Page;
-import QuizPage.fluency_Page;
-import QuizPage.memoryInput_Page;
-import QuizPage.memoryOutput_Page;
 import QuizPage.orientation_Page;
-import fragment.FragmentHome;
 
 
 public class QuizHOME extends AppCompatActivity {
@@ -217,6 +206,7 @@ public class QuizHOME extends AppCompatActivity {
         isDone = intent.getBooleanExtra("isDone", false);
 
         if(isDone){
+            tts.Stop();
             current = 1;
             view.setVisibility(View.GONE);
             exam.setVisibility(View.GONE);

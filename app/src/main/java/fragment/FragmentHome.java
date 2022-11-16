@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -18,6 +20,9 @@ import com.cbnu.dementiadiagnosis.PermissionSupport;
 import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
 
+import java.util.ArrayList;
+
+import QuizPage.memoryInput_Page;
 import memoryQuiz.StartActivity;
 import simpleTest.S_orientation;
 import user.SharedPreference;
@@ -44,20 +49,27 @@ public class FragmentHome extends Fragment {
         quiz = view.findViewById(R.id.rememberQuiz);
         logout = view.findViewById(R.id.btnLogout);
 
+
         // 간이검사 시작
         simple.setOnClickListener(v -> {
             SharedPreference.setTypeInf(getActivity(), "simple");
-            startActivity(new Intent(requireActivity(), S_orientation.class));
+            Intent intent = new Intent(getActivity(), S_orientation.class);
+            startActivity(intent);
         });
 
         // 정규검사 시작
         formal.setOnClickListener(v -> {
             SharedPreference.setTypeInf(getActivity(), "regular");
-            startActivity(new Intent(requireActivity(), QuizHOME.class));
+            Intent intent = new Intent(getActivity(), QuizHOME.class);
+            startActivity(intent);
         });
 
         // 기억력 향상 테스트
-        quiz.setOnClickListener(v -> startActivity(new Intent(requireActivity(), StartActivity.class)));
+        quiz.setOnClickListener(v -> {
+                    Intent intent = new Intent(getActivity(), StartActivity.class);
+                    startActivity(intent);
+                }
+        );
 
         // 로그아웃
         logout.setOnClickListener(v -> {

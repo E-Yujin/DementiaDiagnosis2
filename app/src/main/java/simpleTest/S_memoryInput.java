@@ -3,6 +3,7 @@ package simpleTest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import QuizPage.QuizPage;
 import questions.memoryInput;
+import user.SharedPreference;
 
 public class S_memoryInput extends AppCompatActivity {
     memoryInput memo_in;
@@ -73,6 +75,7 @@ public class S_memoryInput extends AppCompatActivity {
         intent = getIntent();
         memo_in.scores = intent.getIntArrayExtra("scores");
 
+
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -84,7 +87,11 @@ public class S_memoryInput extends AppCompatActivity {
         });
 
 
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
+
         QP = new QuizPage(stt, tts, question, answer, sttBtn,submit, memo_in.quiz);
         first = new ArrayList<>();
         second = new ArrayList<>();

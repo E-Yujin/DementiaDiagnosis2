@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import fragment.FragmentSetting;
+
 public class SharedPreference {
     static String PREFERENCES_NAME = "pref_user";
 
@@ -15,9 +17,20 @@ public class SharedPreference {
     static String pref_user_edu = "edu";
     static String pref_user_score = "score";
     static String pref_type = "type";
+    static String pref_stt_start = "start";
+    static String pref_stt_end = "end";
+    static String pref_stt_speed = "speed";
 
     static public SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
+    }
+
+    public static void setSttInf(Context ctx, int s, int e, int v){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putInt(pref_stt_start, s);
+        editor.putInt(pref_stt_end, e);
+        editor.putInt(pref_stt_speed, v);
+        editor.apply();
     }
 
     // 사용자 정보 저장
@@ -44,6 +57,16 @@ public class SharedPreference {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(pref_type, type);
         editor.apply();
+    }
+
+    public static int getSTT_start(Context ctx){
+        return getSharedPreferences(ctx).getInt(pref_stt_start, 350);
+    }
+    public static int getSTT_end(Context ctx){
+        return getSharedPreferences(ctx).getInt(pref_stt_end, 200);
+    }
+    public static int getSTT_speed(Context ctx){
+        return getSharedPreferences(ctx).getInt(pref_stt_speed, 0);
     }
 
     // 저장된 사용자 일련코드 가져오기

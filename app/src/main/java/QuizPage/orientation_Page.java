@@ -24,10 +24,12 @@ import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import questions.orientation;
+import user.SharedPreference;
 
 public class orientation_Page extends AppCompatActivity {
     orientation ortt_main;
@@ -46,8 +48,6 @@ public class orientation_Page extends AppCompatActivity {
     String[] U_answers;
     AppCompatButton donKnow;
     boolean isDK_inFirst = false;
-    float D_x = 0;
-    float D_y = 0;
 
     private long backBtnTime = 0;
 
@@ -70,7 +70,11 @@ public class orientation_Page extends AppCompatActivity {
         donKnow = (AppCompatButton) findViewById(R.id.donknow);
 
 
-        stt = new MainSTT(this, answer, question, sttBtn, submit, tts);
+        stt = new MainSTT(this, answer, question, sttBtn, submit, tts,
+                SharedPreference.getSTT_start(this), SharedPreference.getSTT_end(this),
+                SharedPreference.getSTT_speed(this));
+        Log.d("STT_setting", "s= "+stt.getStart()+", e= "+stt.getEnd()+", v= "+stt.getSpeed());
+
         QP = new QuizPage(stt, tts, question, answer, sttBtn, submit, ortt_main.quiz);
         QP.isOrient = true;
         isCorrect = new boolean[4];
@@ -118,9 +122,7 @@ public class orientation_Page extends AppCompatActivity {
 
         donKnow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(QP.current == 0 || QP.current == 4)
-                    announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
-                else announce.setText("");
+                announce.setText("");
 
                 if(QP.current == 0){
                     QP.current = 4;
@@ -128,6 +130,11 @@ public class orientation_Page extends AppCompatActivity {
                     pro_bar.setProgress(10);
                 }
                 if(QP.current == 3) pro_bar.setProgress(10);
+
+                int max = -1;
+                for(int i = 0; i < 4; i++) {
+                    if(!isWrong[i]) max = i;
+                }
 
                 //다음 문제 화면 전환
                 if(QP.current < 4){
@@ -140,11 +147,14 @@ public class orientation_Page extends AppCompatActivity {
                         if(isCorrect[i]) j++;
                     }// 모두 정답이면 공간지남력 문제로 점프
                     if(j == 4) QP.current = 4;
+                    if(QP.current == max+1) QP.current = 4;
                 }
                 if(QP.current < 5){
                     answer.setText("");
                     tts.isStopUtt = false;
-                    QP.Submit();
+                    QP.current++;
+                    question.setText(ortt_main.quiz.get(QP.current));
+                    if(QP.current ==4 ) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
                     tts.speakOut(question.getText().toString());
                 }
                 else if(QP.current == 5){
@@ -171,7 +181,6 @@ public class orientation_Page extends AppCompatActivity {
                 for(int i = 3; i >= 0; i--) {
                     if(!isWrong[i]) min = i;
                 }
-                if(min == -1)QP.current = 0;
 
                 if(QP.current == 0){
                     Toast.makeText(getApplicationContext(), "해당 항목의 첫 문제 입니다.",
@@ -179,8 +188,8 @@ public class orientation_Page extends AppCompatActivity {
                 }
                 if(QP.current > 0){
                     pro_bar.setProgress(5);
-                    boolean isChange = false;
                     if(QP.current > 1){
+                        boolean isChange = false;
                         for(int i = 3; i >= 0; i--){
                             if(!isWrong[i]){
                                 if(QP.current-1 > i){
@@ -188,11 +197,13 @@ public class orientation_Page extends AppCompatActivity {
                                     isChange = true;
                                     break;
                                 }
-                                else isChange = false;
                             } // 모두 정답이면 첫 문제로 점프
                         }
-                        if(!isChange) QP.current--;
-                        if(QP.current == min)QP.current = 0;
+                        if(!isChange && min == QP.current-1) QP.current = 0;
+                        // current를 바꾼 적이 없고 제일 앞에 있는 되묻기 질문이라면
+                        // 반복되지 않도록 제일 첫 질문으로 이동함
+                        if(min == -1 && QP.current == 5) QP.current = 0;
+                        // 시간지남력 문제에서 틀린 것이 없으면 첫 질문으로 이동
                     }
                     else QP.current --;
 
@@ -200,7 +211,12 @@ public class orientation_Page extends AppCompatActivity {
                         QP.current = 0;
                         isDK_inFirst = false;
                     }
-                    if(QP.current == 0) announce.setText("년, 월, 일, 요일");
+                    if(QP.current == 0) {
+                        announce.setText("년, 월, 일, 요일");
+                        Arrays.fill(isCorrect, false);
+                        Arrays.fill(isWrong, false);
+                        ortt_main.Tscore = 0;
+                    }
                     else announce.setText("");
 
                     tts.isStopUtt = false;
@@ -213,9 +229,7 @@ public class orientation_Page extends AppCompatActivity {
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(QP.current == 4 || QP.current == 5) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
-                else if(QP.current == 0) announce.setText("년, 월, 일, 요일");
-                else announce.setText("");
+                announce.setText("");
                 stt.Stop();
                 tts.Stop();
                 tts.isStopUtt = true;
@@ -299,6 +313,10 @@ public class orientation_Page extends AppCompatActivity {
                         pro_bar.setProgress(10);
                         U_answers[QP.current-1] = QP.user_ans;
                     }
+                    int max = -1;
+                    for(int i = 0; i < 4; i++) {
+                        if(!isWrong[i]) max = i;
+                    }
 
                     //다음 문제 화면 전환
                     if(QP.current < 4){
@@ -311,14 +329,17 @@ public class orientation_Page extends AppCompatActivity {
                             if(isCorrect[i]) j++;
                         }// 모두 정답이면 공간지남력 문제로 점프
                         if(j == 4) QP.current = 4;
+                        if(QP.current == max+1) QP.current = 4;
                     }
-
                     if(QP.current < 5){
                         answer.setText("");
                         tts.isStopUtt = false;
-                        QP.Submit();
+                        QP.current++;
+                        question.setText(ortt_main.quiz.get(QP.current));
+                        if(QP.current == 5) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
                         tts.speakOut(question.getText().toString());
                     }
+
                     else if(QP.current == 5){
                         announce.setText("");
 

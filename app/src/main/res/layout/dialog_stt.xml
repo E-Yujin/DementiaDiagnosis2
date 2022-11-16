@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:background="?attr/colorOnPrimary"
+    android:layout_gravity="center"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="25dp"
+        android:fontFamily="@font/jejugothic"
+        android:text="음성인식 설정"
+        android:textColor="?attr/colorOnTertiary"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/helper_jump"
+        app:tint="?attr/colorPrimary" />
+
+    <RelativeLayout
+        android:id="@+id/volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/V_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/jejugothic"
+            android:text="분석 간격"
+            android:textColor="?attr/colorOnTertiary"
+            android:textSize="10sp" />
+
+        <SeekBar
+            android:id="@+id/V_seek"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/V_text"
+            android:max="5"
+            android:progress="0"
+            android:progressDrawable="@drawable/seekbar1"
+            android:thumb="@drawable/seekbar1_thumb" />
+
+        <TextView
+            android:id="@+id/V_seekText"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/V_text"
+            android:layout_toEndOf="@+id/V_seek"
+            android:fontFamily="@font/jejugothic"
+            android:text="0"
+            android:textColor="?attr/colorOnTertiary"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/volume"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/S_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/jejugothic"
+            android:text="인지 시작"
+            android:textColor="?attr/colorOnTertiary"
+            android:textSize="10sp" />
+
+        <SeekBar
+            android:id="@+id/S_seek"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/S_text"
+            android:max="5"
+            android:progress="0"
+            android:progressDrawable="@drawable/seekbar1"
+            android:thumb="@drawable/seekbar1_thumb" />
+
+        <TextView
+            android:id="@+id/S_seekText"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/S_text"
+            android:layout_toEndOf="@+id/S_seek"
+            android:fontFamily="@font/jejugothic"
+            android:text="0"
+            android:textColor="?attr/colorOnTertiary"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/start"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/E_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/jejugothic"
+            android:text="인지 종료"
+            android:textColor="?attr/colorOnTertiary"
+            android:textSize="10sp" />
+
+        <SeekBar
+            android:id="@+id/E_seek"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/E_text"
+            android:max="8"
+            android:progress="0"
+            android:progressDrawable="@drawable/seekbar1"
+            android:thumb="@drawable/seekbar1_thumb" />
+
+        <TextView
+            android:id="@+id/E_seekText"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/E_text"
+            android:layout_toEndOf="@+id/E_seek"
+            android:fontFamily="@font/jejugothic"
+            android:text="0"
+            android:textColor="?attr/colorOnTertiary"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/end"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/jejugothic"
+        android:gravity="center"
+        android:letterSpacing="0.04"
+        android:lineSpacingExtra="10dp"
+        android:textSize="13sp" />
+
+    <ImageButton
+        android:id="@+id/sttStart"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/result"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/mic_selector" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sttStart"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelBtn"
+            android:layout_width="95dp"
+            android:layout_height="35dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="?attr/colorPrimary"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:text="취 소"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/retrieveBtn"
+            android:layout_width="95dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="40dp"
+            android:layout_toEndOf="@+id/cancelBtn"
+            android:background="@drawable/round_button"
+            android:backgroundTint="?attr/colorPrimary"
+            android:fontFamily="@font/jejugothic"
+            android:gravity="center"
+            android:text="수 정"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

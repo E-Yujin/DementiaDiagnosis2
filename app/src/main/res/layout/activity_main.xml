@@ -153,7 +153,7 @@
                 android:layout_gravity="center|bottom"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/ic_mic" />
+                android:background="@drawable/mic_selector" />
         </LinearLayout>
 
     </FrameLayout>

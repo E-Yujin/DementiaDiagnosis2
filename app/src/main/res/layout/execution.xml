@@ -114,7 +114,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_marginStart="20dp"
-                    android:background="@drawable/ic_mic"
+                    android:background="@drawable/mic_selector"
                     android:visibility="invisible" />
 
             </LinearLayout>

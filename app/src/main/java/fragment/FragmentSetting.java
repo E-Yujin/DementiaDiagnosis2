@@ -4,14 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,23 +22,27 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.cbnu.dementiadiagnosis.FirstActivity;
+import com.cbnu.dementiadiagnosis.Helper;
+import com.cbnu.dementiadiagnosis.MainSTT;
 import com.cbnu.dementiadiagnosis.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 import database.DBHelper;
 import user.EducationAge;
@@ -46,7 +51,15 @@ import user.User;
 
 public class FragmentSetting extends Fragment implements View.OnClickListener {
 
-    TextView inf_retrieve, inf_delete;
+    MainSTT stt;
+    TextView inf_retrieve, inf_delete, setting_stt;
+    int start, end, speed;
+    SeekBar VOLUME, START, END;
+    TextView V_text, S_text, E_text;
+    ImageView helper_img;
+    ImageButton sttBtn;
+    EditText answer;
+    Helper helper;
     TextView inf_name;
     DBHelper db;
     String serial_code;
@@ -68,6 +81,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         inf_name = (TextView) view.findViewById(R.id.userIf_name);
         inf_retrieve = (TextView) view.findViewById(R.id.userIf_retrieve);
         inf_delete = (TextView) view.findViewById(R.id.userIf_delete);
+        setting_stt = view.findViewById(R.id.setting_stt);
 
         User user = db.getUserInf(serial_code);
         inf_name.setText(user.getName());
@@ -76,10 +90,13 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         inf_retrieve.setOnClickListener(this);
         // 삭제 버튼
         inf_delete.setOnClickListener(this);
+        // 음성인식 옵션 버튼
+        setting_stt.setOnClickListener(this);
 
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
@@ -90,7 +107,161 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
             case R.id.userIf_delete:
                 onClickDelete();
                 break;
+            case R.id.setting_stt:
+                onClickSettingSTT();
+                break;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void onClickSettingSTT() {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_stt, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setView(dialogView);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setContentView(R.layout.dialog_retrieve);
+        alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.round_button);
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        params.copyFrom(alertDialog.getWindow().getAttributes());
+        params.width = 900;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setAttributes(params);
+
+        start = SharedPreference.getSTT_start(requireActivity().getApplicationContext());
+        end = SharedPreference.getSTT_end(requireActivity().getApplicationContext());
+        speed = SharedPreference.getSTT_speed(requireActivity().getApplicationContext());
+
+        answer = dialogView.findViewById(R.id.result);
+        answer.setHint("음성인식을 점검해보세요!");
+        answer.setEnabled(false);
+        answer.setHintTextColor(requireActivity().getApplicationContext().getColor(R.color.gray));
+        sttBtn = dialogView.findViewById(R.id.sttStart);
+        stt = new MainSTT(requireActivity(), answer, sttBtn, start, end, speed);
+
+        VOLUME = dialogView.findViewById(R.id.V_seek);
+        V_text = dialogView.findViewById(R.id.V_seekText);
+        START = dialogView.findViewById(R.id.S_seek);
+        S_text = dialogView.findViewById(R.id.S_seekText);
+        END = dialogView.findViewById(R.id.E_seek);
+        E_text = dialogView.findViewById(R.id.E_seekText);
+
+        VOLUME.setProgress(speed, true);
+        V_text.setText(Integer.toString(speed));
+        START.setProgress((start / 50) - 5, true);
+        S_text.setText(Integer.toString(start));
+        END.setProgress((end / 50) - 2, true);
+        E_text.setText(Integer.toString(end));
+
+        Button cancelBtn = (Button) dialogView.findViewById(R.id.cancelBtn);
+        Button retrieveBtn = (Button) dialogView.findViewById(R.id.retrieveBtn);
+
+        helper_img = dialogView.findViewById(R.id.img);
+
+        helper = new Helper(stt, helper_img, requireActivity());
+        helper.setTest();
+
+        VOLUME.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                V_text.setText(String.format("%d", seekBar.getProgress()));
+                speed = seekBar.getProgress();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                stt.setSpeed(speed);
+            }
+        });
+
+        START.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(end >= (5 + seekBar.getProgress()) * 50){
+                    seekBar.setProgress((start/50)-5);
+                    S_text.setText(Integer.toString(start));
+                    answer.setHint("종료 볼륨은 시작보다 작아야합니다.");
+                    answer.setHintTextColor(requireActivity().getApplicationContext().getColor(R.color.red));
+                    answer.setText("");
+                }
+                else{
+                    start = (5 + seekBar.getProgress()) * 50;
+                    S_text.setText(String.format("%d", start));
+                    answer.setHint("음성인식을 점검해보세요!");
+                    answer.setHintTextColor(requireActivity().getApplicationContext().getColor(R.color.gray));
+                    answer.setText("");
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                stt.setStart(start);
+            }
+        });
+
+        END.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(start <= (seekBar.getProgress()+2) * 50){
+                    seekBar.setProgress((end/50)-2);
+                    E_text.setText(Integer.toString(end));
+                    answer.setHintTextColor(requireActivity().getApplicationContext().getColor(R.color.red));
+                    answer.setHint("종료 볼륨은 시작보다 작아야합니다.");
+                    answer.setText("");
+                }
+                else{
+                    end = (seekBar.getProgress()+2) * 50;
+                    E_text.setText(String.format("%d", end));
+                    answer.setHintTextColor(requireActivity().getApplicationContext().getColor(R.color.gray));
+                    answer.setHint("음성인식을 점검해보세요!");
+                    answer.setText("");
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                stt.setEnd(end);
+            }
+        });
+
+        sttBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                stt.start_STT();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        retrieveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreference.setSttInf(requireActivity().getApplicationContext(), stt.getStart(), stt.getEnd(), stt.getSpeed());
+                alertDialog.dismiss();
+            }
+        });
     }
 
     // 사용자 정보 수정 Dialog
@@ -148,14 +319,14 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
             }
         });
 
-        if(sex.equals("남")) {
+        if (sex.equals("남")) {
             spinnerSex.setSelection(0);
         } else {
             spinnerSex.setSelection(1);
         }
 
         int eduNum = 0;
-        switch(edu) {
+        switch (edu) {
             case "문맹":
                 eduNum = 0;
                 break;
@@ -188,7 +359,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         eduList.add("대학졸업이상");
 
         ArrayAdapter spinnerAdapterEdu;
-        spinnerAdapterEdu = new ArrayAdapter(requireActivity(),R.layout.spinner, eduList);
+        spinnerAdapterEdu = new ArrayAdapter(requireActivity(), R.layout.spinner, eduList);
         spinnerEdu.setAdapter(spinnerAdapterEdu);
 
         spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -227,7 +398,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
 
                 long result = db.updateData(serial_code, cname, cbirth, cage, csex, cedu, cscore);
 
-                if(result > -1) {
+                if (result > -1) {
                     Toast.makeText(requireActivity(), "수정되었습니다", Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 } else {
@@ -263,7 +434,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
                         // 삭제 이벤트 처리
                         long del_user = db.deleteUser(serial_code);
                         long del_score = db.deleteScore(serial_code);
-                        if(del_user > -1 && del_score > -1) {
+                        if (del_user > -1 && del_score > -1) {
                             dialog.dismiss();
                             Toast.makeText(requireActivity(), "사용자 정보 삭제 성공!!!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), FirstActivity.class));
@@ -272,7 +443,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
                         }
                     }
                 });
-        Typeface face = ResourcesCompat.getFont(requireContext(),R.font.jejugothic);
+        Typeface face = ResourcesCompat.getFont(requireContext(), R.font.jejugothic);
         TextView title_of_dialog = new TextView(requireActivity().getApplicationContext());
         title_of_dialog.setText("사용자 정보 삭제");
         title_of_dialog.setTypeface(face);
@@ -311,10 +482,10 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
             String date = null;
             String s_month = Integer.toString(month), s_day = Integer.toString(day);
 
-            if(month < 10) {
+            if (month < 10) {
                 s_month = "0" + month;
             }
-            if(day < 10) {
+            if (day < 10) {
                 s_day = "0" + day;
             }
             date = year + "/" + s_month + "/" + s_day;
@@ -334,13 +505,13 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
 
         year = Integer.parseInt(birth.substring(0, 4));
 
-        if(birth.charAt(5) == '0') {
+        if (birth.charAt(5) == '0') {
             month = Integer.parseInt(birth.substring(6, 7));
         } else {
             month = Integer.parseInt(birth.substring(5, 7));
         }
 
-        if(birth.charAt(8) == '0') {
+        if (birth.charAt(8) == '0') {
             day = Integer.parseInt(birth.substring(9, 10));
         } else {
             day = Integer.parseInt(birth.substring(8, 10));
@@ -349,7 +520,7 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         age = currentYear - year;
 
         // 생일이 지나지 않은 경우 -1
-        if(month * 100 + day > currentMonth * 100 + currentDay) {
+        if (month * 100 + day > currentMonth * 100 + currentDay) {
             age--;
         }
         return age;
@@ -360,11 +531,11 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         int age_index = 0;
         int ref_score = 0;
 
-        if(age < 60) {
+        if (age < 60) {
             age_index = 0;
-        } else if(age < 70) {
+        } else if (age < 70) {
             age_index = 1;
-        } else if(age < 80) {
+        } else if (age < 80) {
             age_index = 2;
         } else {
             age_index = 3;
@@ -397,3 +568,4 @@ public class FragmentSetting extends Fragment implements View.OnClickListener {
         return ref_score;
     }
 }
+
