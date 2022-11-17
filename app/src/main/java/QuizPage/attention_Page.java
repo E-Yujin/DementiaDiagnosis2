@@ -175,7 +175,7 @@ public class attention_Page extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), SpaceTimePage.class);
                     intent.putExtra("scores", att.scores);
                     startActivity(intent);
-
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
@@ -273,7 +273,7 @@ public class attention_Page extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), SpaceTimePage.class);
                         intent.putExtra("scores", att.scores);
                         startActivity(intent);
-
+                        overridePendingTransition(0, 0);
                         finish();
                     }
                 }

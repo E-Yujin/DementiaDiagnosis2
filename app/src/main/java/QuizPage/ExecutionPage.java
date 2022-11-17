@@ -245,7 +245,7 @@ public class ExecutionPage extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), memoryOutput_Page.class);
                     intent.putExtra("scores", execution.scores);
                     startActivity(intent);
-
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
@@ -434,7 +434,7 @@ public class ExecutionPage extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), memoryOutput_Page.class);
                         intent.putExtra("scores", execution.scores);
                         startActivity(intent);
-
+                        overridePendingTransition(0, 0);
                         finish();
                     }
                 }

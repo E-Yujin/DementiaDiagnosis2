@@ -143,7 +143,7 @@ public class fluency_Page extends AppCompatActivity {
                 startActivity(intent);
 
                 stt.isFluency = false;
-
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -192,7 +192,7 @@ public class fluency_Page extends AppCompatActivity {
                     startActivity(intent);
 
                     stt.isFluency = false;
-
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
