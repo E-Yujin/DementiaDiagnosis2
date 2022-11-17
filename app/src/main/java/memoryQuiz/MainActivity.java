@@ -259,11 +259,10 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(result);
                                 JSONArray dkf = (JSONArray) jsonObject.get("items");
                                 if(!dkf.isNull(0)) {
-                                    JSONObject obb = new JSONObject();
                                     String[] titleArr = new String[5];
 
                                     for (int i = 0; i < 5; i++) {
-                                        obb = (JSONObject) dkf.get(i);
+                                        JSONObject obb = (JSONObject) dkf.get(i);
                                         String temp = (String) obb.get("title");
                                         String titleFilter = temp.replaceAll("<b>", "");
                                         String title = titleFilter.replaceAll("</b>", "");
@@ -472,6 +471,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.setContentView(R.layout.dialog_quiz_end);
         alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.round_button);
+        alertDialog.setCancelable(false);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         params.copyFrom(alertDialog.getWindow().getAttributes());
         params.width = 900;
