@@ -53,7 +53,8 @@ public class FragmentHome extends Fragment {
         // 간이검사 시작
         simple.setOnClickListener(v -> {
             SharedPreference.setTypeInf(getActivity(), "simple");
-            Intent intent = new Intent(getActivity(), S_orientation.class);
+            Intent intent = new Intent(getActivity(), QuizHOME.class);
+            intent.putExtra("isSimple", "simple");
             startActivity(intent);
         });
 
@@ -61,6 +62,7 @@ public class FragmentHome extends Fragment {
         formal.setOnClickListener(v -> {
             SharedPreference.setTypeInf(getActivity(), "regular");
             Intent intent = new Intent(getActivity(), QuizHOME.class);
+            intent.putExtra("isSimple", "regular");
             startActivity(intent);
         });
 

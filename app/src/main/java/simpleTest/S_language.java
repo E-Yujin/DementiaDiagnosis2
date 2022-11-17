@@ -9,6 +9,7 @@ import android.content.ClipDescription;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.DragEvent;
@@ -124,12 +125,23 @@ public class S_language extends AppCompatActivity {
                 languageFunc.Tscore = 0;
 
                 languageFunc.scores[7] = languageFunc.Tscore;
-
-                Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
-                intent.putExtra("scores", languageFunc.scores);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-                finish();
+                donKnow.setEnabled(false);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
+                        intent.putExtra("scores", languageFunc.scores);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -154,11 +166,22 @@ public class S_language extends AppCompatActivity {
                 }
                 languageFunc.scores[7] = languageFunc.Tscore;
 
-                Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
-                intent.putExtra("scores", languageFunc.scores);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-                finish();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), S_fluency_Page.class);
+                        intent.putExtra("scores", languageFunc.scores);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

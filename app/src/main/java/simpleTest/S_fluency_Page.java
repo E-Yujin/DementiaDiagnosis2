@@ -2,6 +2,7 @@ package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -85,7 +86,7 @@ public class S_fluency_Page extends AppCompatActivity {
                 sttBtn.setEnabled(false);
                 submit.setEnabled(false);
                 int time[] = {1500, 1000, 1000, 1001};
-                tts.onInit(status, question.getText().toString(), "default", 1000);
+                tts.onInit(status, question.getText().toString(), "default", 1000, donKnow);
                 tem.add(flu.quiz.get(1));
                 tem.add(flu.quiz.get(2));
                 tem.add(flu.quiz.get(3));
@@ -130,16 +131,27 @@ public class S_fluency_Page extends AppCompatActivity {
                 flu.Tscore = 0;
 
                 flu.scores[8] = flu.Tscore;
+                donKnow.setEnabled(false);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
+                        intent.putExtra("scores", flu.scores);
+                        intent.putExtra("isDone", true);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
 
-                Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
-                intent.putExtra("scores", flu.scores);
-                intent.putExtra("isDone", true);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
+                        stt.isFluency = false;
 
-                stt.isFluency = false;
-
-                finish();
+                        finish();
+                    }
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -178,15 +190,26 @@ public class S_fluency_Page extends AppCompatActivity {
 
                     flu.scores[8] = flu.Tscore;
 
-                    Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
-                    intent.putExtra("scores", flu.scores);
-                    intent.putExtra("isDone", true);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getApplicationContext(), QuizHOME.class);
+                            intent.putExtra("scores", flu.scores);
+                            intent.putExtra("isDone", true);
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
 
-                    stt.isFluency = false;
+                            stt.isFluency = false;
 
-                    finish();
+                            finish();
+                        }
+                    });
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

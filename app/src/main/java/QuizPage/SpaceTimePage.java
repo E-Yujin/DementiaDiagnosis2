@@ -70,7 +70,7 @@ public class SpaceTimePage extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 tem.clear();
-                tts.onInit(status, question.getText().toString(), "default", 1000);
+                tts.onInit(status, question.getText().toString(), "default", 1000, donKnow);
                 tem.add(ST.quiz.get(1));
                 tem.add(ST.quiz.get(2));
                 tem.add(ST.quiz.get(3));

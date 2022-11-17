@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import QuizPage.orientation_Page;
+import simpleTest.S_orientation;
 
 
 public class QuizHOME extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class QuizHOME extends AppCompatActivity {
     private int total_score = 0;
     boolean isDone = false;
     List<String> tem = new ArrayList<>();
-    boolean isStart = false;
+    String isSimple = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,9 @@ public class QuizHOME extends AppCompatActivity {
             }
         };
         loading.setImageDrawable(anim);
+
+        Intent intent = getIntent();
+        isSimple = intent.getStringExtra("isSimple");
 
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -206,7 +210,6 @@ public class QuizHOME extends AppCompatActivity {
 
         }
         else {
-            if(!isStart){
                 Announce.setText("안녕하세요.");
                 tts.speakOut(Announce.getText().toString(),"default");
                 tem.clear();
@@ -225,8 +228,6 @@ public class QuizHOME extends AppCompatActivity {
                 tem.add("생각나는 대로 최선을 다해 답변해 주시면 됩니다.");
                 tem.add("준비되셨다면 아래 '시작하기'를 눌러주세요.");
                 tts.UtteranceProgress(tem, "continue", Announce, title_text, textView, mic, arrow, finger, donknow);
-            }
-            else finish();
         }
     }
 
@@ -257,10 +258,16 @@ public class QuizHOME extends AppCompatActivity {
     private void switchPage(Intent intent, View view){
         switch (current){
             case 0:
-                isStart = true;
-                intent = new Intent(view.getContext(), orientation_Page.class);
-                startActivityForResult(intent, 100);
-                break;
+                if(isSimple.equals("simple")){
+                    intent = new Intent(view.getContext(), S_orientation.class);
+                    startActivityForResult(intent, 100);
+                    break;
+                }
+                else{
+                    intent = new Intent(view.getContext(), orientation_Page.class);
+                    startActivityForResult(intent, 100);
+                    break;
+                }
             case 1:
                 intent = new Intent(view.getContext(), Result.class);
                 intent.putExtra("part_score", part_score);

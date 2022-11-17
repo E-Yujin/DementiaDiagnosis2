@@ -2,6 +2,7 @@ package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -92,7 +93,7 @@ public class S_attention extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 tem.clear();
-                tts.onInit(status, question.getText().toString(), "default", 1000);
+                tts.onInit(status, question.getText().toString(), "default", 1000, donKnow);
                 tem.add("금수강산");
                 tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                 sttBtn.setEnabled(false);
@@ -148,13 +149,24 @@ public class S_attention extends AppCompatActivity {
                     att.Tscore = cal_score(U_answers, crr_ans);
 
                     att.scores[3] = att.Tscore;
+                    donKnow.setEnabled(false);
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getApplicationContext(), S_SpaceTime.class);
+                            intent.putExtra("scores", att.scores);
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
 
-                    Intent intent = new Intent(getApplicationContext(), S_SpaceTime.class);
-                    intent.putExtra("scores", att.scores);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-
-                    finish();
+                            finish();
+                        }
+                    });
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -195,12 +207,23 @@ public class S_attention extends AppCompatActivity {
 
                         att.scores[3] = att.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(), S_SpaceTime.class);
-                        intent.putExtra("scores", att.scores);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), S_SpaceTime.class);
+                                intent.putExtra("scores", att.scores);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
 
-                        finish();
+                                finish();
+                            }
+                        });
+                        thread.start();
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

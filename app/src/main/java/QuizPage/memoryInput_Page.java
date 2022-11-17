@@ -84,7 +84,7 @@ public class memoryInput_Page extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 int[] time = {1000, 500};
-                tts.onInit(status, question.getText().toString(), "continue", 1000);
+                tts.onInit(status, question.getText().toString(), "continue", 1000, donKnow);
                 tem.add("민수는.....자전거를 타고.....공원에 가서....11시부터...야구를 했다.");
                 tts.UtteranceProgress(tem, "continue", time, sttBtn, submit);
             }

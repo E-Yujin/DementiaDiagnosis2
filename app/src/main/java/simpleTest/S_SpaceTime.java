@@ -2,6 +2,7 @@ package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -96,13 +97,24 @@ public class S_SpaceTime extends AppCompatActivity {
                 ST.scores[4] = ST.Tscore;
 
                 pro_bar.setProgress(40);
+                donKnow.setEnabled(false);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), S_execution.class);
+                        intent.putExtra("scores", ST.scores);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
 
-                Intent intent = new Intent(getApplicationContext(), S_execution.class);
-                intent.putExtra("scores", ST.scores);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-
-                finish();
+                        finish();
+                    }
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -132,13 +144,23 @@ public class S_SpaceTime extends AppCompatActivity {
 
                 pro_bar.setProgress(40);
 
-                Intent intent = new Intent(getApplicationContext(), S_execution.class);
-                intent.putExtra("scores", ST.scores);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), S_execution.class);
+                        intent.putExtra("scores", ST.scores);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
 
-
-                finish();
+                        finish();
+                    }
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

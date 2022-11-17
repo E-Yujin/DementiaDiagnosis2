@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,13 +104,24 @@ public class S_execution extends AppCompatActivity {
                 execution.scores[5] = execution.Tscore;
 
                 pro_bar.setProgress(50);
+                donKnow.setEnabled(false);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
+                        intent.putExtra("scores", execution.scores);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
 
-                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
-                intent.putExtra("scores", execution.scores);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-
-                finish();
+                        finish();
+                    }
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -132,12 +144,24 @@ public class S_execution extends AppCompatActivity {
                     execution.Tscore = 0;
                 }
                 execution.scores[5] = execution.Tscore;
-                Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
-                intent.putExtra("scores", execution.scores);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
 
-                finish();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), S_memoryOutput.class);
+                        intent.putExtra("scores", execution.scores);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+
+                        finish();
+                    }
+                });
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

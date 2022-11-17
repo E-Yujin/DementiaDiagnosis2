@@ -2,6 +2,7 @@ package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -80,7 +81,7 @@ public class S_memoryInput extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 int[] time = {1000, 500};
-                tts.onInit(status, question.getText().toString(), "continue", 1000);
+                tts.onInit(status, question.getText().toString(), "default", 1000, donKnow);
                 tem.add("민수는.....자전거를 타고.....공원에 가서....11시부터...야구를 했다.");
                 tts.UtteranceProgress(tem, "continue", time, sttBtn, submit);
             }
@@ -145,13 +146,24 @@ public class S_memoryInput extends AppCompatActivity {
                 }
                 else{
                     memo_in.scores[2] = memo_in.Tscore;
+                    donKnow.setEnabled(false);
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getApplicationContext(), S_attention.class);
+                            intent.putExtra("scores", memo_in.scores);
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
 
-                    Intent intent = new Intent(getApplicationContext(), S_attention.class);
-                    intent.putExtra("scores", memo_in.scores);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-
-                    finish();
+                            finish();
+                        }
+                    });
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -214,12 +226,23 @@ public class S_memoryInput extends AppCompatActivity {
                     else{
                         memo_in.scores[2] = memo_in.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(), S_attention.class);
-                        intent.putExtra("scores", memo_in.scores);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), S_attention.class);
+                                intent.putExtra("scores", memo_in.scores);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
 
-                        finish();
+                                finish();
+                            }
+                        });
+                        thread.start();
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

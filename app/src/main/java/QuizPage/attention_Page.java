@@ -80,7 +80,7 @@ public class attention_Page extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 tem.clear();
-                tts.onInit(status, question.getText().toString(), "default", 1000);
+                tts.onInit(status, question.getText().toString(), "default", 1000, donKnow);
                 tem.add("6, 9, 7, 3");
                 tts.UtteranceProgress(tem, "continue", sttBtn, submit, answer);
                 sttBtn.setEnabled(false);

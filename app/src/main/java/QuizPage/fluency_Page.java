@@ -89,7 +89,7 @@ public class fluency_Page extends AppCompatActivity {
                 sttBtn.setEnabled(false);
                 submit.setEnabled(false);
                 int time[] = {1500, 1000, 1000, 1001};
-                tts.onInit(status, question.getText().toString(), "default", 1000);
+                tts.onInit(status, question.getText().toString(), "default", 1000, donKnow);
                 tem.add(flu.quiz.get(1));
                 tem.add(flu.quiz.get(2));
                 tem.add(flu.quiz.get(3));

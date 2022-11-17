@@ -2,6 +2,7 @@ package simpleTest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +21,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.cbnu.dementiadiagnosis.Helper;
 import com.cbnu.dementiadiagnosis.HomeActivity;
 import com.cbnu.dementiadiagnosis.MainSTT;
+import com.cbnu.dementiadiagnosis.QuizHOME;
 import com.cbnu.dementiadiagnosis.R;
 import com.cbnu.dementiadiagnosis.TTS;
 
@@ -109,7 +111,7 @@ public class S_orientation extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString(), "Done", 1000);
+                tts.onInit(status, question.getText().toString(), "Done", 1000, donKnow);
             }
         });
 
@@ -163,15 +165,26 @@ public class S_orientation extends AppCompatActivity {
                     ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
 
                     ortt_main.scores[1] = ortt_main.Tscore;
+                    donKnow.setEnabled(false);
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
+                            intent.putExtra("scores", ortt_main.scores);
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
 
-                    Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
-                    intent.putExtra("scores", ortt_main.scores);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
+                            QP.isOrient = false;
 
-                    QP.isOrient = false;
-
-                    finish();
+                            finish();
+                        }
+                    });
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -280,14 +293,25 @@ public class S_orientation extends AppCompatActivity {
 
                         ortt_main.scores[1] = ortt_main.Tscore;
 
-                        Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
-                        intent.putExtra("scores", ortt_main.scores);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), S_memoryInput.class);
+                                intent.putExtra("scores", ortt_main.scores);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
 
-                        QP.isOrient = false;
+                                QP.isOrient = false;
 
-                        finish();
+                                finish();
+                            }
+                        });
+                        thread.start();
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                 }

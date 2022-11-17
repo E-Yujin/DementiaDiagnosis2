@@ -835,6 +835,22 @@ public class TTS {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void speakOut(String say, String id, int time, Button donknow) {
+        CharSequence text = say;
+        tts.setPitch((float) 1.2);
+        tts.setSpeechRate((float) 1);
+        donknow.setEnabled(false);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);
+                donknow.setEnabled(true);
+            }
+        }, time);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void speakOut(String say, String id, int time) {
         CharSequence text = say;
         tts.setPitch((float) 1.2);
@@ -914,6 +930,22 @@ public class TTS {
             Log.e("TTS", "Initilization Failed!");
         }
     }
+    public void onInit(int status, String say, String id, int time, Button btn) {
+        if (status == TextToSpeech.SUCCESS) {
+            Voice voiceobj = new Voice("it-it-x-kda#male_2-local",
+                    Locale.getDefault(), 500, 1, false, null);
+            tts.setVoice(voiceobj);
+            int result = tts.setLanguage(Locale.KOREA);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                speakOut(say, id, time, btn);
+            }
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+
     public void onInit(int status, String say, String id, int time) {
         if (status == TextToSpeech.SUCCESS) {
             Voice voiceobj = new Voice("it-it-x-kda#male_2-local",

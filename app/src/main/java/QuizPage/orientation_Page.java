@@ -92,7 +92,7 @@ public class orientation_Page extends AppCompatActivity {
         tts = new TTS(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                tts.onInit(status, question.getText().toString(), "Done", 1000);
+                tts.onInit(status, question.getText().toString(), "Done", 1000, donKnow);
             }
         });
 
