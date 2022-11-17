@@ -153,7 +153,7 @@ public class memoryInput_Page extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), attention_Page.class);
                     intent.putExtra("scores", memo_in.scores);
                     startActivity(intent);
-
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
@@ -220,7 +220,7 @@ public class memoryInput_Page extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), attention_Page.class);
                         intent.putExtra("scores", memo_in.scores);
                         startActivity(intent);
-
+                        overridePendingTransition(0, 0);
                         finish();
                     }
                 }

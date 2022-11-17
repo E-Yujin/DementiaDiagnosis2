@@ -124,7 +124,7 @@ public class ComprehensionPage extends AppCompatActivity {
                 intent.putExtra("current" , -1);
                 Log.d("comprehension", Okey);
                 setResult(RESULT_OK, intent);
-
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -154,7 +154,7 @@ public class ComprehensionPage extends AppCompatActivity {
                 intent.putExtra("current" , -1);
                 Log.d("comprehension", Okey);
                 setResult(RESULT_OK, intent);
-
+                overridePendingTransition(0, 0);
                 finish();
             }
         });

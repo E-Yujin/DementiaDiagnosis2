@@ -120,7 +120,7 @@ public class LanguagePage extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), fluency_Page.class);
                                 intent.putExtra("scores", languageFunc.scores);
                                 startActivity(intent);
-
+                                overridePendingTransition(0, 0);
                                 finish();
                             }
                             else{

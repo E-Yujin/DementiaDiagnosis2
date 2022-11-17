@@ -144,7 +144,7 @@ public class memoryOutput_Page extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
                     intent.putExtra("scores", memo_out.scores);
                     startActivity(intent);
-
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
@@ -235,7 +235,7 @@ public class memoryOutput_Page extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), LanguagePage.class);
                             intent.putExtra("scores", memo_out.scores);
                             startActivity(intent);
-
+                            overridePendingTransition(0, 0);
                             finish();
                         }
                     }

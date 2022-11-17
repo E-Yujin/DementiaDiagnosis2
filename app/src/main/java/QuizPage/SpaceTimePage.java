@@ -104,7 +104,7 @@ public class SpaceTimePage extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ExecutionPage.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
-
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -138,7 +138,7 @@ public class SpaceTimePage extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ExecutionPage.class);
                 intent.putExtra("scores", ST.scores);
                 startActivity(intent);
-
+                overridePendingTransition(0, 0);
                 finish();
             }
         });

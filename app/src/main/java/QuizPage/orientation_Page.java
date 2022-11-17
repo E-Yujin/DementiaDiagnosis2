@@ -173,7 +173,7 @@ public class orientation_Page extends AppCompatActivity {
                     startActivity(intent);
 
                     QP.isOrient = false;
-
+                    overridePendingTransition(0, 0);
                     finish();
                 }
             }
@@ -359,7 +359,7 @@ public class orientation_Page extends AppCompatActivity {
                             startActivity(intent);
 
                             QP.isOrient = false;
-
+                            overridePendingTransition(0, 0);
                             finish();
                         }
                     }
@@ -434,7 +434,7 @@ public class orientation_Page extends AppCompatActivity {
             startActivity(intent);
 
             QP.isOrient = false;
-
+            overridePendingTransition(0, 0);
             finish();
         } else {
             backBtnTime = curTime;
