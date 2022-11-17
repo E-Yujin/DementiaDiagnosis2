@@ -101,6 +101,7 @@
                     android:id="@+id/radioM"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="?attr/colorPrimary"
                     android:text="남"
                     android:fontFamily="@font/jejugothic"
                     android:textSize="18sp"/>
@@ -110,6 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:buttonTint="?attr/colorPrimary"
                     android:text="여"
                     android:fontFamily="@font/jejugothic"
                     android:textSize="18sp"/>
@@ -151,12 +153,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="문맹"
+                        android:buttonTint="?attr/colorPrimary"
                         android:fontFamily="@font/jejugothic"
                         android:letterSpacing="0.04"
                         android:textSize="18sp"/>
                     <RadioButton
                         android:id="@+id/radioTwo"
                         android:layout_width="wrap_content"
+                        android:buttonTint="?attr/colorPrimary"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="무학"
@@ -170,6 +174,7 @@
                         android:id="@+id/radioThree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="?attr/colorPrimary"
                         android:text="초등졸업"
                         android:fontFamily="@font/jejugothic"
                         android:letterSpacing="0.04"
@@ -179,6 +184,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:buttonTint="?attr/colorPrimary"
                         android:text="중등졸업"
                         android:fontFamily="@font/jejugothic"
                         android:letterSpacing="0.04"
@@ -191,6 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="고등졸업"
+                        android:buttonTint="?attr/colorPrimary"
                         android:fontFamily="@font/jejugothic"
                         android:letterSpacing="0.04"
                         android:textSize="18sp" />
@@ -200,6 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="대학졸업이상"
+                        android:buttonTint="?attr/colorPrimary"
                         android:fontFamily="@font/jejugothic"
                         android:letterSpacing="0.04"
                         android:textSize="18sp" />
@@ -224,6 +232,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="사용자 정보 기억하기"
+                android:buttonTint="?attr/colorPrimary"
                 android:textSize="15sp"
                 android:fontFamily="@font/jejugothic"
                 android:letterSpacing="0.04"/>

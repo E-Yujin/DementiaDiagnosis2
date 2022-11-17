@@ -228,6 +228,7 @@ public class S_orientation extends AppCompatActivity {
 
                 if(QP.user_ans.isEmpty()){
                     tts.speakOut("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
+                    if(QP.current == 0) announce.setText("월, 일");
                 }
                 else
                 {

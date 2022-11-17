@@ -301,9 +301,12 @@ public class TTS {
                             if(!s.contains("Done")){
                                 if(i == say.size()-1){
                                     speakOut(say.get(i), "Done");
+                                    i = 0;
                                 }
-                                else speakOut(say.get(i), id);
-                                i++;
+                                else {
+                                    speakOut(say.get(i), id);
+                                    i++;
+                                }
                             }
                             else{
                                 sttButt.setEnabled(true);

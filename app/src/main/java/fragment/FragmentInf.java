@@ -463,7 +463,7 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
 
 
         if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(requireActivity(), "주소 미발견", Toast.LENGTH_LONG).show();
+            //Toast.makeText(requireActivity(), "주소 미발견", Toast.LENGTH_LONG).show();
             return "주소 미발견";
 
         } else {

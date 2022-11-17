@@ -158,7 +158,7 @@ public class orientation_Page extends AppCompatActivity {
                     tts.isStopUtt = false;
                     QP.current++;
                     question.setText(ortt_main.quiz.get(QP.current));
-                    if(QP.current ==4 ) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
+                    if(QP.current == 5 ) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
                     tts.speakOut(question.getText().toString());
                 }
                 else if(QP.current == 5){
@@ -245,6 +245,8 @@ public class orientation_Page extends AppCompatActivity {
 
                 if(QP.user_ans.isEmpty()){
                     tts.speakOut("무응답으로 넘어가실 수 없습니다.\n아시는 대로 천천히 말씀해주시면 됩니다.");
+                    if(QP.current == 5) announce.setText("도시 또는 동/읍/면 등을 말해주세요.");
+                    if(QP.current == 0) announce.setText("년, 월, 일, 요일");
                 }
                 else
                 {
@@ -348,7 +350,6 @@ public class orientation_Page extends AppCompatActivity {
 
                     else if(QP.current == 5){
                         announce.setText("");
-
                         ortt_main.Tscore = cal_score(U_answers, ortt_main.crr_ans);
 
                         if(ortt_main.Tscore != -1){
