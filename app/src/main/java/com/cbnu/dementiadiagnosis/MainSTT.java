@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -72,6 +73,8 @@ public class MainSTT{
     boolean isTooFast = false;
     public boolean isFluency = false;
     MainSTT stt;
+    AppCompatActivity contx;
+    FragmentActivity Fcontx;
 
     private short[] buffer = null;
 
@@ -82,6 +85,7 @@ public class MainSTT{
                     context, new String[]{Manifest.permission.INTERNET,
                             Manifest.permission.RECORD_AUDIO},PERMISSION);
         }
+        contx = context;
         result = editText;
         textView = announce;
         question = quiz;
@@ -98,6 +102,7 @@ public class MainSTT{
                     context, new String[]{Manifest.permission.INTERNET,
                             Manifest.permission.RECORD_AUDIO},PERMISSION);
         }
+        contx = context;
         result = editText;
         question = quiz;
         sttBtn = Btn;
@@ -112,6 +117,7 @@ public class MainSTT{
                     context, new String[]{Manifest.permission.INTERNET,
                             Manifest.permission.RECORD_AUDIO},PERMISSION);
         }
+        Fcontx = context;
         result = editText;
         sttBtn = Btn;
         start = s;
@@ -126,6 +132,7 @@ public class MainSTT{
                     context, new String[]{Manifest.permission.INTERNET,
                             Manifest.permission.RECORD_AUDIO},PERMISSION);
         }
+        contx = context;
         result = editText;
         textView = announce;
         question = quiz;
@@ -144,6 +151,7 @@ public class MainSTT{
                     context, new String[]{Manifest.permission.INTERNET,
                             Manifest.permission.RECORD_AUDIO},PERMISSION);
         }
+        contx = context;
         result = editText;
         question = quiz;
         sttBtn = Btn;
@@ -324,6 +332,37 @@ public class MainSTT{
                     isAnalysing= false;
                     isTooFast = true;
                     break;
+                case 9: // 에러
+                    //textView.setText("조금 더 천천히 말씀해주세요.");
+                    result.setHint("조금 더 천천히 말씀해주세요.");
+                    isListening = false;
+                    isRecognize = false;
+                    isAnalysing= false;
+                    isTooFast = true;
+                    if(contx != null){
+                        Toast.makeText(contx, "조금 더 천천히 말씀해주세요!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else if(Fcontx != null){
+                        Toast.makeText(Fcontx, "조금 더 천천히 말씀해주세요!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 10: // 에러
+                    //textView.setText("조금 더 천천히 말씀해주세요.");
+                    result.setHint("조금 더 천천히 말씀해주세요.");
+                    isListening = false;
+                    isRecognize = false;
+                    isAnalysing= false;
+                    isTooFast = true;
+                    if(contx != null){
+                        Toast.makeText(contx, "죄송하지만, 다시 한 번 말씀해주세요!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else if(Fcontx != null){
+                        Toast.makeText(Fcontx, "죄송하지만, 다시 한 번 말씀해주세요!",
+                                Toast.LENGTH_SHORT).show();
+                    }
             }
             super.handleMessage(msg);
         }
@@ -468,7 +507,14 @@ public class MainSTT{
                             flag = PrintResult(this, endIndex, startingIndex, recData);
                             if (flag == -1) {
                                 SendMessage("ERROR", 8);
-                            } else SendMessage("들었어요!", 5);
+                            }
+                            else if(flag == 429){
+                                SendMessage("ERROR", 9);
+                            }
+                            else if(flag == 400){
+                                SendMessage("ERROR", 10);
+                            }
+                            else SendMessage("들었어요!", 5);
                             recData.clear();
                         }
                     });
@@ -502,8 +548,9 @@ public class MainSTT{
 
             Log.d("record_d", sendDataAndGetResult(speechData, lenSpeech));
             result_text = sendDataAndGetResult(speechData, lenSpeech);
-            if(result_text.contains("ERROR")) return -1;
-            if(result_text.contains("-1")) return -1;
+            if(result_text.contains("ERROR") && result_text.contains("429")) return 429;
+            else if(result_text.contains("ERROR") && result_text.contains("400")) return 400;
+            if(result_text.contains("-1") || result_text.contains("ERROR")) return -1;
             else return 0;
 
     }
@@ -552,11 +599,14 @@ public class MainSTT{
                 transforming = false;
                 return responBody;
             }
-            else
+            else{
                 transforming = false;
+                Log.e("MainSTT", "ERROR: " + responseCode);
                 return "ERROR: " + Integer.toString(responseCode);
+            }
         } catch (Throwable t) {
             transforming = false;
+            Log.e("MainSTT", "ERROR: " + t.toString());
             return "ERROR: " + t.toString();
         }
     }

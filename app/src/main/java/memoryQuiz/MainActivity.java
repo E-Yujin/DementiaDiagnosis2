@@ -205,10 +205,11 @@ public class MainActivity extends AppCompatActivity {
     public void changeQuiz(int pro) {
         Log.e("progress", Integer.toString(pro));
         pro_bar.setProgress(pro);
+        sttBtn.setEnabled(false);
         tts.isStopUtt = false;
         QP.Submit();
         question.setText(memoryQuiz.quiz.get(QP.current));
-        tts.speakOut(question.getText().toString());
+        tts.speakOut(question.getText().toString(),"default");
         tts.UtteranceProgress(question.getText().toString(), 1000, answer, sttBtn, submit);
         random = generateString();
         Log.e("random", random);
