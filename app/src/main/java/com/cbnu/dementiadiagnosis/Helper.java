@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.os.Handler;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class Helper{
     AnimationListner jump, nomal, nomal2, speak, speak2, listn_s,listn,listn_f, recog, anal, slow;
     ImageView img;
+    int sloww = 0;
 
     public Helper(TTS tts, MainSTT stt, ImageView IMG, AppCompatActivity activity){
         img = IMG;
@@ -258,6 +262,13 @@ public class Helper{
                         R.drawable.helper_slow)) {
             @Override
             public void onAnimationFinish() {
+                sloww ++;
+                Log.d("울면안돼", Integer.toString(sloww));
+                if(sloww >= 3){
+                    this.stop();
+                    img.setImageDrawable(recog);
+                    recog.start();
+                }
             }
 
             @Override

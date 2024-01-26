@@ -331,6 +331,14 @@ public class MainSTT{
                     isRecognize = false;
                     isAnalysing= false;
                     isTooFast = true;
+                    if(contx != null){
+                        Toast.makeText(contx, "API 서버 연결이 불안정합니다.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else if(Fcontx != null){
+                        Toast.makeText(Fcontx, "API 서버 연결이 불안정합니다.",
+                                Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case 9: // 에러
                     //textView.setText("조금 더 천천히 말씀해주세요.");

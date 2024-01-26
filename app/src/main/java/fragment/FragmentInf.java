@@ -2,6 +2,7 @@ package fragment;
 
 import static android.content.Context.LOCATION_SERVICE;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.ThemedSpinnerAdapter;
@@ -87,8 +88,8 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
 
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
+    private static final int UPDATE_INTERVAL_MS = 100000;  // 100초
+    private static final int FASTEST_UPDATE_INTERVAL_MS = 60000; // 1분
     private static final String MSG_KEY = "status";
 
 
@@ -484,6 +485,7 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
 
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
 
+        Log.d(TAG, "슉");
 
         if (currentMarker != null) currentMarker.remove();
 
@@ -505,7 +507,7 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
         if(lat > 0.7
                 && lon > 0.3){
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,14));
-            button.setEnabled(false);
+            //button.setEnabled(false);
             showPlaceInformation(currentPosition);
         }
 
@@ -679,12 +681,33 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
 
     @Override
     public void onPlacesFailure(PlacesException e) {
+        Log.d("fail", "근처에 치매 관련 시설이 없습니다.");
 
+        final Runnable notifyDataSetChangedRunnalbe = new Runnable() {
+            @Override
+            public void run() {
+                synchronized (this) {
+                    this.notify();
+                    button.setEnabled(true);
+                    Toast.makeText(getActivity(), "근처에 치매 관련 시설이 없습니다.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        synchronized (notifyDataSetChangedRunnalbe) {
+            requireActivity().runOnUiThread(notifyDataSetChangedRunnalbe);
+            try {
+                //notifyDataSetChangedRunnalbe.wait();
+                ((HomeActivity)getActivity()).EnableTab(true);
+            } catch (Exception a) {
+                a.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void onPlacesStart() {
-
+        Log.d("start", "가까운 치매 시설을 검색합니다.");
     }
 
 
@@ -718,7 +741,6 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
                 synchronized (this) {
                     this.notify();
                     button.setEnabled(true);
-                    Log.d("욕", "3");
                     ((HomeActivity)getActivity()).EnableTab(true);
                 }
             }
@@ -727,9 +749,7 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
         synchronized (notifyDataSetChangedRunnalbe) {
             requireActivity().runOnUiThread(notifyDataSetChangedRunnalbe);
             try {
-                notifyDataSetChangedRunnalbe.wait();
-                button.setEnabled(true);
-                Log.d("욕", "2");
+                //notifyDataSetChangedRunnalbe.wait();
                 ((HomeActivity)getActivity()).EnableTab(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -768,7 +788,7 @@ public class FragmentInf extends Fragment implements OnMapReadyCallback, PlacesL
 
     @Override
     public void onPlacesFinished() {
-
+        Log.d("finished", "검색을 중지합니다.");
     }
     public void showPlaceInformation(LatLng location)
     {

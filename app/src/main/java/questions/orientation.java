@@ -189,13 +189,11 @@ public class orientation extends question {
     }
 
     public String KorTran(String num) {
-        String input = num.replace("년", "")
-                .replace("도", "")
-                .replace("일", "")
+        String input = num.replace("도", "")
                 .replace("시월", "십월")
                 .replace("유월", "육월")
-                .replace("월", "");
-
+                .replace(" ", "");
+        input = input.substring(0, input.length() - 1);
         String splited[] = input.split(" ");
 
         StringTokenizer st;
@@ -214,7 +212,7 @@ public class orientation extends question {
             st = new StringTokenizer(split, UNIT, true);
             StringTokenizer tem = new StringTokenizer(split, UNIT, true);
             String tok = tem.nextToken();
-            if (NUMBER.indexOf(tok) != -1 || (UNIT.indexOf(tok) != -1 && split.length() == 1)) {
+            if (NUMBER.indexOf(tok) != -1 || (UNIT.indexOf(tok) != -1)) {
                 if (have_to_num && NUMBER.indexOf(tok) == -1) continue;
                 if (have_to_unit && UNIT.indexOf(tok) == -1) continue;
                 if (tem.hasMoreTokens()) {

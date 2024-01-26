@@ -240,8 +240,17 @@ public class S_orientation extends AppCompatActivity {
                         for(int i = 0; i < answers.length; i++){
                             String str = "";
                             if(answers[i].contains("월")){
-                                U_answers[0] = dateFilter(answers[i]);
-                                isCorrect[0] = true;
+                                if(i > 0 && answers[i-1].contains("십"))
+                                {
+                                    str = answers[i-1] + answers[i];
+                                    str = str.substring(0, str.length()-1);
+                                    U_answers[0] = dateFilter(str);
+                                    isCorrect[0] = true;
+                                }
+                                else{
+                                    U_answers[0] = dateFilter(answers[i]);
+                                    isCorrect[0] = true;
+                                }
                             }
                             else if(answers[i].contains("일")){
                                 if(!answers[i-1].contains("월") && !answers[i-1].contains("년")
@@ -249,7 +258,7 @@ public class S_orientation extends AppCompatActivity {
                                     if(answers[i-1].contains("십")){
                                         str = answers[i-1] + answers[i];
                                         str = str.substring(0, str.length()-1);
-                                        isCorrect[1] = true;
+                                         isCorrect[1] = true;
                                         U_answers[1] = dateFilter(str);
                                     }
                                 }
@@ -345,7 +354,7 @@ public class S_orientation extends AppCompatActivity {
         int score = 0;
         if(ans.length == crr.length-1){
             for(int i = 0; i < ans.length; i++){
-                if(ans[i].contains(crr[i + 1].get(0))) score ++;
+                if(ans[i].equals(crr[i + 1].get(0))) score ++;
             }
         }
         return score;

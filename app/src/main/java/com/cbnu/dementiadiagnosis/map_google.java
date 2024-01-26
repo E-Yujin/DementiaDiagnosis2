@@ -190,7 +190,7 @@ public class map_google implements OnMapReadyCallback, PlacesListener {
                 .key("AIzaSyB-YOpnjgfNzZye9YVh-7tcwSTA-t9pDJI")
                 .latlng(location.latitude, location.longitude)//현재 위치
                 .radius(500) //500 미터 내에서 검색
-                .type("치매") //음식점
+                .type("치매")
                 .build()
                 .execute();
     }
@@ -412,7 +412,7 @@ public class map_google implements OnMapReadyCallback, PlacesListener {
         //디폴트 위치, Seoul
         LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
         String markerTitle = "위치정보 가져올 수 없음";
-        String markerSnippet = "위치 퍼미션과 GPS 활성 요부 확인하세요";
+        String markerSnippet = "위치 퍼미션과 GPS 활성 여부 확인하세요";
 
 
         if (currentMarker != null) currentMarker.remove();

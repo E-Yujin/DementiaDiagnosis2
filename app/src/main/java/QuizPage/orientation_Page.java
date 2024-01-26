@@ -259,41 +259,38 @@ public class orientation_Page extends AppCompatActivity {
                         String[] answers = QP.user_ans.split(" ");
                         for(int i = 0; i < answers.length; i++){
                             String str = "";
-                            if(answers[i].contains("년도")){
+                            if(answers[i].contains("년") || answers[i].contains("년도")){
                                 if(i-2 >= 0){
-                                    str = answers[i-2] + answers[i-1] + answers[i].replace("년", "");
+                                    str = answers[i-2] + answers[i-1] + answers[i];
                                 }
                                 else if(i-1 >= 0){
-                                    str = answers[i-1] + answers[i].replace("년", "");
+                                    str = answers[i-1] + answers[i];
                                 }
                                 else if(i >= 0){
-                                    str = answers[i].replace("년", "");
+                                    str = answers[i];
                                 }
                                 isCorrect[0] = true;
                                 U_answers[0] = dateFilter(str);
                             }
-                            else if(answers[i].contains("년")){
-                                if(i-2 >= 0){
-                                    str = answers[i-2] + answers[i-1] + answers[i].replace("년", "");
+                            else if(answers[i].charAt(answers[i].length() - 1) == '월'){
+                                if(i > 0 && answers[i-1].contains("십"))
+                                {
+                                    str = answers[i];
+                                    //str = answers[i-1] + answers[i];
+                                    //str = str.substring(0, str.length()-1);
+                                    U_answers[1] = dateFilter(str);
+                                    isCorrect[1] = true;
                                 }
-                                else if(i-1 >= 0){
-                                    str = answers[i-1] + answers[i].replace("년", "");
+                                else{
+                                    U_answers[1] = dateFilter(answers[i]);
+                                    isCorrect[1] = true;
                                 }
-                                else if(i >= 0){
-                                    str = answers[i].replace("년", "");
-                                }
-                                isCorrect[0] = true;
-                                U_answers[0] = dateFilter(str);
-                            }
-                            else if(answers[i].contains("월") && !answers[i].contains("요일")){
-                                U_answers[1] = dateFilter(answers[i]);
-                                isCorrect[1] = true;
                             }
                             else if(answers[i].contains("요일")){
                                 U_answers[3] = answers[i];
                                 isCorrect[3] = true;
                             }
-                            else if(answers[i].contains("일")){
+                            else if(answers[i].charAt(answers[i].length() - 1) == '일'){
                                 if(i != 0 && !answers[i-1].contains("월") && !answers[i-1].contains("년")
                                         && !answers[i-1].contains("년도") && !answers[i-1].contains("요일")){
                                     if(answers[i-1].contains("십")){

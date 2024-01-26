@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,9 +39,11 @@ public class TTS {
     Handler handler = new Handler();
     public boolean isStopUtt = false;
     boolean isSpeaking = false;
+    Context conx;
 
     public TTS(Context context, TextToSpeech.OnInitListener listener){
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, null);
+        conx = context;
         tts = new TextToSpeech(context, listener);
     }
 
@@ -839,62 +842,90 @@ public class TTS {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void speakOut(String say, String id, int time, Button donknow) {
-        CharSequence text = say;
-        tts.setPitch((float) 1.2);
-        tts.setSpeechRate((float) 1);
-        donknow.setEnabled(false);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);
-                donknow.setEnabled(true);
-            }
-        }, time);
-
+        if(tts != null){
+            CharSequence text = say;
+            tts.setPitch((float) 1.2);
+            tts.setSpeechRate((float) 1);
+            donknow.setEnabled(false);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);
+                    donknow.setEnabled(true);
+                }
+            }, time);
+        }
+        else {
+            Toast.makeText(conx, "죄송합니다. 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void speakOut(String say, String id, int time) {
-        CharSequence text = say;
-        tts.setPitch((float) 1.2);
-        tts.setSpeechRate((float) 1);
+        if(tts != null){
+            CharSequence text = say;
+            tts.setPitch((float) 1.2);
+            tts.setSpeechRate((float) 1);
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);
-            }
-        }, time);
-
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);
+                }
+            }, time);
+        }
+        else {
+            Toast.makeText(conx, "죄송합니다. 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void speakOut(String say, int time) {
-        CharSequence text = say;
-        tts.setPitch((float) 1.2);
-        tts.setSpeechRate((float) 1);
+        if(tts != null){
+            CharSequence text = say;
+            tts.setPitch((float) 1.2);
+            tts.setSpeechRate((float) 1);
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                tts.speak(text,TextToSpeech.QUEUE_FLUSH,null, "Done");
-            }
-        }, time);
-        UtteranceProgress();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tts.speak(text,TextToSpeech.QUEUE_FLUSH,null, "Done");
+                }
+            }, time);
+            UtteranceProgress();
+        }
+        else {
+            Toast.makeText(conx, "죄송합니다. 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void speakOut(String say, String id) {
-        CharSequence text = say;
-        tts.setPitch((float) 1.2);
-        tts.setSpeechRate((float) 1);
-        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);
+        if(tts != null){
+            CharSequence text = say;
+            tts.setPitch((float) 1.2);
+            tts.setSpeechRate((float) 1);
+            tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,id);
+        }
+        else {
+            Toast.makeText(conx, "죄송합니다. 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void speakOut(String say) {
-        CharSequence text = say;
-        tts.setPitch((float) 1.2);
-        tts.setSpeechRate((float) 1);
-        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,"Done");
-        UtteranceProgress();
+        if(tts != null){
+            CharSequence text = say;
+            tts.setPitch((float) 1.2);
+            tts.setSpeechRate((float) 1);
+            tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,"Done");
+            UtteranceProgress();
+        }
+        else {
+            Toast.makeText(conx, "죄송합니다. 다시 시도해주세요.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean IsTalking(){
